@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>project-aether2</label>
+	</settings>
+	<users>
+		<user>
+			<path>project-aether2.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>project-aether2.jcp</path>
+		</project>
+	</projects>
+</workspace>
