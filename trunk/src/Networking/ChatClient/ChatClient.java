@@ -28,7 +28,7 @@ public class ChatClient
 	Scanner stdin = new Scanner(System.in);
 	try
 	{
-	    csocket = new Socket ("127.0.0.1", 5000);
+	    csocket = new Socket ("24.57.115.97", 4186);
 	    System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
             System.out.println("Please give me a username:");
             username = stdin.nextLine();

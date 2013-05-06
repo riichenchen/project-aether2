@@ -24,14 +24,14 @@ public class ChatServer {
 		Socket cSocket = null;
 		try {
 			// Start the server on port 5000, print out some information about the server
-			sSocket = new ServerSocket(5000);
+			sSocket = new ServerSocket(4186);
 			System.out.println("Server Started");
 			InetAddress inet = InetAddress.getLocalHost();
 			System.out.println("Host Name: " + inet.getHostName());
 			System.out.println("IP Address: " + inet.getHostAddress());
 			System.out.println("Port: " + sSocket.getLocalPort());
 		} catch (Exception e) {
-			System.err.println("Could not start server on port 5000");
+			System.err.println("Could not start server on port 4186");
 			acceptConns = false;
 		}
 		// The manager will keep track of all clients connected to the server
