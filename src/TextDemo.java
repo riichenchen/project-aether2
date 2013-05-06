@@ -78,13 +78,15 @@ public class TextDemo extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent evt) {
-        String text = textField.getText();
-        textArea.append(text + newline);
-        textField.setText("");
+        if (evt.getSource() == textField){
+            String text = textField.getText();
+            textArea.append(text + newline);
+            textField.setText("");
 
-        //Make sure the new text is visible, even if there
-        //was a selection in the text area.
-        textArea.setCaretPosition(textArea.getDocument().getLength());
+            //Make sure the new text is visible, even if there
+            //was a selection in the text area.
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+        }
     }
 
     /**
