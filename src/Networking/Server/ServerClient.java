@@ -4,7 +4,7 @@
  */
 package Networking.Server;
 
-import GameSource.Net.Server.ServerMessageListener;
+import GameSource.Net.Server.ServerNetListener;
 import Networking.Messages.ChatMessage;
 import Networking.Messages.Message;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public abstract class ServerClient extends Thread{
         } catch (Exception e) {
             
         } 
-        manager.addClient((ServerMessageListener)this);  // get added to the list of clients
+        manager.addClient((ServerNetListener)this);  // get added to the list of clients
     }
     public abstract void ReceiveMessage(Message m);
     
@@ -48,7 +48,7 @@ public abstract class ServerClient extends Thread{
         } catch (Exception e) {
 
         } finally {
-            manager.removeClient((ServerMessageListener)this);
+            manager.removeClient((ServerNetListener)this);
             try {
                 in.close();
                 out.close();

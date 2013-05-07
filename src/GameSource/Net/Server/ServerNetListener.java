@@ -15,8 +15,8 @@ import java.net.Socket;
  *
  * @author Shiyang
  */
-public class ServerMessageListener extends ServerClient{
-    public ServerMessageListener(Socket cSocket, ClientManager manager){
+public class ServerNetListener extends ServerClient{
+    public ServerNetListener(Socket cSocket, ClientManager manager){
         super(cSocket,manager);
     }
     @Override
