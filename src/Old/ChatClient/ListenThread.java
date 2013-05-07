@@ -16,20 +16,24 @@ public class ListenThread extends Thread
 {
     ObjectInputStream in = null;
     Socket socket = null;
-    private boolean running = true;
+    private boolean running = false;
     
     public ListenThread(Socket cSocket) {
         socket = cSocket;
+    }
+    
+    public void start(){
         try {
         in = new ObjectInputStream(socket.getInputStream());
         } catch (Exception ex){
             System.out.println("error: "+ex.getMessage());
         }
-        
     }
+    
     public boolean isRunning(){
         return running;
     }
+    
     public void run ()
     {
 	while (true)

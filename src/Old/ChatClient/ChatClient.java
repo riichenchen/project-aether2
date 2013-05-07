@@ -22,16 +22,16 @@ public class ChatClient
 
 	int digit = 98;
 	ObjectOutputStream out = null;
-	String str, username = "-user-name-error-";
+	String str;//, username = "-user-name-error-";
 	int found = 0;
         ListenThread t = null;
-	Scanner stdin = new Scanner(System.in);
+	//Scanner stdin = new Scanner(System.in);
 	try
 	{
-	    csocket = new Socket ("24.57.115.97", 4186);
+            //System.out.print("Please give me a username:");
+            //username = stdin.nextLine();
+            csocket = new Socket ("24.57.115.97", 4186);
 	    System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
-            System.out.println("Please give me a username:");
-            username = stdin.nextLine();
 	    out = new ObjectOutputStream(csocket.getOutputStream ());
             t = new ListenThread (csocket);
             t.start ();
@@ -42,16 +42,16 @@ public class ChatClient
             System.exit(0);
 	}
 
-	while (((ListenThread)t).isRunning())
-	{
-	    try
-	    {
-			str = stdin.nextLine (); // gets the input from the user
-			out.writeObject (new ChatMessage(username,str));
-	    }
-	    catch (Exception e)
-	    {
-	    }
-	}
+//	while (((ListenThread)t).isRunning())
+//	{
+////	    try
+////	    {
+////			str = stdin.nextLine (); // gets the input from the user
+////			out.writeObject (new ChatMessage(username,str));
+////	    }
+////	    catch (Exception e)
+////	    {
+////	    }
+//	}
     } // main method
 } // ChatClient class
