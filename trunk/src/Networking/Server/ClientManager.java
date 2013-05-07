@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package Networking.Server;
-import GameSource.Net.Server.ServerMessageListener;
+import GameSource.Net.Server.ServerNetListener;
 import Networking.Messages.ChatMessage;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -18,11 +18,11 @@ public class ClientManager {
             clientList = new Vector();
     }
 
-    public void addClient(ServerMessageListener client) {
+    public void addClient(ServerNetListener client) {
             clientList.add(client);  // adds a client to the list
     }
 
-    public void removeClient(ServerMessageListener client) {
+    public void removeClient(ServerNetListener client) {
             clientList.remove(client);  // removes a client from the list
     }
 
@@ -34,7 +34,7 @@ public class ClientManager {
               // loop through all the connected clients
             while (e.hasMoreElements ()) {
                 //System.out.println("preparing");
-                ServerMessageListener client = (ServerMessageListener)e.nextElement ();
+                ServerNetListener client = (ServerNetListener)e.nextElement ();
                 try {
                     client.send(message);  // send the message to the client
                 } catch (Exception ex) {

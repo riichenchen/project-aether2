@@ -4,7 +4,7 @@
  */
 package Networking.Server;
 
-import GameSource.Net.Server.ServerMessageListener;
+import GameSource.Net.Server.ServerNetListener;
 import Networking.Messages.Message;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -45,7 +45,7 @@ public class Server extends Thread{
                 cSocket = sSocket.accept();
                 System.out.println("Client Connected: " + cSocket.getInetAddress().getHostAddress());
                 // Start a thread to handle each client, the client will add itself to the managers list
-                ServerMessageListener client = new ServerMessageListener(cSocket, manager);
+                ServerNetListener client = new ServerNetListener(cSocket, manager);
                 //client.send(new ServerHandshakeMessage(Globals.__SERVERVERSION__));
                 client.start();
             } catch (Exception e) {
