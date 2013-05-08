@@ -4,6 +4,7 @@
  */
 package Networking.Client;
 
+import GameSource.LoginFrame;
 import GameSource.Net.Client.ClientNetListener;
 import GameSource.Net.Client.ClientNetSender;
 import GameSource.Net.Client.ClientTest;
@@ -22,10 +23,10 @@ public abstract class Client
     protected boolean started = false;
     protected ClientNetListener netlistener = null;
     protected ClientSendThread netSender = null;
-    protected ClientTest world;
+    protected LoginFrame world;
     protected int clientId;
     
-    public Client (ClientTest world){
+    public Client (LoginFrame world){
         this.world = world;
     } 
     

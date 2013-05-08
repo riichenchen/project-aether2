@@ -4,6 +4,7 @@
  */
 package GameSource.Net.Client;
 
+import GameSource.LoginFrame;
 import Networking.Client.Client;
 
 /**
@@ -12,7 +13,7 @@ import Networking.Client.Client;
  */
 public class MyClient extends Client{
 //    private String clientId;
-    public MyClient(ClientTest world){
+    public MyClient(LoginFrame world){
         super(world);
 //        this.clientId = clientId;
     }

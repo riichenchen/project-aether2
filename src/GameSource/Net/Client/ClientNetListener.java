@@ -4,6 +4,7 @@
  */
 package GameSource.Net.Client;
 
+import GameSource.LoginFrame;
 import Networking.Client.Client;
 import Networking.Client.ClientListenThread;
 import Networking.Messages.ChatMessage;
@@ -16,13 +17,13 @@ import java.net.Socket;
  * @author Shiyang
  */
 public class ClientNetListener extends ClientListenThread{
-    private ClientTest world;
+    private LoginFrame world;
     
     public ClientNetListener(Socket csocket,Client client){
         super(csocket,client);
     }
     
-    public void setWorld(ClientTest world){
+    public void setWorld(LoginFrame world){
         this.world = world;
     }
 
@@ -31,14 +32,17 @@ public class ClientNetListener extends ClientListenThread{
         if (msg instanceof ChatMessage){
             ChatMessage mymsg = (ChatMessage)msg;
             if (mymsg.getClientId() != client.getClientId()){
-                System.out.println(mymsg.getName()+": "+mymsg.getMessage());
+                //System.out.println(mymsg.getName()+": "+mymsg.getMessage());
+                world.addChatMessage(mymsg.getName()+": "+mymsg.getMessage());
             }
         } else if (msg instanceof LoginReplyMessage){
             LoginReplyMessage mymsg = (LoginReplyMessage)msg;
             if (mymsg.getReply()){
-                world.loggedin = true;
+                world.login();
+            } else {
+                world.setResponse("Failed to login. Try Again?");
             }
-            world.response = true;
+            //world.response = true;
         }
     }
 
