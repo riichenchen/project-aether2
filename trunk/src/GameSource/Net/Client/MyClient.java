@@ -11,14 +11,14 @@ import Networking.Client.Client;
  * @author Shiyang
  */
 public class MyClient extends Client{
-    private String clientId;
+//    private String clientId;
     public MyClient(String clientId){
-        this.clientId = clientId;
+//        this.clientId = clientId;
     }
 
-    @Override
-    public void initListener() {
-       t.setUserID(clientId);
-    }
+//    @Override
+//    public void initListener() {
+////       netlistener.setUserID(clientId);
+//    }
     
 }

@@ -17,7 +17,7 @@ import java.net.Socket;
 public abstract class ClientListenThread extends Thread
 {
     protected ObjectInputStream in = null;
-    protected ObjectOutputStream out = null;
+    //protected ObjectOutputStream out = null;
     protected Socket socket = null;
     protected boolean connected = false;
     protected int CLIENTID;
@@ -29,19 +29,19 @@ public abstract class ClientListenThread extends Thread
         } catch (Exception e){
             System.out.println("could not connect with input stream "+e.getMessage());
         }
-        try {
-            out = new ObjectOutputStream(socket.getOutputStream());
-        } catch (Exception ex){
-            System.out.println("could not connect with output stream: "+ex.getMessage());
-        }
+        connected = true;
+//        try {
+//            out = new ObjectOutputStream(socket.getOutputStream());
+//        } catch (Exception ex){
+//            System.out.println("could not connect with output stream: "+ex.getMessage());
+//        }
     }
-    public abstract void onConnect();
     public abstract void ReceiveMessage(Message msg);
     
-    public void connect(){
-        onConnect();
-        connected = true;
-    }
+//    public void connect(){
+//        //onConnect();
+//        connected = true;
+//    }
     public boolean isConnected(){
         return connected;
     }
@@ -65,12 +65,12 @@ public abstract class ClientListenThread extends Thread
 	    }
 	}
     }
-    public void sendMessage(Message msg){
-        try {
-            msg.setClientId(CLIENTID);
-            out.writeObject(msg);
-        } catch (Exception e){
-            System.out.println("Error sending Message: "+e.getMessage());
-        }
-    }
+//    public void sendMessage(Message msg){
+//        try {
+//            msg.setClientId(CLIENTID);
+//            out.writeObject(msg);
+//        } catch (Exception e){
+//            System.out.println("Error sending Message: "+e.getMessage());
+//        }
+//    }
 }

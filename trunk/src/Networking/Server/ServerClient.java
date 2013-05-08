@@ -4,30 +4,30 @@
  */
 package Networking.Server;
 
-import GameSource.Net.Server.ServerNetListener;
-import Networking.Messages.ChatMessage;
+//import GameSource.Net.Server.ServerNetListener;
 import Networking.Messages.Message;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
  * @author Shiyang
  */
-public abstract class ServerClient extends Thread{
+public class ServerClient extends Thread{
     protected Socket cSocket = null;
     protected ObjectInputStream in = null;
     protected ObjectOutputStream out = null;
     protected ClientManager manager = null;
     protected boolean stayConnected = true;
     protected int connectionId;
+    protected Server theServer;
     
-    public ServerClient(Socket cSocket, ClientManager manager) {
+    public ServerClient(Socket cSocket, ClientManager manager,Server theServer) {
         this.cSocket = cSocket;
         this.manager = manager;
+        this.theServer = theServer;
         try {
             out = new ObjectOutputStream(cSocket.getOutputStream());
         } catch (Exception e) {}
@@ -36,7 +36,7 @@ public abstract class ServerClient extends Thread{
         } catch (Exception e) {
             
         } 
-        manager.addClient((ServerNetListener)this);  // get added to the list of clients
+        manager.addClient((ServerClient)this);  // get added to the list of clients
     }
     public void setConnectionId(int id){
         connectionId = id;
@@ -45,18 +45,19 @@ public abstract class ServerClient extends Thread{
         return connectionId;
     }
     
-    public abstract void ReceiveMessage(Message m);
+    //public abstract void ReceiveMessage(Message m);
     
+    @Override
     public void run() {
         try {
             while(stayConnected) {
                 Object msg = in.readObject();
-                ReceiveMessage((Message)msg);
+                theServer.receiveMessage((Message)msg);
             }
         } catch (Exception e) {
 
         } finally {
-            manager.removeClient((ServerNetListener)this);
+            manager.removeClient(this);
             try {
                 in.close();
                 out.close();

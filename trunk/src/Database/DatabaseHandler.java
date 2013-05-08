@@ -36,6 +36,7 @@ public class DatabaseHandler {
                 .getConnection("jdbc:mysql://24.57.115.97/projectaether2?"
                     + "user="+sqluser+"&password="+sqluserpw);
             statement = connect.createStatement();
+            System.out.println("Successfully Connected to Database!");
         } catch (Exception e) {
             close();
             System.out.println("Error: "+e.getMessage());

@@ -6,7 +6,7 @@ package GameSource.Net.Client;
 
 import Networking.Client.ClientListenThread;
 import Networking.Messages.ChatMessage;
-import Networking.Messages.ClientJoinChatMessage;
+import Networking.Messages.LoginReplyMessage;
 import Networking.Messages.Message;
 import java.net.Socket;
 
@@ -15,7 +15,7 @@ import java.net.Socket;
  * @author Shiyang
  */
 public class ClientNetListener extends ClientListenThread{
-    private String userid;
+    //private String userid;
     
     public ClientNetListener(Socket csocket){
         super(csocket);
@@ -29,17 +29,24 @@ public class ClientNetListener extends ClientListenThread{
             if (mymsg.getClientId() != this.CLIENTID){
                 System.out.println(mymsg.getName()+": "+mymsg.getMessage());
             }
+        } else if (msg instanceof LoginReplyMessage){
+            LoginReplyMessage mymsg = (LoginReplyMessage)msg;
+            if (mymsg.getReply()){
+                System.out.println("Accepted!");
+            } else {
+                System.out.println("Declined!");
+            }
         }
     }
 
-    @Override
-    public void onConnect() {
-        sendMessage(new ClientJoinChatMessage(userid));
-    }
+//    @Override
+//    public void onConnect() {
+//        sendMessage(new ClientJoinChatMessage(userid));
+//    }
     
-    public void setUserID(String id){
-        userid = id;
-    }
+//    public void setUserID(String id){
+//        userid = id;
+//    }
 
     
 }

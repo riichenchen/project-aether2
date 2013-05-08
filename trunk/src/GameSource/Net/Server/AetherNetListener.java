@@ -6,34 +6,24 @@ package GameSource.Net.Server;
 
 import Networking.Messages.ChatMessage;
 import Networking.Messages.ClientJoinChatMessage;
-import Networking.Messages.LoginReplyMessage;
 import Networking.Messages.Message;
 import Networking.Messages.RequestLoginMessage;
 import Networking.Server.ClientManager;
-import Networking.Server.ServerClient;
-import java.net.Socket;
+import Networking.Server.ServerNetListener;
 
 /**
  *
  * @author Shiyang
  */
-public class ServerNetListener extends ServerClient{
+public class AetherNetListener extends ServerNetListener{
     private ServerTest world;
-    public ServerNetListener(Socket cSocket, ClientManager manager){//, ServerTest world){
-        super(cSocket,manager);
+    public AetherNetListener(ClientManager manager){
+        super(manager);
         //this.world = world;
     }
+    
     @Override
-    public void ReceiveMessage(Message m) {
-//        if (m instanceof RequestLoginMessage){
-//            RequestLoginMessage mymsg = (RequestLoginMessage)m;
-//            if (world.RequestLogin(mymsg.getUser(),mymsg.getPass())){
-//                manager.sendToClient(m.getClientId(),new LoginReplyMessage(true));
-//            } else {
-//                manager.sendToClient(m.getClientId(),new LoginReplyMessage(false));
-//            }
-//            //manager.reply
-//        } else 
+    public void ReceiveMessage(Message m){
         if (m instanceof ChatMessage){
             ChatMessage mymsg = (ChatMessage)m;
             System.out.println(mymsg.getName()+": "+mymsg.getMessage());
@@ -44,7 +34,17 @@ public class ServerNetListener extends ServerClient{
             ChatMessage serverMsg = new ChatMessage("Server",mymsg.getName()+" has joined the chat!");
             serverMsg.setClientId(-1);
             manager.broadcast(serverMsg);
+        } else if (m instanceof RequestLoginMessage){
+            RequestLoginMessage mymsg = (RequestLoginMessage)m;
+            //System.out.println(world);
+            if (world.RequestLogin(mymsg.getUser(), mymsg.getPass())){
+                System.out.println("You're in!");
+            } else {
+                System.out.println("You're not :C");
+            }
         }
     }
-    
+    public void setWorld(ServerTest world){
+        this.world = world;
+    }
 }
