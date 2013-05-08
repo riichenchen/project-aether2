@@ -4,12 +4,11 @@
  */
 package Networking.Server;
 
-import GameSource.Net.Server.ServerNetListener;
+//import Networking.Server.ServerNetListener;
 import Networking.Messages.Message;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
@@ -20,7 +19,8 @@ public abstract class Server extends Thread{
     private boolean acceptConns = true;
     private ServerSocket sSocket = null;
     private Socket cSocket = null;
-    
+    protected ServerNetListener netListener;
+            
     public Server() {
             try {
                 // Start the server on port 5000, print out some information about the server
@@ -35,8 +35,12 @@ public abstract class Server extends Thread{
             }
             // The manager will keep track of all clients connected to the server
             manager = new ClientManager();
+            netListener = addListener(manager);
+            netListener.start();
     }
-
+    public void receiveMessage(Message m){
+        netListener.addMessage(m);
+    }
     public void run(){
         System.out.println("Waiting on Connections");
         while(acceptConns) {
@@ -45,8 +49,9 @@ public abstract class Server extends Thread{
                 cSocket = sSocket.accept();
                 System.out.println("Client Connected: " + cSocket.getInetAddress().getHostAddress());
                 // Start a thread to handle each client, the client will add itself to the managers list
-                addListener(cSocket,manager).start();
-                //ServerNetListener client = new ServerNetListener(cSocket, manager);
+                //addListener(manager).start();
+                ServerClient client = new ServerClient(cSocket, manager,this);
+                client.start();
                 //client.send(new ServerHandshakeMessage(Globals.__SERVERVERSION__));
                 
             } catch (Exception e) {
@@ -54,5 +59,5 @@ public abstract class Server extends Thread{
             }
         }
     }
-    public abstract ServerClient addListener(Socket cSocket, ClientManager manager);
+    public abstract ServerNetListener addListener(ClientManager manager);
 }

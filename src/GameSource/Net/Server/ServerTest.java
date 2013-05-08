@@ -14,18 +14,20 @@ import java.sql.SQLException;
  */
 public class ServerTest {
     private DatabaseHandler db;
-//    public ServerTest(){
-//        db = new DatabaseHandler();
-//        MyServer myserver = new MyServer(this);
-//        myserver.start();
-//    }
-    
-    public static void main(String[] args){
-        MyServer myserver = new MyServer();
+    public ServerTest(){
+        db = new DatabaseHandler();
+        MyServer myserver = new MyServer(this);
         myserver.start();
     }
     
+    public static void main(String[] args){
+//        MyServer myserver = new MyServer(this);
+//        myserver.start();
+        new ServerTest();
+    }
+    
     public boolean RequestLogin(String username, String password){
+        //System.out.println("okay to querry");
         ResultSet r = db.makeQuerry("Select * from accounts where username = '"+username+"' and password = '"+password+"'");
         try {
             if (r.next()){
