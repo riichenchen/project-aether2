@@ -18,14 +18,14 @@ public class ClientTest {
     public String name = "";
     public boolean loggedin = false;
     public ClientTest(){
-        MyClient c = new MyClient(this);
-        c.start();
+        //MyClient c = new MyClient(this);
+        //c.start();
         Scanner kb = new Scanner(System.in);
         System.out.print("Give me a UserName: ");
         name = kb.nextLine();
         System.out.print("Give me a Password: ");
         password = kb.nextLine();
-        c.sendMessage(new RequestLoginMessage(name,password));
+        //c.sendMessage(new RequestLoginMessage(name,password));
         while (!response){}
         while (!loggedin){
             response = false;
@@ -34,14 +34,14 @@ public class ClientTest {
             name = kb.nextLine();
             System.out.print("Give me a Password: ");
             password = kb.nextLine();
-            c.sendMessage(new RequestLoginMessage(name,password));    
+            //c.sendMessage(new RequestLoginMessage(name,password));    
             while (!response){}
         }
         
         System.out.println("You're in the chat now, press enter to send chat.");
         
         while (true){
-            c.sendMessage(new ChatMessage(name,kb.nextLine()));
+        //    c.sendMessage(new ChatMessage(name,kb.nextLine()));
         }
     }
     public static void main(String[] args){
