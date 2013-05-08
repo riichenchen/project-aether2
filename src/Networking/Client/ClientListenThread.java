@@ -20,10 +20,11 @@ public abstract class ClientListenThread extends Thread
     //protected ObjectOutputStream out = null;
     protected Socket socket = null;
     protected boolean connected = false;
-    protected int CLIENTID;
+    protected Client client;
     
-    public ClientListenThread(Socket cSocket) {
+    public ClientListenThread(Socket cSocket,Client client) {
         this.socket = cSocket;
+        this.client = client;
         try {
             in = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e){
@@ -53,7 +54,8 @@ public abstract class ClientListenThread extends Thread
 	    try {
                 Object x = in.readObject();
                 if (x instanceof RegisterClientMessage) {
-                    CLIENTID = ((RegisterClientMessage)x).getClientId();
+                    System.out.println("registered as client "+((RegisterClientMessage)x).getClientId());
+                    client.setClientId(((RegisterClientMessage)x).getClientId());
                 } else {
                     ReceiveMessage((Message)x);
                 }    

@@ -12,7 +12,8 @@ import Networking.Client.Client;
  */
 public class MyClient extends Client{
 //    private String clientId;
-    public MyClient(String clientId){
+    public MyClient(ClientTest world){
+        super(world);
 //        this.clientId = clientId;
     }
 

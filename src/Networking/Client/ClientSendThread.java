@@ -19,11 +19,13 @@ public abstract class ClientSendThread extends Thread
     protected ObjectOutputStream out = null;
     protected Socket socket = null;
     protected boolean connected = false;
-    protected int CLIENTID;
+    //protected int CLIENTID;
     protected ConcurrentLinkedQueue<Object> messages = new ConcurrentLinkedQueue<>();
+    protected Client client;
     
-    public ClientSendThread(Socket cSocket) {
+    public ClientSendThread(Socket cSocket,Client client) {
         this.socket = cSocket;
+        this.client = client;
         //try {
         //    in = new ObjectInputStream(socket.getInputStream());
         //} catch (Exception e){
@@ -67,7 +69,7 @@ public abstract class ClientSendThread extends Thread
     }
     public void sendMessage(Message msg){
         try {
-            msg.setClientId(CLIENTID);
+            msg.setClientId(client.getClientId());
             out.writeObject(msg);
         } catch (Exception e){
             System.out.println("Error sending Message: "+e.getMessage());

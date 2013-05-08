@@ -6,6 +6,7 @@ package Networking.Client;
 
 import GameSource.Net.Client.ClientNetListener;
 import GameSource.Net.Client.ClientNetSender;
+import GameSource.Net.Client.ClientTest;
 import Networking.Globals;
 import Networking.Messages.Message;
 import java.net.Socket;
@@ -21,17 +22,22 @@ public abstract class Client
     protected boolean started = false;
     protected ClientNetListener netlistener = null;
     protected ClientSendThread netSender = null;
+    protected ClientTest world;
+    protected int clientId;
     
-    public Client (){} 
+    public Client (ClientTest world){
+        this.world = world;
+    } 
     
     public void start(){
 	try {
             csocket = new Socket (Globals.__IP__, 4186);
 	    System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
-            netlistener = new ClientNetListener(csocket);
+            netlistener = new ClientNetListener(csocket,this);
+            netlistener.setWorld(world);
             //initListener();
             netlistener.start();
-            netSender = new ClientNetSender(csocket);
+            netSender = new ClientNetSender(csocket,this);
             //netSender.connect();
             netSender.start();
             started = true;
@@ -50,6 +56,12 @@ public abstract class Client
     
     public ClientNetListener getClientNetListener(){
         return netlistener;
+    }
+    public void setClientId(int id){
+        this.clientId = id;
+    }
+    public int getClientId(){
+        return clientId;
     }
     
     //public abstract void initListener();

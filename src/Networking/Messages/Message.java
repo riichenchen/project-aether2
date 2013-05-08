@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author Shiyang
  */
 public abstract class Message implements Serializable{
-    private int ClientId;
+    private int ClientId = -1;//Default: Server message
     public Message(){
     }
     public void setClientId(int clientid){
