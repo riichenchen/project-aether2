@@ -5,6 +5,7 @@
 package Networking.Client;
 
 import Networking.Messages.Message;
+import Networking.Messages.RegisterClientMessage;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -19,6 +20,7 @@ public abstract class ClientListenThread extends Thread
     protected ObjectOutputStream out = null;
     protected Socket socket = null;
     protected boolean connected = false;
+    protected int CLIENTID;
     
     public ClientListenThread(Socket cSocket) {
         this.socket = cSocket;
@@ -48,11 +50,16 @@ public abstract class ClientListenThread extends Thread
     {
 	while (true)
 	{
-	    try {  
-                Message x = (Message)in.readObject();
-                ReceiveMessage(x);
+	    try {
+                Object x = in.readObject();
+                if (x instanceof RegisterClientMessage) {
+                    CLIENTID = ((RegisterClientMessage)x).getClientId();
+                } else {
+                    ReceiveMessage((Message)x);
+                }    
 	    } catch (Exception e) {
                 System.out.println("Problem Occured. Server may have died. Error:"+e.getMessage());
+                e.printStackTrace();
                 connected = false;
                 System.exit(0);
 	    }
@@ -60,6 +67,7 @@ public abstract class ClientListenThread extends Thread
     }
     public void sendMessage(Message msg){
         try {
+            msg.setClientId(CLIENTID);
             out.writeObject(msg);
         } catch (Exception e){
             System.out.println("Error sending Message: "+e.getMessage());

@@ -23,7 +23,8 @@ public abstract class ServerClient extends Thread{
     protected ObjectOutputStream out = null;
     protected ClientManager manager = null;
     protected boolean stayConnected = true;
-
+    protected int connectionId;
+    
     public ServerClient(Socket cSocket, ClientManager manager) {
         this.cSocket = cSocket;
         this.manager = manager;
@@ -37,6 +38,13 @@ public abstract class ServerClient extends Thread{
         } 
         manager.addClient((ServerNetListener)this);  // get added to the list of clients
     }
+    public void setConnectionId(int id){
+        connectionId = id;
+    }
+    public int getConnectionId(){
+        return connectionId;
+    }
+    
     public abstract void ReceiveMessage(Message m);
     
     public void run() {
@@ -58,8 +66,13 @@ public abstract class ServerClient extends Thread{
         }
     }
 
-    public synchronized void send(Message message) throws IOException{
-        out.writeObject(message);
+    public synchronized void send(Message message){
+        try {
+            //message.setClientId(-1);
+            out.writeObject(message);
+        } catch (IOException e){
+            System.out.println("Unable to send message!");
+        }
     }
 
     public void end() {

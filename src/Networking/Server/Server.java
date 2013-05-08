@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * @author Shiyang
  */
-public class Server extends Thread{
+public abstract class Server extends Thread{
     private ClientManager manager;
     private boolean acceptConns = true;
     private ServerSocket sSocket = null;
@@ -45,12 +45,14 @@ public class Server extends Thread{
                 cSocket = sSocket.accept();
                 System.out.println("Client Connected: " + cSocket.getInetAddress().getHostAddress());
                 // Start a thread to handle each client, the client will add itself to the managers list
-                ServerNetListener client = new ServerNetListener(cSocket, manager);
+                addListener(cSocket,manager).start();
+                //ServerNetListener client = new ServerNetListener(cSocket, manager);
                 //client.send(new ServerHandshakeMessage(Globals.__SERVERVERSION__));
-                client.start();
+                
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
     }
+    public abstract ServerClient addListener(Socket cSocket, ClientManager manager);
 }

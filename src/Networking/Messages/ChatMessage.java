@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Shiyang
  */
-public class ChatMessage implements Serializable,Message {
+public class ChatMessage extends Message implements Serializable {
 	public ChatMessage(){}
 	private String message;
         private String name;

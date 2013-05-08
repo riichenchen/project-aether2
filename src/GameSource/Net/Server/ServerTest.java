@@ -4,15 +4,38 @@
  */
 package GameSource.Net.Server;
 
-import Networking.Server.Server;
+import Database.DatabaseHandler;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author Shiyang
  */
 public class ServerTest {
+    private DatabaseHandler db;
+//    public ServerTest(){
+//        db = new DatabaseHandler();
+//        MyServer myserver = new MyServer(this);
+//        myserver.start();
+//    }
+    
     public static void main(String[] args){
-        Server myserver = new Server();
+        MyServer myserver = new MyServer();
         myserver.start();
+    }
+    
+    public boolean RequestLogin(String username, String password){
+        ResultSet r = db.makeQuerry("Select * from accounts where username = '"+username+"' and password = '"+password+"'");
+        try {
+            if (r.next()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e){
+            System.out.println("ERROR LOGGING IN! "+e.getMessage());
+            return false;
+        }
     }
 }
