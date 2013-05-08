@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Shiyang
  */
-public class ServerHandshakeMessage implements Serializable,Message{
+public class ServerHandshakeMessage extends Message implements Serializable{
     public ServerHandshakeMessage(){}
     float sVersion;
     public ServerHandshakeMessage(float serverVersion){

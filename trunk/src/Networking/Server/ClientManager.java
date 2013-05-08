@@ -5,25 +5,26 @@
 package Networking.Server;
 import GameSource.Net.Server.ServerNetListener;
 import Networking.Messages.ChatMessage;
+import Networking.Messages.RegisterClientMessage;
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
  * @author Shiyang
  */
 public class ClientManager {
-    Vector clientList = null;  // This will be a list of all the clients connected
-    public ClientManager() {
-            clientList = new Vector();
-    }
+    private ConcurrentHashMap<Integer,Object> clientList = new ConcurrentHashMap<>();  // This will be a list of all the clients connected
+    private int numClients = 0;
+    public ClientManager() {}
 
     public void addClient(ServerNetListener client) {
-            clientList.add(client);  // adds a client to the list
+        clientList.put(numClients,client);  // adds a client to the list
+        client.send(new RegisterClientMessage(numClients++));
     }
 
     public void removeClient(ServerNetListener client) {
-            clientList.remove(client);  // removes a client from the list
+        clientList.remove(client.getConnectionId());  // removes a client from the list
     }
 
     // Broadcasts the message to every client connected, synchronized so that only

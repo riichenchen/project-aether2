@@ -1,3 +1,8 @@
+
+import GameSource.Net.Client.MyClient;
+import Networking.Messages.ChatMessage;
+import Networking.Messages.RequestLoginMessage;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,8 +17,11 @@ public class LoginFrame extends javax.swing.JFrame {
     /**
      * Creates new form LoginFrame
      */
+    MyClient c = null;
+    
     public LoginFrame() {
         initComponents();
+        //c = new MyClient();
     }
 
     /**
@@ -187,8 +195,12 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void sendChat(){
-        ChatArea.append(ChatField.getText()+"\n");
+        //ChatArea.append(ChatField.getText()+"\n");
         ChatField.setText("");
+    }
+    
+    public void setChat(ChatMessage msg){
+        ChatArea.append(msg.getName()+": "+msg.getMessage()+"\n");
     }
     
     private void ChatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChatFieldActionPerformed
@@ -199,31 +211,26 @@ public class LoginFrame extends javax.swing.JFrame {
         sendChat();
     }//GEN-LAST:event_SendButtonActionPerformed
 
-    
-    private void checkLogin(String user, String pass){
-        if (user.equals("admin")&&pass.equals("pass")){
-            LoginPane.setVisible(false);
-            Response.setText("Login Successful!");
-            //frame.add(frame.getChatPanel());
-            ChatPane.setVisible(true);
-        } else {
-            Response.setText("Username or Password doesn't exist!");
-        }
+    private void tryLogin(String user, String pass){
+        c.sendMessage(new RequestLoginMessage(user,pass));
+    }
+    private void login(){
+        LoginPane.setVisible(false);
+        Response.setText("Login Successful!");
+        //frame.add(frame.getChatPanel());
+        ChatPane.setVisible(true);
     }
     
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        checkLogin(UserField.getText(),new String(PasswordField.getPassword()));
+        tryLogin(UserField.getText(),new String(PasswordField.getPassword()));
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void UserFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserFieldActionPerformed
-        //if (evt.getActionCommand().equals()){
-            checkLogin(UserField.getText(),new String(PasswordField.getPassword()));
-            //}
+        tryLogin(UserField.getText(),new String(PasswordField.getPassword()));
     }//GEN-LAST:event_UserFieldActionPerformed
 
     private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
-        // TODO add your handling code here:
-        checkLogin(UserField.getText(),new String(PasswordField.getPassword()));
+        tryLogin(UserField.getText(),new String(PasswordField.getPassword()));
     }//GEN-LAST:event_PasswordFieldActionPerformed
 
     /**

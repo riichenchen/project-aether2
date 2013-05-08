@@ -25,7 +25,6 @@ public abstract class Client
 	try {
             csocket = new Socket (Globals.__IP__, 4186);
 	    System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
-	    //out = new ObjectOutputStream(csocket.getOutputStream ());
             t = new ClientNetListener(csocket);
             initListener();
             t.connect();

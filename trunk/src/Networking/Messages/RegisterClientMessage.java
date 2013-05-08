@@ -10,14 +10,13 @@ import java.io.Serializable;
  *
  * @author Shiyang
  */
-public abstract class Message implements Serializable{
-    private int ClientId;
-    public Message(){
-    }
-    public void setClientId(int clientid){
-        this.ClientId = clientid;
+public class RegisterClientMessage extends Message implements Serializable {
+    public RegisterClientMessage(){}
+    private int ClientID;
+    public RegisterClientMessage(int id){
+        this.ClientID = id;
     }
     public int getClientId(){
-        return ClientId;
+        return ClientID;
     }
 }

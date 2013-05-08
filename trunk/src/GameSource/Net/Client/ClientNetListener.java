@@ -26,7 +26,9 @@ public class ClientNetListener extends ClientListenThread{
     public void ReceiveMessage(Message msg) {
         if (msg instanceof ChatMessage){
             ChatMessage mymsg = (ChatMessage)msg;
-            System.out.println(mymsg.getName()+": "+mymsg.getMessage());
+            if (mymsg.getClientId() != this.CLIENTID){
+                System.out.println(mymsg.getName()+": "+mymsg.getMessage());
+            }
         }
     }
 

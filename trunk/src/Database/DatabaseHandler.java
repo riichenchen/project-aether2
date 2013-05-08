@@ -42,10 +42,15 @@ public class DatabaseHandler {
         } 
     }
     /*Two method tools that are used for SHA hashing for password security and what not*/
-    public static String SHAsum(String inputString) throws NoSuchAlgorithmException{
-        byte[] convertme = inputString.getBytes();
-        MessageDigest md = MessageDigest.getInstance("SHA-1"); 
-        return byteArray2Hex(md.digest(convertme));
+    public static String SHAsum(String inputString){
+        try {
+            byte[] convertme = inputString.getBytes();
+            MessageDigest md = MessageDigest.getInstance("SHA-1"); 
+            return byteArray2Hex(md.digest(convertme));
+        } catch (NoSuchAlgorithmException e){
+            System.out.println("Error Sha1-ing");
+            return null;
+        }
     }
 
     private static String byteArray2Hex(final byte[] hash) {

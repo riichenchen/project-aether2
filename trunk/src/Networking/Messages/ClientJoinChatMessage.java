@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Shiyang
  */
-public class ClientJoinChatMessage implements Message,Serializable{
+public class ClientJoinChatMessage extends Message implements Serializable{
     private String name;
     public ClientJoinChatMessage(){}
     public ClientJoinChatMessage(String name){
