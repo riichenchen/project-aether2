@@ -4,6 +4,7 @@
  */
 package GameSource.Net.Client;
 
+import Networking.Client.Client;
 import Networking.Client.ClientListenThread;
 import Networking.Messages.ChatMessage;
 import Networking.Messages.LoginReplyMessage;
@@ -15,27 +16,29 @@ import java.net.Socket;
  * @author Shiyang
  */
 public class ClientNetListener extends ClientListenThread{
-    //private String userid;
+    private ClientTest world;
     
-    public ClientNetListener(Socket csocket){
-        super(csocket);
+    public ClientNetListener(Socket csocket,Client client){
+        super(csocket,client);
     }
     
+    public void setWorld(ClientTest world){
+        this.world = world;
+    }
 
     @Override
     public void ReceiveMessage(Message msg) {
         if (msg instanceof ChatMessage){
             ChatMessage mymsg = (ChatMessage)msg;
-            if (mymsg.getClientId() != this.CLIENTID){
+            if (mymsg.getClientId() != client.getClientId()){
                 System.out.println(mymsg.getName()+": "+mymsg.getMessage());
             }
         } else if (msg instanceof LoginReplyMessage){
             LoginReplyMessage mymsg = (LoginReplyMessage)msg;
             if (mymsg.getReply()){
-                System.out.println("Accepted!");
-            } else {
-                System.out.println("Declined!");
+                world.loggedin = true;
             }
+            world.response = true;
         }
     }
 
