@@ -20,6 +20,7 @@ public class LoginFrame extends javax.swing.JFrame {
     MyClient client;
     public LoginFrame() {
         initComponents();
+        System.out.println("Connecting to server...");
         client = new MyClient(this);
         client.start();
     }
@@ -222,12 +223,14 @@ public class LoginFrame extends javax.swing.JFrame {
     }
     public void addChatMessage(String str){
         ChatArea.append(str+"\n");
+        ChatArea.setCaretPosition(ChatArea.getDocument().getLength());
     }
     private void sendChatMessage(){
         if (!ChatTextField.getText().equals("")){
             addChatMessage(UserField.getText()+": "+ChatTextField.getText());
             client.sendMessage(new ChatMessage(UserField.getText(),ChatTextField.getText()));
             ChatTextField.setText("");
+            ChatArea.setCaretPosition(ChatArea.getDocument().getLength());
         }
     }
     private void ChatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChatTextFieldActionPerformed

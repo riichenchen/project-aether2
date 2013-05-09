@@ -24,9 +24,9 @@ public abstract class PhysicsSpace {
     public void update(){
         while (msgs.peek() != null){
             PhysicsSpaceMessage message  = msgs.poll();
-            if (message.){
-                
-            }
+//            if (message.){
+//                
+//            }
         }
     }
     public void setGravity(float g){

@@ -1,3 +1,5 @@
+import GameSource.game.GameMap;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class ClientMain {
@@ -18,24 +20,28 @@ public class ClientMain {
 	}
         
 	public static void startGame() {
-	    f.dispose();
-	    f = new JFrame("GAME_NAME");
-		GamePanel gp = new GamePanel();
-		f.getContentPane().add(gp);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(GamePanel.X, GamePanel.Y);
-		System.out.println("Start Game");
-		loadMaps();
-		findMap(0, 0, X_MAX, Y_MAX);
-		f.setVisible(true);
+            throw new UnsupportedOperationException("Not supported yet.");
+//	    f.dispose();
+//	    f = new JFrame("GAME_NAME");
+//		GamePanel gp = new GamePanel();
+//		f.getContentPane().add(gp);
+//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		f.setSize(GamePanel.X, GamePanel.Y);
+//		System.out.println("Start Game");
+//		loadMaps();
+//		findMap(0, 0, X_MAX, Y_MAX);
+//		f.setVisible(true);
 	}
 	
 	private static void loadMaps() {
-		maps = new ArrayList<GameMap>();
+            throw new UnsupportedOperationException("Not supported yet.");
+//		maps = new ArrayList<GameMap>();
 		//Load maps
 	}
 	
 	private static int findMap(int lx, int ly, int ux, int uy) {
+            throw new UnsupportedOperationException("Not supported yet.");
+            //throw new Exception("WRONG!");
 		//Look for map to render
 	}
 	
