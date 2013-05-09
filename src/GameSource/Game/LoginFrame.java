@@ -60,7 +60,6 @@ public class LoginFrame extends JPanel implements ActionListener {
     
     public void actionPerformed (ActionEvent e) {
         if (e.getSource() == bLogin) {
-            ClientMain.f.dispose();
             ClientMain.startGame();
         }
     }
