@@ -25,7 +25,7 @@ public class Dirt_Block extends AbstractTerrainBlock {
     private LinkedList<RenderChunk> renderChunks = new LinkedList<RenderChunk>();
     private Image image = AssetManager.getBlockImage("dirtblock");;
     public Dirt_Block(int x,int y,int z, int id){
-        super(x,y,z,1,1,1,"dirtblock",id);
+        super(x,y,z,50,28,1,"dirtblock",id);
     }
     
     @Override
@@ -43,7 +43,7 @@ public class Dirt_Block extends AbstractTerrainBlock {
         //TODO: Add perspective to this thing
         int[] camSpaceCoords = camera.convertCoords((int)(location.getX()-camera.getX()),(int)(location.getZ()-camera.getY()));
         
-        g.drawImage(image, camSpaceCoords[0], camSpaceCoords[1], pane);
+        g.drawImage(image, camSpaceCoords[0], camSpaceCoords[1]-((int)location.getY()*2), pane);
     }
 
     @Override

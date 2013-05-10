@@ -88,6 +88,9 @@ class GamePanel extends JPanel implements MouseMotionListener,KeyListener{
             for (int i = 0; i < 5000; i++){
                 myRender.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28,ids++));
             }
+            for (int i = 0; i < 50; i++){
+                myRender.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,100,myrand.nextInt(1200/28)*28,ids++));
+            }
             setSize(800,600);
     }
 	
