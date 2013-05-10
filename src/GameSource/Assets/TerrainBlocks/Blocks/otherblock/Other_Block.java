@@ -26,7 +26,7 @@ public class Other_Block extends AbstractTerrainBlock {
     private LinkedList<RenderChunk> renderChunks = new LinkedList<RenderChunk>();
     private Image image = AssetManager.getBlockImage("otherblock");;
     public Other_Block(int x,int y,int z, int id){
-        super(x,y,z,1,1,1,"otherblock",id);
+        super(x,y,z,45,113,1,"otherblock",id);
     }
     
     @Override
@@ -51,7 +51,7 @@ public class Other_Block extends AbstractTerrainBlock {
 //        g.drawRect((int)(location.getX()-camera.getX()), (int)(location.getZ()-camera.getY()), 30,15);
         int[] camSpaceCoords = camera.convertCoords((int)(location.getX()-camera.getX()),(int)(location.getZ()-camera.getY()));
         
-        g.drawImage(image, camSpaceCoords[0], camSpaceCoords[1]-20, pane);
+        g.drawImage(image, camSpaceCoords[0], camSpaceCoords[1]-(int)location.getY()*2, pane);
     }
 
     @Override

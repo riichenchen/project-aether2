@@ -24,15 +24,18 @@ public class Renderer {
     private RenderChunk[][] renderMap;
     private LinkedList<RenderMessage> updateSpatMessages = new LinkedList<RenderMessage>();
     private AetherCam camera = null;
-    private final float SX = 0.2f, SY = 0.2f;
+    
+    //Constants represent a scale factor by which to divide the entire "map" into
+    //and organize spatials by
+    private final float S_QUAD = 0.05f;
     
     private GameMap map;
     
     public Renderer(GameMap map){
         this.map = map;
-        this.renderMap = new RenderChunk[(int)(map.getDimY()*SX)][(int)(map.getDimX()*SY)];
-        for (int i = 0; i < (int)(map.getDimY()*SY);i++){
-            for (int j = 0; j < (int)(map.getDimX()*SX);j++){
+        this.renderMap = new RenderChunk[(int)(map.getDimY()*S_QUAD)][(int)(map.getDimX()*S_QUAD)];
+        for (int i = 0; i < (int)(map.getDimY()*S_QUAD);i++){
+            for (int j = 0; j < (int)(map.getDimX()*S_QUAD);j++){
                 renderMap[i][j] = new RenderChunk();
             }
         }
@@ -43,14 +46,20 @@ public class Renderer {
             System.out.println("UNABLE TO RENDER WITHOUT CAMERA!");
             return;
         }
+        //Make sure no spats are rendered twice as chunks may contain repeats
+        HashMap<Integer,RenderSpatial> temp = new HashMap<>();
         /*Note: Render System divides map up into quadrant sections and then renders whatever quadrants the camera captures*/
-        for (int i = (int)(Math.floor(camera.getX()*SX));i < (int)((camera.getX()+camera.getLength())*SX);i++){
-            for (int j = (int)(Math.floor(camera.getY()*SY)); j < (int)((camera.getY()+camera.getWidth())*SY);j++){
+        for (int i = (int)(Math.floor(camera.getX()*S_QUAD));i < (int)((camera.getX()+camera.getLength())*S_QUAD);i++){
+            for (int j = (int)(Math.floor(camera.getY()*S_QUAD)); j < (int)((camera.getY()+camera.getWidth())*S_QUAD);j++){
                 HashMap<Integer,RenderSpatial> myobjs = renderMap[j][i].getObjects();
-                RenderSpatial[] meep = myobjs.values().toArray(new RenderSpatial[0]);
-                
-                for (int k = 0; k < meep.length;k++){
-                    renderObjects.add(meep[k]);
+                RenderSpatial[] potentialRenders = myobjs.values().toArray(new RenderSpatial[0]);
+                //potential renders because not all will be "rendered"
+                for (int k = 0; k < potentialRenders.length;k++){
+                    //add to renderlist and add into hashmap that it's been rendered
+                    if (!temp.containsKey(potentialRenders[k].getId())){
+                        renderObjects.add(potentialRenders[k]);
+                        temp.put(potentialRenders[k].getId(),potentialRenders[k]);
+                    }
                 }
             }
         }
@@ -80,11 +89,11 @@ public class Renderer {
     
     public void addSpatial(RenderSpatial spat){
         GamePoint location = spat.getLocation();
-        int x = (int)Math.floor(location.getX()*SX);
-        int y = (int)Math.floor(location.getZ()*SY);
+        int x = (int)Math.floor(location.getX()*S_QUAD);
+        int y = (int)Math.floor(location.getZ()*S_QUAD);
         BoundingBox dims = spat.getDimensions();
-        int sizex = (int)Math.ceil(dims.getLength()*SX);
-        int sizey = (int)Math.ceil(dims.getWidth()*SY);
+        int sizex = (int)Math.ceil(dims.getLength()*S_QUAD);
+        int sizey = (int)Math.ceil(dims.getWidth()*S_QUAD);
 
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
@@ -98,8 +107,8 @@ public class Renderer {
         int x = (int)Math.floor(location.getX());
         int y = (int)Math.ceil(location.getZ());
         BoundingBox dims = spat.getDimensions();
-        int sizex = (int)Math.ceil(dims.getLength()*SX);
-        int sizey = (int)Math.ceil(dims.getWidth()*SY);
+        int sizex = (int)Math.ceil(dims.getLength()*S_QUAD);
+        int sizey = (int)Math.ceil(dims.getWidth()*S_QUAD);
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
                 renderMap[j][i].removeObject(spat);
