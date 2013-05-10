@@ -11,10 +11,10 @@ import GameSource.Game.GamePoint;
  * @author Robert
  */
 public abstract class Spatial {
-    private GamePoint location;
-    private int id;
-    private float mass;
-    private BoundingBox box;
+    protected GamePoint location;
+    protected int id;
+    protected float mass;
+    protected BoundingBox box;
     
     public Spatial(float x, float y, float z, float length, float width, float height, float m,int id){
         this.location = new GamePoint(x,y,z);
@@ -22,9 +22,12 @@ public abstract class Spatial {
         box = new BoundingBox(length,width,height);
         this.id = id;
     }
-    public void move(float x, float y, float z){
+    public void move(int x, int y, int z){
         location.translate(x,y,z);
         //box.translate(x,y,z);
+    }
+    public GamePoint getLocation(){
+        return location;
     }
     public BoundingBox getBoundingBox(){
         return box;
