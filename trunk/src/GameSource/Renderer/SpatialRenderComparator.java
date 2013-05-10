@@ -31,7 +31,11 @@ public class SpatialRenderComparator implements Comparator<RenderSpatial>{
                    return GREATER;
                else if (p2.getX() < p2.getX())
                    return LESS;
-        return 0; // the two points are on the exact same position
+        if (A.getId() < B.getId())
+            return GREATER; // the two points are on the exact same position
+        else if (B.getId() < A.getId())
+            return LESS;
+        return 0;
     }
     
 }

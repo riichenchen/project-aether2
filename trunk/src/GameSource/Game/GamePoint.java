@@ -2,7 +2,7 @@ package GameSource.Game;
 
 public class GamePoint {
         
-        float x, y, z;
+        private float x, y, z;
         
         public GamePoint(float _x, float _y, float _z) {
                 x = _x;
@@ -21,9 +21,13 @@ public class GamePoint {
         public float getZ() {
                 return z;
         }
-        public void translate(float x,float y,float z){
-            this.x+=x;
-            this.y+=y;
-            this.z+=z;
+        public void translate(float nx,float ny,float nz){
+            this.x+=nx;
+            this.y+=ny;
+            this.z+=nz;
+        }
+        @Override
+        public String toString(){
+            return this.x+" "+this.y+" "+this.z;
         }
 }
