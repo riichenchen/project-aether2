@@ -6,7 +6,7 @@ public class GameMap {
         
         private ImageIcon mapImage;
         private double mobDensity; 
-        private int dimx,dimy;        
+        private int dimx = 1600,dimy = 1200;        
         
         public GameMap(String mapName, double _mobDensity) {
                 mapImage = new ImageIcon(mapName);
