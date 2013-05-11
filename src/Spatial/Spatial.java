@@ -14,18 +14,20 @@ import java.util.HashMap;
  */
 public abstract class Spatial {
     protected GamePoint location;
-    protected int id;
-    protected float mass;
+     private int entity;
+    public final float mass;
+    public final float cof;      //coefficient of friction
     protected BoundingBox box;
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     
-    public Spatial(float x, float y, float z, float length, float width, float height, float m,int id){
+    public Spatial(float x, float y, float z, float length, float width, float height, float m, float c, int entity){
         this.location = new GamePoint(x,y,z);
         mass = m;
+        cof = c;
         box = new BoundingBox(length,width,height);
-        this.id = id;
+        this.entity = entity;
     }
-    public void move(int x, int y, int z){
+    public void move(float x, float y, float z){
         location.translate(x,y,z);
         //box.translate(x,y,z);
     }
@@ -39,29 +41,40 @@ public abstract class Spatial {
     
     public boolean collide(Spatial s){
         //if collision occurs: call the collideListener(pass in colliding object);
-        return false;
-//        float aXmin = box.getMinMaxX()[0];
-//        float aXmax = box.getMinMaxX()[1];
-//        float aYmin = box.getMinMaxY()[0];
-//        float aYmax = box.getMinMaxY()[1];
-//        float aZmin = box.getMinMaxZ()[0];
-//        float aZmax = box.getMinMaxZ()[1];
-//        float bXmin = s.getBoundingBox().getMinMaxX()[0];
-//        float bXmax = s.getBoundingBox().getMinMaxX()[1];
-//        float bYmin = s.getBoundingBox().getMinMaxY()[0];
-//        float bYmax = s.getBoundingBox().getMinMaxY()[1];
-//        float bZmin = s.getBoundingBox().getMinMaxZ()[0];
-//        float bZmax = s.getBoundingBox().getMinMaxZ()[1];
-//        if (aXmin < bXmax && aXmax > bXmin && aYmin < bYmax && aYmax > bYmin && aZmin < bZmax && aZmax > bZmin){ 
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
+        //return false;
+        float aXmin = location.getX() - box.getLength()/2;
+        float aXmax = location.getY() - box.getWidth()/2;
+        float aYmin = location.getZ();
+        float aYmax = location.getX() + box.getLength()/2;
+        float aZmin = location.getY() + box.getWidth()/2;
+        float aZmax = location.getZ() + box.getHeight();
+        
+        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
+        float bXmax = s.getY() - s.getBoundingBox().getWidth()/2;
+        float bYmin = s.getZ();
+        float bYmax = s.getX() + s.getBoundingBox().getLength()/2;
+        float bZmin = s.getY() + s.getBoundingBox().getWidth()/2;
+        float bZmax = s.getZ() - s.getBoundingBox().getHeight();
+        
+        if (aXmin < bXmax && aXmax > bXmin && aYmin < bYmax && aYmax > bYmin && aZmin < bZmax && aZmax > bZmin){ 
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
-    public int getId(){
-        return id;
+    public int getEntity(){
+        return entity;
+    }
+    public float getX(){
+        return location.getX();
+    }
+    public float getY(){
+        return location.getY();
+    }
+    public float getZ(){
+        return location.getZ();
     }
     
     public void addControl(AbstractControl control){

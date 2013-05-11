@@ -12,20 +12,21 @@ import PhysicsSpace.PhysicsSpace;
  * @author Robert
  */
 public class PhysicsSyncListener {
-    private LinkedList <PhysicsMessage> msgs;
-    private PhysicsSpace space; 
+    private LinkedList <PhysicsSyncMessage> msgs;
+    private PhysicsSpace space;   
     
     public PhysicsSyncListener(float g){
-        msgs = new LinkedList <PhysicsMessage>();
-        space = new PhysicsSpace(g);
+        msgs = new LinkedList <>();
+        space = new PhysicsSpace(g) {};
     }
     public void update(){
-        if (message.peek() != null){
-            PhysicsMessage message = msgs.poll();
-            if (message.){
-                
-            }
+        if (msgs.peek() != null){
+            PhysicsSyncMessage message = msgs.poll();
+            space.addMoveMessage(message.x,message.y,message.z,message.entity);
         }
     }
-    public void moveSpatial()
+    public void moveSpatial(float x, float y, float z, int entity){
+        PhysicsSyncMessage msg = new PhysicsSyncMessage(x,y,z,entity);
+        msgs.addLast(msg);
+    }
 }
