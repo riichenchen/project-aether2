@@ -8,7 +8,7 @@ import GameSource.LoginFrame;
 import GameSource.Net.Client.ClientNetListener;
 import GameSource.Net.Client.ClientNetSender;
 import GameSource.Net.Client.ClientTest;
-import Networking.Globals;
+import GameSource.Globals;
 import Networking.Messages.Message;
 import java.net.Socket;
 
