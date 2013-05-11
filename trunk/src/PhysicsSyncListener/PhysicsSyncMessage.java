@@ -9,5 +9,12 @@ package PhysicsSyncListener;
  * @author Robert
  */
 public class PhysicsSyncMessage {
-    in
+    public final int entity;
+    public final float x,y,z;
+    public PhysicsSyncMessage(float x,float z,float y, int entity){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.entity = entity;
+    }
 }
