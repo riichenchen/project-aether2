@@ -17,8 +17,8 @@ public abstract class RenderSpatial extends Spatial{
 //    public abstract GamePoint getLocation();
     protected Renderer renderer;
     
-    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m,int id){
-        super(x,y,z,dx,dz,dy,m,id);
+    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m, float c,int id){
+        super(x,y,z,dx,dz,dy,m,c,id);
     }
     
     public void bindToRenderer(Renderer renderer){
