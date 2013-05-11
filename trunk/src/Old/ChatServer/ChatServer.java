@@ -4,7 +4,7 @@
  */
 package Networking.ChatServer;
 
-import Networking.Globals;
+import GameSource.Globals;
 import Networking.Messages.ServerHandshakeMessage;
 import java.net.InetAddress;
 import java.net.ServerSocket;
