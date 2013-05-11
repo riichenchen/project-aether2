@@ -15,16 +15,16 @@ public class RenderChunk {
     private HashMap<Integer,RenderSpatial> objects;
     
     public RenderChunk(){
-        objects = new HashMap<Integer,RenderSpatial>();
+        objects = new HashMap<>();
     }
     
     public void addObject(RenderSpatial spat){
-        objects.put(spat.getId(),spat);
+        objects.put(spat.getEntity(),spat);
         spat.getChunks().add(this);
     }
     
     public void removeObject(RenderSpatial spat){
-        objects.remove(spat.getId());
+        objects.remove(spat.getEntity());
     }
     
     public HashMap<Integer,RenderSpatial> getObjects(){

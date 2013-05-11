@@ -57,9 +57,9 @@ public class Renderer {
                 //potential renders because not all will be "rendered"
                 for (int k = 0; k < potentialRenders.length;k++){
                     //add to renderlist and add into hashmap that it's been rendered
-                    if (!temp.containsKey(potentialRenders[k].getId())){
+                    if (!temp.containsKey(potentialRenders[k].getEntity())){
                         renderObjects.add(potentialRenders[k]);
-                        temp.put(potentialRenders[k].getId(),potentialRenders[k]);
+                        temp.put(potentialRenders[k].getEntity(),potentialRenders[k]);
                     }
                 }
             }
