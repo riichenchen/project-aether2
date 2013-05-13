@@ -26,13 +26,14 @@ import javax.swing.JPanel;
  */
 public class GamePanel extends JPanel implements MouseMotionListener,KeyListener{
     private boolean []keys;
-    public boolean ready=false,inputstate = true;
+    public boolean ready=false,inputstate = true,visibility = true;
     //private int boxx= 200,boxy=200;
-    private Renderer myRender;
+    
     private Other_Block myBlock,yourBlock;
     private MyKeyListener mykeycontrol,yourkeycontrol;
-    private int ids = 0;
-    private AetherCam myCam = new AetherCam(800,600);
+    private GameMap myMap;
+    private AetherCam myCam;
+    
     public GamePanel(){ //initialize game variables, assign map to UI
         addMouseMotionListener(this);
         addKeyListener(this);
@@ -41,22 +42,23 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         //GameUI= new BloonInterface(gameMap);
         //new SpriteSet();
         AssetManager.init();
-        myBlock = new Other_Block(300,1,200,ids++);
-        yourBlock = new Other_Block(350,1,200,ids++);
+        myBlock = new Other_Block(300,1,200);
+        yourBlock = new Other_Block(350,1,200);
         mykeycontrol = new MyKeyListener();
         yourkeycontrol = new MyKeyListener();
         myBlock.addControl(mykeycontrol);
         yourBlock.addControl(yourkeycontrol);
-        myRender = new Renderer(new GameMap("Mymap",1));
-        myRender.addSpatial(myBlock);
-        myRender.addSpatial(yourBlock);
-        myRender.setCam(myCam);
+        myMap = new GameMap("Mymap",1,1600,1200,800,600,true);
+        myMap.addSpatial(myBlock);
+        myMap.addSpatial(yourBlock);
+        myCam = myMap.getCamera();
+
         Random myrand = new Random();
         for (int i = 0; i < 5000; i++){
-            myRender.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28,ids++));
+            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
         }
         for (int i = 0; i < 50; i++){
-            myRender.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,100,myrand.nextInt(1200/28)*28,ids++));
+            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,100,myrand.nextInt(1200/28)*28));
         }
         setSize(800,600);
     }
@@ -66,31 +68,27 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         requestFocus();
         ready = true;
     }
+    
     public void update(){
-        updateSpatials();
-        myRender.update();
+        myMap.update();
     }
     
-    private void updateSpatials(){
-        myBlock.update();
-        yourBlock.update();
-    }
     public void move(){
         if (keys[KeyEvent.VK_D]){
-            myRender.translateCamLocation(5,0);
+            myCam.translateLocation(5,0);
         } if (keys[KeyEvent.VK_A]){
-            myRender.translateCamLocation(-5,0);
+            myCam.translateLocation(-5,0);
         } if (keys[KeyEvent.VK_W]){
-            myRender.translateCamLocation(0,-5);
+            myCam.translateLocation(0,-5);
         } if (keys[KeyEvent.VK_S]){
-            myRender.translateCamLocation(0,5);
+            myCam.translateLocation(0,5);
         }
     }
     @Override
     public void paintComponent(Graphics g){//display the UI
         g.setColor(Color.GRAY);
         g.fillRect(0,0,800,600);
-	myRender.render(g,this);
+	myMap.render(g,this);
     }
     
     // ---------- MouseMotionListener ------------------------------------------
@@ -120,12 +118,24 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         if (e.getKeyCode() == KeyEvent.VK_SPACE){
             if (inputstate) {
                 myBlock.removeControl(mykeycontrol);
-                System.out.println("Control off!");
+                //System.out.println("Control off!");
             } else {
                 myBlock.addControl(mykeycontrol);
-                System.out.println("Control on!");
+                //System.out.println("Control on!");
             }
             inputstate = !inputstate;
+        }
+        
+         
+        if (e.getKeyCode() == KeyEvent.VK_V){
+            if (visibility) {
+                myMap.hideSpatial(myBlock);
+                //System.out.println("Invisible!");
+            } else {
+                myMap.revealSpatial(myBlock);
+                //System.out.println("Visible!!");
+            }
+            visibility = !visibility;
         }
     }
 }
