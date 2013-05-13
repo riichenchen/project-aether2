@@ -38,6 +38,10 @@ public abstract class AbstractKeyListener extends AbstractControl{
             System.out.println("WARNING: KEYLISTENER "+listenerID+" HAS NO KEYSET BINDING!");
             return;
         }
+        if (boundTo == null){
+            System.out.println("WARNING: NO BOUND SPATIAL TO MOVE!");
+            return;
+        }
         resolveKeyEvents();
     }
 }
