@@ -14,32 +14,32 @@ import java.util.HashMap;
  */
 public abstract class Spatial {
     protected GamePoint location;
-<<<<<<< .mine
+//<<<<<<< .mine
     protected static int IDs = 0;
     protected int id;
-    protected float mass;
-=======
-     private int entity;
+//    protected float mass;
+//=======
+//     private int entity;
     public final float mass;
     public final float cof;      //coefficient of friction
->>>>>>> .r28
+//>>>>>>> .r28
     protected BoundingBox box;
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     
-<<<<<<< .mine
-    public Spatial(float x, float y, float z, float length, float width, float height, float m){
-=======
-    public Spatial(float x, float y, float z, float length, float width, float height, float m, float c, int entity){
->>>>>>> .r28
+//<<<<<<< .mine
+//    public Spatial(float x, float y, float z, float length, float width, float height, float m){
+//=======
+    public Spatial(float x, float y, float z, float length, float width, float height, float m, float c){
+//>>>>>>> .r28
         this.location = new GamePoint(x,y,z);
         mass = m;
         cof = c;
         box = new BoundingBox(length,width,height);
-<<<<<<< .mine
+//<<<<<<< .mine
         this.id = IDs++;
-=======
-        this.entity = entity;
->>>>>>> .r28
+//=======
+//        this.entity = entity;
+//>>>>>>> .r28
     }
     public void move(float x, float y, float z){
         location.translate(x,y,z);
@@ -78,9 +78,9 @@ public abstract class Spatial {
         }
     }
     
-    public int getEntity(){
-        return entity;
-    }
+//    public int getEntity(){
+//        return 1;//entity;
+//    }
     public float getX(){
         return location.getX();
     }
@@ -105,5 +105,8 @@ public abstract class Spatial {
         for (AbstractControl c: conts){
             c.update();
         }
+    }
+    public int getId(){
+        return id;
     }
 }

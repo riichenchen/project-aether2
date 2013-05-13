@@ -19,13 +19,13 @@ public abstract class RenderSpatial extends Spatial{
     protected HashMap<Integer,RenderChunk> renderChunks = new HashMap<>();
     protected Renderer renderer;
     
-<<<<<<< .mine
-    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m){
-        super(x,y,z,dx,dz,dy,m);
-=======
-    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m, float c,int id){
-        super(x,y,z,dx,dz,dy,m,c,id);
->>>>>>> .r28
+//<<<<<<< .mine
+//    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m){
+//        super(x,y,z,dx,dz,dy,m);
+//=======
+    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m, float c){
+        super(x,y,z,dx,dz,dy,m,c);
+//>>>>>>> .r28
     }
     
     public void bindToRenderer(Renderer renderer){
@@ -39,7 +39,7 @@ public abstract class RenderSpatial extends Spatial{
     
     /*Override move to update the renderer each time*/
     @Override 
-    public void move(int x,int y,int z){
+    public void move(float x,float y,float z){
         super.move(x,y,z);
         if (renderer == null){
             if (Globals.RENDER_DEBUG){
