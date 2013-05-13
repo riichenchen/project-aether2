@@ -4,28 +4,25 @@
  */
 package GameSource.Net.Server;
 
+import GameSource.Game.ServerWorldHandler;
 import Networking.Server.ClientManager;
 import Networking.Server.Server;
 import Networking.Server.ServerNetListener;
-import java.net.Socket;
 
 /**
  *
  * @author Shiyang
  */
-public class MyServer extends Server{
-    private ServerTest world;
-    
-    public MyServer(ServerTest world){
+public class AetherServer extends Server{
+    ServerWorldHandler world;
+    public AetherServer(ServerWorldHandler world){
         super();
         this.world = world;
-        ((TestNetListener)netListener).setWorld(world);
-        //System.out.println(world);
-        //setListener();
+        ((AetherNetListener)netListener).setWorld(world);
     }
-
     @Override
     public ServerNetListener addListener(ClientManager manager) {
-        return (ServerNetListener) (new TestNetListener(manager));//,world));
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+    
 }
