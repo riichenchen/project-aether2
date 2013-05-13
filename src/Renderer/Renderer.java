@@ -126,13 +126,4 @@ public class Renderer {
         }
         spat.unbindFromRenderer();
     }
-
-    public void translateCamLocation(int x,int y){
-        //if (camera.getX()+x+camera.getLength() < map.getDimX() && camera.getX()+x >= 0){
-            
-       //     System.out.println("OKAY!");
-        //}if (camera.getY()+y+camera.getWidth() < map.getDimY() && camera.getY()+y >= 0){
-          //  camera.updatePosition(0,camera.getY()+y);
-        //}
-    }
 }

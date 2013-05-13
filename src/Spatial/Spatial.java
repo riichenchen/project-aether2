@@ -22,28 +22,20 @@ public abstract class Spatial {
 //     private int entity;
     public final float mass;
     public final float cof;      //coefficient of friction
-//>>>>>>> .r28
+
     protected BoundingBox box;
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     
-//<<<<<<< .mine
-//    public Spatial(float x, float y, float z, float length, float width, float height, float m){
-//=======
     public Spatial(float x, float y, float z, float length, float width, float height, float m, float c){
-//>>>>>>> .r28
         this.location = new GamePoint(x,y,z);
         mass = m;
         cof = c;
         box = new BoundingBox(length,width,height);
-//<<<<<<< .mine
         this.id = IDs++;
-//=======
-//        this.entity = entity;
-//>>>>>>> .r28
     }
+    
     public void move(float x, float y, float z){
         location.translate(x,y,z);
-        //box.translate(x,y,z);
     }
     public GamePoint getLocation(){
         return location;
@@ -78,9 +70,6 @@ public abstract class Spatial {
         }
     }
     
-//    public int getEntity(){
-//        return 1;//entity;
-//    }
     public float getX(){
         return location.getX();
     }
