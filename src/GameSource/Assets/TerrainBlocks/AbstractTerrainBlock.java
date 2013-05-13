@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @author Shiyang
  */
 public abstract class AbstractTerrainBlock extends RenderSpatial{
-    protected LinkedList<RenderChunk> renderChunks = new LinkedList<RenderChunk>();
+    
     protected boolean solid = true;// is this a solid block? solid by default
     //protected String imageType;//block type for rendering
     protected Image image;
@@ -29,8 +29,8 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
      - Change block image to an image set
      - one for the top view and one for the front profile of the block*/
     
-    public AbstractTerrainBlock(int x,int y, int z,int dx,int dz,int dy,String imageType,int id){
-        super(x,y,z,dx,dz,dy,0,id);
+    public AbstractTerrainBlock(int x,int y, int z,int dx,int dz,int dy,String imageType){
+        super(x,y,z,dx,dz,dy,0);
         this.image = AssetManager.getBlockImage(imageType);
         this.solid = getSolid();
     }
@@ -41,11 +41,6 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
         int[] camSpaceCoords = camera.convertCoords((int)(location.getX()-camera.getX()),(int)(location.getZ()-camera.getY()));
         
         g.drawImage(image, camSpaceCoords[0], camSpaceCoords[1]-((int)location.getY()*2), pane);
-    }
-
-    @Override
-    public LinkedList<RenderChunk> getChunks() {
-        return renderChunks;
     }
     
     public abstract boolean getSolid();
