@@ -30,7 +30,7 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
      - one for the top view and one for the front profile of the block*/
     
     public AbstractTerrainBlock(int x,int y, int z,int dx,int dz,int dy,String imageType){
-        super(x,y,z,dx,dz,dy,0);
+        super(x,y,z,dx,dz,dy,0,0);
         this.image = AssetManager.getBlockImage(imageType);
         this.solid = getSolid();
     }
