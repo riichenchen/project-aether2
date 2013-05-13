@@ -12,19 +12,35 @@ import java.util.Iterator;
  * @author Shiyang
  */
 public class RenderChunk {
+    private static int IDs = 0;
+    private int id;
     private HashMap<Integer,RenderSpatial> objects;
     
     public RenderChunk(){
         objects = new HashMap<>();
+        this.id = IDs++;
+    }
+    
+    public int getId(){
+        return id;
     }
     
     public void addObject(RenderSpatial spat){
-        objects.put(spat.getEntity(),spat);
-        spat.getChunks().add(this);
+        if (objects.containsKey(spat.getId())){
+            System.out.println("Warning: Trying to add existant spatial to Map Chunk!");
+            return;
+        }
+        objects.put(spat.getId(),spat);
+        spat.getChunks().put(id,this);
     }
     
     public void removeObject(RenderSpatial spat){
-        objects.remove(spat.getEntity());
+        if (!objects.containsKey(spat.getId())){
+            System.out.println("Warning: Trying to remove existant spatial to Map Chunk!");
+            return;
+        }
+        objects.remove(spat.getId());
+        spat.getChunks().remove(id);
     }
     
     public HashMap<Integer,RenderSpatial> getObjects(){
