@@ -15,17 +15,11 @@ import javax.swing.JPanel;
  * @author Shiyang
  */
 public abstract class RenderSpatial extends Spatial{
-//    public abstract GamePoint getLocation();
     protected HashMap<Integer,RenderChunk> renderChunks = new HashMap<>();
     protected Renderer renderer;
     
-//<<<<<<< .mine
-//    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m){
-//        super(x,y,z,dx,dz,dy,m);
-//=======
     public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m, float c){
         super(x,y,z,dx,dz,dy,m,c);
-//>>>>>>> .r28
     }
     
     public void bindToRenderer(Renderer renderer){
@@ -51,7 +45,6 @@ public abstract class RenderSpatial extends Spatial{
     }
     
     public abstract void render(Graphics g,JPanel pane,AetherCam cam);
- //   public abstract int getId();
     
     public HashMap<Integer,RenderChunk> getChunks(){
         return renderChunks;
