@@ -15,10 +15,6 @@ public class MyKeyListener extends AbstractKeyListener{
 
     @Override
     public void resolveKeyEvents() {
-        if (boundTo == null){
-            System.out.println("WARNING: NO BOUND SPATIAL TO MOVE!");
-            return;
-        }
         if (keys[KeyEvent.VK_RIGHT]){
             boundTo.move(5,0,0);
         } if (keys[KeyEvent.VK_LEFT]){
