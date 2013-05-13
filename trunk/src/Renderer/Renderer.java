@@ -32,8 +32,9 @@ public class Renderer {
     
     private GameMap map;
     
-    public Renderer(GameMap map){
+    public Renderer(GameMap map,AetherCam camera){
         this.map = map;
+        this.camera = camera;
         this.renderMap = new RenderChunk[(int)(map.getDimY()*S_QUAD)][(int)(map.getDimX()*S_QUAD)];
         for (int i = 0; i < (int)(map.getDimY()*S_QUAD);i++){
             for (int j = 0; j < (int)(map.getDimX()*S_QUAD);j++){
@@ -44,7 +45,7 @@ public class Renderer {
     
     public void render(Graphics g,JPanel pane){
         if (camera == null){
-            System.out.println("UNABLE TO RENDER WITHOUT CAMERA!");
+            System.out.println("FATAL: UNABLE TO RENDER WITHOUT CAMERA!");
             return;
         }
         //Make sure no spats are rendered twice as chunks may contain repeats
@@ -80,10 +81,15 @@ public class Renderer {
             if (mymsg.getType()== RenderMessage.UPDATE){
                 RenderSpatial myspat = mymsg.getSpat();
                 //Take out the spatial from any chunks that may still point to it
-                while (myspat.getChunks().peek()!= null){
-                    RenderChunk myChunk = myspat.getChunks().poll();
-                    myChunk.removeObject(myspat);
+                RenderChunk[] chunks = myspat.getChunks().values().toArray(new RenderChunk[0]);
+                for (RenderChunk ch: chunks){
+                    ch.removeObject(myspat);
                 }
+                myspat.getChunks().clear();
+//                while (myspat.getChunks().peek()!= null){
+//                    RenderChunk myChunk = myspat.getChunks().poll();
+//                    myChunk.removeObject(myspat);
+//                }
                 addSpatial(myspat);
             }
         }
@@ -108,8 +114,8 @@ public class Renderer {
     }
     public void removeSpatial(RenderSpatial spat){
         GamePoint location = spat.getLocation();
-        int x = (int)Math.floor(location.getX());
-        int y = (int)Math.ceil(location.getZ());
+        int x = (int)Math.floor(location.getX()*S_QUAD);
+        int y = (int)Math.floor(location.getZ()*S_QUAD);
         BoundingBox dims = spat.getBoundingBox();
         int sizex = (int)Math.ceil(dims.getLength()*S_QUAD);
         int sizey = (int)Math.ceil(dims.getWidth()*S_QUAD);
@@ -118,13 +124,12 @@ public class Renderer {
                 renderMap[j][i].removeObject(spat);
             }
         }
+        spat.unbindFromRenderer();
     }
-    public void setCam(AetherCam camera){
-        this.camera = camera;
-    }
+
     public void translateCamLocation(int x,int y){
         //if (camera.getX()+x+camera.getLength() < map.getDimX() && camera.getX()+x >= 0){
-            camera.updatePosition(Math.max(Math.min(camera.getX()+x,map.getDimX()-camera.getLength()),0),Math.max(Math.min(camera.getY()+y,map.getDimY()-camera.getWidth()),0));
+            
        //     System.out.println("OKAY!");
         //}if (camera.getY()+y+camera.getWidth() < map.getDimY() && camera.getY()+y >= 0){
           //  camera.updatePosition(0,camera.getY()+y);

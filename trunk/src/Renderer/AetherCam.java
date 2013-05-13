@@ -4,6 +4,8 @@
  */
 package Renderer;
 
+import GameSource.game.GameMap;
+
 /**
  *
  * @author Shiyang
@@ -11,18 +13,25 @@ package Renderer;
 public class AetherCam {
     private int length,width;//Note make sure camera dimensions are greater than screen to avoid culling too much
     private int x = 0,y = 0;
-    public AetherCam(int length,int width){
+    private GameMap map;
+    public AetherCam(GameMap map, int length, int width){
         this.length = length;
         this.width = width;
+        this.map = map;
     }
     public int[] convertCoords(int x,int y){
         //TODO: Base this translation on screenx and screeny
         return new int[] {x,y};
     }
-    public void updatePosition(int x,int y){
+    private void updatePosition(int x,int y){
         this.x = x;
         this.y = y;
     }
+    
+    public void translateLocation(int x,int y){
+        updatePosition(Math.max(Math.min(getX()+x,map.getDimX()-getLength()),0),Math.max(Math.min(getY()+y,map.getDimY()-getWidth()),0));
+    }
+    
     public int getX(){
         return x;
     }
