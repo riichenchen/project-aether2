@@ -31,6 +31,7 @@ public abstract class AIControl extends AbstractControl{
         if (calculator.isReady()){ // Make sure the response has been computed before attempting to retrieve info
             update(calculator.getCalcResult());
             calculator.setReady(false);
+            AIHandler.collectOutput();
         }
     }
 }
