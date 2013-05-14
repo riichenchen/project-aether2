@@ -31,14 +31,14 @@ public class TestAIControl extends AIControl{
         AIHandler handle2 = new AIHandler();
         AIHandler handle3 = new AIHandler();
         handle1.start();
-        //handle2.start();
-        //handle3.start();
+        handle2.start();
+        handle3.start();
         while (true){
-            AIHandler.update();
             mytest.update();
             mytest2.update();
             mytest3.update();
             mytest4.update();
+            AIHandler.update();
         }
     }
 }

@@ -37,24 +37,37 @@ public class AIHandler extends Thread{
     public static boolean go = false;
     
     public static void update(){
-        if (ready==0){
+//        if (ready==0 && !go){
+        if (ready == 0 && waitingOutput == 0){
+            System.out.println("NULL NOW :DDD"+(ThreadCount++));
             calculationList = new ConcurrentLinkedQueue<>(Arrays.asList(allCalculations.values().toArray(new AbstractAICalculation[0])));
-            go = true;
-            System.out.println("NULL NOW :DDD"+(count++));
+//            go = true;
+            ready = calculationList.size();
+            waitingOutput = ready;
         }
     }
-    static int count = 0;
+    private static int waitingOutput = 0;
+    private static int ThreadCount = 0;
+    public static void collectOutput(){
+        waitingOutput--;
+    }
     @Override
     public void run(){
         while (true){
-            while (calculationList.peek()!=null){
-                go = false;
-                ready++;//For each handle thread, we must wait for it to finish before we can move 1 step in the game world
-                AbstractAICalculation currentCalc = calculationList.poll();
-                currentCalc.calculate();
-                currentCalc.setReady(true);
-                ready--;
-            }
+            //synchronized (AIControl.class){
+                if (calculationList.peek()!=null && ready > 0){
+    //                go = false;
+                    AbstractAICalculation currentCalc = null;
+//                    synchronized(AIHandler.class){
+                        currentCalc = calculationList.poll();
+//                    }
+                    if (currentCalc != null){
+                        currentCalc.calculate();
+                        currentCalc.setReady(true);
+                        ready--;
+                    }
+                }
+            //}
         }
     } 
 }
