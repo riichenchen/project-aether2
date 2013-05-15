@@ -12,17 +12,17 @@ public class PhysicsSpaceMessage {
     public final float x,y,z;
     public final int entity;
     public final String command;
-    public PhysicsSpaceMessage(float x, float y, float z, int entity){
+    public PhysicsSpaceMessage(float x, float z, int entity){
         this.x = x;
-        this.y = y;
+        y = 0;
         this.z = z;
         this.entity = entity;
         command = "move";
     }
-    public PhysicsSpaceMessage(float z, int entity){
+    public PhysicsSpaceMessage(float y, int entity){
         x = 0;
-        y = 0;
-        this.z = z;
+        this.y = y;
+        z = 0;
         this.entity = entity;
         command = "move";
     }
