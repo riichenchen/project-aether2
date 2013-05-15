@@ -7,6 +7,7 @@ import Renderer.Renderer;
 import Spatial.Spatial;
 import java.awt.Graphics;
 import java.util.HashMap;
+import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -16,6 +17,7 @@ public class GameMap {
         protected double mobDensity; //????
         protected int dimx = 1600,dimy = 1200;        
         protected HashMap<Integer,Spatial> spats;
+        protected LinkedList<Integer> nonPermaSpats = new LinkedList<>();
         //Only client maps can render. This saves space and allows
         //the server to use this class as well
         protected Renderer renderer = null;
@@ -56,6 +58,7 @@ public class GameMap {
         //Handles attaching and removing of spatials
         public void addSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
+            nonPermaSpats.add(spat.getId());
             if (!verifyRender())
                 return;
             if (spat instanceof RenderSpatial){
@@ -63,6 +66,20 @@ public class GameMap {
             }
         }
         
+        public void addPermanentSpatial(Spatial spat){
+            spats.put(spat.getId(), spat);
+            if (!verifyRender())
+                return;
+            if (spat instanceof RenderSpatial){
+                renderer.addSpatial((RenderSpatial)spat);
+            }
+        }
+        
+        public void clearNonPermanentSpats(){
+            while (nonPermaSpats.peek()!= null){
+                spats.remove(nonPermaSpats.poll());
+            }
+        }
         public void render(Graphics g,JPanel pane){
             if (!verifyRender())
                 return;
