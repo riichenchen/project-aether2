@@ -88,7 +88,29 @@ public abstract class Spatial {
     public void removeControl(AbstractControl control){
         controls.remove(control.getControlId());
     }
+    public AbstractControl getControl(){
+    	if (controls.isEmpty()){
+            return null;
+    		
+    	}
+    	else{
+            return controls.get(1);
+    	}
+    }
+    public AbstractControl getControl(int id){
+    	if (controls.containsKey(id)){
+            return controls.get(id);
+    	}
+    	else{
+            return null;
+    	}
+    }
     
+    public void scale(float x, float y, float z){
+    	box.setLength(box.getLength() + x);
+    	box.setWidth(box.getWidth() + y);
+    	box.setHeight(box.getHeight() + z);
+    }
     public void update(){
         AbstractControl[] conts = controls.values().toArray(new AbstractControl[0]);
         for (AbstractControl c: conts){

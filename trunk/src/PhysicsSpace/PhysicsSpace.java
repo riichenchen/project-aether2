@@ -62,7 +62,7 @@ public abstract class PhysicsSpace {
     public void gravityEffect(){
         Spatial[] spatialsArray = spatials.values().toArray(new Spatial[0]);
         for (Spatial s: spatialsArray){
-            addGravityMessage(s.mass * gravity * -1,s.getEntity());
+            addGravityMessage(s.mass * gravity * -1,s.getId());
         }
     }
 }
