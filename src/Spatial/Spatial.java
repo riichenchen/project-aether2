@@ -22,16 +22,21 @@ public abstract class Spatial {
 //     private int entity;
     public final float mass;
     public final float cof;      //coefficient of friction
-
+    public final int collidable;    
+    //                          0 -> not collidable
+    //                          1 -> totally collidable
+    //                          2 -> monster collidable
+    //                          3 -> player collidable
     protected BoundingBox box;
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     
-    public Spatial(float x, float y, float z, float length, float width, float height, float m, float c){
+    public Spatial(float x, float y, float z, float length, float width, float height, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         mass = m;
         cof = c;
         box = new BoundingBox(length,width,height);
         this.id = IDs++;
+        this.collidable = collidable;
     }
     
     public void move(float x, float y, float z){
@@ -49,23 +54,26 @@ public abstract class Spatial {
         //if collision occurs: call the collideListener(pass in colliding object);
         //return false;
         float aXmin = location.getX() - box.getLength()/2;
-        float aXmax = location.getY() - box.getWidth()/2;
-        float aYmin = location.getZ();
-        float aYmax = location.getX() + box.getLength()/2;
-        float aZmin = location.getY() + box.getWidth()/2;
-        float aZmax = location.getZ() + box.getHeight();
+        float aYmin = location.getY();
+        float aZmin = location.getZ() - box.getWidth()/2;
+        
+        float aXmax = location.getY() + box.getLength()/2;
+        float aYmax = location.getY() + box.getHeight();
+        float aZmax = location.getZ() + box.getWidth()/2;
         
         float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
-        float bXmax = s.getY() - s.getBoundingBox().getWidth()/2;
-        float bYmin = s.getZ();
-        float bYmax = s.getX() + s.getBoundingBox().getLength()/2;
-        float bZmin = s.getY() + s.getBoundingBox().getWidth()/2;
-        float bZmax = s.getZ() - s.getBoundingBox().getHeight();
+        float bYmin = s.getY();
+        float bZmin = s.getZ() - s.getBoundingBox().getHeight()/2;
         
-        if (aXmin < bXmax && aXmax > bXmin && aYmin < bYmax && aYmax > bYmin && aZmin < bZmax && aZmax > bZmin){ 
+        float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
+        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+        float bZmax = s.getY() + s.getBoundingBox().getWidth();
+        
+        if (aXmin <= bXmax && aXmax >= bXmin && aYmin <= bYmax && aYmax >= bYmin && aZmin <= bZmax && aZmax >= bZmin){ 
             return true;
         }
         else{
+            System.out.println("Nope");
             return false;
         }
     }
