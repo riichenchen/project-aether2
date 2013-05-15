@@ -18,7 +18,7 @@ public class ServerMain {
     
     public static void main(String [] args) {
         myDB = new DatabaseHandler();
-        myGameMap = new GameMap("theMap",0.1,1600,1200,Globals.__CAMX__,Globals.__CAMY__);
+//        myGameMap = new GameMap("theMap",0.1,1600,1200,Globals.__CAMX__,Globals.__CAMY__);
         
         //world = new ServerWorldHandler();
         theServer = new AetherServer(world);
