@@ -21,6 +21,7 @@ public class GameMap {
         protected Renderer renderer = null;
         protected AetherCam camera = null;
         protected boolean canRender = false;
+        protected String mapName;
         
         public GameMap(String mapName, double _mobDensity,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
             //mapImage = new ImageIcon(mapName);
@@ -28,6 +29,7 @@ public class GameMap {
             this.dimx = dimx;
             this.dimy = dimy;
             spats = new HashMap<>();
+            this.mapName = mapName;
             //Clean this up later maybe
             if (canRender){
                 this.canRender = true;
@@ -119,5 +121,8 @@ public class GameMap {
             if (!verifyRender())
                 return;
             renderer.update();
+        }
+        public String getName(){
+            return mapName;
         }
 }

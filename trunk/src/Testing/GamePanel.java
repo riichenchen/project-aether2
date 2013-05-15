@@ -48,18 +48,18 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         yourkeycontrol = new MyKeyListener();
         myBlock.addControl(mykeycontrol);
         yourBlock.addControl(yourkeycontrol);
-        myMap = new GameMap("Mymap",1,1600,1200,800,600,true);
+        myMap = AssetManager.getMap("testMap");
         myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
 
-        Random myrand = new Random();
-        for (int i = 0; i < 5000; i++){
-            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
-        }
-        for (int i = 0; i < 50; i++){
-            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,100,myrand.nextInt(1200/28)*28));
-        }
+//        Random myrand = new Random();
+//        for (int i = 0; i < 5000; i++){
+//            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
+//        }
+//        for (int i = 0; i < 50; i++){
+//            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,100,myrand.nextInt(1200/28)*28));
+//        }
         setSize(800,600);
     }
 	
