@@ -38,6 +38,10 @@ public abstract class Spatial {
         this.id = IDs++;
         this.collidable = collidable;
     }
+    /*SHOULD ONLY BE CALLED BY SERVER REGISTER!!!!!!!!!!!*/
+    public void setId(int id){
+        this.id = id;
+    }
     
     public void move(float x, float y, float z){
         location.translate(x,y,z);
