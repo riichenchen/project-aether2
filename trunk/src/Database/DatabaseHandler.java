@@ -1,5 +1,6 @@
 package Database;
 
+import GameSource.Globals;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -25,16 +26,16 @@ public class DatabaseHandler {
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    private String sqluser = "aetherServer";
-    private String sqluserpw = "15201599298";
+//    private String sqluser = "aetherServer";
+//    private String sqluserpw = "15201599298";
     public DatabaseHandler(){
         try {
             // This will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the DB
             connect = DriverManager
-                .getConnection("jdbc:mysql://24.57.115.97/projectaether2?"
-                    + "user="+sqluser+"&password="+sqluserpw);
+                .getConnection("jdbc:mysql://"+Globals.DBIP+"/projectaether2?"
+                    + "user="+Globals.__SQLUSER__+"&password="+Globals.__SQLPASS__);
             statement = connect.createStatement();
             System.out.println("Successfully Connected to Database!");
         } catch (Exception e) {
