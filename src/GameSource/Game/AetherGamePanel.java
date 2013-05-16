@@ -105,15 +105,9 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
     // ---------- MouseMotionListener ------------------------------------------
     @Override
     public void mouseDragged(MouseEvent e){
-//    	GameUI.moveMouse(e.getX(),e.getY());
-//        camera.translateLocation(0,5);
-        InputManager.keyDown(KeyEvent.VK_DOWN);
     }
     @Override    
     public void mouseMoved(MouseEvent e){
-//    	GameUI.moveMouse(e.getX(),e.getY());
-        //camera.translateLocation(0,5);
-        InputManager.keyUp(KeyEvent.VK_DOWN);
     }
 
     @Override
@@ -122,37 +116,13 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("Woot!~");
         keys[e.getKeyCode()] = true;
         InputManager.keyDown(e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("Poot!~");
         keys[e.getKeyCode()] = false;
         InputManager.keyUp(e.getKeyCode());
-//        if (e.getKeyCode() == KeyEvent.VK_SPACE){
-//            if (inputstate) {
-//                myBlock.removeControl(mykeycontrol);
-//                //System.out.println("Control off!");
-//            } else {
-//                myBlock.addControl(mykeycontrol);
-//                //System.out.println("Control on!");
-//            }
-//            inputstate = !inputstate;
-//        }
-//        
-//         
-//        if (e.getKeyCode() == KeyEvent.VK_V){
-//            if (visibility) {
-//                myMap.hideSpatial(myBlock);
-//                //System.out.println("Invisible!");
-//            } else {
-//                myMap.revealSpatial(myBlock);
-//                //System.out.println("Visible!!");
-//            }
-//            visibility = !visibility;
-//        }
     }
 }
