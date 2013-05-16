@@ -22,7 +22,7 @@ public class PhysicsSyncListener {
     public void update(){
         if (msgs.peek() != null){
             PhysicsSyncMessage message = msgs.poll();
-            space.addMoveMessage(message.x,message.y,message.z,message.entity);
+            //space.addMoveMessage(message.x,message.y,message.z,message.entity);
         }
     }
     public void moveSpatial(float x, float y, float z, int entity){

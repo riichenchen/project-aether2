@@ -1,5 +1,7 @@
 package GameSource.game;
 
+import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
+import GameSource.Game.GamePoint;
 import GameSource.Globals;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
@@ -17,7 +19,7 @@ public class GameMap {
         protected double mobDensity; //????
         protected int dimx = 1600,dimy = 1200;        
         protected HashMap<Integer,Spatial> spats;
-        protected LinkedList<Integer> nonPermaSpats = new LinkedList<>();
+        protected HashMap<Integer,Spatial> nonPermaSpats;
         //Only client maps can render. This saves space and allows
         //the server to use this class as well
         protected Renderer renderer = null;
@@ -25,6 +27,8 @@ public class GameMap {
         protected boolean canRender = false;
         protected String mapName;
         
+        public static final int Char_TESTBLOCK = 0;
+                
         public GameMap(String mapName, double _mobDensity,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
             //mapImage = new ImageIcon(mapName);
             mobDensity = _mobDensity;
@@ -32,6 +36,7 @@ public class GameMap {
             this.dimy = dimy;
             spats = new HashMap<>();
             this.mapName = mapName;
+            this.nonPermaSpats = new HashMap<>();
             //Clean this up later maybe
             if (canRender){
                 this.canRender = true;
@@ -58,7 +63,8 @@ public class GameMap {
         //Handles attaching and removing of spatials
         public void addSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
-            nonPermaSpats.add(spat.getId());
+            nonPermaSpats.put(spat.getId(), spat);
+            
             if (!verifyRender())
                 return;
             if (spat instanceof RenderSpatial){
@@ -76,10 +82,12 @@ public class GameMap {
         }
         
         public void clearNonPermanentSpats(){
-            while (nonPermaSpats.peek()!= null){
-                spats.remove(nonPermaSpats.poll());
+            Spatial[] nonperms = nonPermaSpats.values().toArray(new Spatial[0]);
+            for (Spatial spat: nonperms){
+                spats.remove(spat.getId());
             }
         }
+        
         public void render(Graphics g,JPanel pane){
             if (!verifyRender())
                 return;
@@ -110,6 +118,7 @@ public class GameMap {
         
         public void removeSpatial(Spatial spat){
             spats.remove(spat.getId());
+            nonPermaSpats.remove(spat.getId());
             //Remove from render space if the spatial is in the render space
             if (!verifyRender())
                 return;
@@ -141,5 +150,37 @@ public class GameMap {
         }
         public String getName(){
             return mapName;
+        }
+        public Spatial getSpatial(int id){
+            return spats.get(id);
+        }
+        //Should only be called by server side to register player spatial
+        public int addPlayer(int characterType,GamePoint loc){
+            Spatial newChar = null;
+            if (characterType == Char_TESTBLOCK){
+                newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
+            }
+            if (newChar == null){
+                System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
+                System.exit(0);
+            }
+            addSpatial(newChar);
+            return newChar.getId();
+        }
+        public Spatial addPlayer(int characterType,GamePoint loc,int entityId){
+            Spatial newChar = null;
+            if (characterType == Char_TESTBLOCK){
+                newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
+            }
+            if (newChar == null){
+                System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
+                System.exit(0);
+            }
+            newChar.setId(entityId);
+            addSpatial(newChar);
+            return newChar;
+        }
+        public HashMap<Integer,Spatial> getNonPermanents(){
+            return nonPermaSpats;
         }
 }

@@ -4,9 +4,9 @@
  */
 package PhysicsSync;
 
+import GameSource.Game.ClientWorldHandler;
 import GameSource.Game.ServerWorldHandler;
 import GameSource.Globals;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
@@ -21,11 +21,19 @@ public class PhysicsSyncManager {
     //should be in the correct time order. But for future purposes
     //A priorityqueue is set up.
     private PriorityQueue<PhysicSyncMessage> allMessages;
-    private ServerWorldHandler world;
+    private ServerWorldHandler sworld = null;
+    private ClientWorldHandler cworld = null;
     private int TimeElapsed;
+    private boolean isServer;
     public PhysicsSyncManager(ServerWorldHandler world){
         allMessages = new PriorityQueue<>(10,new TimePriorityComparator());
-        this.world = world;
+        this.sworld = world;
+        this.isServer = true;
+    }
+    public PhysicsSyncManager(ClientWorldHandler world){
+        allMessages = new PriorityQueue<>(10,new TimePriorityComparator());
+        this.cworld = world;
+        this.isServer = false;
     }
     public synchronized void addMessage(PhysicSyncMessage msg){
         msg.setReceiveTime(TimeElapsed);
@@ -34,7 +42,7 @@ public class PhysicsSyncManager {
     public synchronized void elapseTime(){
         TimeElapsed++;
     }
-    
+
     public synchronized void update(){ // okay so only main should be calling this anyhow... but better thread safe than not
         while (allMessages.peek()!=null){
             if (TimeElapsed-allMessages.peek().getReceivedTime()<3){
@@ -44,9 +52,17 @@ public class PhysicsSyncManager {
                 break;
             }
             PhysicSyncMessage msg = allMessages.poll();
-            if (msg instanceof SpatActionMessage){
-                SpatActionMessage mymsg = (SpatActionMessage)msg;
-                //mymsg.doAction(world.getSpat(msg.getSpatId()))
+            if (!isServer){
+                if (msg instanceof SpatActionMessage){
+                    SpatActionMessage mymsg = (SpatActionMessage)msg;
+                    mymsg.doAction(cworld.getSpatial(msg.getSpatId(),"testMap"));
+                }
+            } else {
+                if (msg instanceof SpatActionMessage){
+                    SpatActionMessage mymsg = (SpatActionMessage)msg;
+                    mymsg.doAction(sworld.getSpatial(msg.getSpatId(),"testMap"));
+                }
+                sworld.sendMessage(msg);
             }
         }
     }

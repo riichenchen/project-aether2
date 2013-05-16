@@ -24,7 +24,7 @@ public abstract class PhysicSyncMessage extends Message implements Serializable{
     public int getReceivedTime(){
         return receivedTime;
     }
-    public abstract void performAction(Spatial spat);
+    public abstract void doAction(Spatial spat);
     
     public int getSpatId(){
         return entityId;

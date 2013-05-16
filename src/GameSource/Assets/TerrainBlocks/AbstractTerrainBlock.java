@@ -29,8 +29,8 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
      - Change block image to an image set
      - one for the top view and one for the front profile of the block*/
     
-    public AbstractTerrainBlock(int x,int y, int z,int dx,int dz,int dy,String imageType){
-        super(x,y,z,dx,dz,dy,0,0);
+    public AbstractTerrainBlock(float x,float y, float z,int dx,int dz,int dy,String imageType,int collidable){
+        super(x,y,z,dx,dz,dy,0,0,collidable);
         this.image = AssetManager.getBlockImage(imageType);
         this.solid = getSolid();
     }

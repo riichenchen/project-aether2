@@ -27,8 +27,11 @@ public class AssetManager {
         blockimages = new HashMap<>();
         blockimages.put(null, null);
         loadBlocks();
+        //if (Globals.Assetdebug)
+        System.out.println("Loaded Blocks!");
         allmaps = new HashMap<>();
         loadMaps();
+        System.out.println("Loaded Maps!");
         //load in images here
     }
     private static void loadBlocks(){
@@ -52,7 +55,7 @@ public class AssetManager {
     public static Image getBlockImage(String imgName){
         return blockimages.get(imgName);
     }
-    public static void loadMaps(){
+    private static void loadMaps(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"mapdata.txt"));
             String nextline;

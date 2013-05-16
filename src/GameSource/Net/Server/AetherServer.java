@@ -18,11 +18,12 @@ public class AetherServer extends Server{
     public AetherServer(ServerWorldHandler world){
         super();
         this.world = world;
+        world.bindManager(manager);
         ((AetherNetListener)netListener).setWorld(world);
     }
     @Override
     public ServerNetListener addListener(ClientManager manager) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (ServerNetListener)(new AetherNetListener(manager));
     }
     
 }

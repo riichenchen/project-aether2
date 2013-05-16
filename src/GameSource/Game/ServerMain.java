@@ -1,7 +1,7 @@
 package GameSource.Game;
 
 import Database.DatabaseHandler;
-import GameSource.Globals;
+import GameSource.Assets.AssetManager;
 import GameSource.Net.Server.AetherNetListener;
 import GameSource.Net.Server.AetherServer;
 import GameSource.game.GameMap;
@@ -17,11 +17,15 @@ public class ServerMain {
     private static ServerWorldHandler world;
     
     public static void main(String [] args) {
+        AssetManager.init();
         myDB = new DatabaseHandler();
-//        myGameMap = new GameMap("theMap",0.1,1600,1200,Globals.__CAMX__,Globals.__CAMY__);
-        
-        //world = new ServerWorldHandler();
+        myGameMap = AssetManager.getMap("testMap");
+        //myNetListener = new AetherNetListener();
+        world = new ServerWorldHandler(myGameMap,null,myDB);
         theServer = new AetherServer(world);
-        
+        theServer.start();
+        while (true){
+            world.update();
+        }
     }
 }

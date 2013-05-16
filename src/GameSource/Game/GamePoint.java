@@ -1,6 +1,8 @@
 package GameSource.Game;
 
-public class GamePoint {
+import java.io.Serializable;
+
+public class GamePoint implements Serializable{
         
         private float x, y, z;
         

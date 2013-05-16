@@ -19,11 +19,17 @@ public class SpatActionMessage extends PhysicSyncMessage implements Serializable
         this.actionType = ActionType;
     }
     @Override
-    public void performAction(Spatial spat) {
+    public void doAction(Spatial spat) {
         if (actionType == JUMP){
-            //spat.jump();
+            System.out.println("SPAT JUMPED");
         } else if (actionType == MOVEUP){
-            //spat.moveLeft, etc
+            spat.move(0,0,-5);
+        } else if (actionType == MOVEDOWN){
+            spat.move(0,0,5);
+        } else if (actionType == MOVELEFT){
+            spat.move(-5,0,0);
+        } else if (actionType == MOVERIGHT){
+            spat.move(5,0,0);
         }
     }
     

@@ -20,8 +20,8 @@ import javax.swing.JPanel;
  * @author Shiyang
  */
 public class Other_Block extends AbstractTerrainBlock {
-    public Other_Block(int x,int y,int z){
-        super(x,y,z,45,113,1,"otherblock");
+    public Other_Block(float x,float y,float z){
+        super(x,y,z,45,113,1,"otherblock",0);
     }
     
     @Override

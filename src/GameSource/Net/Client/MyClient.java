@@ -15,6 +15,7 @@ public class MyClient extends Client{
 //    private String clientId;
     public MyClient(LoginFrame world){
         super(world);
+        ((ClientNetListener)netlistener).setWorld(world);
 //        this.clientId = clientId;
     }
 
