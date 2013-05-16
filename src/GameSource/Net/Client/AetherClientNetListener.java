@@ -12,6 +12,7 @@ import Networking.Messages.MapDataPackageMessage;
 import Networking.Messages.Message;
 import Networking.Messages.PlayerJoinMessage;
 import PhysicsSync.PhysicSyncMessage;
+import PhysicsSync.SpatActionMessage;
 import Spatial.MapSpatData;
 import Spatial.Spatial;
 import java.net.Socket;
@@ -60,7 +61,13 @@ public class AetherClientNetListener extends ClientListenThread{
             }
             //world.response = true;
         }else if (msg instanceof PhysicSyncMessage){
-            world.addPSyncMessage((PhysicSyncMessage)msg);
+            //if (msg instanceof SpatActionMessage){
+            if (msg.getClientId() != client.getClientId()){
+                world.addPSyncMessage((PhysicSyncMessage)msg);
+            }
+            //} else {
+              //  world.addPSyncMessage((PhysicSyncMessage)msg);
+            //}
         }
     }
 
