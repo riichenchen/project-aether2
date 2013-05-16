@@ -4,18 +4,19 @@
  */
 package Controls;
 
+import GameSource.Game.ClientWorldHandler;
 import Spatial.Spatial;
-import Testing.GamePanel;
 
 /**
  *
  * @author Shiyang
  */
 public abstract class AbstractControl {
+    protected static ClientWorldHandler world;
     private static int controlIds = 0;
     protected int controlId;
     protected Spatial boundTo = null;
-    protected GamePanel world;
+    //protected ClientWorldHandler world;
     public AbstractControl(){
         this.controlId = controlIds++;
     }
@@ -24,8 +25,10 @@ public abstract class AbstractControl {
     }
     public void bindToSpatial(Spatial spat){
         this.boundTo = spat;
-        //TODO: bind to world for access to world events
-        //this.world = world;
+    }
+    
+    public static void setWorld(ClientWorldHandler World){
+        world = World;
     }
     
     public abstract void update();

@@ -22,8 +22,8 @@ import javax.swing.JPanel;
  * @author Shiyang
  */
 public class Dirt_Block extends AbstractTerrainBlock {
-    public Dirt_Block(int x,int y,int z){
-        super(x,y,z,50,28,1,"dirtblock");
+    public Dirt_Block(float x,float y,float z){
+        super(x,y,z,50,28,1,"dirtblock",0);
     }
     
     @Override

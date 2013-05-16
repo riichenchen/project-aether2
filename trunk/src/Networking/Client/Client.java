@@ -7,8 +7,9 @@ package Networking.Client;
 import GameSource.LoginFrame;
 import GameSource.Net.Client.ClientNetListener;
 import GameSource.Net.Client.ClientNetSender;
-import GameSource.Net.Client.ClientTest;
 import GameSource.Globals;
+import GameSource.Net.Client.AetherClientNetListener;
+import GameSource.Net.Client.AetherClientNetSender;
 import Networking.Messages.Message;
 import java.net.Socket;
 
@@ -21,31 +22,41 @@ public abstract class Client
     protected static Socket csocket = null;
     //private ObjectOutputStream out = null;
     protected boolean started = false;
-    protected ClientNetListener netlistener = null;
+    protected ClientListenThread netlistener = null;
     protected ClientSendThread netSender = null;
     protected LoginFrame world;
     protected int clientId;
     
     public Client (LoginFrame world){
         this.world = world;
-    } 
-    
-    public void start(){
-	try {
+        try {
             csocket = new Socket (Globals.__IP__, 4186);
-	    System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
+            System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
             netlistener = new ClientNetListener(csocket,this);
-            netlistener.setWorld(world);
-            //initListener();
-            netlistener.start();
             netSender = new ClientNetSender(csocket,this);
-            //netSender.connect();
-            netSender.start();
-            started = true;
-	} catch (Exception e){
+        } catch (Exception e){
 	    System.out.println ("Unable to connect to host with localhost");
             System.exit(0);
 	}
+    } 
+    public Client(){
+        try {
+            csocket = new Socket (Globals.__IP__, 4186);
+            System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
+            netlistener = new AetherClientNetListener(csocket,this);
+            netSender = new AetherClientNetSender(csocket,this);
+        } catch (Exception e){
+	    System.out.println ("Unable to connect to host with localhost");
+            System.exit(0);
+	}
+    }
+    public void start(){
+//            netlistener.setWorld(world);
+            //initListener();
+        netlistener.start();
+        //netSender.connect();
+        netSender.start();
+        started = true;
     }
     public void sendMessage(Message msg){
         if (!started){
@@ -55,7 +66,7 @@ public abstract class Client
         netSender.sendMessage(msg);
     }
     
-    public ClientNetListener getClientNetListener(){
+    public ClientListenThread getClientNetListener(){
         return netlistener;
     }
     public void setClientId(int id){

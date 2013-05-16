@@ -51,6 +51,7 @@ public class LoginFrame extends javax.swing.JFrame {
         SendButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setForeground(java.awt.Color.white);
         setResizable(false);
 
         PassField.addActionListener(new java.awt.event.ActionListener() {

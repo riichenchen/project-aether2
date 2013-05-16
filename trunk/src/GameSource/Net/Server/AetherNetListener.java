@@ -5,9 +5,13 @@
 package GameSource.Net.Server;
 
 import GameSource.Game.ServerWorldHandler;
+import Networking.Messages.LoginReplyMessage;
+import Networking.Messages.MapDataPackageMessage;
 import Networking.Messages.Message;
+import Networking.Messages.RequestLoginMessage;
 import Networking.Server.ClientManager;
 import Networking.Server.ServerNetListener;
+import PhysicsSync.PhysicSyncMessage;
 
 /**
  *
@@ -16,38 +20,32 @@ import Networking.Server.ServerNetListener;
 public class AetherNetListener extends ServerNetListener{
     private ServerWorldHandler world;
     
-    public AetherNetListener(ClientManager manager,ServerWorldHandler world){
+    public AetherNetListener(ClientManager manager){//,ServerWorldHandler world){
         super(manager);
         //this.world = world;
     }
-    
+    public void setWorld(ServerWorldHandler World){
+        this.world = World;
+    }
     @Override
     public void ReceiveMessage(Message m){
-//        if (m instanceof ChatMessage){
-//            ChatMessage mymsg = (ChatMessage)m;
-//            System.out.println(mymsg.getName()+": "+mymsg.getMessage());
-//            manager.broadcast(mymsg);
-//        } else if (m instanceof ClientJoinChatMessage){
-//            ClientJoinChatMessage mymsg = (ClientJoinChatMessage)m;
-//            System.out.println(mymsg.getName()+" has joined the chatroom");
-//            ChatMessage serverMsg = new ChatMessage("Server",mymsg.getName()+" has joined the chat!");
-//            serverMsg.setClientId(-1);
-//            manager.broadcast(serverMsg);
-//        } else if (m instanceof RequestLoginMessage){
-//            RequestLoginMessage mymsg = (RequestLoginMessage)m;
-//            //System.out.println(world);
-//            if (world.RequestLogin(mymsg.getUser(), mymsg.getPass())){
-//                System.out.println(mymsg.getUser()+" has logged in as client "+mymsg.getClientId()+".");
-//                manager.broadcast(new ChatMessage("Server",mymsg.getUser()+" has logged in."));
-//                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true));
-//            } else {
-//                System.out.println("Failed to login from client "+mymsg.getClientId()+".");
-//                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(false));
-//            }
-//        }
-    }
-    
-    public void setWorld(ServerWorldHandler world){
-        this.world = world;
+        if (m instanceof PhysicSyncMessage){
+            world.addPSyncMessage((PhysicSyncMessage)m);
+        } else if (m instanceof RequestLoginMessage){
+            RequestLoginMessage mymsg = (RequestLoginMessage)m;
+            int reply = world.RequestLogin(mymsg.getUser(), mymsg.getPass());
+            if (reply != -1){
+                System.out.println(mymsg.getUser()+" has logged in as client "+mymsg.getClientId()+".");
+                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true));
+                System.out.println("Sent o.o "+mymsg.getClientId());
+                //Change this in the future
+                manager.sendToOne(mymsg.getClientId(), new MapDataPackageMessage(world.getNonPermanents(),"testMap"));
+                
+                manager.broadcast(world.getPlayerJoinMessage(reply,mymsg.getClientId()));
+            } else {
+                System.out.println("Failed to login from client "+mymsg.getClientId()+".");
+                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(false));
+            }
+        } 
     }
 }

@@ -6,6 +6,8 @@ package Spatial;
 
 import Controls.AbstractControl;
 import GameSource.Game.GamePoint;
+import PhysicsSpace.AVelocity;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -14,7 +16,6 @@ import java.util.HashMap;
  */
 public abstract class Spatial {
     protected GamePoint location;
-//<<<<<<< .mine
     protected static int IDs = 0;
     protected int id;
 //    protected float mass;
@@ -29,9 +30,11 @@ public abstract class Spatial {
     //                          3 -> player collidable
     protected BoundingBox box;
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
+    protected AVelocity velocity;
     
     public Spatial(float x, float y, float z, float length, float width, float height, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
+        this.velocity = new AVelocity(); // To add proper velocity later
         mass = m;
         cof = c;
         box = new BoundingBox(length,width,height);

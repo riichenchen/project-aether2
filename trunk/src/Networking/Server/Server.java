@@ -15,10 +15,10 @@ import java.net.Socket;
  * @author Shiyang
  */
 public abstract class Server extends Thread{
-    private ClientManager manager;
-    private boolean acceptConns = true;
-    private ServerSocket sSocket = null;
-    private Socket cSocket = null;
+    protected ClientManager manager;
+    protected boolean acceptConns = true;
+    protected ServerSocket sSocket = null;
+    protected Socket cSocket = null;
     protected ServerNetListener netListener;
             
     public Server() {

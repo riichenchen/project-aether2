@@ -42,6 +42,7 @@ public class RenderTest extends JFrame implements ActionListener{
             myGame.move();
             myGame.update();
             myGame.repaint(); //show current point in time
+//            System.out.println("working");
         }
     }
 
