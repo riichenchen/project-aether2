@@ -32,7 +32,7 @@ public abstract class Spatial {
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     protected AVelocity velocity;
     
-    public Spatial(float x, float y, float z, float length, float width, float height, float m, float c, int collidable){
+    public Spatial(float x, float y, float z, float length, float height, float width, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         this.velocity = new AVelocity(); // To add proper velocity later
         mass = m;
@@ -61,29 +61,83 @@ public abstract class Spatial {
         //if collision occurs: call the collideListener(pass in colliding object);
         //return false;
         float aXmin = location.getX() - box.getLength()/2;
-        float aYmin = location.getY();
-        float aZmin = location.getZ() - box.getWidth()/2;
+        float aXmax = location.getX() + box.getLength()/2;
         
-        float aXmax = location.getY() + box.getLength()/2;
+        float aYmin = location.getY();
         float aYmax = location.getY() + box.getHeight();
+        
+        float aZmin = location.getZ() - box.getWidth()/2;
         float aZmax = location.getZ() + box.getWidth()/2;
         
         float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
         float bYmin = s.getY();
-        float bZmin = s.getZ() - s.getBoundingBox().getHeight()/2;
+        float bZmin = s.getZ() - s.getBoundingBox().getWidth()/2;
         
         float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
         float bYmax = s.getY() + s.getBoundingBox().getHeight();
-        float bZmax = s.getY() + s.getBoundingBox().getWidth();
+        float bZmax = s.getZ() + s.getBoundingBox().getWidth()/2;
         
-        if (aXmin <= bXmax && aXmax >= bXmin && aYmin <= bYmax && aYmax >= bYmin && aZmin <= bZmax && aZmax >= bZmin){ 
-            return true;
+        if (aXmin <= bXmax && aXmax >= bXmin){
+            System.out.println("derp");
+            if (aYmin <= bYmax && aYmax >= bYmin){
+                System.out.println("merp");
+                if (aZmin <= bZmax && aZmax >= bZmin){
+                    System.out.println("erp");
+                    return true;
+                }
+            }
+            System.out.println("a");
+            
         }
-        else{
-            System.out.println("Nope");
-            return false;
-        }
+//        if (aXmin >= bXmin && aXmax <= bXmax && 
+//                aYmin <= bYmax && aYmax >= bYmin && 
+//                aZmin <= bZmax && aZmax >= bZmin){
+//            System.out.println("b");
+//            return true;}
+//        else if (aXmin <= bXmax && aXmax >= bXmin){
+//            if (aYmin >= bYmin && aYmax <= bYmax && aZmin <= bZmax && aZmax >= bZmin){
+//                System.out.println("c");
+//                return true;
+//            }
+//            else if(aYmin <= bYmax && aYmax >= bYmin && aZmin >= bZmin && aZmax <= bZmax){
+//                System.out.println("d");
+//                return true;
+//            }
+//        }
+//        
+//        else if (aXmin >= bXmin && aXmax <= bXmax && aYmin >= bYmin && aYmax <= bYmax && aZmin <= bZmax && aZmax >= bZmin){
+//            System.out.println("e");
+//            return true;}
+//        else if (aXmin <= bXmax && aXmax >= bXmin && aYmin >= bYmin && aYmax <= bYmax && aZmin >= bZmin && aZmax <= bZmax){
+//            System.out.println("f");
+//            return true;}
+//        if (aXmin >= bXmin && aXmax <= bXmax && aZmin >= bZmin && aZmax <= bZmax){
+//            System.out.println("gord");
+//            if (aYmin <= bYmax && aYmax >= bYmin){
+//                System.out.println("g");
+//                return true;}
+//        }
+//        else if (aXmin >= bXmin && aXmax <= bXmax && aYmin <= bYmax && aYmax >= bYmin && aZmin <= bZmax && aZmax >= bZmin){
+//            System.out.println("h");
+//            return true;}
+        else{} return false;
     }
+//    public boolean contains(Spatial s){
+//        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
+//        float bYmin = s.getY();
+//        float bZmin = s.getZ() - s.getBoundingBox().getHeight()/2;
+//        
+//        float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
+//        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+//        float bZmax = s.getY() + s.getBoundingBox().getWidth();
+//        
+//        if (aXmin >= bXmin && aXmax <= bXmax && aYmin <= bYmax && aYmax >= bYmin && aZmin <= bZmax && aZmax >= bZmin){
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+//    }
     
     public float getX(){
         return location.getX();
@@ -93,6 +147,9 @@ public abstract class Spatial {
     }
     public float getZ(){
         return location.getZ();
+    }
+    public int getId(){
+        return id;
     }
     
     public void addControl(AbstractControl control){
@@ -131,8 +188,5 @@ public abstract class Spatial {
         for (AbstractControl c: conts){
             c.update();
         }
-    }
-    public int getId(){
-        return id;
     }
 }
