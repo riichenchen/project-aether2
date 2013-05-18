@@ -6,7 +6,7 @@ package Networking.Server;
 
 //import GameSource.Net.Server.ServerNetListener;
 import Networking.Messages.Message;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
@@ -19,7 +19,7 @@ public class ServerNetListener extends Thread{
     protected ClientManager manager = null;
     protected boolean stayConnected = true;
 //    protected int connectionId;
-    protected LinkedList<Message> messages = new LinkedList<>();
+    protected ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
     
     public ServerNetListener(ClientManager manager) {
         this.manager = manager;
@@ -31,7 +31,7 @@ public class ServerNetListener extends Thread{
 //    public int getConnectionId(){
 //        return connectionId;
 //    }
-    public void addMessage(Message m){
+    public synchronized void addMessage(Message m){
         messages.add(m);
         //System.out.println(messages.peek());
     }

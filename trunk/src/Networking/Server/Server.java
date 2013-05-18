@@ -38,7 +38,9 @@ public abstract class Server extends Thread{
             netListener = addListener(manager);
             netListener.start();
     }
-    public void receiveMessage(Message m){
+    public int c = 0;
+    public synchronized void receiveMessage(Message m){
+        System.out.println(c++);
         netListener.addMessage(m);
     }
     public void run(){
