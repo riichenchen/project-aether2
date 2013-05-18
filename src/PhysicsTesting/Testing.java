@@ -55,15 +55,17 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
 
     public testPanel(){
         ready = false;
-        space = new PhysicsSpace(9.81f) {};
+        space = new PhysicsSpace(1.81f) {};
         spatials = new HashMap <> ();
-        spatials.put(0, new Spatial(0f,100f,0f, 800f,30f,100f, 0f,0f,0) {
-
+        Spatial a = new Spatial(0f,100f,0f, 800f,30f,100f, 0f,0f,0) {
             @Override
             public void collideEffect(Spatial s) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-        });
+        };
+        spatials.put(0,a);
+        space.addSpatial(0,a);
+        
         count  = 1;
         addMouseMotionListener(this);
         addMouseListener(this);
