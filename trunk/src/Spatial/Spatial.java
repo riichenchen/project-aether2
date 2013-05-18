@@ -9,6 +9,7 @@ import GameSource.Game.GamePoint;
 import PhysicsSpace.AVelocity;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.awt.*;
 
 /**
  *
@@ -60,67 +61,41 @@ public abstract class Spatial {
     public boolean collide(Spatial s){
         //if collision occurs: call the collideListener(pass in colliding object);
         //return false;
-        float aXmin = location.getX() - box.getLength()/2;
-        float aXmax = location.getX() + box.getLength()/2;
+        Rectangle axy = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)location.getY(), (int)(location.getX() + box.getLength()/2), (int)(location.getY() +  box.getHeight()));
+        Rectangle ayz = new Rectangle ((int)location.getY(), (int)(location.getZ() - box.getWidth()), (int)location.getY() + (int) box.getHeight(), (int)(location.getZ() + (int) box.getWidth()/2));
+        Rectangle axz = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)(location.getZ() - box.getWidth()/2), (int)(location.getX() + (int) box.getLength()/2), (int)(location.getY() + box.getWidth()/2));
         
+        Rectangle bxy = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)s.getY(), (int)(s.getX() + s.getBoundingBox().getLength()/2), (int)(s.getY() +  s.getBoundingBox().getHeight()));
+        Rectangle byz = new Rectangle ((int)s.getY(), (int)(s.getZ() - s.getBoundingBox().getWidth()), (int)(s.getY() + s.getBoundingBox().getHeight()), (int)(s.getZ() + s.getBoundingBox().getWidth()/2));
+        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getZ() - s.getBoundingBox().getWidth()/2), (int)(s.getX() + s.getBoundingBox().getLength()/2), (int)(s.getY() + s.getBoundingBox().getWidth()/2));
+        
+//        float aXmin = location.getX() - box.getLength()/2;
+//        float aXmax = location.getX() + box.getLength()/2;
+//        
         float aYmin = location.getY();
         float aYmax = location.getY() + box.getHeight();
-        
-        float aZmin = location.getZ() - box.getWidth()/2;
-        float aZmax = location.getZ() + box.getWidth()/2;
-        
-        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
-        float bYmin = s.getY();
-        float bZmin = s.getZ() - s.getBoundingBox().getWidth()/2;
-        
-        float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
-        float bYmax = s.getY() + s.getBoundingBox().getHeight();
-        float bZmax = s.getZ() + s.getBoundingBox().getWidth()/2;
-        
-        if (aXmin <= bXmax && aXmax >= bXmin){
-            System.out.println("derp");
-            if (aYmin <= bYmax && aYmax >= bYmin){
-                System.out.println("merp");
-                if (aZmin <= bZmax && aZmax >= bZmin){
-                    System.out.println("erp");
-                    return true;
-                }
-            }
-            System.out.println("a");
-            
-        }
-//        if (aXmin >= bXmin && aXmax <= bXmax && 
-//                aYmin <= bYmax && aYmax >= bYmin && 
-//                aZmin <= bZmax && aZmax >= bZmin){
-//            System.out.println("b");
-//            return true;}
-//        else if (aXmin <= bXmax && aXmax >= bXmin){
-//            if (aYmin >= bYmin && aYmax <= bYmax && aZmin <= bZmax && aZmax >= bZmin){
-//                System.out.println("c");
-//                return true;
-//            }
-//            else if(aYmin <= bYmax && aYmax >= bYmin && aZmin >= bZmin && aZmax <= bZmax){
-//                System.out.println("d");
-//                return true;
-//            }
-//        }
 //        
-//        else if (aXmin >= bXmin && aXmax <= bXmax && aYmin >= bYmin && aYmax <= bYmax && aZmin <= bZmax && aZmax >= bZmin){
-//            System.out.println("e");
-//            return true;}
-//        else if (aXmin <= bXmax && aXmax >= bXmin && aYmin >= bYmin && aYmax <= bYmax && aZmin >= bZmin && aZmax <= bZmax){
-//            System.out.println("f");
-//            return true;}
-//        if (aXmin >= bXmin && aXmax <= bXmax && aZmin >= bZmin && aZmax <= bZmax){
-//            System.out.println("gord");
-//            if (aYmin <= bYmax && aYmax >= bYmin){
-//                System.out.println("g");
-//                return true;}
-//        }
-//        else if (aXmin >= bXmin && aXmax <= bXmax && aYmin <= bYmax && aYmax >= bYmin && aZmin <= bZmax && aZmax >= bZmin){
-//            System.out.println("h");
-//            return true;}
-        else{} return false;
+//        float aZmin = location.getZ() - box.getWidth()/2;
+//        float aZmax = location.getZ() + box.getWidth()/2;
+//        
+//        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
+        float bYmin = s.getY();
+//        float bZmin = s.getZ() - s.getBoundingBox().getWidth()/2;
+//        
+//        float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
+        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+//        float bZmax = s.getZ() + s.getBoundingBox().getWidth()/2;
+        if (axz.intersects(bxz) || axz.contains(bxz)){
+            if (aYmin <= bYmax && aYmax >= bYmin){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
     }
 //    public boolean contains(Spatial s){
 //        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
@@ -163,7 +138,6 @@ public abstract class Spatial {
     public AbstractControl getControl(){
     	if (controls.isEmpty()){
             return null;
-    		
     	}
     	else{
             return controls.get(1);

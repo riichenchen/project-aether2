@@ -30,9 +30,11 @@ public abstract class PhysicsSpace {
     public boolean checkCollision(Spatial a){
     	Spatial[] spatialsArray = spatials.values().toArray(new Spatial[0]);
         for (Spatial b: spatialsArray){
-            if (a.collide(b) || b.collide(a)){
-                System.out.println("collide");
-                return true;
+            if (! a.equals(b)){
+                if (a.collide(b) || b.collide(a)){
+                    System.out.println("collide");
+                    return true;
+                }
             }
         }
         return false;
