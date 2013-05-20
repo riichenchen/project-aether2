@@ -32,7 +32,7 @@ public abstract class PhysicsSpace {
         for (Spatial b: spatialsArray){
             if (! a.equals(b)){
                 if (a.collide(b) || b.collide(a)){
-                    System.out.println("collide");
+//                    a.collideEffect(b);
                     return true;
                 }
             }

@@ -24,6 +24,8 @@ public abstract class Spatial {
 //     private int entity;
     public final float mass;
     public final float cof;      //coefficient of friction
+    protected int rotation;        //in degrees clockwise
+    protected Point p1,p2,p3,p4;
     public final int collidable;    
     //                          0 -> not collidable
     //                          1 -> totally collidable
@@ -33,12 +35,17 @@ public abstract class Spatial {
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     protected AVelocity velocity;
     
-    public Spatial(float x, float y, float z, float length, float height, float width, float m, float c, int collidable){
+    public Spatial(float x, float y, float z, float length, float height, float width, int r, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         this.velocity = new AVelocity(); // To add proper velocity later
         mass = m;
         cof = c;
-        box = new BoundingBox(length,width,height);
+        rotation = r;
+        p1 = new Point();
+        p2 = new Point();
+        p3 = new Point();
+        p4 = new Point();
+        box = new BoundingBox(length,height,width);
         this.id = IDs++;
         this.collidable = collidable;
     }
@@ -50,70 +57,61 @@ public abstract class Spatial {
     public void move(float x, float y, float z){
         location.translate(x,y,z);
     }
+    public abstract void collideEffect(Spatial s);
+    
+    public boolean collide(Spatial s){
+        //if collision occurs: call the collideListener(pass in colliding object);
+        //return false;
+        Rectangle axz = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)(location.getZ() - box.getWidth()/2), (int)box.getLength(), (int)box.getWidth());
+        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getZ() - s.getBoundingBox().getWidth()/2), (int)s.getBoundingBox().getLength(), (int)s.getBoundingBox().getWidth());
+        
+        float aYmin = location.getY();
+        float aYmax = location.getY() + box.getHeight();
+        
+        float bYmin = s.getY();
+        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+        
+        if (axz.intersects(bxz) || axz.contains(bxz)){
+            if (aYmin <= bYmax && aYmax >= bYmin)
+            {return true;}
+            else if (aYmin >= bYmin && aYmax <= bYmax)
+            {return true;}
+            else{}return false;
+        }
+        else{}return false;
+    }
+    public boolean contains(Spatial s){
+        Rectangle axy = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)location.getY(), (int)box.getLength(), (int)box.getHeight());
+        Rectangle ayz = new Rectangle ((int)location.getY(), (int)(location.getZ() - box.getWidth()), (int)location.getY(), (int)box.getWidth());
+        Rectangle axz = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)(location.getZ() - box.getWidth()/2), (int)box.getLength(), (int)box.getWidth());
+        
+        Rectangle bxy = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)s.getY(), (int)(s.getX() + s.getBoundingBox().getLength()/2), (int)(s.getY() +  s.getBoundingBox().getHeight()));
+        Rectangle byz = new Rectangle ((int)s.getY(), (int)(s.getZ() - s.getBoundingBox().getWidth()), (int)(s.getY() + s.getBoundingBox().getHeight()), (int)(s.getZ() + s.getBoundingBox().getWidth()/2));
+        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getZ() - s.getBoundingBox().getWidth()/2), (int)s.getBoundingBox().getLength(), (int)s.getBoundingBox().getWidth());
+        
+        float aYmin = location.getY();
+        float aYmax = location.getY() + box.getHeight();
+        
+        float bYmin = s.getY();
+        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+        
+        if (axz.intersects(bxz) || axz.contains(bxz)){
+            if (aYmin >= bYmin && aYmax <= bYmax)
+            {return true;}
+            else{}return false;
+        }
+        else{}return false;
+    }
+    
     public GamePoint getLocation(){
         return location;
     }
     public BoundingBox getBoundingBox(){
         return box;
     }
-    public abstract void collideEffect(Spatial s);
-    
-    public boolean collide(Spatial s){
-        //if collision occurs: call the collideListener(pass in colliding object);
-        //return false;
-        Rectangle axy = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)location.getY(), (int)(location.getX() + box.getLength()/2), (int)(location.getY() +  box.getHeight()));
-        Rectangle ayz = new Rectangle ((int)location.getY(), (int)(location.getZ() - box.getWidth()), (int)location.getY() + (int) box.getHeight(), (int)(location.getZ() + (int) box.getWidth()/2));
-        Rectangle axz = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)(location.getZ() - box.getWidth()/2), (int)(location.getX() + (int) box.getLength()/2), (int)(location.getY() + box.getWidth()/2));
-        
-        Rectangle bxy = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)s.getY(), (int)(s.getX() + s.getBoundingBox().getLength()/2), (int)(s.getY() +  s.getBoundingBox().getHeight()));
-        Rectangle byz = new Rectangle ((int)s.getY(), (int)(s.getZ() - s.getBoundingBox().getWidth()), (int)(s.getY() + s.getBoundingBox().getHeight()), (int)(s.getZ() + s.getBoundingBox().getWidth()/2));
-        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getZ() - s.getBoundingBox().getWidth()/2), (int)(s.getX() + s.getBoundingBox().getLength()/2), (int)(s.getY() + s.getBoundingBox().getWidth()/2));
-        
-//        float aXmin = location.getX() - box.getLength()/2;
-//        float aXmax = location.getX() + box.getLength()/2;
-//        
-        float aYmin = location.getY();
-        float aYmax = location.getY() + box.getHeight();
-//        
-//        float aZmin = location.getZ() - box.getWidth()/2;
-//        float aZmax = location.getZ() + box.getWidth()/2;
-//        
-//        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
-        float bYmin = s.getY();
-//        float bZmin = s.getZ() - s.getBoundingBox().getWidth()/2;
-//        
-//        float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
-        float bYmax = s.getY() + s.getBoundingBox().getHeight();
-//        float bZmax = s.getZ() + s.getBoundingBox().getWidth()/2;
-        if (axz.intersects(bxz) || axz.contains(bxz)){
-            if (aYmin <= bYmax && aYmax >= bYmin){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
+    public int getRotation(){
+        return rotation;
     }
-//    public boolean contains(Spatial s){
-//        float bXmin = s.getX() - s.getBoundingBox().getLength()/2;
-//        float bYmin = s.getY();
-//        float bZmin = s.getZ() - s.getBoundingBox().getHeight()/2;
-//        
-//        float bXmax = s.getX() + s.getBoundingBox().getLength()/2;
-//        float bYmax = s.getY() + s.getBoundingBox().getHeight();
-//        float bZmax = s.getY() + s.getBoundingBox().getWidth();
-//        
-//        if (aXmin >= bXmin && aXmax <= bXmax && aYmin <= bYmax && aYmax >= bYmin && aZmin <= bZmax && aZmax >= bZmin){
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
-//    }
-    
     public float getX(){
         return location.getX();
     }

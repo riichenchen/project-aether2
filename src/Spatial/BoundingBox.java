@@ -12,7 +12,7 @@ public class BoundingBox {
     float length,width,height;
     //float maxX , minX, maxY, minY, maxZ, minZ;
     
-    public BoundingBox(float l, float w, float h){
+    public BoundingBox(float l, float h, float w){
         length = l;
         width = w;
         height = h;
