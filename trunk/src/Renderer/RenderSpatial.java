@@ -18,8 +18,8 @@ public abstract class RenderSpatial extends Spatial{
     protected HashMap<Integer,RenderChunk> renderChunks = new HashMap<>();
     protected Renderer renderer;
     
-    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,float m, float c,int collidable){
-        super(x,y,z,dx,dz,dy,m,c,collidable);
+    public RenderSpatial(float x,float y,float z,float dx,float dz,float dy,int r,float m, float c,int collidable){
+        super(x,y,z,dx,dz,dy,r,m,c,collidable);
     }
     
     public void bindToRenderer(Renderer renderer){

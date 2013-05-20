@@ -57,7 +57,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         ready = false;
         space = new PhysicsSpace(1.81f) {};
         spatials = new HashMap <> ();
-        Spatial a = new Spatial(0f,100f,0f, 800f,30f,100f, 0f,0f,0) {
+        Spatial a = new Spatial(400f,100f,15f, 800f,30f,30f, 0, 0f,0f,0) {
             @Override
             public void collideEffect(Spatial s) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -77,8 +77,8 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         requestFocus();
         ready = true;
     }
-    public void addSpatial(float x, float y,float z, float l, float w, float h, float m, float c, int collide){
-        Spatial s = new Spatial (x,y,z,l,w,h,m,c,collide) {
+    public void addSpatial(float x, float y,float z, float l, float h, float w, int r, float m, float c, int collide){
+        Spatial s = new Spatial (x,y,z,l,h,w,r,m,c,collide) {
 
             @Override
             public void collideEffect(Spatial s) {
@@ -98,11 +98,9 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         g.setColor(Color.blue);
         Spatial[] spatialslist = spatials.values().toArray(new Spatial[0]);
         for (Spatial s: spatialslist){
-            g.fillRect((int)(s.getX()), (int)(s.getY()), (int)(s.getBoundingBox().getLength()), (int)(s.getBoundingBox().getHeight()));
+            g.fillRect((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getY()), (int)(s.getBoundingBox().getLength()), (int)(s.getBoundingBox().getHeight()));
         }
         for (Spatial s: spatialslist){
-            System.out.println(s.getX() + "," + s.getY() + "," + s.getZ());
-            System.out.println(s.getBoundingBox().getLength() + "," + s.getBoundingBox().getHeight()+ "," + s.getBoundingBox().getWidth());
             if (s.getY() < 0){
                 spatials.remove(s.getId());
                 space.addRemoveMessage(s.getId());
@@ -123,8 +121,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
     public void mousePressed(MouseEvent e){
         float mx = (float)(e.getX());
 	float my = (float)(e.getY());
-        addSpatial(mx,my,10f, 20f,20f,20f, 1f,0.1f,0);
-//        0f,100f,10f, 800f,10f,100f
+        addSpatial(mx,my,10f, 20f,20f,20f, 0, 1f,0.1f,0);
     }
     @Override
     public void mouseDragged(MouseEvent e){}
