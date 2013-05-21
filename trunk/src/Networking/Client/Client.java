@@ -31,6 +31,7 @@ public abstract class Client
         this.world = world;
         try {
             csocket = new Socket (Globals.__IP__, 4186);
+            csocket.setTcpNoDelay(true);
             System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
             netlistener = new ClientNetListener(csocket,this);
             netSender = new ClientNetSender(csocket,this);
@@ -42,6 +43,7 @@ public abstract class Client
     public Client(){
         try {
             csocket = new Socket (Globals.__IP__, 4186);
+            csocket.setTcpNoDelay(true);
             System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
             netlistener = new AetherClientNetListener(csocket,this);
             netSender = new AetherClientNetSender(csocket,this);
