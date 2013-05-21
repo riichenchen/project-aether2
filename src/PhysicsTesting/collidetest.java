@@ -39,13 +39,13 @@ public class collidetest {
 //                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //            }
 //        };
-        Spatial a = new Spatial(0f,0f,0f, 20f,20f,40f, 0, 0f,0f,0) {
+        Spatial a = new Spatial(0f,0f,0f, 20f,20f,40f, 0f,0f,0) {
             @Override
             public void collideEffect(Spatial s) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
-        Spatial b = new Spatial(0f,0f,0f, 5f,5f,5f, 0, 0f,0f,0) {
+        Spatial b = new Spatial(0f,0f,0f, 5f,5f,5f, 0f,0f,0) {
             @Override
             public void collideEffect(Spatial s) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

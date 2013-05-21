@@ -7,7 +7,6 @@ import GameSource.Assets.AssetManager;
 import Renderer.AetherCam;
 import Renderer.RenderChunk;
 import Renderer.RenderSpatial;
-import Spatial.BoundingBox;
 import Spatial.Spatial;
 import java.awt.Graphics;
 import java.awt.Image;

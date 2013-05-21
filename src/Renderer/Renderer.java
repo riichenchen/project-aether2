@@ -7,7 +7,6 @@ package Renderer;
 import GameSource.Game.GamePoint;
 import GameSource.Globals;
 import GameSource.game.GameMap;
-import Spatial.BoundingBox;
 import java.awt.Graphics;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -99,9 +98,8 @@ public class Renderer {
         GamePoint location = spat.getLocation();
         int x = (int)Math.floor(location.getX()*S_QUAD);
         int y = (int)Math.floor(location.getZ()*S_QUAD);
-        BoundingBox dims = spat.getBoundingBox();
-        int sizex = (int)Math.ceil(dims.getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(dims.getWidth()*S_QUAD);
+        int sizex = (int)Math.ceil(spat.getLength()*S_QUAD);
+        int sizey = (int)Math.ceil(spat.getWidth()*S_QUAD);
 
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
@@ -116,9 +114,8 @@ public class Renderer {
         GamePoint location = spat.getLocation();
         int x = (int)Math.floor(location.getX()*S_QUAD);
         int y = (int)Math.floor(location.getZ()*S_QUAD);
-        BoundingBox dims = spat.getBoundingBox();
-        int sizex = (int)Math.ceil(dims.getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(dims.getWidth()*S_QUAD);
+        int sizex = (int)Math.ceil(spat.getLength()*S_QUAD);
+        int sizey = (int)Math.ceil(spat.getWidth()*S_QUAD);
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
                 renderMap[j][i].removeObject(spat);

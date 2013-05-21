@@ -8,7 +8,6 @@ import GameSource.Assets.AssetManager;
 import GameSource.Assets.TerrainBlocks.AbstractTerrainBlock;
 import Renderer.AetherCam;
 import Renderer.RenderChunk;
-import Spatial.BoundingBox;
 import Spatial.Spatial;
 import java.awt.Graphics;
 import java.awt.Image;

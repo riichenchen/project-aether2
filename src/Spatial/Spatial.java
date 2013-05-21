@@ -17,6 +17,7 @@ import java.awt.*;
  */
 public abstract class Spatial {
     protected GamePoint location;
+    protected float length, height, width;
     protected static int IDs = 0;
     protected int id;
 //    protected float mass;
@@ -24,28 +25,24 @@ public abstract class Spatial {
 //     private int entity;
     public final float mass;
     public final float cof;      //coefficient of friction
-    protected int rotation;        //in degrees clockwise
-    protected Point p1,p2,p3,p4;
+    protected double rotation;        //in degrees clockwise
     public final int collidable;    
     //                          0 -> not collidable
     //                          1 -> totally collidable
     //                          2 -> monster collidable
     //                          3 -> player collidable
-    protected BoundingBox box;
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     protected AVelocity velocity;
     
-    public Spatial(float x, float y, float z, float length, float height, float width, int r, float m, float c, int collidable){
+    public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
+        length =l;
+        height = h;
+        width = w;
         this.velocity = new AVelocity(); // To add proper velocity later
         mass = m;
         cof = c;
-        rotation = r;
-        p1 = new Point();
-        p2 = new Point();
-        p3 = new Point();
-        p4 = new Point();
-        box = new BoundingBox(length,height,width);
+        rotation = 0;
         this.id = IDs++;
         this.collidable = collidable;
     }
@@ -62,16 +59,29 @@ public abstract class Spatial {
     public boolean collide(Spatial s){
         //if collision occurs: call the collideListener(pass in colliding object);
         //return false;
-        Rectangle axz = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)(location.getZ() - box.getWidth()/2), (int)box.getLength(), (int)box.getWidth());
-        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getZ() - s.getBoundingBox().getWidth()/2), (int)s.getBoundingBox().getLength(), (int)s.getBoundingBox().getWidth());
+        
+        boolean collide = false;
+        boolean rotated = false;
+        double arot = rotation;
         
         float aYmin = location.getY();
-        float aYmax = location.getY() + box.getHeight();
+        float aYmax = location.getY() + height;
         
         float bYmin = s.getY();
-        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+        float bYmax = s.getY() + s.getHeight();
         
-        if (axz.intersects(bxz) || axz.contains(bxz)){
+        if (arot != 0){
+            s.setLocalRotation(-arot);
+            rotated = true;
+        }
+        if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width)){
+            collide = true;
+        }
+        if (rotated){
+            s.setLocalRotation(arot);
+        }
+        
+        if (collide){
             if (aYmin <= bYmax && aYmax >= bYmin)
             {return true;}
             else if (aYmin >= bYmin && aYmax <= bYmax)
@@ -79,23 +89,35 @@ public abstract class Spatial {
             else{}return false;
         }
         else{}return false;
+//        Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
+//        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getLength()/2), (int)(s.getZ() - s.getWidth()/2), (int)s.getLength(), (int)s.getWidth());
+//        
+//        float aYmin = location.getY();
+//        float aYmax = location.getY() + height;
+//        
+//        float bYmin = s.getY();
+//        float bYmax = s.getY() + s.getHeight();
+//        
+//        if (axz.intersects(bxz) || axz.contains(bxz)){
+//            if (aYmin <= bYmax && aYmax >= bYmin)
+//            {return true;}
+//            else if (aYmin >= bYmin && aYmax <= bYmax)
+//            {return true;}
+//            else{}return false;
+//        }
+//        else{}return false;
     }
     public boolean contains(Spatial s){
-        Rectangle axy = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)location.getY(), (int)box.getLength(), (int)box.getHeight());
-        Rectangle ayz = new Rectangle ((int)location.getY(), (int)(location.getZ() - box.getWidth()), (int)location.getY(), (int)box.getWidth());
-        Rectangle axz = new Rectangle ((int)(location.getX() - box.getLength()/2), (int)(location.getZ() - box.getWidth()/2), (int)box.getLength(), (int)box.getWidth());
-        
-        Rectangle bxy = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)s.getY(), (int)(s.getX() + s.getBoundingBox().getLength()/2), (int)(s.getY() +  s.getBoundingBox().getHeight()));
-        Rectangle byz = new Rectangle ((int)s.getY(), (int)(s.getZ() - s.getBoundingBox().getWidth()), (int)(s.getY() + s.getBoundingBox().getHeight()), (int)(s.getZ() + s.getBoundingBox().getWidth()/2));
-        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getBoundingBox().getLength()/2), (int)(s.getZ() - s.getBoundingBox().getWidth()/2), (int)s.getBoundingBox().getLength(), (int)s.getBoundingBox().getWidth());
+        Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
+        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getLength()/2), (int)(s.getZ() - s.getWidth()/2), (int)s.getLength(), (int)s.getWidth());
         
         float aYmin = location.getY();
-        float aYmax = location.getY() + box.getHeight();
+        float aYmax = location.getY() + height;
         
         float bYmin = s.getY();
-        float bYmax = s.getY() + s.getBoundingBox().getHeight();
+        float bYmax = s.getY() + s.getHeight();
         
-        if (axz.intersects(bxz) || axz.contains(bxz)){
+        if (axz.contains(bxz)){
             if (aYmin >= bYmin && aYmax <= bYmax)
             {return true;}
             else{}return false;
@@ -106,11 +128,30 @@ public abstract class Spatial {
     public GamePoint getLocation(){
         return location;
     }
-    public BoundingBox getBoundingBox(){
-        return box;
+    public double getRotation(){
+        return Math.toDegrees(rotation);
     }
-    public int getRotation(){
-        return rotation;
+    public void setRotation(double r){
+        rotation = Math.toRadians(r) % (2*Math.PI);
+    }
+    public void setLocalRotation(double r){
+        rotation = (rotation + Math.toRadians(r)) % (2*Math.PI);
+    }
+    public Polygon getShape(){
+        double angle1 = Math.PI/2 - rotation - Math.atan(length/width);
+        double angle2 = rotation - Math.atan(length/width);
+        double dis = Math.hypot(length/2,width/2);
+        
+        Point p1 = new Point((int)(location.getX() + dis * Math.sin(angle2)),(int)(location.getZ() - dis * Math.cos(angle2)));
+        Point p2 = new Point((int)(location.getX() + dis * Math.cos(angle1)),(int)(location.getZ() - dis * Math.sin(angle1)));
+        Point p3 = new Point((int)(location.getX() - dis * Math.sin(angle2)),(int)(location.getZ() + dis * Math.cos(angle2)));
+        Point p4 = new Point((int)(location.getX() - dis * Math.cos(angle1)),(int)(location.getZ() + dis * Math.sin(angle1)));
+      
+        int[] xpoints = new int[] {p1.x,p2.x,p3.x,p4.x};
+        int[] zpoints = new int[] {p1.y,p2.y,p3.y,p4.y};
+        
+        Polygon shape = new Polygon(xpoints, zpoints, 4);
+        return shape;
     }
     public float getX(){
         return location.getX();
@@ -120,6 +161,15 @@ public abstract class Spatial {
     }
     public float getZ(){
         return location.getZ();
+    }
+    public float getLength(){
+        return length;
+    }
+    public float getWidth(){
+        return width;
+    }
+    public float getHeight(){
+        return height;
     }
     public int getId(){
         return id;
@@ -151,9 +201,9 @@ public abstract class Spatial {
     }
     
     public void scale(float x, float y, float z){
-    	box.setLength(box.getLength() + x);
-    	box.setWidth(box.getWidth() + y);
-    	box.setHeight(box.getHeight() + z);
+    	length += x;
+    	width += z;
+    	height += y;
     }
     public void update(){
         AbstractControl[] conts = controls.values().toArray(new AbstractControl[0]);
