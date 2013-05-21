@@ -33,6 +33,7 @@ public abstract class PhysicsSpace {
             if (! a.equals(b)){
                 if (a.collide(b) || b.collide(a)){
 //                    a.collideEffect(b);
+                    System.out.println("collided");
                     return true;
                 }
             }

@@ -7,7 +7,6 @@ package GameSource.Assets.TerrainBlocks.Blocks.DirtBlock;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.TerrainBlocks.AbstractTerrainBlock;
 import Renderer.AetherCam;
-import Spatial.BoundingBox;
 import Renderer.RenderChunk;
 import Spatial.Spatial;
 import java.awt.Color;

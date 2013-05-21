@@ -73,7 +73,7 @@ class RotPanel extends JPanel implements MouseListener, MouseMotionListener{
         g.setColor(Color.blue);
         for (int i = 0; i < spatials.size(); i ++){
             g.fillPolygon(spatials.get(i).getShape());
-            spatials.get(i).setRotation(spatials.get(i).getRotation()+1);
+            spatials.get(i).setLocalRotation(1);
         }
     }
     
@@ -110,10 +110,13 @@ class Box{
         this.y = y;
         length = l;
         height = h;
-        rot = Math.toRadians(r);
+        rot = Math.toRadians(r) % (2*Math.PI);
     }
     public void setRotation(double r){
-        rot = Math.toRadians(r);
+        rot = Math.toRadians(r) % (2*Math.PI);
+    }
+    public void setLocalRotation(double r){
+        rot = (rot + Math.toRadians(r)) % (2*Math.PI);
     }
     public double getRotation(){
         return Math.toDegrees(rot);
