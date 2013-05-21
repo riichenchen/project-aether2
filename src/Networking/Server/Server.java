@@ -49,6 +49,7 @@ public abstract class Server extends Thread{
             try {
                 // accept a connection from a client
                 cSocket = sSocket.accept();
+                cSocket.setTcpNoDelay(true);
                 System.out.println("Client Connected: " + cSocket.getInetAddress().getHostAddress());
                 // Start a thread to handle each client, the client will add itself to the managers list
                 //addListener(manager).start();
