@@ -55,7 +55,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
 
     public testPanel(){
         ready = false;
-        space = new PhysicsSpace(1.81f) {};
+        space = new PhysicsSpace(1.81f,800,600) {};
         spatials = new HashMap <> ();
         Spatial a = new Spatial(400f,100f,15f, 800f,30f,30f, 0f,0f,0) {
             @Override
