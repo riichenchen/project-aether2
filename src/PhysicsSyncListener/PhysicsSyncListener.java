@@ -15,9 +15,9 @@ public class PhysicsSyncListener {
     private LinkedList <PhysicsSyncMessage> msgs;
     private PhysicsSpace space;   
     
-    public PhysicsSyncListener(float g){
+    public PhysicsSyncListener(float g, int l, int w){
         msgs = new LinkedList <>();
-        space = new PhysicsSpace(g) {};
+        space = new PhysicsSpace(g,l,w) {};
     }
     public void update(){
         if (msgs.peek() != null){
