@@ -55,7 +55,7 @@ public class ClientWorldHandler {
     }
     public void addAllSpatials(MapSpatData[] spatData){
         for (MapSpatData s: spatData){
-            myGameMap.addPlayer(0, s.getLocation(),s.getId());
+            myGameMap.addPlayer(s.getType(), s.getLocation(),s.getId());
         }
     }
 //    public void setGameWaiting(boolean b){

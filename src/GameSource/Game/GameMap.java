@@ -7,9 +7,9 @@ import Renderer.AetherCam;
 import Renderer.RenderSpatial;
 import Renderer.Renderer;
 import Spatial.Spatial;
+import Testing.MyTestCharacter;
 import java.awt.Graphics;
 import java.util.HashMap;
-import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -27,7 +27,7 @@ public class GameMap {
         protected boolean canRender = false;
         protected String mapName;
         
-        public static final int Char_TESTBLOCK = 0;
+        public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1;
                 
         public GameMap(String mapName, double _mobDensity,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
             //mapImage = new ImageIcon(mapName);
@@ -159,6 +159,8 @@ public class GameMap {
             Spatial newChar = null;
             if (characterType == Char_TESTBLOCK){
                 newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
+            } else if (characterType == Char_TESTANIM){
+                newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
             }
             if (newChar == null){
                 System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
@@ -171,6 +173,8 @@ public class GameMap {
             Spatial newChar = null;
             if (characterType == Char_TESTBLOCK){
                 newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
+            } else if (characterType == Char_TESTANIM){
+                newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
             }
             if (newChar == null){
                 System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");

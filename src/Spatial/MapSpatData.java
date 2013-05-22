@@ -14,14 +14,19 @@ import java.io.Serializable;
 public class MapSpatData implements Serializable {
     private int id;
     private GamePoint loc;
-    public MapSpatData(int id,GamePoint loc){
+    private int type;
+    public MapSpatData(int id,GamePoint loc,int type){
         this.id = id;
         this.loc = loc;
+        this.type = type;
     }
     public int getId(){
         return id;
     }
     public GamePoint getLocation(){
         return loc;
+    }
+    public int getType(){
+        return type;
     }
 }
