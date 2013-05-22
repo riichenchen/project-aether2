@@ -52,7 +52,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
     private PhysicsSpace space;
     private HashMap <Integer,Spatial> spatials;
     int count;
-
+    int colidecount = 0;
     public testPanel(){
         ready = false;
         space = new PhysicsSpace(1.81f,800,600) {};
@@ -60,13 +60,22 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         Spatial a = new Spatial(400f,100f,15f, 800f,30f,30f, 0f,0f,0) {
             @Override
             public void collideEffect(Spatial s) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        Spatial b = new Spatial(400f,300f,15f, 800f,30f,30f, 0f,0f,1) {
+            @Override
+            public void collideEffect(Spatial s) {
+                System.out.println("colliding!"+(colidecount++));
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
         spatials.put(0,a);
         space.addSpatial(0,a);
+        spatials.put(1,b);
+        space.addSpatial(1,b);
         
-        count  = 1;
+        count  = 2;
         addMouseMotionListener(this);
         addMouseListener(this);
         setSize(800,600);
@@ -82,7 +91,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
 
             @Override
             public void collideEffect(Spatial s) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
         s.setRotation(10);
@@ -100,8 +109,6 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         Spatial[] spatialslist = spatials.values().toArray(new Spatial[0]);
         for (Spatial s: spatialslist){
             g.fillRect((int)(s.getX() - s.getLength()/2),(int)(s.getY()-s.getHeight()/2),(int)s.getLength(), (int)s.getHeight());
-            System.out.println(s.getRotation());
-            System.out.println(s.getY());
         }
         for (Spatial s: spatialslist){
             if (s.getY() < 0){
@@ -109,7 +116,6 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
                 space.addRemoveMessage(s.getId());
             }
         }
-        System.out.println(spatials.size());
     }
     
     @Override
