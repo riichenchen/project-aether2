@@ -5,19 +5,16 @@
 package Testing;
 
 import GameSource.Assets.AssetManager;
-import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
 import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Renderer.AetherCam;
-import Renderer.Renderer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.Random;
 import javax.swing.JPanel;
 
 /**
@@ -29,7 +26,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     public boolean ready=false,inputstate = true,visibility = true;
     //private int boxx= 200,boxy=200;
     
-    private Other_Block myBlock,yourBlock;
+    private MyTestCharacter myBlock,yourBlock;
     private MyKeyListener mykeycontrol,yourkeycontrol;
     private GameMap myMap;
     private AetherCam myCam;
@@ -42,8 +39,8 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         //GameUI= new BloonInterface(gameMap);
         //new SpriteSet();
         AssetManager.init();
-        myBlock = new Other_Block(300,1,200);
-        yourBlock = new Other_Block(350,1,200);
+        myBlock = new MyTestCharacter(300,1,200);
+        yourBlock = new MyTestCharacter(350,1,200);
         mykeycontrol = new MyKeyListener();
         yourkeycontrol = new MyKeyListener();
         myBlock.addControl(mykeycontrol);

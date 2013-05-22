@@ -19,9 +19,9 @@ public class AetherCam {
         this.width = width;
         this.map = map;
     }
-    public int[] convertCoords(int x,int y){
+    public int[] convertCoords(float X,float Y){
         //TODO: Base this translation on screenx and screeny
-        return new int[] {x,y};
+        return new int[] {(int)(X-x),(int)(Y-y)};
     }
     private void updatePosition(int x,int y){
         this.x = x;

@@ -5,9 +5,11 @@
 package Spatial;
 
 import Controls.AbstractControl;
+import GameSource.Assets.AssetManager;
+import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
 import GameSource.Game.GamePoint;
+import GameSource.Input.PlayerKeyListener;
 import PhysicsSpace.AVelocity;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.awt.*;
 
@@ -33,7 +35,7 @@ public abstract class Spatial {
     //                          3 -> player collidable
     protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
     protected AVelocity velocity;
-    
+
     public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         length =l;
@@ -46,6 +48,7 @@ public abstract class Spatial {
         this.id = IDs++;
         this.collidable = collidable;
     }
+    
     /*SHOULD ONLY BE CALLED BY SERVER REGISTER!!!!!!!!!!!*/
     public void setId(int id){
         this.id = id;
@@ -176,21 +179,33 @@ public abstract class Spatial {
     }
     
     public void addControl(AbstractControl control){
-        controls.put(control.getControlId(),control);
         control.bindToSpatial(this);
+        controls.put(control.getControlId(),control);
     }
     
     public void removeControl(AbstractControl control){
         controls.remove(control.getControlId());
     }
+    
+    //Removes the first instance of a specific class seen.
+    public void removeControl(Class<?> controlType){
+        for (AbstractControl c: controls.values().toArray(new AbstractControl[0])){
+            if (controlType.isInstance(c)){
+                controls.remove(c.getControlId());
+                return;
+            }
+        }
+    }
+    
     public AbstractControl getControl(){
     	if (controls.isEmpty()){
             return null;
     	}
     	else{
-            return controls.get(1);
+            return controls.values().toArray(new AbstractControl[0])[0];
     	}
     }
+    
     public AbstractControl getControl(int id){
     	if (controls.containsKey(id)){
             return controls.get(id);
@@ -200,11 +215,22 @@ public abstract class Spatial {
     	}
     }
     
+    //Based on a class type, returns the first instance of the controltype found or null if it doesn't exist
+    public Object getControl(Class<?> controlType){
+        for (AbstractControl c: controls.values().toArray(new AbstractControl[0])){
+            if (controlType.isInstance(c)){
+                return controlType.cast(c);
+            }
+        }
+        return null;
+    }
+    
     public void scale(float x, float y, float z){
     	length += x;
     	width += z;
     	height += y;
     }
+    
     public void update(){
         AbstractControl[] conts = controls.values().toArray(new AbstractControl[0]);
         for (AbstractControl c: conts){

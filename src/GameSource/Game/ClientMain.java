@@ -12,7 +12,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Shiyang
+ * @author Shiyang1996
  */
 public class ClientMain extends javax.swing.JFrame implements java.awt.event.ActionListener {
 
