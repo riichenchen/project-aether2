@@ -1,0 +1,4 @@
+MyTestAnimation
+WalkLeft
+Stand
+/MyTestAnimation
