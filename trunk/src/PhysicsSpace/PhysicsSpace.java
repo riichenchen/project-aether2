@@ -14,12 +14,26 @@ import java.util.*;
 public abstract class PhysicsSpace {
     public HashMap <Integer,Spatial> spatials;
     public LinkedList <PhysicsSpaceMessage> msgs;
+    private PhysicsChunk[][] physicsMap;
     public final float gravity;
+    public final int length, width;
     
-    public PhysicsSpace(float g){
+    //Constants represent a scale factor by which to divide the entire "map" into
+    //and organize spatials by      -taken from Renderer.java (ask shiyang)
+    private final float S_QUAD = 0.05f;
+    
+    public PhysicsSpace(float g, int l, int w){
+        length = l;
+        width = w;
+        gravity = g;
         spatials = new HashMap <>();
         msgs = new LinkedList <>();
-        gravity = g;
+        this.physicsMap = new PhysicsChunk[(int)(w*S_QUAD)][(int)(l*S_QUAD)];
+        for (int i = 0; i < (int)(w*S_QUAD);i++){
+            for (int j = 0; j < (int)(l*S_QUAD);j++){
+                physicsMap[i][j] = new PhysicsChunk();
+            }
+        }
     }
     public void gravityEffect(){
         Spatial[] spatialsArray = spatials.values().toArray(new Spatial[0]);

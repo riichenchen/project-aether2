@@ -5,11 +5,9 @@
 package Spatial;
 
 import Controls.AbstractControl;
-import GameSource.Assets.AssetManager;
-import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
 import GameSource.Game.GamePoint;
-import GameSource.Input.PlayerKeyListener;
 import PhysicsSpace.AVelocity;
+import PhysicsSpace.PhysicsChunk;
 import java.util.HashMap;
 import java.awt.*;
 
@@ -33,20 +31,25 @@ public abstract class Spatial {
     //                          1 -> totally collidable
     //                          2 -> monster collidable
     //                          3 -> player collidable
-    protected HashMap<Integer,AbstractControl> controls = new HashMap<>();
+    protected float percentscale;
+    protected HashMap<Integer,AbstractControl> controls;
+    protected HashMap<Integer,PhysicsChunk> physicsChunks;
     protected AVelocity velocity;
 
     public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
-        length =l;
+        length = l;
         height = h;
         width = w;
         this.velocity = new AVelocity(); // To add proper velocity later
+        controls = new HashMap<>();
+        physicsChunks = new HashMap<>();
         mass = m;
         cof = c;
         rotation = 0;
         this.id = IDs++;
         this.collidable = collidable;
+        percentscale = 1f;
     }
     
     /*SHOULD ONLY BE CALLED BY SERVER REGISTER!!!!!!!!!!!*/
@@ -60,55 +63,31 @@ public abstract class Spatial {
     public abstract void collideEffect(Spatial s);
     
     public boolean collide(Spatial s){
-        //if collision occurs: call the collideListener(pass in colliding object);
-        //return false;
-        
-        boolean collide = false;
+        boolean collided = false;
         boolean rotated = false;
         double arot = rotation;
         
-        float aYmin = location.getY();
-        float aYmax = location.getY() + height;
+        float aYmin = location.getY() + height;
+        float aYmax = location.getY();
         
-        float bYmin = s.getY();
-        float bYmax = s.getY() + s.getHeight();
+        float bYmin = s.getY() + s.getHeight();
+        float bYmax = s.getY();
         
         if (arot != 0){
             s.setLocalRotation(-arot);
-            rotated = true;
-        }
+            rotated = true;}
         if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width)){
-            collide = true;
-        }
+            collided = true;}
         if (rotated){
-            s.setLocalRotation(arot);
-        }
-        
-        if (collide){
-            if (aYmin <= bYmax && aYmax >= bYmin)
+            s.setLocalRotation(arot);}
+        if (collided){
+            if (aYmin >= bYmax && aYmax <= bYmin)
             {return true;}
-            else if (aYmin >= bYmin && aYmax <= bYmax)
+            else if (aYmin <= bYmin && aYmax >= bYmax)
             {return true;}
             else{}return false;
         }
         else{}return false;
-//        Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
-//        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getLength()/2), (int)(s.getZ() - s.getWidth()/2), (int)s.getLength(), (int)s.getWidth());
-//        
-//        float aYmin = location.getY();
-//        float aYmax = location.getY() + height;
-//        
-//        float bYmin = s.getY();
-//        float bYmax = s.getY() + s.getHeight();
-//        
-//        if (axz.intersects(bxz) || axz.contains(bxz)){
-//            if (aYmin <= bYmax && aYmax >= bYmin)
-//            {return true;}
-//            else if (aYmin >= bYmin && aYmax <= bYmax)
-//            {return true;}
-//            else{}return false;
-//        }
-//        else{}return false;
     }
     public boolean contains(Spatial s){
         Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
@@ -145,16 +124,19 @@ public abstract class Spatial {
         double angle2 = rotation - Math.atan(length/width);
         double dis = Math.hypot(length/2,width/2);
         
-        Point p1 = new Point((int)(location.getX() + dis * Math.sin(angle2)),(int)(location.getZ() - dis * Math.cos(angle2)));
-        Point p2 = new Point((int)(location.getX() + dis * Math.cos(angle1)),(int)(location.getZ() - dis * Math.sin(angle1)));
-        Point p3 = new Point((int)(location.getX() - dis * Math.sin(angle2)),(int)(location.getZ() + dis * Math.cos(angle2)));
-        Point p4 = new Point((int)(location.getX() - dis * Math.cos(angle1)),(int)(location.getZ() + dis * Math.sin(angle1)));
+        Point p1 = new Point((int)(location.getX() + dis * Math.sin(angle2)),(int)(location.getZ() - dis * Math.cos(angle2) - length/2));
+        Point p2 = new Point((int)(location.getX() + dis * Math.cos(angle1)),(int)(location.getZ() - dis * Math.sin(angle1) - length/2));
+        Point p3 = new Point((int)(location.getX() - dis * Math.sin(angle2)),(int)(location.getZ() + dis * Math.cos(angle2) - length/2));
+        Point p4 = new Point((int)(location.getX() - dis * Math.cos(angle1)),(int)(location.getZ() + dis * Math.sin(angle1) - length/2));
       
         int[] xpoints = new int[] {p1.x,p2.x,p3.x,p4.x};
         int[] zpoints = new int[] {p1.y,p2.y,p3.y,p4.y};
         
         Polygon shape = new Polygon(xpoints, zpoints, 4);
         return shape;
+    }
+    public HashMap<Integer,PhysicsChunk> getPhysicsChunks(){
+        return physicsChunks;
     }
     public float getX(){
         return location.getX();
@@ -225,10 +207,17 @@ public abstract class Spatial {
         return null;
     }
     
-    public void scale(float x, float y, float z){
-    	length += x;
-    	width += z;
-    	height += y;
+    public void scale(float percent){
+        percentscale = percent;
+    	length *= percentscale;
+    	width *= percentscale;
+    	height *= percentscale;
+    }
+    public void scaleLocal(float percent){
+    	percentscale += percent;
+    	length *= percentscale;
+    	width *= percentscale;
+    	height *= percentscale;
     }
     
     public void update(){

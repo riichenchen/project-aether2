@@ -46,7 +46,7 @@ public abstract class RenderSpatial extends Spatial{
     
     public abstract void render(Graphics g,JPanel pane,AetherCam cam);
     
-    public HashMap<Integer,RenderChunk> getChunks(){
+    public HashMap<Integer,RenderChunk> getRenderChunks(){
         return renderChunks;
     }
     public abstract int[] getCullBounds(float S_QUAD);

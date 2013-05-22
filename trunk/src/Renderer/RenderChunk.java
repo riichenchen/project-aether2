@@ -31,7 +31,7 @@ public class RenderChunk {
             return;
         }
         objects.put(spat.getId(),spat);
-        spat.getChunks().put(id,this);
+        spat.getRenderChunks().put(id,this);
     }
     
     public void removeObject(RenderSpatial spat){
@@ -40,7 +40,7 @@ public class RenderChunk {
             return;
         }
         objects.remove(spat.getId());
-        spat.getChunks().remove(id);
+        spat.getRenderChunks().remove(id);
     }
     
     public HashMap<Integer,RenderSpatial> getObjects(){
