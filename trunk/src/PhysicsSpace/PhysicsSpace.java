@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author Robert
  */
-public abstract class PhysicsSpace {
+public class PhysicsSpace {
     public HashMap <Integer,Spatial> spatials;
     public LinkedList <PhysicsSpaceMessage> msgs;
     private PhysicsChunk[][] physicsMap;
@@ -46,9 +46,12 @@ public abstract class PhysicsSpace {
         for (Spatial b: spatialsArray){
             if (! a.equals(b)){
                 if (a.collide(b) || b.collide(a)){
-//                    a.collideEffect(b);
-                    System.out.println("collided");
-                    return true;
+                    a.collideEffect(b);
+                    if (a.collidable == b.collidable){
+                        
+//                        System.out.println("collided");
+                        return true;
+                    }
                 }
             }
         }
