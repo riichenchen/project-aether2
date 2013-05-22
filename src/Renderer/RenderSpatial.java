@@ -49,4 +49,5 @@ public abstract class RenderSpatial extends Spatial{
     public HashMap<Integer,RenderChunk> getChunks(){
         return renderChunks;
     }
+    public abstract int[] getCullBounds(float S_QUAD);
 }

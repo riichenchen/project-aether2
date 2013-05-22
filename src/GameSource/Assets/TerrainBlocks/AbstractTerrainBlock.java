@@ -4,6 +4,7 @@
  */
 package GameSource.Assets.TerrainBlocks;
 import GameSource.Assets.AssetManager;
+import GameSource.Game.GamePoint;
 import Renderer.AetherCam;
 import Renderer.RenderChunk;
 import Renderer.RenderSpatial;
@@ -44,4 +45,12 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
     
     public abstract boolean getSolid();
     
+    @Override
+    public int[] getCullBounds(float S_QUAD){
+        int x = (int)Math.floor(getX()*S_QUAD);
+        int y = (int)Math.floor(getZ()*S_QUAD);
+        int sizex = (int)Math.ceil(getLength()*S_QUAD);
+        int sizey = (int)Math.ceil(getWidth()*S_QUAD);
+        return new int[]{x,y,sizex,sizey};
+    }
 }

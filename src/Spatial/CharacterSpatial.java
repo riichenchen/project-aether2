@@ -5,8 +5,10 @@
 package Spatial;
 
 import Controls.CharacterAnimControl;
+import GameSource.Globals;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -20,7 +22,7 @@ public abstract class CharacterSpatial extends RenderSpatial{
     
 //    protected int state;
     public CharacterSpatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
-        super(x,y,z,l,w,h,m,c,collidable);
+        super(x,y,z,l,h,w,m,c,collidable);
 //        this.state = 0; // Default state for stand
     }
     //JUMPING = 1,MOVINGLEFT = 2,MOVINGRIGHT = 3,MOVINGUP = 4,MOVINGDOWN = 5
@@ -31,11 +33,25 @@ public abstract class CharacterSpatial extends RenderSpatial{
     
     @Override 
     public void render(Graphics g,JPanel pane, AetherCam cam){
+        if (Globals.__PHYSICSDEBUG__){
+            g.setColor(Color.red);
+            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getWidth());
+            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
+        }
         Object charAnimControl = this.getControl(CharacterAnimControl.class);
         if (charAnimControl != null){
             ((CharacterAnimControl)charAnimControl).render(g, pane, cam);
         } else {
             System.out.println("Warning: No Character Anim Track for spatial "+this.getId());
         }
+    }
+    
+    @Override
+    public int[] getCullBounds(float S_QUAD){
+        int x = (int)Math.floor((getX()-getLength()/2)*S_QUAD);
+        int y = (int)Math.floor((getZ()-getWidth())*S_QUAD);
+        int sizex = (int)Math.ceil(getLength()*S_QUAD);
+        int sizey = (int)Math.ceil(getWidth()*S_QUAD);
+        return new int[]{x,y,sizex,sizey};
     }
 }

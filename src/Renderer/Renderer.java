@@ -95,11 +95,11 @@ public class Renderer {
     }
     
     public void addSpatial(RenderSpatial spat){
-        GamePoint location = spat.getLocation();
-        int x = (int)Math.floor(location.getX()*S_QUAD);
-        int y = (int)Math.floor(location.getZ()*S_QUAD);
-        int sizex = (int)Math.ceil(spat.getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(spat.getWidth()*S_QUAD);
+        int[] cullbounds = spat.getCullBounds(S_QUAD);//GamePoint location = spat.getLocation();
+        int x = cullbounds[0];//(int)Math.floor(location.getX()*S_QUAD);
+        int y = cullbounds[1];//(int)Math.floor(location.getZ()*S_QUAD);
+        int sizex = cullbounds[2];//(int)Math.ceil(spat.getLength()*S_QUAD);
+        int sizey = cullbounds[3];//(int)Math.ceil(spat.getWidth()*S_QUAD);
 
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
@@ -111,11 +111,12 @@ public class Renderer {
         spat.bindToRenderer(this);
     }
     public void removeSpatial(RenderSpatial spat){
-        GamePoint location = spat.getLocation();
-        int x = (int)Math.floor(location.getX()*S_QUAD);
-        int y = (int)Math.floor(location.getZ()*S_QUAD);
-        int sizex = (int)Math.ceil(spat.getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(spat.getWidth()*S_QUAD);
+        int[] cullbounds = spat.getCullBounds(S_QUAD);//GamePoint location = spat.getLocation();
+        int x = cullbounds[0];//(int)Math.floor(location.getX()*S_QUAD);
+        int y = cullbounds[1];//(int)Math.floor(location.getZ()*S_QUAD);
+        int sizex = cullbounds[2];//(int)Math.ceil(spat.getLength()*S_QUAD);
+        int sizey = cullbounds[3];//(int)Math.ceil(spat.getWidth()*S_QUAD);
+        
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
                 renderMap[j][i].removeObject(spat);
