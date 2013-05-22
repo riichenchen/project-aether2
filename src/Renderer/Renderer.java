@@ -80,11 +80,11 @@ public class Renderer {
             if (mymsg.getType()== RenderMessage.UPDATE){
                 RenderSpatial myspat = mymsg.getSpat();
                 //Take out the spatial from any chunks that may still point to it
-                RenderChunk[] chunks = myspat.getChunks().values().toArray(new RenderChunk[0]);
+                RenderChunk[] chunks = myspat.getRenderChunks().values().toArray(new RenderChunk[0]);
                 for (RenderChunk ch: chunks){
                     ch.removeObject(myspat);
                 }
-                myspat.getChunks().clear();
+                myspat.getRenderChunks().clear();
 //                while (myspat.getChunks().peek()!= null){
 //                    RenderChunk myChunk = myspat.getChunks().poll();
 //                    myChunk.removeObject(myspat);
