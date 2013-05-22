@@ -35,7 +35,10 @@ public abstract class CharacterSpatial extends RenderSpatial{
     public void render(Graphics g,JPanel pane, AetherCam cam){
         if (Globals.__PHYSICSDEBUG__){
             g.setColor(Color.red);
-            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getWidth());
+            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getHeight());
+            g.drawRect(loc[0],loc[1],(int)this.getLength(),(int)this.getHeight());
+            g.setColor(Color.blue);
+            loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getWidth());
             g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
         }
         Object charAnimControl = this.getControl(CharacterAnimControl.class);
