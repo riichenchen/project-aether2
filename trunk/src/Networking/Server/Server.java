@@ -5,6 +5,7 @@
 package Networking.Server;
 
 //import Networking.Server.ServerNetListener;
+import GameSource.Globals;
 import Networking.Messages.Message;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -23,8 +24,8 @@ public abstract class Server extends Thread{
             
     public Server() {
             try {
-                // Start the server on port 5000, print out some information about the server
-                sSocket = new ServerSocket(4186);
+                // Start the server, print out some information about the server
+                sSocket = new ServerSocket(Globals.__PORT__);
                 InetAddress inet = InetAddress.getLocalHost();
                 System.out.println("Host Name: " + inet.getHostName());
                 System.out.println("IP Address: " + inet.getHostAddress());

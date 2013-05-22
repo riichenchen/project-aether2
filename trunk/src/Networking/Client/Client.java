@@ -30,7 +30,7 @@ public abstract class Client
     public Client (LoginFrame world){
         this.world = world;
         try {
-            csocket = new Socket (Globals.__IP__, 4186);
+            csocket = new Socket (Globals.__IP__, Globals.__PORT__);
             csocket.setTcpNoDelay(true);
             System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
             netlistener = new ClientNetListener(csocket,this);
