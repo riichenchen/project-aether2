@@ -15,7 +15,7 @@ import Spatial.Spatial;
  */
 public class MyTestCharacter extends CharacterSpatial{
     public MyTestCharacter(float x,float y,float z){
-        super(x,y,z,1f,1f,1f,1f,1f,0);
+        super(x,y,z,78f,0f,95f,1f,1f,0);
         addControl(new CharacterAnimControl(AssetManager.getSpriteSet("MyTestAnimation")));
     }
     @Override

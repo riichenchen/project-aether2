@@ -1,2 +1,1 @@
 GameSource.game.GameMap
-GameMap
