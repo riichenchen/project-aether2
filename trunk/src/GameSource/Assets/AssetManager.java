@@ -7,8 +7,11 @@ package GameSource.Assets;
 import Animation.AnimTrack;
 import Animation.SpriteSet;
 import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
+import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.Globals;
 import GameSource.game.GameMap;
+import Spatial.Spatial;
+import Testing.MyTestCharacter;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,7 +41,6 @@ public class AssetManager {
         allAnimSets = new HashMap<>();
         loadAnimations();
         System.out.println("Loaded Animations!");
-        //load in images here
     }
     private static void loadBlocks(){
         try {
@@ -134,8 +136,19 @@ public class AssetManager {
     public static SpriteSet getSpriteSet(String key){
         return allAnimSets.get(key);
     }
-    public static void main(String[] args){
-        AssetManager.init();
-//        System.out.println(AssetManager.getBlockImage("dirtblock"));
+    public static int SpatialToType(Spatial spat){
+        if (spat instanceof Other_Block){
+            return 0;
+        } else if (spat instanceof MyTestCharacter){
+            return 1;
+        }
+        System.out.println("SEVERE: Unable to recognise SpatialID!");
+        System.exit(0);
+        return -1;
     }
+
+//    public static void main(String[] args){
+//        AssetManager.init();
+////        System.out.println(AssetManager.getBlockImage("dirtblock"));
+//    }
 }

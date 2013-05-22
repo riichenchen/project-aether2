@@ -4,6 +4,7 @@
  */
 package Networking.Messages;
 
+import GameSource.Assets.AssetManager;
 import Spatial.MapSpatData;
 import Spatial.Spatial;
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class MapDataPackageMessage extends Message implements Serializable{
         this.spatz = new MapSpatData[spats.length];
         int counter = 0;
         for (Spatial s: spats){
-            this.spatz[counter++] = new MapSpatData(s.getId(),s.getLocation());
+            this.spatz[counter++] = new MapSpatData(s.getId(),s.getLocation(),AssetManager.SpatialToType(s));
         }
         this.mapId = mapid;
     }
