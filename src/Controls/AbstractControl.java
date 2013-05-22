@@ -30,6 +30,11 @@ public abstract class AbstractControl {
     public static void setWorld(ClientWorldHandler World){
         world = World;
     }
-    
+    public ClientWorldHandler getWorld(){
+        return world;
+    }
+    public Spatial getBoundTo(){
+        return boundTo;
+    }
     public abstract void update();
 }
