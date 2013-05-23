@@ -76,7 +76,7 @@ public abstract class Spatial {
         if (arot != 0){
             s.setLocalRotation(-arot);
             rotated = true;}
-        if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width),(double)length,(double)width)){
+        if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width)){
             collided = true;}
         if (rotated){
             s.setLocalRotation(arot);}
@@ -124,10 +124,10 @@ public abstract class Spatial {
         double angle2 = rotation - Math.atan(length/width);
         double dis = Math.hypot(length/2,width/2);
         
-        Point p1 = new Point((int)(location.getX() + dis * Math.sin(angle2)),(int)(location.getZ() - dis * Math.cos(angle2) - length/2));
-        Point p2 = new Point((int)(location.getX() + dis * Math.cos(angle1)),(int)(location.getZ() - dis * Math.sin(angle1) - length/2));
-        Point p3 = new Point((int)(location.getX() - dis * Math.sin(angle2)),(int)(location.getZ() + dis * Math.cos(angle2) - length/2));
-        Point p4 = new Point((int)(location.getX() - dis * Math.cos(angle1)),(int)(location.getZ() + dis * Math.sin(angle1) - length/2));
+        Point p1 = new Point((int)(location.getX() + dis * Math.sin(angle2)),(int)(location.getZ() - dis * Math.cos(angle2)));
+        Point p2 = new Point((int)(location.getX() + dis * Math.cos(angle1)),(int)(location.getZ() - dis * Math.sin(angle1)));
+        Point p3 = new Point((int)(location.getX() - dis * Math.sin(angle2)),(int)(location.getZ() + dis * Math.cos(angle2)));
+        Point p4 = new Point((int)(location.getX() - dis * Math.cos(angle1)),(int)(location.getZ() + dis * Math.sin(angle1)));
       
         int[] xpoints = new int[] {p1.x,p2.x,p3.x,p4.x};
         int[] zpoints = new int[] {p1.y,p2.y,p3.y,p4.y};
