@@ -47,6 +47,7 @@ public class PhysicsSpace {
             if (! a.equals(b)){
                 if (a.collide(b) || b.collide(a)){
                     a.collideEffect(b);
+                    b.collideEffect(a);
                     if (a.collidable == b.collidable){
                         
 //                        System.out.println("collided");
@@ -58,7 +59,11 @@ public class PhysicsSpace {
         return false;
     }
     public void update(){
-        gravityEffect();
+        Spatial[] spatialsArray = spatials.values().toArray(new Spatial[0]);
+        for (Spatial a: spatialsArray){
+            checkCollision(a);
+        }
+//        gravityEffect();
         resolveMessages();
     }
     public void resolveMessages(){

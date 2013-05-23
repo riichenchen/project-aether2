@@ -3,6 +3,7 @@ package GameSource.game;
 import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.Game.GamePoint;
 import GameSource.Globals;
+import PhysicsSpace.PhysicsSpace;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
 import Renderer.Renderer;
@@ -26,6 +27,7 @@ public class GameMap {
         protected AetherCam camera = null;
         protected boolean canRender = false;
         protected String mapName;
+        protected PhysicsSpace space;
         
         public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1;
                 
@@ -37,6 +39,7 @@ public class GameMap {
             spats = new HashMap<>();
             this.mapName = mapName;
             this.nonPermaSpats = new HashMap<>();
+            this.space = new PhysicsSpace(9.81f,dimx,dimy);
             //Clean this up later maybe
             if (canRender){
                 this.canRender = true;
@@ -64,6 +67,7 @@ public class GameMap {
         public void addSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
             nonPermaSpats.put(spat.getId(), spat);
+            space.addSpatial(spat.getId(), spat);
             
             if (!verifyRender())
                 return;
@@ -74,6 +78,8 @@ public class GameMap {
         
         public void addPermanentSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
+            space.addSpatial(spat.getId(), spat);
+            
             if (!verifyRender())
                 return;
             if (spat instanceof RenderSpatial){
@@ -147,6 +153,7 @@ public class GameMap {
             if (!verifyRender())
                 return;
             renderer.update();
+            space.update();
         }
         public String getName(){
             return mapName;
