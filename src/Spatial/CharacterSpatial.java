@@ -10,6 +10,8 @@ import Renderer.AetherCam;
 import Renderer.RenderSpatial;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Polygon;
 import javax.swing.JPanel;
 
 /**
@@ -35,10 +37,18 @@ public abstract class CharacterSpatial extends RenderSpatial{
     public void render(Graphics g,JPanel pane, AetherCam cam){
         if (Globals.__PHYSICSDEBUG__){
             g.setColor(Color.blue);
-            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getWidth());
-            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
+            Polygon theShape = getShape();
+            int[] allX = theShape.xpoints;
+            int[] allY = theShape.ypoints;
+            for (int i = 0; i < 4; i++){
+                int[] locs = cam.convertCoords(allX[i], allY[i]);
+                allX[i] = locs[0];
+                allY[i] = locs[1];
+            }
+            g.drawPolygon(new Polygon(allX,allY,4));
+            //            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
             g.setColor(Color.red);
-            loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getHeight());
+            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getHeight());
             g.drawRect(loc[0],loc[1],(int)this.getLength(),(int)this.getHeight());
         }
         Object charAnimControl = this.getControl(CharacterAnimControl.class);
