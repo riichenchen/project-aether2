@@ -226,4 +226,7 @@ public abstract class Spatial {
             c.update();
         }
     }
+    public float distSquared(Spatial spat){
+        return spat.location.distanceSquared(location);
+    }
 }
