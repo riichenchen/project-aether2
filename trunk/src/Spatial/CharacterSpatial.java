@@ -34,12 +34,12 @@ public abstract class CharacterSpatial extends RenderSpatial{
     @Override 
     public void render(Graphics g,JPanel pane, AetherCam cam){
         if (Globals.__PHYSICSDEBUG__){
-            g.setColor(Color.red);
-            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getHeight());
-            g.drawRect(loc[0],loc[1],(int)this.getLength(),(int)this.getHeight());
             g.setColor(Color.blue);
-            loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getWidth());
+            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getWidth());
             g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
+            g.setColor(Color.red);
+            loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getHeight());
+            g.drawRect(loc[0],loc[1],(int)this.getLength(),(int)this.getHeight());
         }
         Object charAnimControl = this.getControl(CharacterAnimControl.class);
         if (charAnimControl != null){
@@ -52,9 +52,9 @@ public abstract class CharacterSpatial extends RenderSpatial{
     @Override
     public int[] getCullBounds(float S_QUAD){
         int x = (int)Math.floor((getX()-getLength()/2)*S_QUAD);
-        int y = (int)Math.floor((getZ()-getWidth())*S_QUAD);
+        int y = (int)Math.floor((getZ()-getHeight())*S_QUAD);
         int sizex = (int)Math.ceil(getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(getWidth()*S_QUAD);
+        int sizey = (int)Math.ceil(getHeight()*S_QUAD);
         return new int[]{x,y,sizex,sizey};
     }
 }

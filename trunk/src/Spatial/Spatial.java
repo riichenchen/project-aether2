@@ -76,7 +76,7 @@ public abstract class Spatial {
         if (arot != 0){
             s.setLocalRotation(-arot);
             rotated = true;}
-        if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width)){
+        if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width),(double)length,(double)width)){
             collided = true;}
         if (rotated){
             s.setLocalRotation(arot);}

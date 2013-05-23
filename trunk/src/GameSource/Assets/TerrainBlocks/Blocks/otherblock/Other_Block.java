@@ -30,7 +30,7 @@ public class Other_Block extends AbstractTerrainBlock {
 
     @Override
     public void collideEffect(Spatial s) {
-        System.out.println("COLLIDED!");
+//        System.out.println("COLLIDED!");
     }
 
 }
