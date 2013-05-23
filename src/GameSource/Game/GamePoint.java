@@ -32,4 +32,7 @@ public class GamePoint implements Serializable{
         public String toString(){
             return this.x+" "+this.y+" "+this.z;
         }
+        public float distanceSquared(GamePoint p){
+            return (float)(Math.pow(x-p.x,2)+Math.pow(y-p.y,2)+Math.pow(z-p.z,2));
+        }
 }

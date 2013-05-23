@@ -49,7 +49,8 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
-
+        Portal myport = new Portal(400,1,300);
+        myMap.addSpatial(myport);
 //        Random myrand = new Random();
 //        for (int i = 0; i < 5000; i++){
 //            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
