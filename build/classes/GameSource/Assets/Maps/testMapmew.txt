@@ -1,4 +1,3 @@
-Blocks
 dirtblock 0 0 0
 dirtblock 0 0 28
 dirtblock 0 0 56
@@ -1375,10 +1374,3 @@ dirtblock 1550 0 1092
 dirtblock 1550 0 1120
 dirtblock 1550 0 1148
 dirtblock 1550 0 1176
-/Blocks
-Portals
-12 400 0 300
-/Portals
-SpawnPoints
-400 0 300 0
-/SpawnPoints

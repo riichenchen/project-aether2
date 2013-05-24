@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         mykeycontrol = new MyKeyListener();
         yourkeycontrol = new MyKeyListener();
         myBlock.addControl(mykeycontrol);
+        myBlock.rotate(Math.toRadians(45));
         yourBlock.addControl(yourkeycontrol);
         myMap = AssetManager.getMap("testMap");
         myMap.addSpatial(myBlock);

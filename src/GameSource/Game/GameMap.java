@@ -18,7 +18,7 @@ public class GameMap {
         
         protected ImageIcon mapImage;//To be used.
         protected double mobDensity; //????
-        protected int dimx = 1600,dimy = 1200;        
+        protected int dimx,dimy;        
         protected HashMap<Integer,Spatial> spats;
         protected HashMap<Integer,Spatial> nonPermaSpats;
         //Only client maps can render. This saves space and allows
@@ -153,7 +153,7 @@ public class GameMap {
             if (!verifyRender())
                 return;
             renderer.update();
-            space.update();
+//            space.update();
         }
         public String getName(){
             return mapName;

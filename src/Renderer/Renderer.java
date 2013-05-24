@@ -34,6 +34,7 @@ public class Renderer {
     public Renderer(GameMap map,AetherCam camera){
         this.map = map;
         this.camera = camera;
+        System.out.println(map.getDimY());
         this.renderMap = new RenderChunk[(int)(map.getDimY()*S_QUAD)][(int)(map.getDimX()*S_QUAD)];
         for (int i = 0; i < (int)(map.getDimY()*S_QUAD);i++){
             for (int j = 0; j < (int)(map.getDimX()*S_QUAD);j++){
@@ -49,9 +50,10 @@ public class Renderer {
         }
         //Make sure no spats are rendered twice as chunks may contain repeats
         HashMap<Integer,RenderSpatial> temp = new HashMap<>();
+
         /*Note: Render System divides map up into quadrant sections and then renders whatever quadrants the camera captures*/
         for (int i = (int)(Math.floor(camera.getX()*S_QUAD));i < (int)((camera.getX()+camera.getLength())*S_QUAD);i++){
-            for (int j = (int)(Math.floor(camera.getY()*S_QUAD)); j < (int)((camera.getY()+camera.getWidth())*S_QUAD);j++){
+            for (int j = (int)(Math.floor(camera.getY()*S_QUAD/Globals.__PROJECTION_SCALE__)); j < (int)((camera.getY()+camera.getWidth())*S_QUAD/Globals.__PROJECTION_SCALE__);j++){
                 HashMap<Integer,RenderSpatial> myobjs = renderMap[j][i].getObjects();
                 RenderSpatial[] potentialRenders = myobjs.values().toArray(new RenderSpatial[0]);
                 //potential renders because not all will be "rendered"

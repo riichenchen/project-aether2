@@ -24,5 +24,10 @@ public class MyTestCharacter extends CharacterSpatial{
 //        System.out.println("collide "+id+" "+(n++));
 //        throw new UnsupportedOperationException("Not supported yet.");
     }
+    @Override
+    public void update(){
+        super.update();
+//        System.out.println(getX()+" "+getY()+" "+getZ());
+    }
     
 }

@@ -41,14 +41,15 @@ public abstract class CharacterSpatial extends RenderSpatial{
             int[] allX = theShape.xpoints;
             int[] allY = theShape.ypoints;
             for (int i = 0; i < 4; i++){
-                int[] locs = cam.convertCoords(allX[i], allY[i]);
+                int[] locs = cam.convertCoords(allX[i], allY[i]*Globals.__PROJECTION_SCALE__);
+//                int[] locs = cam.convertCoords(allX[i], allY[i]);
                 allX[i] = locs[0];
                 allY[i] = locs[1];
             }
             g.drawPolygon(new Polygon(allX,allY,4));
             //            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
             g.setColor(Color.red);
-            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()-this.getHeight());
+            int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()*Globals.__PROJECTION_SCALE__ -this.getHeight());
             g.drawRect(loc[0],loc[1],(int)this.getLength(),(int)this.getHeight());
         }
         Object charAnimControl = this.getControl(CharacterAnimControl.class);

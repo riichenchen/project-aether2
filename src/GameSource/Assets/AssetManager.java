@@ -71,7 +71,7 @@ public class AssetManager {
             String[] tempdat;
             while ((nextline = fin.readLine())!=null){
                 tempdat = nextline.split(";");
-                GameMap mymap = new GameMap(tempdat[0],0.1,1600,1200,Globals.__CAMX__,Globals.__CAMY__,true);
+                GameMap mymap = new GameMap(tempdat[0],0.1,1600,4000,Globals.__CAMX__,Globals.__CAMY__,true);
                 BufferedReader fin_map = new BufferedReader(new FileReader(DIRECTORY+"maps/"+tempdat[1]));
                 while ((nextline = fin_map.readLine()) != null){
                     tempdat = nextline.split(" ");
