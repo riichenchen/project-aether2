@@ -1,4 +1,4 @@
-/*)import java.util.*;
+/*import java.util.*;
 
 public class Pathfinding {
 	
@@ -10,8 +10,16 @@ public class Pathfinding {
 		}
 	}
 	
-	public class EdgeComparator implements Comparator<Edge> {
-		public int compare (Edge x, Edge y) {
+	public class Node {
+		int location, cost;
+		public Node(int _location, int _cost) {
+			location = _location;
+			cost = _cost;
+		}
+	}
+	
+	public class NodeComparator implements Comparator<Node> {
+		public int compare (Node x, Node y) {
 			if (x.cost < y.cost)
 				return -1;
 			
@@ -29,25 +37,29 @@ public class Pathfinding {
 	private int [] dy = {0, 1, 0, -1};
 	private boolean [] visited;
 	private int cur_x, cur_y, tar_x, tar_y;
+	private int maxSize;
 	private ArrayList [] edges;
 	private ArrayList best_path;
 	private PriorityQueue q;
-	
+	private Comparator nodeComparator;
 	
 	public Pathfinding(char [][] _grid, int _cur_x, int _cur_y, int _tar_x, int _tar_y) {
 		INF = (1 << 30) + ((1 << 30) - 1);
 		grid = _grid;
 		X_MAX = grid.length;
 		Y_MAX = grid[0].length;
-		dist = new int [X_MAX * (Y_MAX + 1)]; 
-		edges = new ArrayList[X_MAX * (Y_MAX + 1)];
-		visited = new boolean[X_MAX * (Y_MAX + 1)];
-		prev = new int [X_MAX * (Y_MAX + 1)];
+		maxSize = X_MAX * (Y_MAX + 1);
+		dist = new int [maxSize]; 
+		edges = new ArrayList[maxSize];
+		visited = new boolean[maxSize];
+		prev = new int [maxSize];
+		best_path = new ArrayList();
+	 	nodeComparator = new NodeComparator(); 
 		cur_x = _cur_x;
 		cur_y = _cur_y;
 		tar_x = _tar_x;
 		tar_y = _tar_y;
- 		init();
+ 		solve();
 	}
 	
 	private int getManDist(int v1, int v2) {
@@ -73,7 +85,7 @@ public class Pathfinding {
 		return ret;
 	}	
 		
-	private void init() {
+	private void solve() {
 		
 		Arrays.fill(visited, false);
 		
@@ -105,14 +117,14 @@ public class Pathfinding {
 				}
 			}
 		}
-		Comparator edgeComparator = new EdgeComparator(); 
-		q = new PriorityQueue<Edge>(11, edgeComparator);
-		q.add(new Edge(cur_x, 0));
+		
+		q = new PriorityQueue<Node>(11, nodeComparator);
+		q.add(new Node(cur_x * Y_MAX + cur_y, 0));
 		while (q.peek() != null) {
 			
-			Edge curEdge = (Edge)q.poll();
-			int cur_v = curEdge.to;
-			int cur_cost = curEdge.cost;
+			Node curNode = (Node)q.poll();
+			int cur_v = curNode.location;
+			int cur_cost = curNode.cost;
 			
 			if (visited[cur_v])
 				continue;
@@ -133,7 +145,7 @@ public class Pathfinding {
 				
 				if (dist[new_v] > new_cost) {
 					dist[new_v] = new_cost;
-					q.add(new Edge(new_v, new_cost));
+					q.add(new Node(new_v, new_cost));
 					prev[new_v] = cur_v;
 				}
 			}
@@ -148,7 +160,6 @@ public class Pathfinding {
 		best_path = new ArrayList();
 		
 		int c_node = tar_x * Y_MAX + tar_y;
-		
 		while (prev[c_node] != -1) {
 			c_node = prev[c_node];
 			best_path.add(c_node);
@@ -159,6 +170,18 @@ public class Pathfinding {
 		return best_path;
 	}
 	
+	public void updateCurrentLocation(int x, int y) {
+		cur_x = x;
+		cur_y = y;
+		solve();
+	}
+	
+	public void updateTargetLocation(int x, int y) {
+		tar_x = x;
+		tar_y = y;
+		solve();
+	}
+	
 	public static void main(String [] args) {
 		char [][] test_grid = {
 		{0, 0, 0, 0},
@@ -167,6 +190,7 @@ public class Pathfinding {
 		}; 
 		
 		Pathfinding test = new Pathfinding(test_grid, 0, 0, 2, 2);
+		test.updateCurrentLocation(0, 2);
 		
 		ArrayList bPath = test.getPath();
 		int bPathLen = bPath.size();
