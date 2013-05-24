@@ -229,4 +229,7 @@ public abstract class Spatial {
     public float distSquared(Spatial spat){
         return spat.location.distanceSquared(location);
     }
+    public void rotate(double radians){
+        rotation = radians;
+    }
 }

@@ -6,6 +6,7 @@ package Controls;
 
 import Animation.AnimTrack;
 import Animation.SpriteSet;
+import GameSource.Globals;
 import Renderer.AetherCam;
 import Spatial.Spatial;
 import java.awt.Graphics;
@@ -63,7 +64,7 @@ public class CharacterAnimControl extends AbstractControl{
             return;
         }
         //Note: recall that we're mapping 2D onto 2.5 d, so the 2.5d z axis is the 2d y axis
-        int[] camSpaceCoords = camera.convertCoords(boundTo.getX(),boundTo.getZ());
+        int[] camSpaceCoords = camera.convertCoords(boundTo.getX(),boundTo.getZ()*Globals.__PROJECTION_SCALE__);
         g.drawImage(theTrack.getAt(time),camSpaceCoords[0]-theTrack.getOffX(),camSpaceCoords[1]-theTrack.getOffY(),pane);
     }
     

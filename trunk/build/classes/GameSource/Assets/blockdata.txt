@@ -1,2 +1,0 @@
-dirtblock;greenblock.png
-otherblock;otherblock.png
