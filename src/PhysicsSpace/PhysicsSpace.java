@@ -60,8 +60,12 @@ public class PhysicsSpace {
     }
     public void update(){
         Spatial[] spatialsArray = spatials.values().toArray(new Spatial[0]);
-        for (Spatial a: spatialsArray){
-            checkCollision(a);
+        for (int i = 0; i < spatialsArray.length;i++){
+            for (int j = i+1; j < spatialsArray.length;j++){
+                if (spatialsArray[i].collide(spatialsArray[j])){
+                    spatialsArray[i].collideEffect(spatialsArray[j]);
+                }
+            }
         }
 //        gravityEffect();
         resolveMessages();

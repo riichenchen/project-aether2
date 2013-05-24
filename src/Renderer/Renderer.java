@@ -27,7 +27,7 @@ public class Renderer {
     
     //Constants represent a scale factor by which to divide the entire "map" into
     //and organize spatials by
-    private final float S_QUAD = 0.05f;
+    private final float S_QUAD = 0.1f;
     
     private GameMap map;
     
