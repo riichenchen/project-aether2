@@ -1,0 +1,8 @@
+MyTestAnimation
+WalkLeft
+WalkRight
+Stand
+/MyTestAnimation
+Portal
+Default
+/Portal

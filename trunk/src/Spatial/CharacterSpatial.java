@@ -64,8 +64,8 @@ public abstract class CharacterSpatial extends RenderSpatial{
     public int[] getCullBounds(float S_QUAD){
         int x = (int)Math.floor((getX()-getLength()/2)*S_QUAD);
         int y = (int)Math.floor((getZ()-getHeight())*S_QUAD);
-        int sizex = (int)Math.ceil(getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(getHeight()*S_QUAD);
+        int sizex = (int)(getLength()*S_QUAD);
+        int sizey = (int)(getHeight()*S_QUAD);
         return new int[]{x,y,sizex,sizey};
     }
 }

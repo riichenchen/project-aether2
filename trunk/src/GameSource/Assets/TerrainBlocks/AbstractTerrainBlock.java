@@ -50,8 +50,8 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
     public int[] getCullBounds(float S_QUAD){
         int x = (int)Math.floor(getX()*S_QUAD);
         int y = (int)Math.floor(getZ()*S_QUAD);
-        int sizex = (int)Math.ceil(getLength()*S_QUAD);
-        int sizey = (int)Math.ceil(getWidth()*S_QUAD);
+        int sizex = (int)(getLength()*S_QUAD);
+        int sizey = (int)(getWidth()*S_QUAD);
         return new int[]{x,y,sizex,sizey};
     }
 }
