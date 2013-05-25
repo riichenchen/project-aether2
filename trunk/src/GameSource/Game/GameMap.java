@@ -68,6 +68,7 @@ public class GameMap {
             spats.put(spat.getId(), spat);
             nonPermaSpats.put(spat.getId(), spat);
             space.addPlayerSpatial(spat);
+            spat.bindToMap(this);
             
             if (!verifyRender())
                 return;
@@ -79,6 +80,7 @@ public class GameMap {
         public void addPermanentSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
             space.addEnviroSpatial(spat);
+            spat.bindToMap(this);
             
             if (!verifyRender())
                 return;
@@ -91,6 +93,7 @@ public class GameMap {
             Spatial[] nonperms = nonPermaSpats.values().toArray(new Spatial[0]);
             for (Spatial spat: nonperms){
                 spats.remove(spat.getId());
+                spat.unbindFromMap();
                 space.removeSpatial(spat);
             }
         }
@@ -126,6 +129,8 @@ public class GameMap {
         public void removeSpatial(Spatial spat){
             spats.remove(spat.getId());
             nonPermaSpats.remove(spat.getId());
+            spat.unbindFromMap();
+            
             space.removeSpatial(spat);
             //Remove from render space if the spatial is in the render space
             if (!verifyRender())

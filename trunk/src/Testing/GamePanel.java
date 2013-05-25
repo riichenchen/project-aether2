@@ -5,7 +5,7 @@
 package Testing;
 
 import GameSource.Assets.AssetManager;
-import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
+import GameSource.Effects.IceyEffect;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Renderer.AetherCam;
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
 //        myBlock.rotate(Math.toRadians(45));
         yourBlock.addControl(yourkeycontrol);
         myMap = AssetManager.getMap("testMap");
-        myMap.addSpatial(myBlock);
+//        myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
         Portal myport = new Portal(400,1,300);
@@ -138,6 +138,9 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
                 //System.out.println("Visible!!");
             }
             visibility = !visibility;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+            myMap.addSpatial(new IceyEffect(yourBlock.getX(),yourBlock.getY(),yourBlock.getZ()+10));
         }
     }
 }

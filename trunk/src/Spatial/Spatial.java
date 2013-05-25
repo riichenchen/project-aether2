@@ -6,6 +6,7 @@ package Spatial;
 
 import Controls.AbstractControl;
 import GameSource.Game.GamePoint;
+import GameSource.game.GameMap;
 import PhysicsSpace.AVelocity;
 import PhysicsSpace.PhysicsChunk;
 import PhysicsSpace.PhysicsSpace;
@@ -37,7 +38,8 @@ public abstract class Spatial {
     protected HashMap<Integer,PhysicsChunk> physicsChunks;
     protected AVelocity velocity;
     protected PhysicsSpace space;
-    
+    protected GameMap boundMap;
+            
     public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         length = l;
@@ -52,6 +54,13 @@ public abstract class Spatial {
         this.id = IDs++;
         this.collidable = collidable;
         percentscale = 1f;
+    }
+    
+    public void bindToMap(GameMap map){
+        this.boundMap = map;
+    }
+    public void unbindFromMap(){
+        this.boundMap = null;
     }
     
     public void bindToSpace(PhysicsSpace space){

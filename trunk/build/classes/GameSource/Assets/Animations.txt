@@ -16,3 +16,6 @@ walkupright
 walkupleft
 walkup
 /Steve
+Effects
+icysprite
+/Effects
