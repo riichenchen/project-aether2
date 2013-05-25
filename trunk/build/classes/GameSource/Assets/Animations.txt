@@ -6,3 +6,13 @@ Stand
 Portal
 Default
 /Portal
+Steve
+walkdown
+walkdownright
+walkdownleft
+walkright
+walkleft
+walkupright
+walkupleft
+walkup
+/Steve
