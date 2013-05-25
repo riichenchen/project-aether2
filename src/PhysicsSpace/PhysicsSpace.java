@@ -110,9 +110,12 @@ public class PhysicsSpace {
                 for (int k = j+1; k < playerSpats.length;k++){
                     if (playerSpats[j].collide(playerSpats[k])){
                         playerSpats[j].collideEffect(playerSpats[k]);
-                        playerSpats[k].collideEffect(playerSpats[j]);
+                        //Note: the call to the second will be
+                        //executed when "i" loops around to it in theory
+                        //May have to uncomment the below line if not.
+//                        playerSpats[k].collideEffect(playerSpats[j]);
                     }
-                    n++;
+                    n++; //Operation counter for debug
                 }
                 for (int l = 0; l < envSpats.length;l++){
                     if (playerSpats[j].collide(envSpats[l])){
@@ -135,16 +138,19 @@ public class PhysicsSpace {
             PhysicsSpaceMessage message = msgs.poll();
             if (message instanceof PUpdateSpatialMessage){
                 Spatial myspat = ((PUpdateSpatialMessage)message).spat;
-                PhysicsChunk[] chunks = myspat.getPhysicsChunks().values().toArray(new PhysicsChunk[0]);
-                for (PhysicsChunk chunk: chunks){
-                    chunk.removeObject(myspat);
-                }
-                myspat.getPhysicsChunks().clear();
-                addSpatial(myspat);
+                performUpdateSpatial(myspat);
             }
         }
     }
     
+    private void performUpdateSpatial(Spatial spat){
+        PhysicsChunk[] chunks = spat.getPhysicsChunks().values().toArray(new PhysicsChunk[0]);
+        for (PhysicsChunk chunk: chunks){
+            chunk.removeObject(spat);
+        }
+        spat.getPhysicsChunks().clear();
+        addSpatial(spat);
+    }
     public void addEnviroSpatial(Spatial s){
         enviroSpats.put(s.getId(), s);
         addSpatial(s);

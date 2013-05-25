@@ -248,6 +248,9 @@ public abstract class Spatial {
         rotation = radians;
     }
     
+    /*This method returns the culling boundary of each item based
+     on their length, width and location. This boundary is used
+     to cull for rendering as well as physics calculations.*/
     public int[] getCullBounds(float S_QUAD){
         int x = (int)((getX()-getLength()/2)*S_QUAD);
         int y = (int)((getZ()-getHeight())*S_QUAD);

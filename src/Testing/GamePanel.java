@@ -26,8 +26,10 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     public boolean ready=false,inputstate = true,visibility = true;
     //private int boxx= 200,boxy=200;
     
-    private MyTestCharacter myBlock,yourBlock;
-    private MyKeyListener mykeycontrol,yourkeycontrol;
+    private MyTestCharacter myBlock;
+    private Stevey yourBlock;
+    private MyKeyListener mykeycontrol;
+    private SteveyKeyListener yourkeycontrol;
     private GameMap myMap;
     private AetherCam myCam;
     
@@ -41,9 +43,9 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         //new SpriteSet();
         AssetManager.init();
         myBlock = new MyTestCharacter(300,1,200);
-        yourBlock = new MyTestCharacter(350,1,200);
+        yourBlock = new Stevey(350,1,400);
         mykeycontrol = new MyKeyListener();
-        yourkeycontrol = new MyKeyListener();
+        yourkeycontrol = new SteveyKeyListener();
         myBlock.addControl(mykeycontrol);
 //        myBlock.rotate(Math.toRadians(45));
         yourBlock.addControl(yourkeycontrol);
