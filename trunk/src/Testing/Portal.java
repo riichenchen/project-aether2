@@ -19,9 +19,10 @@ public class Portal extends CharacterSpatial{
         addControl(new CharacterAnimControl(AssetManager.getSpriteSet("Portal")));
     }
     private int n = 0;
+    
     @Override
     public void collideEffect(Spatial s) {
-        if (location.distanceSquared(s.getLocation()) <= Math.pow(15,2) && getZ()-s.getZ() >= 0){
+        if (location.distanceSquared(s.getLocation()) <= Math.pow(20,2) && getZ()-s.getZ() >= 0){
             System.out.println("IN! "+id+" "+(n++));
         }
 //        throw new UnsupportedOperationException("Not supported yet.");

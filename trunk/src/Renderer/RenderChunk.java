@@ -36,7 +36,7 @@ public class RenderChunk {
     
     public void removeObject(RenderSpatial spat){
         if (!objects.containsKey(spat.getId())){
-            System.out.println("Warning: Trying to remove existant spatial to Map Chunk!");
+            System.out.println("Warning: Trying to remove non existant spatial to Map Chunk!");
             return;
         }
         objects.remove(spat.getId());

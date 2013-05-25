@@ -35,7 +35,7 @@ public abstract class CharacterSpatial extends RenderSpatial{
     
     @Override 
     public void render(Graphics g,JPanel pane, AetherCam cam){
-        if (Globals.__PHYSICSDEBUG__){
+        if (Globals.__PHYSICSDEBUG__ <5){
             g.setColor(Color.blue);
             Polygon theShape = getShape();
             int[] allX = theShape.xpoints;
@@ -58,14 +58,5 @@ public abstract class CharacterSpatial extends RenderSpatial{
         } else {
             System.out.println("Warning: No Character Anim Track for spatial "+this.getId());
         }
-    }
-    
-    @Override
-    public int[] getCullBounds(float S_QUAD){
-        int x = (int)Math.floor((getX()-getLength()/2)*S_QUAD);
-        int y = (int)Math.floor((getZ()-getHeight())*S_QUAD);
-        int sizex = (int)(getLength()*S_QUAD);
-        int sizey = (int)(getHeight()*S_QUAD);
-        return new int[]{x,y,sizex,sizey};
     }
 }

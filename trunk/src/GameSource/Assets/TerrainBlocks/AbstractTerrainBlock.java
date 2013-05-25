@@ -41,17 +41,8 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
         //TODO: Add perspective to this thing
         int[] camSpaceCoords = camera.convertCoords(location.getX(),location.getZ()*Globals.__PROJECTION_SCALE__);
         
-        g.drawImage(image, camSpaceCoords[0], camSpaceCoords[1], pane);
+        g.drawImage(image, camSpaceCoords[0]-(int)length/2, camSpaceCoords[1]-(int)width, pane);
     }
     
     public abstract boolean getSolid();
-    
-    @Override
-    public int[] getCullBounds(float S_QUAD){
-        int x = (int)Math.floor(getX()*S_QUAD);
-        int y = (int)Math.floor(getZ()*S_QUAD);
-        int sizex = (int)(getLength()*S_QUAD);
-        int sizey = (int)(getWidth()*S_QUAD);
-        return new int[]{x,y,sizex,sizey};
-    }
 }

@@ -8,11 +8,10 @@ import Spatial.Spatial;
 
 /**
  *
- * @author Robert
+ * @author Shiyang
  */
-public class PhysicsSpaceMessage {
-    public final Spatial spat;
-    public PhysicsSpaceMessage(Spatial spat){
-        this.spat = spat;
+public class PUpdateSpatialMessage extends PhysicsSpaceMessage{
+    public PUpdateSpatialMessage(Spatial spat){
+        super(spat);
     }
 }

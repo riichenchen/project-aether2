@@ -37,7 +37,7 @@ public class AetherNetListener extends ServerNetListener{
             if (reply != -1){
                 System.out.println(mymsg.getUser()+" has logged in as client "+mymsg.getClientId()+".");
                 manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true));
-                System.out.println("Sent o.o "+mymsg.getClientId());
+//                System.out.println("Sent o.o "+mymsg.getClientId());
                 //Change this in the future
                 manager.sendToOne(mymsg.getClientId(), new MapDataPackageMessage(world.getNonPermanents(),"testMap"));
                 
