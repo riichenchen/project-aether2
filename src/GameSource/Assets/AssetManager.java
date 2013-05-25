@@ -12,6 +12,7 @@ import GameSource.Globals;
 import GameSource.game.GameMap;
 import Spatial.Spatial;
 import Testing.MyTestCharacter;
+import Testing.Portal;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -141,6 +142,10 @@ public class AssetManager {
             return 0;
         } else if (spat instanceof MyTestCharacter){
             return 1;
+        } else if (spat instanceof Dirt_Block){
+            return 2;
+        } else if (spat instanceof Portal){
+            return 3;
         }
         System.out.println("SEVERE: Unable to recognise SpatialID!");
         System.exit(0);

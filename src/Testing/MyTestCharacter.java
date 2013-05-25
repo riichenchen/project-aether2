@@ -21,13 +21,16 @@ public class MyTestCharacter extends CharacterSpatial{
     }
     @Override
     public void collideEffect(Spatial s) {
-//        System.out.println("collide "+id+" "+(n++));
+//        if (AssetManager.SpatialToType(s)==AssetManager.SpatialToType(this)){
+//            System.out.println("collide "+id+" "+(n++));   
+//            System.out.println(getX()+" "+getZ()+","+s.getX()+" "+s.getZ());
+//        }
 //        throw new UnsupportedOperationException("Not supported yet.");
     }
     @Override
     public void update(){
         super.update();
-//        System.out.println(getX()+" "+getY()+" "+getZ());
+//        System.out.println(location);
     }
     
 }

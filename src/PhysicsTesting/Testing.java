@@ -71,9 +71,9 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
             }
         };
         spatials.put(0,a);
-        space.addSpatial(0,a);
+        space.addEnviroSpatial(a);
         spatials.put(1,b);
-        space.addSpatial(1,b);
+        space.addEnviroSpatial(b);
         
         count  = 2;
         addMouseMotionListener(this);
@@ -96,7 +96,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         };
         s.setRotation(10);
         spatials.put(s.getId(),s);
-        space.addSpatial(s.getId(), s);
+        space.addEnviroSpatial(s);
     }
     
     
@@ -113,7 +113,7 @@ class testPanel extends JPanel implements MouseMotionListener, MouseListener{
         for (Spatial s: spatialslist){
             if (s.getY() < 0){
                 spatials.remove(s.getId());
-                space.addRemoveMessage(s.getId());
+                space.removeSpatial(s);
             }
         }
     }

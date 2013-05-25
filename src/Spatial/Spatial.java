@@ -8,6 +8,7 @@ import Controls.AbstractControl;
 import GameSource.Game.GamePoint;
 import PhysicsSpace.AVelocity;
 import PhysicsSpace.PhysicsChunk;
+import PhysicsSpace.PhysicsSpace;
 import java.util.HashMap;
 import java.awt.*;
 
@@ -35,7 +36,8 @@ public abstract class Spatial {
     protected HashMap<Integer,AbstractControl> controls;
     protected HashMap<Integer,PhysicsChunk> physicsChunks;
     protected AVelocity velocity;
-
+    protected PhysicsSpace space;
+    
     public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         length = l;
@@ -52,6 +54,13 @@ public abstract class Spatial {
         percentscale = 1f;
     }
     
+    public void bindToSpace(PhysicsSpace space){
+        this.space = space;
+    }
+    public void unbindFromSpace(){
+        this.space = null;
+    }
+    
     /*SHOULD ONLY BE CALLED BY SERVER REGISTER!!!!!!!!!!!*/
     public void setId(int id){
         this.id = id;
@@ -59,6 +68,9 @@ public abstract class Spatial {
     
     public void move(float x, float y, float z){
         location.translate(x,y,z);
+        if (space != null){
+            space.updateSpatial(this);
+        }
     }
     public abstract void collideEffect(Spatial s);
     
@@ -77,17 +89,20 @@ public abstract class Spatial {
             s.setLocalRotation(-arot);
             rotated = true;}
         if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width)){
-            collided = true;}
+            collided = true;
+        } 
         if (rotated){
-            s.setLocalRotation(arot);}
+            s.setLocalRotation(arot);
+        } 
         if (collided){
-            if (aYmin >= bYmax && aYmax <= bYmin)
-            {return true;}
-            else if (aYmin <= bYmin && aYmax >= bYmax)
-            {return true;}
-            else{}return false;
+            if (aYmin >= bYmax && aYmax <= bYmin){
+                return true;
+            } else if (aYmin <= bYmin && aYmax >= bYmax){
+                return true;
+            }
+            return false;
         }
-        else{}return false;
+        return false;
     }
     public boolean contains(Spatial s){
         Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
@@ -231,5 +246,13 @@ public abstract class Spatial {
     }
     public void rotate(double radians){
         rotation = radians;
+    }
+    
+    public int[] getCullBounds(float S_QUAD){
+        int x = (int)((getX()-getLength()/2)*S_QUAD);
+        int y = (int)((getZ()-getHeight())*S_QUAD);
+        int sizex = (int)(getLength()*S_QUAD);
+        int sizey = (int)(getHeight()*S_QUAD);
+        return new int[]{x,y,sizex,sizey};
     }
 }

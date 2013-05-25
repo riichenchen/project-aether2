@@ -32,8 +32,9 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     private AetherCam myCam;
     
     public GamePanel(){ //initialize game variables, assign map to UI
-        addMouseMotionListener(this);
         addKeyListener(this);
+        addMouseMotionListener(this);
+        
         keys = new boolean[KeyEvent.KEY_LAST+1];
         //BloonMap gameMap = new BloonMap("monkeyStream");
         //GameUI= new BloonInterface(gameMap);
@@ -44,14 +45,14 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         mykeycontrol = new MyKeyListener();
         yourkeycontrol = new MyKeyListener();
         myBlock.addControl(mykeycontrol);
-        myBlock.rotate(Math.toRadians(45));
+//        myBlock.rotate(Math.toRadians(45));
         yourBlock.addControl(yourkeycontrol);
         myMap = AssetManager.getMap("testMap");
         myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
         Portal myport = new Portal(400,1,300);
-        myMap.addSpatial(myport);
+        myMap.addPermanentSpatial(myport);
 //        Random myrand = new Random();
 //        for (int i = 0; i < 5000; i++){
 //            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
