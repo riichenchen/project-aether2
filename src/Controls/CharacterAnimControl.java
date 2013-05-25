@@ -68,4 +68,9 @@ public class CharacterAnimControl extends AbstractControl{
         g.drawImage(theTrack.getAt(time),camSpaceCoords[0]-theTrack.getOffX(),camSpaceCoords[1]-theTrack.getOffY(),pane);
     }
     
+    //Returns the loop time of this animation
+    public int getLimit() {
+        return limit;
+    }
+    
 }
