@@ -6,6 +6,9 @@
  *
  * @author Angus
  */
+ 
+ //Refer to: http://mathworld.wolfram.com/Line-PlaneIntersection.html
+ 
 public class LinePlaneIntersection {
    public class Point {
        double x, y, z;
@@ -57,7 +60,7 @@ public class LinePlaneIntersection {
                {y1, y2, y3, y5 - y4},
                {z1, z2, z3, z5 - z4}};
        
-       tNum = solveMat(matNum);
+       tNum = -solveMat(matNum);
        tDen = solveMat(matDen);
    }
    
@@ -129,6 +132,6 @@ public class LinePlaneIntersection {
    }
    
    public Point getPointOfIntersection() {
-       return new Point(x4 + (x5 - x4) * -(tNum / tDen), y4 + (y5 - y4) * -(tNum / tDen), z4 + (z5 - z4) * -(tNum / tDen));
+       return new Point(x4 + (x5 - x4) * (tNum / tDen), y4 + (y5 - y4) * (tNum / tDen), z4 + (z5 - z4) * (tNum / tDen));
    }
 }
