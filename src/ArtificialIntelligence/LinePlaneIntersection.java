@@ -120,15 +120,15 @@ public class LinePlaneIntersection {
    }
    
    public boolean intersectsAtLine() {
-       return tNum == 0 && tDen == 0;
+       return (tNum == 0 && tDen == 0);
    }
    
    public boolean doesNotIntersect() {
-       return tNum != 0 && tDen == 0;
+       return (tNum != 0 && tDen == 0);
    }
    
    public boolean intersectsAtPoint() {
-       return !intersectsAtLine() && !doesNotIntersect();
+       return (!intersectsAtLine() && !doesNotIntersect());
    }
    
    public Point getPointOfIntersection() {

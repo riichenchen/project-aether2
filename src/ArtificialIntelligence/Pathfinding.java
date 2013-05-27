@@ -1,4 +1,4 @@
-/*import java.util.*;
+import java.util.*;
 
 public class Pathfinding {
 	
@@ -44,7 +44,7 @@ public class Pathfinding {
 	private Comparator nodeComparator;
 	
 	public Pathfinding(char [][] _grid, int _cur_x, int _cur_y, int _tar_x, int _tar_y) {
-		INF = (1 << 30) + ((1 << 30) - 1);
+		INF = (1 << 30) - 1;
 		grid = _grid;
 		X_MAX = grid.length;
 		Y_MAX = grid[0].length;
@@ -106,11 +106,11 @@ public class Pathfinding {
 					if (x - 1 >= 0 && grid[x - 1][y] == 0) 
 						edges[x * Y_MAX + y].add(new Edge((x - 1) * Y_MAX + y, 1));
 					
-					if (y - 1 >= 0 && grid[x][y - 1] == 0)
-						edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y - 1, 1));
-					
 					if (x + 1 < X_MAX && grid[x + 1][y] == 0)
 						edges[x * Y_MAX + y].add(new Edge((x + 1) * Y_MAX + y, 1));
+					
+					if (y - 1 >= 0 && grid[x][y - 1] == 0)
+						edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y - 1, 1));
 					
 					if (y + 1 < Y_MAX && grid[x][y + 1] == 0) 
 						edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y + 1, 1));
@@ -191,6 +191,7 @@ public class Pathfinding {
 		
 		Pathfinding test = new Pathfinding(test_grid, 0, 0, 2, 2);
 		test.updateCurrentLocation(0, 2);
+		test.updateTargetLocation(1, 2);
 		
 		ArrayList bPath = test.getPath();
 		int bPathLen = bPath.size();
@@ -199,4 +200,4 @@ public class Pathfinding {
 			System.out.printf("%d %d\n", (int)bPath.get(i) / test.Y_MAX, (int)bPath.get(i) % test.Y_MAX);
 	}
 	
-}*/
+}

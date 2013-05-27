@@ -1,4 +1,4 @@
-/*public class MobCounter {
+public class MobCounter {
 	
 	public int X_MAX, Y_MAX;
 	private int [][] tree;
@@ -25,8 +25,13 @@
 	public void addMob(int x, int y) {
 		update(x + 1, y + 1, 1);
 	}
+	
+	public void moveMob(int x1, int y1, int x2, int y2) {
+		removeMob(x1, y1);
+		addMob(x2, y2);
+	}
 		
-	int getNumMobs(int x1, int y1, int x2, int y2) {
+	public int getNumMobs(int x1, int y1, int x2, int y2) {
 		return query(x2 + 1, y2 + 1) - query(x1 , y2 + 1) - query(x2 + 1, y1) + query(x1, y1);
 	}
 	
@@ -57,12 +62,14 @@
 	public static void main(String [] args) {
 		char [][] testGrid = { {1, 1, 1, 1},
 								{1, 0, 1, 1},
-								{1, 1, 0, 1}
+								{1, 1, 0, 1},
+								{1, 0, 1, 0},
+								{0, 1, 1, 0},
 		};
 		MobCounter testCounter = new MobCounter(testGrid);
-		System.out.println(testCounter.getNumMobs(1, 1, 2, 2));
+		System.out.println(testCounter.getNumMobs(1, 1, 3, 2));
 		
 	}
 	
 	
-}*/
+}
