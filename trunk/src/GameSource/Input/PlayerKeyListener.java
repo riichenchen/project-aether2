@@ -24,25 +24,25 @@ public class PlayerKeyListener extends AbstractKeyListener{
         }
         String currentAnim = "Stand";
         
-        if (keys[KeyEvent.VK_RIGHT]){
+        if (keyDown(KeyEvent.VK_RIGHT)){
             boundTo.move(5,0,0);
             currentAnim = "WalkRight";
             world.addSpatAction(boundTo,SpatActionMessage.MOVERIGHT);
-        } if (keys[KeyEvent.VK_LEFT]){
+        } if (keyDown(KeyEvent.VK_LEFT)){
             boundTo.move(-5,0,0);
             currentAnim = "WalkLeft";
             world.addSpatAction(boundTo,SpatActionMessage.MOVELEFT);
-        } if (keys[KeyEvent.VK_UP]){
+        } if (keyDown(KeyEvent.VK_UP)){
             boundTo.move(0,0,-5);
             world.addSpatAction(boundTo,SpatActionMessage.MOVEUP);
-        } if (keys[KeyEvent.VK_DOWN]){
+        } if (keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(0,0,5);
             world.addSpatAction(boundTo,SpatActionMessage.MOVEDOWN);
         }
         if (animControl != null){
             animControl.swapAnim(currentAnim);
         }
-        if (!(keys[KeyEvent.VK_RIGHT]||keys[KeyEvent.VK_LEFT])){
+        if (!(keyDown(KeyEvent.VK_RIGHT)||keyDown(KeyEvent.VK_LEFT))){
             world.addSpatAction(boundTo,SpatActionMessage.NONE);
         }
     }
