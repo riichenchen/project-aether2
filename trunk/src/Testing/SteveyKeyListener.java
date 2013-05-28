@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  * @author Shiyang
  */
 public class SteveyKeyListener extends AbstractKeyListener{
-
+    int n = 0;
     @Override
     public void resolveKeyEvents() {
         Object charCont = boundTo.getControl(CharacterAnimControl.class);
@@ -25,30 +25,33 @@ public class SteveyKeyListener extends AbstractKeyListener{
             return;
         }
         String currentAnim = "walkdown";
-        if (keys[KeyEvent.VK_RIGHT] && keys[KeyEvent.VK_DOWN]){
+        if (keyDown(KeyEvent.VK_RIGHT) && keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(3, 0, 3);
             currentAnim = "walkdownright";
-        } else if (keys[KeyEvent.VK_RIGHT] && keys[KeyEvent.VK_UP]){
+        } else if (keyDown(KeyEvent.VK_RIGHT) && keyDown(KeyEvent.VK_UP)){
             boundTo.move(3,0,-3);
             currentAnim = "walkupright";
-        } else if (keys[KeyEvent.VK_LEFT] && keys[KeyEvent.VK_DOWN]){
+        } else if (keyDown(KeyEvent.VK_LEFT) && keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(-3,0,3);
             currentAnim = "walkdownleft";
-        } else if (keys[KeyEvent.VK_LEFT] && keys[KeyEvent.VK_UP]){
+        } else if (keyDown(KeyEvent.VK_LEFT) && keyDown(KeyEvent.VK_UP)){
             boundTo.move(-3,0,-3);
             currentAnim = "walkupleft";
-        }  else if (keys[KeyEvent.VK_RIGHT]){
+        }  else if (keyDown(KeyEvent.VK_RIGHT)){
             boundTo.move(3,0,0);
             currentAnim = "walkright";
-        } else if (keys[KeyEvent.VK_LEFT]){
+        } else if (keyDown(KeyEvent.VK_LEFT)){
             boundTo.move(-3,0,0);
             currentAnim = "walkleft";
-        } else if (keys[KeyEvent.VK_UP]){
+        } else if (keyDown(KeyEvent.VK_UP)){
             boundTo.move(0,0,-3);
             currentAnim = "walkup";
-        } else if (keys[KeyEvent.VK_DOWN]){
+        } else if (keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(0,0,3);
             currentAnim = "walkdown";
+        }
+        if (eventKeyDown(KeyEvent.VK_DOWN)){
+            System.out.println("Times pressed: "+(n++));
         }
         animControl.swapAnim(currentAnim);
     }

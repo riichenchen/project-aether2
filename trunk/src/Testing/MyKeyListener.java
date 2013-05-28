@@ -25,16 +25,16 @@ public class MyKeyListener extends AbstractKeyListener{
             return;
         }
         String currentAnim = "Stand";
-        if (keys[KeyEvent.VK_RIGHT]){
+        if (keyDown(KeyEvent.VK_RIGHT)){
             boundTo.move(3,0,0);
             currentAnim = "WalkRight";
-        } if (keys[KeyEvent.VK_LEFT]){
+        } if (keyDown(KeyEvent.VK_LEFT)){
             boundTo.move(-3,0,0);
             currentAnim = "WalkLeft";
-        } if (keys[KeyEvent.VK_UP]){
+        } if (keyDown(KeyEvent.VK_UP)){
             boundTo.move(0,0,-3);
 //            currentAnim = "WalkLeft";
-        } if (keys[KeyEvent.VK_DOWN]){
+        } if (keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(0,0,3);
 //            currentAnim = "WalkLeft";
         }

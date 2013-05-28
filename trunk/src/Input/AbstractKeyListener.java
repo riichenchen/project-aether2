@@ -5,6 +5,7 @@
 package Input;
 
 import Controls.AbstractControl;
+import java.util.HashMap;
 
 /**
  * This is the keylistener class. All listeners are essentially controls
@@ -14,21 +15,38 @@ import Controls.AbstractControl;
  * @author Shiyang
  */
 public abstract class AbstractKeyListener extends AbstractControl{
-    protected boolean[] keys;
+    private boolean[] keys;
+    private boolean[] pressedKeys;
+    protected HashMap<Integer,Boolean> prevPressed;
     private int listenerID;
     
     public AbstractKeyListener(){
         InputManager.addKeyListener(this);
     }
     
-    public void bindTo(boolean[] keys,int id){
+    public void bindTo(boolean[] keys,boolean[] pressedKeys,int id){
         this.keys = keys;
         this.listenerID = id;
+        this.pressedKeys = pressedKeys;
+        this.prevPressed = new HashMap<>();
+    }
+    
+    public boolean eventKeyDown(int key){
+        if (keys[key] && !prevPressed.containsKey(key)){
+            prevPressed.put(key, Boolean.TRUE);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean keyDown(int key){
+        return keys[key];
     }
     
     public void removeBind(){
         keys = null;
     }
+    
     //Each listener must provide a way to take care of key events
     public abstract void resolveKeyEvents();
     
@@ -42,6 +60,13 @@ public abstract class AbstractKeyListener extends AbstractControl{
             System.out.println("WARNING: NO BOUND SPATIAL TO MOVE!");
             return;
         }
+        //allow key to be counted for again if it was released
+        for (int key: prevPressed.keySet().toArray(new Integer[0])){
+            if (!pressedKeys[key]){
+                prevPressed.remove(key);
+            }
+        }
+        
         resolveKeyEvents();
     }
 }
