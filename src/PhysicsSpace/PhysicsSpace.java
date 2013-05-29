@@ -5,6 +5,8 @@
 package PhysicsSpace;
 
 import GameSource.Globals;
+import Math.Line2D;
+import Math.Point2D;
 import Spatial.Spatial;
 import java.util.*;
 
@@ -103,13 +105,13 @@ public class PhysicsSpace {
         int n = 0;
         for (int i = 0; i < allPlayersArray.length;i++){
             Spatial[][] spatsAround = grabSpatialsAround(allPlayersArray[i]);
-            Spatial[] playerSpats = spatsAround[0];
+            Spatial[] pSpats = spatsAround[0];
             Spatial[] envSpats = spatsAround[1];
 //            System.out.println(Arrays.toString(playerSpats));
-            for (int j = 0; j < playerSpats.length;j++){
-                for (int k = j+1; k < playerSpats.length;k++){
-                    if (playerSpats[j].collide(playerSpats[k])){
-                        playerSpats[j].collideEffect(playerSpats[k]);
+            for (int j = 0; j < pSpats.length;j++){
+                for (int k = j+1; k < pSpats.length;k++){
+                    if (pSpats[j].collide(pSpats[k])||pSpats[k].collide(pSpats[j])){
+                        pSpats[j].collideEffect(pSpats[k]);
                         //Note: the call to the second will be
                         //executed when "i" loops around to it in theory
                         //May have to uncomment the below line if not.
@@ -118,10 +120,10 @@ public class PhysicsSpace {
                     n++; //Operation counter for debug
                 }
                 for (int l = 0; l < envSpats.length;l++){
-                    if (playerSpats[j].collide(envSpats[l])){
+                    if (pSpats[j].collide(envSpats[l])){
 //                        System.out.println("YAY"+(n++));
-                        playerSpats[j].collideEffect(envSpats[l]);
-                        envSpats[l].collideEffect(playerSpats[j]);
+                        pSpats[j].collideEffect(envSpats[l]);
+                        envSpats[l].collideEffect(pSpats[j]);
                     }
                     n++;
                 }
@@ -199,7 +201,58 @@ public class PhysicsSpace {
         }
         spat.unbindFromSpace();
     }
-    
+    public Spatial[] rayCast(float x1,float y1,float x2,float y2){
+        HashMap<Integer,Spatial> hit = new HashMap<>();
+        
+        Line2D ray = new Line2D(x1,y1,x2,y2);
+        int increment = (int)(1/S_QUAD);
+        
+        if (!ray.isUndefined() && Math.abs(ray.getSlope()) >= 1){
+            for (int i = (int)Math.min(y1,y2);i < (int)Math.max(y1,y2); i+=increment){
+                Line2D newline = new Line2D(new Point2D(0,i),new Point2D(width,i));
+                Point2D intersection = ray.intersect(newline);
+                int chunkY = (int)(intersection.y*S_QUAD);
+                int chunkX = (int)(intersection.x*S_QUAD);
+                
+                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length){
+                    for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
+                        if (!hit.containsKey(spat.getId())){
+                            hit.put(spat.getId(), spat);
+                        }
+                    }
+                }
+            }
+        } else if (!ray.isUndefined()){
+            for (int i = (int)Math.min(x1,x2);i < (int)Math.max(x1,x2); i+=increment){
+                Line2D newline = new Line2D(new Point2D(i,0),new Point2D(i,length));
+                Point2D intersection = ray.intersect(newline);
+                int chunkY = (int)(intersection.y*S_QUAD);
+                int chunkX = (int)(intersection.x*S_QUAD);
+                
+                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length){
+                    for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
+                        if (!hit.containsKey(spat.getId())){
+                            hit.put(spat.getId(), spat);
+                        }
+                    }
+                }
+            }
+        } else { // the ray is undefined
+            for (int i = (int)Math.min(y1, y2) ; i < (int)Math.max(y1,y2);i+=increment){
+                int chunkY = (int)(i*S_QUAD);
+                int chunkX = (int)(x1*S_QUAD);
+                
+                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length){
+                    for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
+                        if (!hit.containsKey(spat.getId())){
+                            hit.put(spat.getId(), spat);
+                        }
+                    }
+                }
+            }
+        }
+        return hit.values().toArray(new Spatial[0]);
+    }
 //    public void addMoveMessage(float x, float z, Spatial spat){
 //        PhysicsSpaceMessage message = new PhysicsSpaceMessage(x,z,spat);
 //        msgs.addLast(message);

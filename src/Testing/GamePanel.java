@@ -139,8 +139,5 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
             }
             visibility = !visibility;
         }
-        if (e.getKeyCode() == KeyEvent.VK_SHIFT){
-            myMap.addSpatial(new IceyEffect(yourBlock.getX(),yourBlock.getY(),yourBlock.getZ()+10));
-        }
     }
 }

@@ -36,7 +36,6 @@ public abstract class CharacterSpatial extends RenderSpatial{
     @Override 
     public void render(Graphics g,JPanel pane, AetherCam cam){
         if (Globals.__PHYSICSDEBUG__ <5){
-            g.setColor(Color.blue);
             Polygon theShape = getShape();
             int[] allX = theShape.xpoints;
             int[] allY = theShape.ypoints;
@@ -46,7 +45,11 @@ public abstract class CharacterSpatial extends RenderSpatial{
                 allX[i] = locs[0];
                 allY[i] = locs[1];
             }
+//            System.out.println("("+allX[2]+" "+allY[2]+") , ("+allX[3]+","+allY[3]+")");
+            g.setColor(Color.blue);
             g.drawPolygon(new Polygon(allX,allY,4));
+            g.setColor(Color.green);
+            g.drawLine(allX[2],allY[2],allX[3],allY[3]);
             //            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
             g.setColor(Color.red);
             int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()*Globals.__PROJECTION_SCALE__ -this.getHeight());

@@ -15,12 +15,15 @@ import Spatial.Spatial;
  */
 public class Stevey extends CharacterSpatial{
     public Stevey(float x,float y,float z){
-        super(x,y,z,171f,256f,56f,1f,1f,1);
+        super(x,y,z,51f,77f,36f,1f,1f,1);
         addControl(new CharacterAnimControl(AssetManager.getSpriteSet("Steve")));
     }
+//    int n = 0;
     @Override
     public void collideEffect(Spatial s) {
-        //nothign foar now
+//        if (s instanceof Portal){
+//            //System.out.println("YAY "+(n++));
+//        }
     }
     
 }

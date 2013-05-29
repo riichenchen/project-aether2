@@ -7,9 +7,12 @@ package Spatial;
 import Controls.AbstractControl;
 import GameSource.Game.GamePoint;
 import GameSource.game.GameMap;
+import Math.Line2D;
+import Math.Point2D;
 import PhysicsSpace.AVelocity;
 import PhysicsSpace.PhysicsChunk;
 import PhysicsSpace.PhysicsSpace;
+import Testing.Stevey;
 import java.util.HashMap;
 import java.awt.*;
 
@@ -95,13 +98,14 @@ public abstract class Spatial {
         float bYmax = s.getY();
         
         if (arot != 0){
-            s.setLocalRotation(-arot);
-            rotated = true;}
+            s.setLocalRotation(arot);
+            rotated = true;
+        }
         if (s.getShape().intersects((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width) || s.getShape().contains((double)(location.getX()-length/2),(double)(location.getZ()-width/2),(double)length,(double)width)){
             collided = true;
         } 
         if (rotated){
-            s.setLocalRotation(arot);
+            s.setLocalRotation(-arot);
         } 
         if (collided){
             if (aYmin >= bYmax && aYmax <= bYmin){
@@ -113,6 +117,8 @@ public abstract class Spatial {
         }
         return false;
     }
+    
+    /*not used atm...*/
     public boolean contains(Spatial s){
         Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
         Rectangle bxz = new Rectangle ((int)(s.getX() - s.getLength()/2), (int)(s.getZ() - s.getWidth()/2), (int)s.getLength(), (int)s.getWidth());
@@ -135,6 +141,9 @@ public abstract class Spatial {
         return location;
     }
     public double getRotation(){
+        return Math.toDegrees(rotation)-90;
+    }
+    public double getLocalRotation(){
         return Math.toDegrees(rotation);
     }
     public void setRotation(double r){
@@ -144,14 +153,21 @@ public abstract class Spatial {
         rotation = (rotation + Math.toRadians(r)) % (2*Math.PI);
     }
     public Polygon getShape(){
-        double angle1 = Math.PI/2 - rotation - Math.atan(length/width);
-        double angle2 = rotation - Math.atan(length/width);
-        double dis = Math.hypot(length/2,width/2);
+        double angle = Math.atan(width/length);
+//        if (this instanceof Stevey)
+//            System.out.println(Math.atan(width/length));
+//            System.out.println(Math.cos(angle));
+//        double angle2 = rotation - Math.atan(width/length);
+        double dis = Math.hypot(width/2,length/2);
         
-        Point p1 = new Point((int)(location.getX() + dis * Math.sin(angle2)),(int)(location.getZ() - dis * Math.cos(angle2)));
-        Point p2 = new Point((int)(location.getX() + dis * Math.cos(angle1)),(int)(location.getZ() - dis * Math.sin(angle1)));
-        Point p3 = new Point((int)(location.getX() - dis * Math.sin(angle2)),(int)(location.getZ() + dis * Math.cos(angle2)));
-        Point p4 = new Point((int)(location.getX() - dis * Math.cos(angle1)),(int)(location.getZ() + dis * Math.sin(angle1)));
+        float x = location.getX();
+        float z = location.getZ();
+//        double cosA = Math.cos(rotation);
+//        double sinA = Math.sin(rotation);
+        Point p1 = new Point((int)(x + dis * Math.cos(angle+rotation)),(int)(z + dis * Math.sin(angle+rotation)));
+        Point p2 = new Point((int)(x + dis * Math.cos(Math.PI-angle+rotation)),(int)(z + dis * Math.sin(Math.PI-angle+rotation)));
+        Point p3 = new Point((int)(x + dis * Math.cos(Math.PI+angle+rotation)),(int)(z + dis * Math.sin(Math.PI+angle+rotation)));
+        Point p4 = new Point((int)(x + dis * Math.cos(2*Math.PI-angle+rotation)),(int)(z + dis * Math.sin(2*Math.PI-angle+rotation)));
       
         int[] xpoints = new int[] {p1.x,p2.x,p3.x,p4.x};
         int[] zpoints = new int[] {p1.y,p2.y,p3.y,p4.y};
@@ -253,8 +269,13 @@ public abstract class Spatial {
     public float distSquared(Spatial spat){
         return spat.location.distanceSquared(location);
     }
+    
     public void rotate(double radians){
         rotation = radians;
+    }
+    
+    public GameMap getMap(){
+        return boundMap;
     }
     
     /*This method returns the culling boundary of each item based
@@ -266,5 +287,18 @@ public abstract class Spatial {
         int sizex = (int)(getLength()*S_QUAD);
         int sizey = (int)(getHeight()*S_QUAD);
         return new int[]{x,y,sizex,sizey};
+    }
+    
+    public Line2D[] getBoundingLines(){
+        Polygon p = getShape();
+        int[] xs = p.xpoints;
+        int[] ys = p.ypoints;
+        Point2D[] points = new Point2D[4];
+        for (int i = 0; i < 4; i++){
+            points[i] = new Point2D(xs[i],ys[i]);
+        }
+        return new Line2D[]{new Line2D(points[3],points[2]),
+                            new Line2D(points[0],points[3]),
+                            new Line2D(points[1],points[2])};
     }
 }
