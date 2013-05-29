@@ -23,7 +23,7 @@ public class PhysicsSpace {
     
     //Constants represent a scale factor by which to divide the entire "map" into
     //and organize spatials by      -taken from Renderer.java (ask shiyang)
-    private final float S_QUAD = 0.10f;
+    private final float S_QUAD = 0.05f;
     
     private HashMap<Integer,Spatial> enviroSpats;
     private HashMap<Integer,Spatial> playerSpats;
@@ -214,7 +214,7 @@ public class PhysicsSpace {
                 int chunkY = (int)(intersection.y*S_QUAD);
                 int chunkX = (int)(intersection.x*S_QUAD);
                 
-                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length){
+                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length && chunkY>=0 && chunkX>=0){
                     for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
                         if (!hit.containsKey(spat.getId())){
                             hit.put(spat.getId(), spat);
@@ -229,7 +229,7 @@ public class PhysicsSpace {
                 int chunkY = (int)(intersection.y*S_QUAD);
                 int chunkX = (int)(intersection.x*S_QUAD);
                 
-                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length){
+                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length && chunkY>=0 && chunkX>=0){
                     for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
                         if (!hit.containsKey(spat.getId())){
                             hit.put(spat.getId(), spat);
@@ -242,7 +242,7 @@ public class PhysicsSpace {
                 int chunkY = (int)(i*S_QUAD);
                 int chunkX = (int)(x1*S_QUAD);
                 
-                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length){
+                if (chunkY < physicsMap.length && chunkX < physicsMap[0].length && chunkY>=0 && chunkX>=0){
                     for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
                         if (!hit.containsKey(spat.getId())){
                             hit.put(spat.getId(), spat);
