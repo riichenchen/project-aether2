@@ -50,6 +50,9 @@ public abstract class CharacterSpatial extends RenderSpatial{
             g.drawPolygon(new Polygon(allX,allY,4));
             g.setColor(Color.green);
             g.drawLine(allX[2],allY[2],allX[3],allY[3]);
+            g.setColor(Color.PINK);
+            g.drawLine(allX[0],allY[0],allX[3],allY[3]);
+            g.drawLine(allX[2],allY[2],allX[1],allY[1]);
             //            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
             g.setColor(Color.red);
             int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()*Globals.__PROJECTION_SCALE__ -this.getHeight());

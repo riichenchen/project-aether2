@@ -77,7 +77,7 @@ public class AssetManager {
                 while ((nextline = fin_map.readLine()) != null){
                     tempdat = nextline.split(" ");
                     if (tempdat[0].equals("dirtblock")){
-                        mymap.addPermanentSpatial(new Dirt_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
+                        mymap.addBackgroundSpatial(new Dirt_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
                     }
                 }
                 allmaps.put(mymap.getName(), mymap);

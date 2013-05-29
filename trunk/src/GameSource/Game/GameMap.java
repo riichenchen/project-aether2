@@ -88,6 +88,17 @@ public class GameMap {
                 renderer.addSpatial((RenderSpatial)spat);
             }
         }
+        public void addBackgroundSpatial(Spatial spat){
+            spats.put(spat.getId(), spat);
+//            space.addEnviroSpatial(spat);
+            spat.bindToMap(this);
+            
+            if (!verifyRender())
+                return;
+            if (spat instanceof RenderSpatial){
+                renderer.addSpatial((RenderSpatial)spat);
+            }
+        }
         
         public void clearNonPermanentSpats(){
             Spatial[] nonperms = nonPermaSpats.values().toArray(new Spatial[0]);
