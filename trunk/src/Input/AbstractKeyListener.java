@@ -31,6 +31,9 @@ public abstract class AbstractKeyListener extends AbstractControl{
         this.prevPressed = new HashMap<>();
     }
     
+    //Event driven keyDown input. Also supports
+    //Non-typable keys (keys that are not characters)
+    //Whereas keyTyped does not :DD
     public boolean eventKeyDown(int key){
         if (keys[key] && !prevPressed.containsKey(key)){
             prevPressed.put(key, Boolean.TRUE);

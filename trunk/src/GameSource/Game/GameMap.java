@@ -201,4 +201,7 @@ public class GameMap {
         public HashMap<Integer,Spatial> getNonPermanents(){
             return nonPermaSpats;
         }
+        public PhysicsSpace getSpace(){
+            return space;
+        }
 }
