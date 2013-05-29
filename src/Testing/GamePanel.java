@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         //new SpriteSet();
         AssetManager.init();
         myBlock = new MyTestCharacter(300,1,200);
-        yourBlock = new Stevey(350,1,400);
+        yourBlock = new Stevey(350,1,420);
         mykeycontrol = new MyKeyListener();
         yourkeycontrol = new SteveyKeyListener();
         myBlock.addControl(mykeycontrol);

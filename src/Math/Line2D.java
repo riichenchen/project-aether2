@@ -49,7 +49,10 @@ public class Line2D {
     }
     
     public float distanceTo(Point2D point){
-        return Math.abs(A*point.x+B*point.y-C)/(float)Math.sqrt(Math.pow(A,2)+Math.pow(B,2));
+        if (!undefinedSlope){
+            return Math.abs(A*point.x+B*point.y-C)/(float)Math.sqrt(Math.pow(A,2)+Math.pow(B,2));
+        } 
+        return Math.abs(point.x-xIntercept);
     }
     
     public boolean isUndefined(){

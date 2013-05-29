@@ -18,11 +18,11 @@ public class Stevey extends CharacterSpatial{
         super(x,y,z,51f,77f,36f,1f,1f,1);
         addControl(new CharacterAnimControl(AssetManager.getSpriteSet("Steve")));
     }
-//    int n = 0;
+    int n = 0;
     @Override
     public void collideEffect(Spatial s) {
 //        if (s instanceof Portal){
-//            //System.out.println("YAY "+(n++));
+//            System.out.println("YAY "+(n++));
 //        }
     }
     

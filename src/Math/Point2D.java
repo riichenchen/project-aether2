@@ -16,4 +16,8 @@ public class Point2D {
         this.y = y;
     }
     
+    public double distSquared(Point2D p){
+        return Math.pow(x-p.x,2)+Math.pow(y-p.y, 2);
+    }
+    
 }

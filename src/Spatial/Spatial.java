@@ -12,9 +12,10 @@ import Math.Point2D;
 import PhysicsSpace.AVelocity;
 import PhysicsSpace.PhysicsChunk;
 import PhysicsSpace.PhysicsSpace;
-import Testing.Stevey;
+import Testing.Portal;
 import java.util.HashMap;
 import java.awt.*;
+import java.util.LinkedList;
 
 /**
  *
@@ -79,9 +80,10 @@ public abstract class Spatial {
     }
     
     public void move(float x, float y, float z){
-        location.translate(x,y,z);
-        if (space != null){
-            space.updateSpatial(this);
+        if (space == null){
+            location.translate(x,y,z);
+        } else {
+            space.addMoveMessage(x,z,this);
         }
     }
     public abstract void collideEffect(Spatial s);
@@ -290,6 +292,13 @@ public abstract class Spatial {
     }
     
     public Line2D[] getBoundingLines(){
+        Point2D[] points = getPoints();
+        return new Line2D[]{new Line2D(points[3],points[2]),
+                            new Line2D(points[0],points[3]),
+                            new Line2D(points[1],points[2]),
+                            new Line2D(points[0],points[1])};
+    }
+    public Point2D[] getPoints(){
         Polygon p = getShape();
         int[] xs = p.xpoints;
         int[] ys = p.ypoints;
@@ -297,8 +306,43 @@ public abstract class Spatial {
         for (int i = 0; i < 4; i++){
             points[i] = new Point2D(xs[i],ys[i]);
         }
-        return new Line2D[]{new Line2D(points[3],points[2]),
-                            new Line2D(points[0],points[3]),
-                            new Line2D(points[1],points[2])};
+        return points;
+    }
+    public Point2D[] intersectLine(Line2D line){
+        Line2D[] allLines = getBoundingLines();
+        LinkedList<Point2D> intersections = new LinkedList<>();
+//        for (Line2D ln: allLines){
+        Point2D intersection = allLines[0].intersect(line);
+        if (intersection != null && allLines[1].distanceTo(intersection) < length && allLines[2].distanceTo(intersection) < length){
+//            System.out.println("Front!");
+            intersections.add(intersection);
+        }
+        intersection = allLines[3].intersect(line);
+        if (intersection != null && allLines[1].distanceTo(intersection) < length && allLines[2].distanceTo(intersection) < length){
+//            System.out.println("BACK!");
+            intersections.add(intersection);
+        }
+        
+        intersection = allLines[1].intersect(line);
+//        if (this instanceof Portal){
+//        System.out.println(intersection.x+" "+intersection.y);
+//        System.out.println(allLines[0].distanceTo(intersection));
+//        System.out.println(allLines[3].distanceTo(intersection));
+//        }
+        if (intersection != null && allLines[0].distanceTo(intersection) < width && allLines[3].distanceTo(intersection) < width){
+//            System.out.println("LEFT");
+            intersections.add(intersection);
+        }
+        intersection = allLines[2].intersect(line);
+        if (intersection != null && allLines[0].distanceTo(intersection) < width && allLines[3].distanceTo(intersection) < width){
+//            System.out.println("RIGHT!");
+            intersections.add(intersection);
+        }
+        
+//        }
+        return intersections.toArray(new Point2D[0]);
+    }
+    public void setLocation(GamePoint p){
+        this.location = p;
     }
 }

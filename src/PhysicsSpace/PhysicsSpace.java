@@ -4,9 +4,11 @@
  */
 package PhysicsSpace;
 
+import GameSource.Game.GamePoint;
 import GameSource.Globals;
 import Math.Line2D;
 import Math.Point2D;
+import Math.Vector2D;
 import Spatial.Spatial;
 import java.util.*;
 
@@ -89,6 +91,7 @@ public class PhysicsSpace {
                     if (!PlayerSpatialsInArea.containsKey(s.getId()) && playerSpats.containsKey(s.getId())){
                         PlayerSpatialsInArea.put(s.getId(), s);
                     }
+                    n++;
                 }
             }
         }
@@ -98,11 +101,11 @@ public class PhysicsSpace {
 
         return new Spatial[][]{pAreaSpats,envAreaSpats};
     }
-//    private int n = 0;
+    private int n = 0;
     public void update(){
         resolveMessages();
         Spatial[] allPlayersArray = playerSpats.values().toArray(new Spatial[0]);
-        int n = 0;
+        n = 0;
         for (int i = 0; i < allPlayersArray.length;i++){
             Spatial[][] spatsAround = grabSpatialsAround(allPlayersArray[i]);
             Spatial[] pSpats = spatsAround[0];
@@ -110,7 +113,7 @@ public class PhysicsSpace {
 //            System.out.println(Arrays.toString(playerSpats));
             for (int j = 0; j < pSpats.length;j++){
                 for (int k = j+1; k < pSpats.length;k++){
-                    if (pSpats[j].collide(pSpats[k])||pSpats[k].collide(pSpats[j])){
+                    if (pSpats[j].collide(pSpats[k])){
                         pSpats[j].collideEffect(pSpats[k]);
                         //Note: the call to the second will be
                         //executed when "i" loops around to it in theory
@@ -119,15 +122,16 @@ public class PhysicsSpace {
                     }
                     n++; //Operation counter for debug
                 }
-                for (int l = 0; l < envSpats.length;l++){
-                    if (pSpats[j].collide(envSpats[l])){
+            }
+//            System.out.println(Arrays.toString(envSpats));
+            for (int l = 0; l < envSpats.length;l++){
+                if (allPlayersArray[i].collide(envSpats[l])){
 //                        System.out.println("YAY"+(n++));
-                        pSpats[j].collideEffect(envSpats[l]);
-                        envSpats[l].collideEffect(pSpats[j]);
-                    }
-                    n++;
+                    allPlayersArray[i].collideEffect(envSpats[l]);
+                    envSpats[l].collideEffect(allPlayersArray[i]);
                 }
-            }    
+                n++;
+            }
         }
         if (Globals.__PHYSICSDEBUG__ < 4){
             System.out.println("Number of operations: "+n);
@@ -141,6 +145,62 @@ public class PhysicsSpace {
             if (message instanceof PUpdateSpatialMessage){
                 Spatial myspat = ((PUpdateSpatialMessage)message).spat;
                 performUpdateSpatial(myspat);
+            } else if (message instanceof PMoveSpatialMessage){
+                PMoveSpatialMessage mymsg = (PMoveSpatialMessage)message;
+                Vector2D vel = mymsg.getMotion();
+                GamePoint pos = mymsg.spat.getLocation();
+                
+                Point2D pt = new Point2D(pos.getX(),pos.getZ());
+                Point2D newPt = new Point2D(pos.getX()+vel.x,pos.getZ()+vel.z);
+                
+//                Spatial[] hit = rayCast(pt,newPt);
+//                
+//                Line2D ln = new Line2D(pt,newPt);
+//                Line2D faceLine = mymsg.spat.getBoundingLines()[0];
+//                
+//                Point2D closest = newPt;
+//                double closestDist = faceLine.distanceTo(closest);
+//                
+//                float rot = (float)Math.toRadians(mymsg.spat.getRotation());
+//                float wid = mymsg.spat.getWidth()/2;
+//                //System.out.println(closestDist);
+////                System.out.println(Arrays.toString(hit));
+//                for (Spatial spat: hit){
+//                   if (spat == mymsg.spat) {
+//                        continue;
+//                   }
+//                   Point2D[] pts = spat.intersectLine(ln);
+//                   System.out.println("HERP");
+////                   System.out.println(pts.length);
+//                   for (Point2D point: pts){
+//                       System.out.println("-----");
+//                       double testDist = faceLine.distanceTo(point);
+//                       System.out.println(testDist+" "+closestDist);
+//                       if (testDist-wid <= closestDist){
+//                        
+//                           closestDist = testDist;
+//                           closest = point;
+//                           closest.x -= wid*(float)Math.cos(rot);
+//                           closest.y -= wid*(float)Math.sin(rot);
+//                           System.out.println(testDist);
+////                           System.out.println("uh oh");
+////                           System.out.println(point.x+" "+point.y);
+//                       }
+//                   }
+////                   pts = spat.getPoints();
+////                   for (Point2D point: pts){
+////                       double testDist = faceLine.distanceTo(point);
+////                       if (testDist < closestDist){
+////                           closestDist = testDist;
+////                           closest = point;
+////                       }
+////                   }
+//                }
+////                System.out.println("Wid "+wid);
+////                mymsg.spat.setLocation(new GamePoint(closest.x,pos.getY(),closest.y-wid*(float)Math.sin(rot)));
+//                mymsg.spat.setLocation(new GamePoint(closest.x,pos.getY(),closest.y));
+                mymsg.spat.setLocation(new GamePoint(newPt.x,pos.getY(),newPt.y));
+                performUpdateSpatial(message.spat);
             }
         }
     }
@@ -180,10 +240,6 @@ public class PhysicsSpace {
         spat.bindToSpace(this);
     }
     
-    public void moveSpatial(Spatial s, float x, float y, float z){
-        s.move(x,y,z);
-    }
-    
     public void removeSpatial(Spatial spat){
         spatials.remove(spat.getId());
         enviroSpats.remove(spat.getId());
@@ -201,10 +257,15 @@ public class PhysicsSpace {
         }
         spat.unbindFromSpace();
     }
+    public Spatial[] rayCast(Point2D p1,Point2D p2){
+        return rayCast(p1.x,p1.y,p2.x,p2.y);
+    }
     public Spatial[] rayCast(float x1,float y1,float x2,float y2){
         HashMap<Integer,Spatial> hit = new HashMap<>();
-        
-        Line2D ray = new Line2D(x1,y1,x2,y2);
+        HashMap<Integer,Spatial> checked = new HashMap<>();
+        Point2D pointA = new Point2D(x1,y1);
+        Point2D pointB = new Point2D(x2,y2);
+        Line2D ray = new Line2D(pointA,pointB);
         int increment = (int)(1/S_QUAD);
         
         if (!ray.isUndefined() && Math.abs(ray.getSlope()) >= 1){
@@ -216,8 +277,12 @@ public class PhysicsSpace {
                 
                 if (chunkY < physicsMap.length && chunkX < physicsMap[0].length && chunkY>=0 && chunkX>=0){
                     for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
-                        if (!hit.containsKey(spat.getId())){
-                            hit.put(spat.getId(), spat);
+                        if (!checked.containsKey(spat.getId())){
+                            checked.put(spat.getId(), spat);
+                            Point2D[] intersections = spat.intersectLine(ray);
+                            if (intersections.length > 0){
+                                hit.put(spat.getId(), spat);
+                            }
                         }
                     }
                 }
@@ -231,8 +296,12 @@ public class PhysicsSpace {
                 
                 if (chunkY < physicsMap.length && chunkX < physicsMap[0].length && chunkY>=0 && chunkX>=0){
                     for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
-                        if (!hit.containsKey(spat.getId())){
-                            hit.put(spat.getId(), spat);
+                        if (!checked.containsKey(spat.getId())){
+                            checked.put(spat.getId(), spat);
+                            Point2D[] intersections = spat.intersectLine(ray);
+                            if (intersections.length > 0){
+                                hit.put(spat.getId(), spat);
+                            }
                         }
                     }
                 }
@@ -244,8 +313,12 @@ public class PhysicsSpace {
                 
                 if (chunkY < physicsMap.length && chunkX < physicsMap[0].length && chunkY>=0 && chunkX>=0){
                     for (Spatial spat: physicsMap[chunkY][chunkX].getObjects().values().toArray(new Spatial[0])){
-                        if (!hit.containsKey(spat.getId())){
-                            hit.put(spat.getId(), spat);
+                        if (!checked.containsKey(spat.getId())){
+                            checked.put(spat.getId(), spat);
+                            Point2D[] intersections = spat.intersectLine(ray);
+                            if (intersections.length > 0){
+                                hit.put(spat.getId(), spat);
+                            }
                         }
                     }
                 }
@@ -253,10 +326,11 @@ public class PhysicsSpace {
         }
         return hit.values().toArray(new Spatial[0]);
     }
-//    public void addMoveMessage(float x, float z, Spatial spat){
-//        PhysicsSpaceMessage message = new PhysicsSpaceMessage(x,z,spat);
-//        msgs.addLast(message);
-//    }
+    
+    public void addMoveMessage(float x, float z, Spatial spat){
+        PMoveSpatialMessage message = new PMoveSpatialMessage(spat,new Vector2D(x,0,z));
+        msgs.addLast(message);
+    }
 //    
 //    public void addGravityMessage(float y, Spatial spat){
 //        PhysicsSpaceMessage message = new PhysicsSpaceMessage(y,spat);
