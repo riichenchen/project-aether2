@@ -25,7 +25,7 @@ public class PhysicsSpace {
     
     //Constants represent a scale factor by which to divide the entire "map" into
     //and organize spatials by      -taken from Renderer.java (ask shiyang)
-    private final float S_QUAD = 0.05f;
+    private final float S_QUAD = 0.10f;
     
     private HashMap<Integer,Spatial> enviroSpats;
     private HashMap<Integer,Spatial> playerSpats;

@@ -8,6 +8,7 @@ import Controls.CharacterAnimControl;
 import GameSource.Effects.IceyEffect;
 import Input.AbstractKeyListener;
 import Math.Point2D;
+import Sound.SoundManager;
 import Spatial.Spatial;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -86,8 +87,10 @@ public class SteveyKeyListener extends AbstractKeyListener{
             }
             hit = allhit.values().toArray(new Spatial[0]);
             for (Spatial spat: hit){
-                if (spat != boundTo)
+                if (spat != boundTo){
                     boundTo.getMap().addSpatial(new IceyEffect(spat.getX(),1,spat.getZ()));
+                    SoundManager.getChannel("Effects").addTrack("iceySound");
+                }
             }
         }
         animControl.swapAnim(currentAnim);        

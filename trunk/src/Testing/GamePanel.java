@@ -5,10 +5,11 @@
 package Testing;
 
 import GameSource.Assets.AssetManager;
-import GameSource.Effects.IceyEffect;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Renderer.AetherCam;
+import Sound.SoundChannel;
+import Sound.SoundManager;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -42,6 +43,12 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         //GameUI= new BloonInterface(gameMap);
         //new SpriteSet();
         AssetManager.init();
+        SoundManager.init();
+        SoundManager.addChannel("Effects", false);
+        SoundManager.getChannel("Effects").setNumberTracks(6);
+        SoundManager.addChannel("Background",true);
+        SoundChannel bg = SoundManager.getChannel("Background");
+        bg.addTrack("soundTest1");
         myBlock = new MyTestCharacter(300,1,200);
         yourBlock = new Stevey(350,1,420);
         mykeycontrol = new MyKeyListener();
