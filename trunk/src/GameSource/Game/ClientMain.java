@@ -8,6 +8,7 @@ import GameSource.Assets.AssetManager;
 import GameSource.Net.Client.AetherClient;
 import Networking.Messages.RequestLoginMessage;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -40,6 +41,18 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
         theGame.setVisible(false);
         world = new ClientWorldHandler(this,theGame);
         client = new AetherClient(world);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(new javax.swing.JFrame(), 
+                    "Are you sure to quit?", "Confirm Exit", 
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    world.disconnect();
+                    System.exit(0);
+                }
+            }
+        });
         client.start();
         
     }
@@ -62,7 +75,7 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
         PasswordLabel = new javax.swing.JLabel();
         ResponseLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
         PassField.addActionListener(new java.awt.event.ActionListener() {

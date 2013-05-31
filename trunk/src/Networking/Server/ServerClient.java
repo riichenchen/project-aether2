@@ -62,7 +62,10 @@ public class ServerClient extends Thread{
                 in.close();
                 out.close();
                 cSocket.close();
-            } catch (Exception e){}
+            } catch (Exception e){
+                System.out.println("SEVERE: Unable to close client! D:");
+                e.printStackTrace();
+            }
             manager = null;
         }
     }

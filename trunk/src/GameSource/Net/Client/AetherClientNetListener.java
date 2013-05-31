@@ -4,6 +4,7 @@
  */
 package GameSource.Net.Client;
 
+import GameSource.Assets.AssetManager;
 import GameSource.Game.ClientWorldHandler;
 import Networking.Client.Client;
 import Networking.Client.ClientListenThread;
@@ -11,8 +12,8 @@ import Networking.Messages.LoginReplyMessage;
 import Networking.Messages.MapDataPackageMessage;
 import Networking.Messages.Message;
 import Networking.Messages.PlayerJoinMessage;
+import Networking.Messages.RemoveSpatialMessage;
 import PhysicsSync.PhysicSyncMessage;
-import PhysicsSync.SpatActionMessage;
 import Spatial.MapSpatData;
 import Spatial.Spatial;
 import java.net.Socket;
@@ -42,6 +43,7 @@ public class AetherClientNetListener extends ClientListenThread{
             System.out.println("Map Data Added!");
         } else if (msg instanceof PlayerJoinMessage) {
             PlayerJoinMessage mymsg = (PlayerJoinMessage)msg;
+//            System.out.println(mymsg.getClientId());
             Spatial newSpatial = world.addPlayerSpatial(mymsg);
             if (mymsg.getClientId() == client.getClientId()){
                 System.out.println("Loaded in Player!");
@@ -61,13 +63,12 @@ public class AetherClientNetListener extends ClientListenThread{
             }
             //world.response = true;
         }else if (msg instanceof PhysicSyncMessage){
-            //if (msg instanceof SpatActionMessage){
             if (msg.getClientId() != client.getClientId()){
                 world.addPSyncMessage((PhysicSyncMessage)msg);
             }
-            //} else {
-              //  world.addPSyncMessage((PhysicSyncMessage)msg);
-            //}
+        }else if (msg instanceof RemoveSpatialMessage){
+            RemoveSpatialMessage mymsg = (RemoveSpatialMessage)msg;
+            world.removeSpatial(mymsg.getMapId(),mymsg.getSpatId());
         }
     }
 

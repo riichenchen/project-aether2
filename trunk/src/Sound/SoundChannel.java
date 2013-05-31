@@ -16,29 +16,27 @@ public class SoundChannel extends Thread{
 //    private HashMap<Integer,SoundTrack> allTracks;
     private ArrayList<SoundTrack> soundQueue;
     private int numberTracks = 5; // 5 by default
+    private int trackCounter = 0;
     private boolean loop;
     private static int IDs = 0;
     
     public SoundChannel(boolean loop){
-//        this.allTracks = new HashMap<>();
         this.soundQueue = new ArrayList<>(5);
         this.loop = loop;
     }
     
     public void addTrack(String newSound){
-        if (soundQueue.size() >= numberTracks){
+        if (trackCounter >= numberTracks){
             SoundTrack oldTrack = soundQueue.get(0);
             soundQueue.remove(0);
             oldTrack.interrupt();
-            
-//            allTracks.remove(oldTrack.getSoundId());
+            trackCounter--;
         }
         Player newPlayer = SoundManager.getTrack(newSound);
-        
-        SoundTrack newTrack = new SoundTrack(newPlayer,IDs,newSound);
+        trackCounter++;
+        SoundTrack newTrack = new SoundTrack(newPlayer,IDs++,newSound);
         
         soundQueue.add(newTrack);
-//        allTracks.put(IDs++,newTrack);
 
         newTrack.start();
     }
@@ -52,28 +50,34 @@ public class SoundChannel extends Thread{
     }
     
     public void stopAll(){
-//        allTracks.clear();
-        for (SoundTrack s: soundQueue){
-            s.interrupt();
+        for (int i = 0; i < soundQueue.size(); i++){
+            if (soundQueue.get(i) != null)
+                soundQueue.get(i).interrupt();
         }
         soundQueue.clear();
     }
     
     //Stops the first instance of a track it finds
     public void stopTrack(int soundId){
-//        allTracks.remove(soundId);
-        soundQueue.get(soundId).interrupt();
-        soundQueue.remove(soundId);
+        for (int i = 0; i < soundQueue.size(); i++) 
+            if (soundQueue.get(i) != null && soundQueue.get(i).getSoundId() == soundId){ 
+                soundQueue.get(i).interrupt();
+                soundQueue.remove(i); 
+                trackCounter--;
+                break;
+            }
     }
     
     @Override
     public void run(){
         while (true){
-            for (SoundTrack s: soundQueue){
-                if (!s.isAlive()){
-                    soundQueue.remove(s.getSoundId());
+            for (int i = 0; i < soundQueue.size(); i++){
+                if (soundQueue.get(i) != null && !soundQueue.get(i).isPlaying()){
+                    String name = soundQueue.get(i).getSoundName();
+                    soundQueue.remove(i);
+                    trackCounter--;
                     if (loop){
-                        addTrack(s.getSoundName());
+                        addTrack(name);
                     }
                     break;
                 }

@@ -5,6 +5,7 @@
 package PhysicsSync;
 
 import Controls.CharacterAnimControl;
+import GameSource.Globals;
 import Spatial.Spatial;
 import java.io.Serializable;
 
@@ -15,12 +16,19 @@ import java.io.Serializable;
 public class SpatActionMessage extends PhysicSyncMessage implements Serializable{
     public static final int NONE = 0,JUMP = 1,MOVELEFT = 2,MOVERIGHT = 3,MOVEUP = 4,MOVEDOWN = 5;
     private int actionType = 0;
+    
     public SpatActionMessage(Spatial spat,int ActionType){
-        super(spat.getId());
+        super(spat.getId(),spat.getMap().getName());
         this.actionType = ActionType;
     }
     @Override
     public void doAction(Spatial spat) {
+        if (spat == null){
+            if (Globals.P_SYNC_DEBUG){
+                System.out.println("Warning: trying to doAction non-existant spatial");
+            }
+            return;
+        }
         Object charCont = spat.getControl(CharacterAnimControl.class);
         CharacterAnimControl animControl = null;
         if (charCont != null){
