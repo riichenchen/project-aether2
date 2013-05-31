@@ -27,6 +27,8 @@ public class PhysicsChunk {
         if (! objects.containsKey(s.getId())){
             objects.put(s.getId(),s);
             s.getPhysicsChunks().put(id,this);
+        } else {
+            System.out.println("Warning: trying to add existing spatial to physics chunk!");
         }
         
     }

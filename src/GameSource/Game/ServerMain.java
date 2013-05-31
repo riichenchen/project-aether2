@@ -21,7 +21,7 @@ public class ServerMain {
         myDB = new DatabaseHandler();
         myGameMap = AssetManager.getMap("testMap");
         //myNetListener = new AetherNetListener();
-        world = new ServerWorldHandler(myGameMap,null,myDB);
+        world = new ServerWorldHandler(myDB);
         theServer = new AetherServer(world);
         theServer.start();
         while (true){

@@ -51,4 +51,7 @@ public class SoundTrack extends Thread{
         player.close();
         super.interrupt();
     }
+    public boolean isPlaying(){
+        return !player.isComplete();
+    }
 }

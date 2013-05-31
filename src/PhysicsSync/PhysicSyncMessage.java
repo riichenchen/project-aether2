@@ -14,9 +14,11 @@ import java.io.Serializable;
  */
 public abstract class PhysicSyncMessage extends Message implements Serializable{
     protected int entityId;
+    protected String mapid;
     protected int receivedTime = -1;
-    public PhysicSyncMessage(int id){
+    public PhysicSyncMessage(int id,String mapId){
         this.entityId = id;
+        this.mapid = mapId;
     }
     public void setReceiveTime(int time){
         this.receivedTime = time;
@@ -28,5 +30,8 @@ public abstract class PhysicSyncMessage extends Message implements Serializable{
     
     public int getSpatId(){
         return entityId;
+    }
+    public String getMapId(){
+        return mapid;
     }
 }

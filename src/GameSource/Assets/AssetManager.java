@@ -62,7 +62,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    public static Image getBlockImage(String imgName){
+    public synchronized static Image getBlockImage(String imgName){
         return blockimages.get(imgName);
     }
     private static void loadMaps(){
@@ -90,12 +90,15 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    public static GameMap getMap(String identifier){
+    public synchronized static GameMap getMap(String identifier){
         if (!allmaps.containsKey(identifier)){
             System.out.println("SEVERE: Unable to find map with key "+identifier+"!");
             System.exit(0);
         }
         return allmaps.get(identifier);
+    }
+    public synchronized static GameMap[] getAllMaps(){
+        return allmaps.values().toArray(new GameMap[0]);
     }
     public static void loadAnimations(){
         try {

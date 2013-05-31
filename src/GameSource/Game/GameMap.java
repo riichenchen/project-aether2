@@ -11,6 +11,7 @@ import Spatial.Spatial;
 import Testing.MyTestCharacter;
 import java.awt.Graphics;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -19,8 +20,9 @@ public class GameMap {
         protected ImageIcon mapImage;//To be used.
         protected double mobDensity; //????
         protected int dimx,dimy;        
-        protected HashMap<Integer,Spatial> spats;
-        protected HashMap<Integer,Spatial> nonPermaSpats;
+        protected ConcurrentHashMap<Integer,Spatial> spats;
+        protected ConcurrentHashMap<Integer,Spatial> nonPermaSpats;
+        protected ConcurrentHashMap<Integer,Integer> clientIds;
         //Only client maps can render. This saves space and allows
         //the server to use this class as well
         protected Renderer renderer = null;
@@ -36,9 +38,10 @@ public class GameMap {
             mobDensity = _mobDensity;
             this.dimx = dimx;
             this.dimy = dimy;
-            spats = new HashMap<>();
+            spats = new ConcurrentHashMap<>();
             this.mapName = mapName;
-            this.nonPermaSpats = new HashMap<>();
+            this.nonPermaSpats = new ConcurrentHashMap<>();
+            this.clientIds = new ConcurrentHashMap<>();//1 million clients per session
             this.space = new PhysicsSpace(9.81f,dimx,dimy);
             //Clean this up later maybe
             if (canRender){
@@ -62,7 +65,16 @@ public class GameMap {
             }
             return true;
         }
-        
+        //returns all existing clients sharing the map
+        public Integer[] getClients(){
+            return clientIds.values().toArray(new Integer[0]);
+        }
+        public void removeClient(int clientId){
+            clientIds.remove(clientId);
+        }
+        public void addClientId(int cid){
+            clientIds.put(cid,cid);
+        }
         //Handles attaching and removing of spatials
         public void addSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
@@ -107,6 +119,7 @@ public class GameMap {
                 spat.unbindFromMap();
                 space.removeSpatial(spat);
             }
+            clientIds.clear();
         }
         
         public void render(Graphics g,JPanel pane){
@@ -136,7 +149,9 @@ public class GameMap {
                 System.out.println("Warning: Trying to reveal non-renderable Spaial!");
             }
         }
-        
+        public void removeSpatial(int spatId){
+            removeSpatial(spats.get(spatId));
+        }
         public void removeSpatial(Spatial spat){
             spats.remove(spat.getId());
             nonPermaSpats.remove(spat.getId());
@@ -162,8 +177,8 @@ public class GameMap {
         public int getDimY(){
             return dimy;
         }
-
-        public void update(){
+        
+        public synchronized void update(){
             Spatial[] spatList = spats.values().toArray(new Spatial[0]);
             for (Spatial s: spatList){
                 s.update();
@@ -209,7 +224,7 @@ public class GameMap {
             addSpatial(newChar);
             return newChar;
         }
-        public HashMap<Integer,Spatial> getNonPermanents(){
+        public ConcurrentHashMap<Integer,Spatial> getNonPermanents(){
             return nonPermaSpats;
         }
         public PhysicsSpace getSpace(){

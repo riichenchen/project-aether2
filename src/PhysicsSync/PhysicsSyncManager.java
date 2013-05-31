@@ -55,14 +55,14 @@ public class PhysicsSyncManager {
             if (!isServer){
                 if (msg instanceof SpatActionMessage){
                     SpatActionMessage mymsg = (SpatActionMessage)msg;
-                    mymsg.doAction(cworld.getSpatial(msg.getSpatId(),"testMap"));
+                    mymsg.doAction(cworld.getSpatial(msg.getSpatId(),msg.getMapId()));
                 }
             } else {
                 if (msg instanceof SpatActionMessage){
                     SpatActionMessage mymsg = (SpatActionMessage)msg;
-                    mymsg.doAction(sworld.getSpatial(msg.getSpatId(),"testMap"));
+                    mymsg.doAction(sworld.getSpatial(msg.getSpatId(),msg.getMapId()));
                 }
-                sworld.sendMessage(msg);
+                sworld.sendPhysicsMessage(msg);
             }
         }
     }

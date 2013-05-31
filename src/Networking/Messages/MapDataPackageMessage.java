@@ -8,7 +8,7 @@ import GameSource.Assets.AssetManager;
 import Spatial.MapSpatData;
 import Spatial.Spatial;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This is a message containing all other entities in the game, and
@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class MapDataPackageMessage extends Message implements Serializable{
     private MapSpatData[] spatz;
     private String mapId;
-    public MapDataPackageMessage(HashMap<Integer,Spatial> spatz,String mapid){
+    public MapDataPackageMessage(ConcurrentHashMap<Integer,Spatial> spatz,String mapid){
         Spatial[] spats = spatz.values().toArray(new Spatial[0]);
         this.spatz = new MapSpatData[spats.length];
         int counter = 0;
