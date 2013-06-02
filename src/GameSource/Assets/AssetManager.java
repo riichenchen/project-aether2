@@ -33,7 +33,7 @@ public class AssetManager {
     private static HashMap<String,GameMap> allmaps;
     private static HashMap<String,SpriteSet> allAnimSets;
     private static HashMap<String,PortalData> allPortalData;
-    private static String[] mapProperties = new String[]{"Blocks","Portals"};
+    private static String[] mapProperties = new String[]{"Blocks","Portals","BGSound"};
     public static void init(){
         allAnimSets = new HashMap<>();
         loadAnimations();
@@ -134,6 +134,12 @@ public class AssetManager {
                         while (!nextline.equals("/"+s)){    
                             tempdat = nextline.split(" ");
                             mymap.addPermanentSpatial(AssetManager.getPortal(tempdat[0], Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3])));
+                            nextline = fin_map.readLine();
+                        }
+                    } else if (s.equals("BGSound")){
+                        nextline = fin_map.readLine();
+                        while (!nextline.equals("/"+s)){    
+                            mymap.setBGMusic(nextline);
                             nextline = fin_map.readLine();
                         }
                     }

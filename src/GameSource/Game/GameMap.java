@@ -29,6 +29,7 @@ public class GameMap {
         protected boolean canRender = false;
         protected String mapName;
         protected PhysicsSpace space;
+        private String bgMusic;
         
         public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1,Char_STEVEY = 4;
                 
@@ -208,5 +209,11 @@ public class GameMap {
         }
         public PhysicsSpace getSpace(){
             return space;
+        }
+        public void setBGMusic(String musicKey){
+            this.bgMusic = musicKey;
+        }
+        public String getBGMusic(){
+            return bgMusic;
         }
 }
