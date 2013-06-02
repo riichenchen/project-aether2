@@ -34,7 +34,6 @@ public class Renderer {
     public Renderer(GameMap map,AetherCam camera){
         this.map = map;
         this.camera = camera;
-        System.out.println(map.getDimY());
         this.renderMap = new RenderChunk[(int)(map.getDimY()*S_QUAD)][(int)(map.getDimX()*S_QUAD)];
         for (int i = 0; i < (int)(map.getDimY()*S_QUAD);i++){
             for (int j = 0; j < (int)(map.getDimX()*S_QUAD);j++){

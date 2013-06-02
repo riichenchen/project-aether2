@@ -12,7 +12,7 @@ import Math.Point2D;
 import PhysicsSpace.AVelocity;
 import PhysicsSpace.PhysicsChunk;
 import PhysicsSpace.PhysicsSpace;
-import Testing.Portal;
+import GameSource.Assets.Portals.Portal;
 import java.util.HashMap;
 import java.awt.*;
 import java.util.LinkedList;

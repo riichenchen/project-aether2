@@ -187,7 +187,6 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
         System.out.println("Starting Game...");
         theGame.setCamera();
         //Clean this up after so that the world sets the map
-        theGame.setMap(AssetManager.getMap("testMap"));
         //Note: may need to make a handle to player in the future
         setSize(800,600);
         setResizable(false);

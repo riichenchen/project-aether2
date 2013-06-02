@@ -4,6 +4,7 @@
  */
 package Testing;
 
+import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.AssetManager;
 import GameSource.game.GameMap;
 import Input.InputManager;
@@ -60,7 +61,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
 //        myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
-        Portal myport = new Portal(400,1,300);
+        Portal myport = AssetManager.getPortal("testPort1", 400,1,300);
         myMap.addPermanentSpatial(myport);
 //        Random myrand = new Random();
 //        for (int i = 0; i < 5000; i++){

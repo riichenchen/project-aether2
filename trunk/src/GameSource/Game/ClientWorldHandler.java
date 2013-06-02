@@ -2,13 +2,13 @@ package GameSource.Game;
 import Controls.AbstractControl;
 import Database.PlayerData;
 import GameSource.Assets.AssetManager;
-import GameSource.Input.PlayerKeyListener;
 import GameSource.Net.Client.AetherClientNetSender;
 import GameSource.game.GameMap;
 import Networking.Messages.PlayerJoinMessage;
 import Networking.Messages.SaveMessage;
-import PhysicsSpace.PhysicsSpace;
+import Sound.SoundManager;
 import Spatial.Spatial;
+import Testing.SteveyKeyListener;
 
 public class ClientWorldHandler {
     private GameMap myGameMap;
@@ -23,10 +23,8 @@ public class ClientWorldHandler {
         this.thegame = thegame;
         thegame.setHandler(this);
         AbstractControl.setWorld(this);
-    }
-    
-    public Spatial getSpatial(int id,String mapid){
-        return myGameMap.getSpatial(id);
+        SoundManager.addChannel("Effects", false);
+        SoundManager.getChannel("Effects").setNumberTracks(6);
     }
     
     public void setGameMap(String mapid){
@@ -46,7 +44,7 @@ public class ClientWorldHandler {
     }
     
     public void bindPlayerToClient(Spatial spat){
-        spat.addControl(new PlayerKeyListener());
+        spat.addControl(new SteveyKeyListener());
         this.boundSpatId = spat.getId();
     }
     
