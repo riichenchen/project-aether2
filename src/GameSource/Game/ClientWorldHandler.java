@@ -89,10 +89,17 @@ public class ClientWorldHandler {
     
     public void enterPortal(Portal port){
         Spatial myspat = myGameMap.getSpatial(boundSpatId);
+        //Clear old map's previous messages
+        myGameMap.clearMessages();
+        AbstractControl hold = (AbstractControl)myspat.getControl(SteveyKeyListener.class);
+        myspat.removeControl(hold);
         myGameMap.removeSpatial(myspat);
         myspat.setLocation(port.getNewPos());
         myGameMap = AssetManager.getMap(port.getToMap());
         myGameMap.addSpatial(myspat);
         thegame.setMap(myGameMap);
+        //Clear new Map's previous messages
+        myGameMap.clearMessages();
+        myspat.addControl(hold);
     }
 }

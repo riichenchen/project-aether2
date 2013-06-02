@@ -94,7 +94,9 @@ public class Renderer {
             }
         }
     }
-    
+    public void clearMessages(){
+        updateSpatMessages.clear();
+    }
     public void addSpatial(RenderSpatial spat){
         int[] cullbounds = spat.getCullBounds(S_QUAD);//GamePoint location = spat.getLocation();
         int x = cullbounds[0];//(int)Math.floor(location.getX()*S_QUAD);
