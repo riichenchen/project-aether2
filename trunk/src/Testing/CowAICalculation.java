@@ -14,11 +14,11 @@ public class CowAICalculation extends AbstractAICalculation {
 
     @Override
     public void calculate() {
-        Object blah = 0;
-        for (int i = 0; i < 100000000;i++){
-            blah = i;
-        }
-        this.endValue = blah;
+//        Object blah = 0;
+//        for (int i = 0; i < 100000000;i++){
+//            blah = i;
+//        }
+        this.endValue = -1;
     }
     
 }
