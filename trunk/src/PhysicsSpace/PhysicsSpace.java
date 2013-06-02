@@ -205,6 +205,10 @@ public class PhysicsSpace {
         }
     }
     
+    public void clearMessages(){
+        msgs.clear();
+    }
+    
     private void performUpdateSpatial(Spatial spat){
         PhysicsChunk[] chunks = spat.getPhysicsChunks().values().toArray(new PhysicsChunk[0]);
         for (PhysicsChunk chunk: chunks){

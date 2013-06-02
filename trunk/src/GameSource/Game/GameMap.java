@@ -142,7 +142,6 @@ public class GameMap {
         public void removeSpatial(Spatial spat){
             spats.remove(spat.getId());
             nonPermaSpats.remove(spat.getId());
-            spat.unbindFromMap();
             space.removeSpatial(spat);
             //Remove from render space if the spatial is in the render space
             if (!verifyRender())
@@ -150,8 +149,13 @@ public class GameMap {
             if (spat instanceof RenderSpatial){
                 renderer.removeSpatial((RenderSpatial)spat);
             }
+            spat.unbindFromMap();
         }
         
+        public void clearMessages(){
+            space.clearMessages();
+            renderer.clearMessages();
+        }
         
         public double getMobDensity() {
             return mobDensity;
@@ -171,9 +175,10 @@ public class GameMap {
             }
             if (!verifyRender())
                 return;
-            renderer.update();
             space.update();
+            renderer.update();
         }
+        
         public String getName(){
             return mapName;
         }
