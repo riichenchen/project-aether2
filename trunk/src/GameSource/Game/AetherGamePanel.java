@@ -25,10 +25,8 @@ import javax.swing.JPanel;
 public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyListener{
     private boolean []keys;
     public boolean ready=false,inputstate = true,visibility = true;
-    //private int boxx= 200,boxy=200;
     
     private Spatial player;
-//    private MyKeyListener mykeycontrol,yourkeycontrol;
     private GameMap gameMap;
     private AetherCam camera;
     public boolean loaded = false;
@@ -47,28 +45,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         addMouseMotionListener(this);
         addKeyListener(this);
         keys = new boolean[KeyEvent.KEY_LAST+1];
-        //BloonMap gameMap = new BloonMap("monkeyStream");
-        //GameUI= new BloonInterface(gameMap);
-        //new SpriteSet();
         AssetManager.init();
-//        myBlock = new Other_Block(300,1,200);
-//        yourBlock = new Other_Block(350,1,200);
-//        mykeycontrol = new MyKeyListener();
-//        yourkeycontrol = new MyKeyListener();
-//        myBlock.addControl(mykeycontrol);
-//        yourBlock.addControl(yourkeycontrol);
-//        myMap = AssetManager.getMap("testMap");
-//        myMap.addSpatial(myBlock);
-//        myMap.addSpatial(yourBlock);
-//        myCam = myMap.getCamera();
-
-//        Random myrand = new Random();
-//        for (int i = 0; i < 5000; i++){
-//            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
-//        }
-//        for (int i = 0; i < 50; i++){
-//            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,100,myrand.nextInt(1200/28)*28));
-//        }
         setSize(800,600);
     }
     
@@ -77,7 +54,6 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         super.addNotify();
         requestFocus();
         ready = true;
-        System.out.println("focused");
     }
     
     public void update(){

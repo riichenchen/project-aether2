@@ -23,21 +23,16 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
     AetherClient client;
     ClientWorldHandler world;
     AetherGamePanel theGame;
-    //Varible used to stall the program until the network catches up
-//    private boolean waiting = false; // Note may not need this later (ie get rid of it)
     Timer myTimer;
     
-//    public void setWaiting(boolean b){
-//        waiting = b;
-//    }
     public ClientMain() {
+        super("Chronicles of Aether v1.0b");
         initComponents();
         myTimer = new Timer(10, this);	 // trigger every 10 ms
         myTimer.start();
         
         System.out.println("Connecting to server...");
         theGame = new AetherGamePanel();
-//        add(theGame);
         theGame.setVisible(false);
         world = new ClientWorldHandler(this,theGame);
         client = new AetherClient(world);
@@ -48,7 +43,8 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
                     "Are you sure to quit?", "Confirm Exit", 
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-                    world.disconnect();
+                    if (theGame.ready)
+                        world.disconnect();
                     System.exit(0);
                 }
             }
@@ -184,11 +180,8 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
     }
     public void login(){
         setTitle("Loading Game...");
-//        waiting = true;
         LoginPane.setVisible(false);
         remove(LoginPane);
-        //MyLayerPane.remove(LoginPane);
-//        ChatPanel.setVisible(true);
     }
     public void startGame(){
         System.out.println("Starting Game...");

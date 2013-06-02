@@ -44,27 +44,27 @@ public class PhysicsSyncManager {
     }
 
     public synchronized void update(){ // okay so only main should be calling this anyhow... but better thread safe than not
-        while (allMessages.peek()!=null){
-            if (TimeElapsed-allMessages.peek().getReceivedTime()<3){
-                if (Globals.P_SYNC_DEBUG){
-                    System.out.println("Warning: Message time received a tad too soon for liking.");
-                }
-                break;
-            }
-            PhysicSyncMessage msg = allMessages.poll();
-            if (!isServer){
-                if (msg instanceof SpatActionMessage){
-                    SpatActionMessage mymsg = (SpatActionMessage)msg;
-                    mymsg.doAction(cworld.getSpatial(msg.getSpatId(),msg.getMapId()));
-                }
-            } else {
-                if (msg instanceof SpatActionMessage){
-                    SpatActionMessage mymsg = (SpatActionMessage)msg;
-                    mymsg.doAction(sworld.getSpatial(msg.getSpatId(),msg.getMapId()));
-                }
-                sworld.sendPhysicsMessage(msg);
-            }
-        }
+//        while (allMessages.peek()!=null){
+//            if (TimeElapsed-allMessages.peek().getReceivedTime()<3){
+//                if (Globals.P_SYNC_DEBUG){
+//                    System.out.println("Warning: Message time received a tad too soon for liking.");
+//                }
+//                break;
+//            }
+//            PhysicSyncMessage msg = allMessages.poll();
+//            if (!isServer){
+//                if (msg instanceof SpatActionMessage){
+//                    SpatActionMessage mymsg = (SpatActionMessage)msg;
+//                    mymsg.doAction(cworld.getSpatial(msg.getSpatId(),msg.getMapId()));
+//                }
+//            } else {
+//                if (msg instanceof SpatActionMessage){
+//                    SpatActionMessage mymsg = (SpatActionMessage)msg;
+//                    mymsg.doAction(sworld.getSpatial(msg.getSpatId(),msg.getMapId()));
+//                }
+////                sworld.sendPhysicsMessage(msg);
+//            }
+//        }
     }
     
 }

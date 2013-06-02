@@ -4,6 +4,7 @@
  */
 package Networking.Messages;
 
+import Database.PlayerData;
 import GameSource.Game.GamePoint;
 import java.io.Serializable;
 
@@ -12,32 +13,13 @@ import java.io.Serializable;
  * @author Shiyang
  */
 public class PlayerJoinMessage extends Message implements Serializable{
-    private int characterType;
-    private GamePoint location;
-    private String mapid;
-    private int spatId;
-    private int clientId;
+    private PlayerData pData;
+
+    public PlayerData getpData() {
+        return pData;
+    }
     
-    public PlayerJoinMessage(int characterType,GamePoint location,String mapid,int spatId,int clientId){
-        this.characterType = characterType;
-        this.location = location;
-        this.mapid = mapid;
-        this.spatId = spatId;
-        this.clientId = clientId;
-    }
-    public int getSpatId(){
-        return spatId;
-    }
-    public int getCharacterType(){
-        return characterType;
-    }
-    public GamePoint getLocation(){
-        return location;
-    }
-    public String getMapId(){
-        return mapid;
-    }
-    public int getClientId(){
-        return clientId;
+    public PlayerJoinMessage(PlayerData pData){
+        this.pData = pData;
     }
 }

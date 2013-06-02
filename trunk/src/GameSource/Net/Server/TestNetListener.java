@@ -41,10 +41,10 @@ public class TestNetListener extends ServerNetListener{
             if (world.RequestLogin(mymsg.getUser(), mymsg.getPass())){
                 System.out.println(mymsg.getUser()+" has logged in as client "+mymsg.getClientId()+".");
                 manager.broadcast(new ChatMessage("Server",mymsg.getUser()+" has logged in."));
-                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true));
+                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true,""));
             } else {
                 System.out.println("Failed to login from client "+mymsg.getClientId()+".");
-                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(false));
+                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(false,""));
             }
         }
     }

@@ -35,51 +35,22 @@ public class AetherClientNetListener extends ClientListenThread{
 
     @Override
     public void ReceiveMessage(Message msg) {
-        if (msg instanceof MapDataPackageMessage){
-            MapDataPackageMessage mymsg = (MapDataPackageMessage)msg;
-            world.setGameMap(mymsg.getMapId());
-            MapSpatData[] allSpats = mymsg.getSpatData();
-            world.addAllSpatials(allSpats);
-            System.out.println("Map Data Added!");
-        } else if (msg instanceof PlayerJoinMessage) {
+        if (msg instanceof PlayerJoinMessage) {
             PlayerJoinMessage mymsg = (PlayerJoinMessage)msg;
-//            System.out.println(mymsg.getClientId());
             Spatial newSpatial = world.addPlayerSpatial(mymsg);
-            if (mymsg.getClientId() == client.getClientId()){
-                System.out.println("Loaded in Player!");
-                world.bindPlayerToClient(newSpatial);
-                //as soon as we receive our spatial, we can display the game 
-                //to the player C:
-//                world.setGameWaiting(false);
-                world.startGame();
-            }
+            System.out.println("Loaded in Player!");
+            world.bindPlayerToClient(newSpatial);
+            world.bindAccountToClient(mymsg.getpData().getAccountId());
+            //as soon as we receive our spatial, we can display the game 
+            //to the player C:
+            world.startGame();
         }else if (msg instanceof LoginReplyMessage){
-            System.out.println("logging in!");
             LoginReplyMessage mymsg = (LoginReplyMessage)msg;
             if (mymsg.getReply()){
                 world.login();
             } else {
-                world.setResponse("Failed to login. Try Again?");
+                world.setResponse(mymsg.getMessage());
             }
-            //world.response = true;
-        }else if (msg instanceof PhysicSyncMessage){
-            if (msg.getClientId() != client.getClientId()){
-                world.addPSyncMessage((PhysicSyncMessage)msg);
-            }
-        }else if (msg instanceof RemoveSpatialMessage){
-            RemoveSpatialMessage mymsg = (RemoveSpatialMessage)msg;
-            world.removeSpatial(mymsg.getMapId(),mymsg.getSpatId());
         }
     }
-
-//    @Override
-//    public void onConnect() {
-//        sendMessage(new ClientJoinChatMessage(userid));
-//    }
-    
-//    public void setUserID(String id){
-//        userid = id;
-//    }
-
-    
 }
