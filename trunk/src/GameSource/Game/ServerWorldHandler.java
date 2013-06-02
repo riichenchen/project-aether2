@@ -16,7 +16,6 @@ public class ServerWorldHandler {
     private GameMap[] allMaps;
 
     public ServerWorldHandler(DatabaseHandler db) {
-        AssetManager.init();
         this.db = db;     
         this.allMaps = AssetManager.getAllMaps();
     }

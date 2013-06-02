@@ -138,11 +138,11 @@ public class GameMap {
         public void removeSpatial(int spatId){
             removeSpatial(spats.get(spatId));
         }
+        
         public void removeSpatial(Spatial spat){
             spats.remove(spat.getId());
             nonPermaSpats.remove(spat.getId());
             spat.unbindFromMap();
-            
             space.removeSpatial(spat);
             //Remove from render space if the spatial is in the render space
             if (!verifyRender())

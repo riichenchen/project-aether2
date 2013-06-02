@@ -31,9 +31,6 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
     
     public void setMap(GameMap gameMap){
         this.gameMap = gameMap;
-    }
-    
-    public void setCamera(){
         this.camera = gameMap.getCamera();
     }
     

@@ -33,10 +33,12 @@ public class PhysicsChunk {
         
     }
     public void removeObject(Spatial s){
-        if (objects.containsKey(s.getId())){
-            objects.remove(s.getId());
-            s.getPhysicsChunks().remove(id);
+        if (!objects.containsKey(s.getId())){
+            System.out.println("Warnind: Trying to remove non existant spatial from PhysicsChunk!");
+            return;
         }        
+        objects.remove(s.getId());
+        s.getPhysicsChunks().remove(id);
     }
     public HashMap<Integer,Spatial> getObjects(){
         return objects;
