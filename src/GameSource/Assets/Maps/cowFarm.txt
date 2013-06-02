@@ -1,4 +1,4 @@
-1600,4000
+1600,4000,2
 Blocks
 grassblock 26 -30 56
 grassblock 26 -30 112
@@ -2276,6 +2276,10 @@ grassblock 1576 -30 3976
 Portals
 cowPort1 200 1 300
 /Portals
+Spawners
+CowSpawner 400 1 600 5000
+CowSpawner 200 1 600 5000
+/Spawners
 BGSound
 farmy
 /BGSound

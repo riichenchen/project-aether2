@@ -15,6 +15,8 @@ import Spatial.Spatial;
 import Testing.MyTestCharacter;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.Portals.PortalData;
+import GameSource.Assets.Spawners.AbstractMobSpawner;
+import GameSource.Spawners.CowSpawner;
 import Testing.Stevey;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -33,7 +35,7 @@ public class AssetManager {
     private static HashMap<String,GameMap> allmaps;
     private static HashMap<String,SpriteSet> allAnimSets;
     private static HashMap<String,PortalData> allPortalData;
-    private static String[] mapProperties = new String[]{"Blocks","Portals","BGSound"};
+    private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound"};
     public static void init(){
         allAnimSets = new HashMap<>();
         loadAnimations();
@@ -112,8 +114,8 @@ public class AssetManager {
                 
                 int x = Integer.parseInt(mapinfo[0]);
                 int y = Integer.parseInt(mapinfo[1]);
-                
-                GameMap mymap = new GameMap(tempdat[0],0.1,x,y,Globals.__CAMX__,Globals.__CAMY__,true);
+                int mobLim = Integer.parseInt(mapinfo[2]);
+                GameMap mymap = new GameMap(tempdat[0],mobLim,x,y,Globals.__CAMX__,Globals.__CAMY__,true);
                 for (String s: mapProperties){
                     while (!nextline.equals(s)){
                         nextline = fin_map.readLine();
@@ -134,6 +136,21 @@ public class AssetManager {
                         while (!nextline.equals("/"+s)){    
                             tempdat = nextline.split(" ");
                             mymap.addPermanentSpatial(AssetManager.getPortal(tempdat[0], Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3])));
+                            nextline = fin_map.readLine();
+                        }
+                    } else if (s.equals("Spawners")){
+                        nextline = fin_map.readLine();
+                        while (!nextline.equals("/"+s)){    
+                            tempdat = nextline.split(" ");
+                            AbstractMobSpawner spawner = null;
+                            if (tempdat[0].equals("CowSpawner")){
+                                spawner = new CowSpawner(Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3]),Integer.parseInt(tempdat[4])/10);
+                            }//else if....
+                            if (spawner == null){
+                                System.out.println("SEVERE: UNABLE TO FIND MOBID "+tempdat[0]);
+                                System.exit(0);
+                            }
+                            mymap.addBackgroundSpatial(spawner);
                             nextline = fin_map.readLine();
                         }
                     } else if (s.equals("BGSound")){

@@ -17,7 +17,6 @@ public class MyTestCharacter extends CharacterSpatial{
     private int n = 0;
     public MyTestCharacter(float x,float y,float z){
         super(x,y,z,78f,95f,20f,1f,1f,0);
-        addControl(new CharacterAnimControl(AssetManager.getSpriteSet("MyTestAnimation")));
     }
     @Override
     public void collideEffect(Spatial s) {
@@ -31,6 +30,11 @@ public class MyTestCharacter extends CharacterSpatial{
     public void update(){
         super.update();
 //        System.out.println(location);
+    }
+
+    @Override
+    public CharacterAnimControl getAnimControl() {
+        return new CharacterAnimControl(AssetManager.getSpriteSet("MyTestAnimation"));
     }
     
 }

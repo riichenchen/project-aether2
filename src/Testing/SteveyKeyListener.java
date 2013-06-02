@@ -90,6 +90,7 @@ public class SteveyKeyListener extends AbstractKeyListener{
                 if (spat != boundTo){
                     boundTo.getMap().addSpatial(new IceyEffect(spat.getX(),1,spat.getZ()));
                     SoundManager.getChannel("Effects").addTrack("iceySound");
+                    break;
                 }
             }
         }

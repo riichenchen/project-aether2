@@ -13,11 +13,11 @@ import Spatial.CharacterSpatial;
  * @author Shiyang
  */
 public abstract class AbstractEffect extends CharacterSpatial{
-    private int limit;
-    private int time = 0;
+    protected int limit;
+    protected int time = 0;
     public AbstractEffect(float x,float y,float z,float l,float h,float w,String effectName){
         super(x,y,z,l,h,w,0,0,0);
-        CharacterAnimControl myEffect = new CharacterAnimControl(AssetManager.getSpriteSet("Effects"));
+        CharacterAnimControl myEffect = (CharacterAnimControl)getControl(CharacterAnimControl.class);
         myEffect.swapAnim(effectName);
         limit = myEffect.getLimit();
         addControl(myEffect);
@@ -30,5 +30,10 @@ public abstract class AbstractEffect extends CharacterSpatial{
         if (limit <= time){
             boundMap.removeSpatial(this);
         }
+    }
+    
+    @Override
+    public CharacterAnimControl getAnimControl() {
+        return new CharacterAnimControl(AssetManager.getSpriteSet("Effects"));
     }
 }

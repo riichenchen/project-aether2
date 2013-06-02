@@ -1,0 +1,7 @@
+length,width,mobLimit
+Blocks
+/Blocks
+Portals
+/Portals
+BGSound
+/BGSound

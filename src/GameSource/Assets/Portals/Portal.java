@@ -25,7 +25,6 @@ public class Portal extends CharacterSpatial{
         this.ty = ty;
         this.tz = tz;
         this.toMap = toMap;
-        addControl(new CharacterAnimControl(AssetManager.getSpriteSet("Portal")));
     }
     
     public String getToMap() {
@@ -43,5 +42,10 @@ public class Portal extends CharacterSpatial{
     
     public GamePoint getNewPos(){
         return new GamePoint(tx,ty,tz);
+    }
+
+    @Override
+    public CharacterAnimControl getAnimControl() {
+        return new CharacterAnimControl(AssetManager.getSpriteSet("Portal"));
     }
 }
