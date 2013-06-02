@@ -10,16 +10,12 @@ import PhysicsSpace.PhysicsSpace;
 public class ServerMain {
 
     private static DatabaseHandler myDB;
-    private static GameMap myGameMap;
-    private static PhysicsSpace myPhysicsSpace;
-    private static AetherNetListener myNetListener;
     private static AetherServer theServer;
     private static ServerWorldHandler world;
     
     public static void main(String [] args) {
         AssetManager.init();
         myDB = new DatabaseHandler();
-        myGameMap = AssetManager.getMap("testMap");
         world = new ServerWorldHandler(myDB);
         theServer = new AetherServer(world);
         theServer.start();

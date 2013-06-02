@@ -93,6 +93,9 @@ public class SteveyKeyListener extends AbstractKeyListener{
                 }
             }
         }
+        if (eventKeyDown(KeyEvent.VK_SPACE)){
+            world.enterPortal();
+        }
         animControl.swapAnim(currentAnim);        
     }
 }

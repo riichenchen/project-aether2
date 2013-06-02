@@ -43,7 +43,8 @@ public abstract class Spatial {
     protected AVelocity velocity;
     protected PhysicsSpace space;
     protected GameMap boundMap;
-            
+    protected HashMap<String,Object> properties;
+    
     public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         length = l;
@@ -58,6 +59,23 @@ public abstract class Spatial {
         this.id = IDs++;
         this.collidable = collidable;
         percentscale = 1f;
+        properties = new HashMap<>();
+    }
+    
+    public void setProperty(String key,Object obj){
+        properties.put(key, obj);
+    }
+    
+    public Object getProperty(String key){
+        return properties.get(key);
+    }
+    
+    public boolean hasProperty(String key){
+        return properties.containsKey(key);
+    }
+    
+    public void removeProperty(String key){
+        properties.remove(key);
     }
     
     public void bindToMap(GameMap map){

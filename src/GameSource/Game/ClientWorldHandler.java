@@ -2,6 +2,7 @@ package GameSource.Game;
 import Controls.AbstractControl;
 import Database.PlayerData;
 import GameSource.Assets.AssetManager;
+import GameSource.Assets.Portals.Portal;
 import GameSource.Net.Client.AetherClientNetSender;
 import GameSource.game.GameMap;
 import Networking.Messages.PlayerJoinMessage;
@@ -17,7 +18,7 @@ public class ClientWorldHandler {
     private AetherGamePanel thegame;
     private int boundSpatId = -1;
     private int boundAccountId = -1;
-    
+            
     public ClientWorldHandler(ClientMain theclient,AetherGamePanel thegame) {
         this.theclient = theclient;
         this.thegame = thegame;
@@ -31,6 +32,7 @@ public class ClientWorldHandler {
         this.myGameMap = AssetManager.getMap(mapid);
         thegame.setMap(this.myGameMap);
     }
+    
     public Spatial addPlayerSpatial(PlayerJoinMessage mymsg){
         //System.out.println(mymsg.getSpatId());
         PlayerData pData = mymsg.getpData();
@@ -77,5 +79,20 @@ public class ClientWorldHandler {
     
     public void removeSpatial(String mapid,int spatId){
         AssetManager.getMap(mapid).removeSpatial(spatId);
+    }
+    
+    public void enterPortal(){
+        Portal curPort = (Portal)myGameMap.getSpatial(boundSpatId).getProperty("currentPortal");
+        if (curPort != null)
+            enterPortal(curPort);
+    }
+    
+    public void enterPortal(Portal port){
+        Spatial myspat = myGameMap.getSpatial(boundSpatId);
+        myGameMap.removeSpatial(myspat);
+        myspat.setLocation(port.getNewPos());
+        myGameMap = AssetManager.getMap(port.getToMap());
+        myGameMap.addSpatial(myspat);
+        thegame.setMap(myGameMap);
     }
 }

@@ -16,6 +16,7 @@ import Spatial.Spatial;
  */
 public class Portal extends CharacterSpatial{
     private String toMap;
+
     private float tx,ty,tz;
     
     public Portal(float x,float y,float z,String toMap,float tx,float ty,float tz){
@@ -23,20 +24,24 @@ public class Portal extends CharacterSpatial{
         this.tx = tx;
         this.ty = ty;
         this.tz = tz;
+        this.toMap = toMap;
         addControl(new CharacterAnimControl(AssetManager.getSpriteSet("Portal")));
     }
+    
+    public String getToMap() {
+        return toMap;
+    }
+    
     private int n = 0;
     
     @Override
     public void collideEffect(Spatial s) {
         if (location.distanceSquared(s.getLocation()) <= Math.pow(20,2) && getZ()-s.getZ() >= 0){
-//            System.out.println("IN! "+id+" "+(n++));
+            s.setProperty("currentPortal", this);
         }
-//        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     public GamePoint getNewPos(){
         return new GamePoint(tx,ty,tz);
     }
-    
 }
