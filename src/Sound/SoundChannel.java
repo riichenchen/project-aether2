@@ -54,6 +54,7 @@ public class SoundChannel extends Thread{
             if (soundQueue.get(i) != null)
                 soundQueue.get(i).interrupt();
         }
+        trackCounter = 0;
         soundQueue.clear();
     }
     
