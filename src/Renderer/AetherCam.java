@@ -4,6 +4,7 @@
  */
 package Renderer;
 
+import Renderer.CameraControls.AbstractCameraControl;
 import GameSource.Globals;
 import GameSource.game.GameMap;
 
@@ -15,6 +16,7 @@ public class AetherCam {
     private int length,width;//Note make sure camera dimensions are greater than screen to avoid culling too much
     private int x = 0,y = 0,XLimit,YLimit;
     private GameMap map;
+    private AbstractCameraControl control;
     
     public AetherCam(GameMap map, int length, int width){
         this.length = length;
@@ -23,10 +25,11 @@ public class AetherCam {
         XLimit = map.getDimX()-getLength();
         YLimit = (int)((map.getDimY()-getWidth()/Globals.__PROJECTION_SCALE__)*Globals.__PROJECTION_SCALE__);
     }
+    
     public int[] convertCoords(float X,float Y){
-        //TODO: Base this translation on screenx and screeny
         return new int[] {(int)(X-x),(int)(Y-y)};
     }
+    
     private void updatePosition(int x,int y){
         this.x = x;
         this.y = y;
