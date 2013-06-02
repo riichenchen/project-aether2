@@ -2276,3 +2276,6 @@ dirtblock 1576 -30 3976
 Portals
 testPort1 500 1 400
 /Portals
+BGSound
+soundTest1
+/BGSound

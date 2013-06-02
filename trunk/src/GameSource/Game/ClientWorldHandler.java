@@ -26,6 +26,7 @@ public class ClientWorldHandler {
         thegame.setHandler(this);
         AbstractControl.setWorld(this);
         SoundManager.addChannel("Effects", false);
+        SoundManager.addChannel("BackgroundMusic", true);
         SoundManager.getChannel("Effects").setNumberTracks(6);
         this.camControl = new AetherCameraControl();
     }
@@ -34,6 +35,7 @@ public class ClientWorldHandler {
         this.myGameMap = AssetManager.getMap(mapid);
         thegame.setMap(this.myGameMap);
         camControl.bindToCamera(myGameMap.getCamera());
+        SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
     }
     
     public Spatial addPlayerSpatial(PlayerJoinMessage mymsg){
@@ -105,6 +107,8 @@ public class ClientWorldHandler {
         //Clear new Map's previous messages
         myGameMap.clearMessages();
         camControl.bindToCamera(myGameMap.getCamera());
+        SoundManager.getChannel("BackgroundMusic").stopAll();
+        SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
         boundSpat.addControl(hold);
     }
 }
