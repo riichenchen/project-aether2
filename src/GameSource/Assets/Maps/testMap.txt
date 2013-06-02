@@ -1,3 +1,5 @@
+1600,4000
+Blocks
 dirtblock 26 -30 56
 dirtblock 26 -30 112
 dirtblock 26 -30 168
@@ -2270,3 +2272,7 @@ dirtblock 1576 -30 3808
 dirtblock 1576 -30 3864
 dirtblock 1576 -30 3920
 dirtblock 1576 -30 3976
+/Blocks
+Portals
+testPort1 500 1 400
+/Portals

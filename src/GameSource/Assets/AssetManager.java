@@ -7,12 +7,15 @@ package GameSource.Assets;
 import Animation.AnimTrack;
 import Animation.SpriteSet;
 import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
+import GameSource.Assets.TerrainBlocks.Blocks.GrassBlock.Grass_Block;
 import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.Globals;
 import GameSource.game.GameMap;
 import Spatial.Spatial;
 import Testing.MyTestCharacter;
-import Testing.Portal;
+import GameSource.Assets.Portals.Portal;
+import GameSource.Assets.Portals.PortalData;
+import Testing.Stevey;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,19 +32,26 @@ public class AssetManager {
     private static final String DIRECTORY = "src/GameSource/Assets/";
     private static HashMap<String,GameMap> allmaps;
     private static HashMap<String,SpriteSet> allAnimSets;
-    
+    private static HashMap<String,PortalData> allPortalData;
+    private static String[] mapProperties = new String[]{"Blocks","Portals"};
     public static void init(){
-        blockimages = new HashMap<>();
-        blockimages.put(null, null);
-        loadBlocks();
-        //if (Globals.Assetdebug)
-        System.out.println("Loaded Blocks!");
-        allmaps = new HashMap<>();
-        loadMaps();
-        System.out.println("Loaded Maps!");
         allAnimSets = new HashMap<>();
         loadAnimations();
         System.out.println("Loaded Animations!");
+        
+        allPortalData = new HashMap<>();
+        loadPortals();
+        System.out.println("Loaded Portals!");
+        
+        blockimages = new HashMap<>();
+        loadBlocks();
+        //if (Globals.Assetdebug)
+        System.out.println("Loaded Blocks!");
+        
+        allmaps = new HashMap<>();
+        loadMaps();
+        System.out.println("Loaded Maps!");
+        
     }
     private static void loadBlocks(){
         try {
@@ -62,9 +72,34 @@ public class AssetManager {
             System.exit(0);
         }
     }
+    
     public synchronized static Image getBlockImage(String imgName){
         return blockimages.get(imgName);
     }
+    
+    private static void loadPortals(){
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"portaldata.txt"));
+            String nextline;
+            String[] tempdat;
+            while ((nextline = fin.readLine())!=null){
+                tempdat = nextline.split(";");
+                BufferedReader portal_fin = new BufferedReader(new FileReader(DIRECTORY+"portals/allPortals/"+tempdat[1]));
+                String[] portalData = portal_fin.readLine().split(",");
+                allPortalData.put(tempdat[0], new PortalData(portalData[0],Float.parseFloat(portalData[1]),Float.parseFloat(portalData[2]),Float.parseFloat(portalData[3])));
+            }
+        } catch (IOException e){
+            System.out.println("Error loading portals!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+    
+    public static Portal getPortal(String key,float x,float y,float z){
+        PortalData dat = allPortalData.get(key);
+        return new Portal(x,y,z,dat.getToMap(),dat.getTx(),dat.getTy(),dat.getTz());
+    }
+    
     private static void loadMaps(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"mapdata.txt"));
@@ -72,12 +107,35 @@ public class AssetManager {
             String[] tempdat;
             while ((nextline = fin.readLine())!=null){
                 tempdat = nextline.split(";");
-                GameMap mymap = new GameMap(tempdat[0],0.1,1600,4000,Globals.__CAMX__,Globals.__CAMY__,true);
                 BufferedReader fin_map = new BufferedReader(new FileReader(DIRECTORY+"maps/"+tempdat[1]));
-                while ((nextline = fin_map.readLine()) != null){
-                    tempdat = nextline.split(" ");
-                    if (tempdat[0].equals("dirtblock")){
-                        mymap.addBackgroundSpatial(new Dirt_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
+                String[] mapinfo = fin_map.readLine().split(",");
+                
+                int x = Integer.parseInt(mapinfo[0]);
+                int y = Integer.parseInt(mapinfo[1]);
+                
+                GameMap mymap = new GameMap(tempdat[0],0.1,x,y,Globals.__CAMX__,Globals.__CAMY__,true);
+                for (String s: mapProperties){
+                    while (!nextline.equals(s)){
+                        nextline = fin_map.readLine();
+                    }
+                    if (s.equals("Blocks")){
+                        nextline = fin_map.readLine();
+                        while (!nextline.equals("/"+s)){    
+                            tempdat = nextline.split(" ");
+                            if (tempdat[0].equals("dirtblock")){
+                                mymap.addBackgroundSpatial(new Dirt_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
+                            } else if (tempdat[0].equals("grassblock")){
+                                mymap.addBackgroundSpatial(new Grass_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
+                            }
+                            nextline = fin_map.readLine();
+                        }
+                    } else if (s.equals("Portals")){
+                        nextline = fin_map.readLine();
+                        while (!nextline.equals("/"+s)){    
+                            tempdat = nextline.split(" ");
+                            mymap.addPermanentSpatial(AssetManager.getPortal(tempdat[0], Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3])));
+                            nextline = fin_map.readLine();
+                        }
                     }
                 }
                 allmaps.put(mymap.getName(), mymap);
@@ -97,10 +155,12 @@ public class AssetManager {
         }
         return allmaps.get(identifier);
     }
+    
     public synchronized static GameMap[] getAllMaps(){
         return allmaps.values().toArray(new GameMap[0]);
     }
-    public static void loadAnimations(){
+    
+    private static void loadAnimations(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"Animations.txt"));
             String nextline;
@@ -137,9 +197,11 @@ public class AssetManager {
             System.exit(0);
         }
     }
+    
     public static SpriteSet getSpriteSet(String key){
         return allAnimSets.get(key);
     }
+    
     public static int SpatialToType(Spatial spat){
         if (spat instanceof Other_Block){
             return 0;
@@ -149,6 +211,8 @@ public class AssetManager {
             return 2;
         } else if (spat instanceof Portal){
             return 3;
+        } else if (spat instanceof Stevey){
+            return 4;
         }
         System.out.println("SEVERE: Unable to recognise SpatialID!");
         System.exit(0);

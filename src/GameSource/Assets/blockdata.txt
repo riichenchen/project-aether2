@@ -1,2 +1,3 @@
 dirtblock;greenblock.png
 otherblock;otherblock.png
+grassblock;grasstile.jpg

@@ -9,9 +9,9 @@ import Renderer.RenderSpatial;
 import Renderer.Renderer;
 import Spatial.Spatial;
 import Testing.MyTestCharacter;
+import Testing.Stevey;
 import java.awt.Graphics;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -30,7 +30,7 @@ public class GameMap {
         protected String mapName;
         protected PhysicsSpace space;
         
-        public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1;
+        public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1,Char_STEVEY = 4;
                 
         public GameMap(String mapName, double _mobDensity,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
             mobDensity = _mobDensity;
@@ -187,6 +187,8 @@ public class GameMap {
                 newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
             } else if (characterType == Char_TESTANIM){
                 newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
+            } else if (characterType == Char_STEVEY){
+                newChar = new Stevey(loc.getX(),loc.getY(),loc.getZ());
             }
             if (newChar == null){
                 System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
@@ -195,21 +197,7 @@ public class GameMap {
             addSpatial(newChar);
             return newChar;
         }
-        public Spatial addPlayer(int characterType,GamePoint loc,int entityId){
-            Spatial newChar = null;
-            if (characterType == Char_TESTBLOCK){
-                newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
-            } else if (characterType == Char_TESTANIM){
-                newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
-            }
-            if (newChar == null){
-                System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
-                System.exit(0);
-            }
-            newChar.setId(entityId);
-            addSpatial(newChar);
-            return newChar;
-        }
+        
         public HashMap<Integer,Spatial> getNonPermanents(){
             return nonPermaSpats;
         }

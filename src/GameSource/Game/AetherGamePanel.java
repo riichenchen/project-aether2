@@ -8,14 +8,13 @@ import GameSource.Assets.AssetManager;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Renderer.AetherCam;
-import Spatial.Spatial;
+import Sound.SoundManager;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -25,19 +24,19 @@ import javax.swing.JPanel;
 public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyListener{
     private boolean []keys;
     public boolean ready=false,inputstate = true,visibility = true;
-    
-    private Spatial player;
+
     private GameMap gameMap;
     private AetherCam camera;
-    public boolean loaded = false;
+    private ClientWorldHandler handler;
     
     public void setMap(GameMap gameMap){
         this.gameMap = gameMap;
     }
+    
     public void setCamera(){
         this.camera = gameMap.getCamera();
     }
-    private ClientWorldHandler handler;
+    
     public void setHandler(ClientWorldHandler handler){
         this.handler = handler;
     }
@@ -46,6 +45,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         addKeyListener(this);
         keys = new boolean[KeyEvent.KEY_LAST+1];
         AssetManager.init();
+        SoundManager.init();
         setSize(800,600);
     }
     
