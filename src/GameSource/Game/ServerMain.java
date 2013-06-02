@@ -20,12 +20,8 @@ public class ServerMain {
         AssetManager.init();
         myDB = new DatabaseHandler();
         myGameMap = AssetManager.getMap("testMap");
-        //myNetListener = new AetherNetListener();
         world = new ServerWorldHandler(myDB);
         theServer = new AetherServer(world);
         theServer.start();
-        while (true){
-            world.update();
-        }
     }
 }

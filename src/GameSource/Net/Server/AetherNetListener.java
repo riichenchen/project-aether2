@@ -4,19 +4,16 @@
  */
 package GameSource.Net.Server;
 
+import Database.LoginReply;
 import Database.PlayerData;
-import GameSource.Assets.AssetManager;
 import GameSource.Game.ServerWorldHandler;
-import Networking.Messages.DisconnectMessage;
 import Networking.Messages.LoginReplyMessage;
-import Networking.Messages.MapDataPackageMessage;
 import Networking.Messages.Message;
 import Networking.Messages.PlayerJoinMessage;
-import Networking.Messages.RemoveSpatialMessage;
 import Networking.Messages.RequestLoginMessage;
+import Networking.Messages.SaveMessage;
 import Networking.Server.ClientManager;
 import Networking.Server.ServerNetListener;
-import PhysicsSync.PhysicSyncMessage;
 
 /**
  *
@@ -25,42 +22,37 @@ import PhysicsSync.PhysicSyncMessage;
 public class AetherNetListener extends ServerNetListener{
     private ServerWorldHandler world;
     
-    public AetherNetListener(ClientManager manager){//,ServerWorldHandler world){
+    public AetherNetListener(ClientManager manager){
         super(manager);
-        //this.world = world;
     }
     public void setWorld(ServerWorldHandler World){
         this.world = World;
     }
     @Override
     public void ReceiveMessage(Message m){
-        if (m instanceof PhysicSyncMessage){
-            world.addPSyncMessage((PhysicSyncMessage)m);
-        } else if (m instanceof RequestLoginMessage){
+        if (m instanceof RequestLoginMessage){
             RequestLoginMessage mymsg = (RequestLoginMessage)m;
-            int reply = world.RequestLogin(mymsg.getUser(), mymsg.getPass());
-            if (reply != -1){
+            
+            LoginReply reply = world.RequestLogin(mymsg.getUser(), mymsg.getPass());
+            if (reply.isAccepted()){
                 System.out.println(mymsg.getUser()+" has logged in as client "+mymsg.getClientId()+".");
-                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true));
-//                System.out.println("Sent o.o "+mymsg.getClientId());
-                //Change this in the future
-                PlayerData pData = world.getPlayerData(reply);
-                String mapid = pData.getMapId();
-                manager.sendToOne(mymsg.getClientId(), new MapDataPackageMessage(world.getNonPermanents(mapid),mapid));
+                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(true,""));
+
+                PlayerData pData = world.getPlayerData(reply.getAccId());
                 
-                PlayerJoinMessage newPlayer = world.getPlayerJoinMessage(pData,mymsg.getClientId());
-                world.sendToMap(mapid,newPlayer);
-                //manager.broadcast(newPlayer);
+                PlayerJoinMessage newPlayer = new PlayerJoinMessage(pData);
+                manager.sendToOne(mymsg.getClientId(), newPlayer);
                 
             } else {
                 System.out.println("Failed to login from client "+mymsg.getClientId()+".");
-                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(false));
+                manager.sendToOne(mymsg.getClientId(), new LoginReplyMessage(false,reply.getMessage()));
             }
-        } else if (m instanceof DisconnectMessage){
-            DisconnectMessage mymsg = (DisconnectMessage)m;
-            AssetManager.getMap(mymsg.getMapId()).removeSpatial(mymsg.getSpatId());
-            AssetManager.getMap(mymsg.getMapId()).removeClient(mymsg.getClientId());
-            world.sendToMap(mymsg.getMapId(), new RemoveSpatialMessage(mymsg.getSpatId(),mymsg.getMapId()));
+        } else if (m instanceof SaveMessage){
+            SaveMessage mymsg = (SaveMessage)m;
+            //TODO: IMPLEMENT A SAVE :DDD
+            System.out.println("Disconnect, let's save! Account: "+mymsg.getSaveData().getAccountId());
+            world.savePlayerData(mymsg.getSaveData());
+            //world.logOut(mymsg.getSaveData().getAccountId());
         }
     }
 }

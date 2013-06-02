@@ -1,70 +1,63 @@
 package GameSource.Game;
 import Controls.AbstractControl;
+import Database.PlayerData;
 import GameSource.Assets.AssetManager;
 import GameSource.Input.PlayerKeyListener;
 import GameSource.Net.Client.AetherClientNetSender;
 import GameSource.game.GameMap;
-import Networking.Messages.DisconnectMessage;
 import Networking.Messages.PlayerJoinMessage;
+import Networking.Messages.SaveMessage;
 import PhysicsSpace.PhysicsSpace;
-import PhysicsSync.PhysicSyncMessage;
-import PhysicsSync.PhysicsSyncManager;
-import PhysicsSync.SpatActionMessage;
-import Spatial.MapSpatData;
 import Spatial.Spatial;
 
 public class ClientWorldHandler {
     private GameMap myGameMap;
     private AetherClientNetSender netSender;
-    private PhysicsSpace myPhysicsSpace;
-    private PhysicsSyncManager psync;
     private ClientMain theclient;
     private AetherGamePanel thegame;
     private int boundSpatId = -1;
+    private int boundAccountId = -1;
+    
     public ClientWorldHandler(ClientMain theclient,AetherGamePanel thegame) {
         this.theclient = theclient;
         this.thegame = thegame;
-        this.psync = new PhysicsSyncManager(this);
         thegame.setHandler(this);
         AbstractControl.setWorld(this);
     }
+    
     public Spatial getSpatial(int id,String mapid){
         return myGameMap.getSpatial(id);
     }
     
-    public void addPSyncMessage(PhysicSyncMessage msg){
-        psync.addMessage(msg);
-    }
-    public synchronized void setGameMap(String mapid){
+    public void setGameMap(String mapid){
         this.myGameMap = AssetManager.getMap(mapid);
         thegame.setMap(this.myGameMap);
     }
-    public synchronized Spatial addPlayerSpatial(PlayerJoinMessage mymsg){
+    public Spatial addPlayerSpatial(PlayerJoinMessage mymsg){
         //System.out.println(mymsg.getSpatId());
-        int charType = mymsg.getCharacterType();
-        GamePoint loc = mymsg.getLocation();
+        PlayerData pData = mymsg.getpData();
+        int charType = pData.getCharacterType();
+        GamePoint loc = pData.getLocation();
         //Future: Add support for different maps!
-        String mapId = mymsg.getMapId();
-        
-        int entityid = mymsg.getSpatId();
-        Spatial newSpat = myGameMap.addPlayer(charType,loc,entityid);
+        String mapId = pData.getMapId();
+        setGameMap(mapId);
+        Spatial newSpat = myGameMap.addPlayer(charType,loc);
         return newSpat;
     }
+    
     public void bindPlayerToClient(Spatial spat){
         spat.addControl(new PlayerKeyListener());
         this.boundSpatId = spat.getId();
     }
+    
+    public void bindAccountToClient(int accountId){
+        this.boundAccountId = accountId;
+    }
+    
     public void bindSender(AetherClientNetSender netSender){
         this.netSender = netSender;
     }
-    public synchronized void addAllSpatials(MapSpatData[] spatData){
-        for (MapSpatData s: spatData){
-            myGameMap.addPlayer(s.getType(), s.getLocation(),s.getId());
-        }
-    }
-//    public void setGameWaiting(boolean b){
-//        theclient.setWaiting(b);
-//    }
+    
     public void startGame(){
         theclient.startGame();
     }
@@ -74,21 +67,17 @@ public class ClientWorldHandler {
     public void setResponse(String s){
         theclient.setResponse(s);
     }
-    public synchronized void update(){
+    public void update(){
         myGameMap.update();
-        //Work on this!
-        psync.elapseTime();
-        psync.update();
-    }
-    public synchronized void addSpatAction(Spatial spat, int action){
-        netSender.sendMessage(new SpatActionMessage(spat,action));
     }
     
-    public synchronized void disconnect(){
-        netSender.sendMessage(new DisconnectMessage(myGameMap.getSpatial(boundSpatId)));
+    public void disconnect(){
+        Spatial playerSpat = myGameMap.getSpatial(boundSpatId);
+        PlayerData saveData = new PlayerData(boundAccountId,-1,playerSpat.getLocation(),myGameMap.getName());
+        netSender.sendMessage(new SaveMessage(saveData));
     }
     
-    public synchronized void removeSpatial(String mapid,int spatId){
+    public void removeSpatial(String mapid,int spatId){
         AssetManager.getMap(mapid).removeSpatial(spatId);
     }
 }

@@ -20,9 +20,8 @@ public class GameMap {
         protected ImageIcon mapImage;//To be used.
         protected double mobDensity; //????
         protected int dimx,dimy;        
-        protected ConcurrentHashMap<Integer,Spatial> spats;
-        protected ConcurrentHashMap<Integer,Spatial> nonPermaSpats;
-        protected ConcurrentHashMap<Integer,Integer> clientIds;
+        protected HashMap<Integer,Spatial> spats;
+        protected HashMap<Integer,Spatial> nonPermaSpats;
         //Only client maps can render. This saves space and allows
         //the server to use this class as well
         protected Renderer renderer = null;
@@ -34,14 +33,12 @@ public class GameMap {
         public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1;
                 
         public GameMap(String mapName, double _mobDensity,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
-            //mapImage = new ImageIcon(mapName);
             mobDensity = _mobDensity;
             this.dimx = dimx;
             this.dimy = dimy;
-            spats = new ConcurrentHashMap<>();
+            spats = new HashMap<>();
             this.mapName = mapName;
-            this.nonPermaSpats = new ConcurrentHashMap<>();
-            this.clientIds = new ConcurrentHashMap<>();//1 million clients per session
+            this.nonPermaSpats = new HashMap<>();
             this.space = new PhysicsSpace(9.81f,dimx,dimy);
             //Clean this up later maybe
             if (canRender){
@@ -65,16 +62,7 @@ public class GameMap {
             }
             return true;
         }
-        //returns all existing clients sharing the map
-        public Integer[] getClients(){
-            return clientIds.values().toArray(new Integer[0]);
-        }
-        public void removeClient(int clientId){
-            clientIds.remove(clientId);
-        }
-        public void addClientId(int cid){
-            clientIds.put(cid,cid);
-        }
+
         //Handles attaching and removing of spatials
         public void addSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
@@ -102,7 +90,6 @@ public class GameMap {
         }
         public void addBackgroundSpatial(Spatial spat){
             spats.put(spat.getId(), spat);
-//            space.addEnviroSpatial(spat);
             spat.bindToMap(this);
             
             if (!verifyRender())
@@ -119,7 +106,6 @@ public class GameMap {
                 spat.unbindFromMap();
                 space.removeSpatial(spat);
             }
-            clientIds.clear();
         }
         
         public void render(Graphics g,JPanel pane){
@@ -178,7 +164,7 @@ public class GameMap {
             return dimy;
         }
         
-        public synchronized void update(){
+        public void update(){
             Spatial[] spatList = spats.values().toArray(new Spatial[0]);
             for (Spatial s: spatList){
                 s.update();
@@ -194,8 +180,8 @@ public class GameMap {
         public Spatial getSpatial(int id){
             return spats.get(id);
         }
-        //Should only be called by server side to register player spatial
-        public int addPlayer(int characterType,GamePoint loc){
+        
+        public Spatial addPlayer(int characterType,GamePoint loc){
             Spatial newChar = null;
             if (characterType == Char_TESTBLOCK){
                 newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
@@ -207,7 +193,7 @@ public class GameMap {
                 System.exit(0);
             }
             addSpatial(newChar);
-            return newChar.getId();
+            return newChar;
         }
         public Spatial addPlayer(int characterType,GamePoint loc,int entityId){
             Spatial newChar = null;
@@ -224,7 +210,7 @@ public class GameMap {
             addSpatial(newChar);
             return newChar;
         }
-        public ConcurrentHashMap<Integer,Spatial> getNonPermanents(){
+        public HashMap<Integer,Spatial> getNonPermanents(){
             return nonPermaSpats;
         }
         public PhysicsSpace getSpace(){
