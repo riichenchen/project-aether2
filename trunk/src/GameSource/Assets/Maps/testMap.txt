@@ -1,4 +1,4 @@
-1600,4000
+1600,4000,5
 Blocks
 dirtblock 26 -30 56
 dirtblock 26 -30 112
@@ -2276,6 +2276,8 @@ dirtblock 1576 -30 3976
 Portals
 testPort1 500 1 400
 /Portals
+Spawners
+/Spawners
 BGSound
 soundTest1
 /BGSound

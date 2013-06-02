@@ -1,4 +1,5 @@
 package GameSource.Game;
+import ArtificialIntelligence.AIHandler;
 import Controls.AbstractControl;
 import Database.PlayerData;
 import GameSource.Assets.AssetManager;
@@ -19,6 +20,7 @@ public class ClientWorldHandler {
     private Spatial boundSpat = null;
     private int boundAccountId = -1;
     private AetherCameraControl camControl;
+    private AIHandler aiHandle;
     
     public ClientWorldHandler(ClientMain theclient,AetherGamePanel thegame) {
         this.theclient = theclient;
@@ -29,6 +31,8 @@ public class ClientWorldHandler {
         SoundManager.addChannel("BackgroundMusic", true);
         SoundManager.getChannel("Effects").setNumberTracks(6);
         this.camControl = new AetherCameraControl();
+        this.aiHandle = new AIHandler();
+        aiHandle.start();
     }
     
     public void setGameMap(String mapid){
@@ -74,6 +78,7 @@ public class ClientWorldHandler {
         theclient.setResponse(s);
     }
     public void update(){
+        aiHandle.update();
         myGameMap.update();
         camControl.update();
     }
@@ -84,10 +89,6 @@ public class ClientWorldHandler {
         netSender.sendMessage(new SaveMessage(saveData));
     }
     
-    public void removeSpatial(String mapid,int spatId){
-        AssetManager.getMap(mapid).removeSpatial(spatId);
-    }
-    
     public void enterPortal(){
         Portal curPort = (Portal)boundSpat.getProperty("currentPortal");
         if (curPort != null)
@@ -96,7 +97,6 @@ public class ClientWorldHandler {
     
     public void enterPortal(Portal port){
         //Clear old map's previous messages
-        myGameMap.clearMessages();
         AbstractControl hold = (AbstractControl)boundSpat.getControl(SteveyKeyListener.class);
         boundSpat.removeControl(hold);
         myGameMap.removeSpatial(boundSpat);
@@ -105,7 +105,7 @@ public class ClientWorldHandler {
         myGameMap.addSpatial(boundSpat);
         thegame.setMap(myGameMap);
         //Clear new Map's previous messages
-        myGameMap.clearMessages();
+//        myGameMap.clearMessages();
         camControl.bindToCamera(myGameMap.getCamera());
         SoundManager.getChannel("BackgroundMusic").stopAll();
         SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());

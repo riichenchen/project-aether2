@@ -102,6 +102,7 @@ public class PhysicsSpace {
         return new Spatial[][]{pAreaSpats,envAreaSpats};
     }
     private int n = 0;
+    int derp = 0;
     public void update(){
         resolveMessages();
         Spatial[] allPlayersArray = playerSpats.values().toArray(new Spatial[0]);
@@ -111,18 +112,23 @@ public class PhysicsSpace {
             Spatial[] pSpats = spatsAround[0];
             Spatial[] envSpats = spatsAround[1];
 //            System.out.println(Arrays.toString(playerSpats));
-            for (int j = 0; j < pSpats.length;j++){
-                for (int k = j+1; k < pSpats.length;k++){
-                    if (pSpats[j].collide(pSpats[k])){
-                        pSpats[j].collideEffect(pSpats[k]);
-                        //Note: the call to the second will be
-                        //executed when "i" loops around to it in theory
-                        //May have to uncomment the below line if not.
-//                        playerSpats[k].collideEffect(playerSpats[j]);
-                    }
-                    n++; //Operation counter for debug
-                }
+            for (int j = 0; j < pSpats.length; j++){
+                if (allPlayersArray[i].collide(pSpats[j])){
+                    allPlayersArray[i].collideEffect(pSpats[j]);
+                }   
             }
+//            for (int j = 0; j < pSpats.length;j++){
+//                for (int k = j+1; k < pSpats.length;k++){
+//                    if (pSpats[j].collide(pSpats[k])){
+//                        pSpats[j].collideEffect(pSpats[k]);
+//                        //Note: the call to the second will be
+//                        //executed when "i" loops around to it in theory
+//                        //May have to uncomment the below line if not.
+//                        pSpats[k].collideEffect(pSpats[j]);
+//                    }
+//                    n++; //Operation counter for debug
+//                }
+//            }
 //            System.out.println(Arrays.toString(envSpats));
             for (int l = 0; l < envSpats.length;l++){
                 if (allPlayersArray[i].collide(envSpats[l])){

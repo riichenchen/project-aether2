@@ -13,8 +13,8 @@ import GameSource.game.GameMap;
  * @author Shiyang
  */
 public class TestAIControl extends AIControl{
-    public TestAIControl(GameMap map){
-        super(map,new TestAICalculation());
+    public TestAIControl(){
+        super(new TestAICalculation());
     }
     @Override
     public void update(Object returnValue) {
@@ -22,10 +22,15 @@ public class TestAIControl extends AIControl{
         System.out.println((Integer)returnValue+controlId);
     }
     public static void main(String[] args){
-        TestAIControl mytest = new TestAIControl(new GameMap("MAP",0.1,1600,1200,800,600,false));
-        TestAIControl mytest2 = new TestAIControl(new GameMap("MAP",0.1,1600,1200,800,600,false));
-        TestAIControl mytest3 = new TestAIControl(new GameMap("MAP",0.1,1600,1200,800,600,false));
-        TestAIControl mytest4 = new TestAIControl(new GameMap("MAP",0.1,1600,1200,800,600,false));
+        TestAIControl mytest = new TestAIControl();
+        TestAIControl mytest2 = new TestAIControl();
+        TestAIControl mytest3 = new TestAIControl();
+        TestAIControl mytest4 = new TestAIControl();
+        GameMap mymap = new GameMap("MAP",3,1600,1200,800,600,false);
+        mytest.bindToMap(mymap);
+        mytest2.bindToMap(mymap);
+        mytest3.bindToMap(mymap);
+        mytest4.bindToMap(mymap);
         
         AIHandler handle1 = new AIHandler();
         AIHandler handle2 = new AIHandler();

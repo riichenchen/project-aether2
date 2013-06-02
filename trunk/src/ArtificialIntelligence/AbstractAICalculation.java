@@ -30,6 +30,7 @@ public abstract class AbstractAICalculation<T> {
     public int getId(){
         return id;
     }
+    
     //Must be a way to calculate value before returning value
     public abstract void calculate();
     

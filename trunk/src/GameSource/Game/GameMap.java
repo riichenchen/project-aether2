@@ -1,5 +1,7 @@
 package GameSource.game;
 
+import GameSource.Assets.MobData.AbstractMob;
+import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.Game.GamePoint;
 import GameSource.Globals;
@@ -12,13 +14,11 @@ import Testing.MyTestCharacter;
 import Testing.Stevey;
 import java.awt.Graphics;
 import java.util.HashMap;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class GameMap {
-        
-        protected ImageIcon mapImage;//To be used.
-        protected double mobDensity; //????
+        protected int mobCounter = 0;
+        protected int mobLimit;
         protected int dimx,dimy;        
         protected HashMap<Integer,Spatial> spats;
         protected HashMap<Integer,Spatial> nonPermaSpats;
@@ -33,10 +33,10 @@ public class GameMap {
         
         public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1,Char_STEVEY = 4;
                 
-        public GameMap(String mapName, double _mobDensity,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
-            mobDensity = _mobDensity;
+        public GameMap(String mapName, int mobLimit,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
             this.dimx = dimx;
             this.dimy = dimy;
+            this.mobLimit = mobLimit;
             spats = new HashMap<>();
             this.mapName = mapName;
             this.nonPermaSpats = new HashMap<>();
@@ -66,6 +66,7 @@ public class GameMap {
 
         //Handles attaching and removing of spatials
         public void addSpatial(Spatial spat){
+            clearMessages();
             spats.put(spat.getId(), spat);
             nonPermaSpats.put(spat.getId(), spat);
             space.addPlayerSpatial(spat);
@@ -79,6 +80,7 @@ public class GameMap {
         }
         
         public void addPermanentSpatial(Spatial spat){
+            clearMessages();
             spats.put(spat.getId(), spat);
             space.addEnviroSpatial(spat);
             spat.bindToMap(this);
@@ -89,7 +91,9 @@ public class GameMap {
                 renderer.addSpatial((RenderSpatial)spat);
             }
         }
+        
         public void addBackgroundSpatial(Spatial spat){
+            clearMessages();
             spats.put(spat.getId(), spat);
             spat.bindToMap(this);
             
@@ -97,15 +101,6 @@ public class GameMap {
                 return;
             if (spat instanceof RenderSpatial){
                 renderer.addSpatial((RenderSpatial)spat);
-            }
-        }
-        
-        public void clearNonPermanentSpats(){
-            Spatial[] nonperms = nonPermaSpats.values().toArray(new Spatial[0]);
-            for (Spatial spat: nonperms){
-                spats.remove(spat.getId());
-                spat.unbindFromMap();
-                space.removeSpatial(spat);
             }
         }
         
@@ -136,11 +131,9 @@ public class GameMap {
                 System.out.println("Warning: Trying to reveal non-renderable Spaial!");
             }
         }
-        public void removeSpatial(int spatId){
-            removeSpatial(spats.get(spatId));
-        }
         
         public void removeSpatial(Spatial spat){
+            clearMessages();
             spats.remove(spat.getId());
             nonPermaSpats.remove(spat.getId());
             space.removeSpatial(spat);
@@ -158,9 +151,6 @@ public class GameMap {
             renderer.clearMessages();
         }
         
-        public double getMobDensity() {
-            return mobDensity;
-        }
 
         public int getDimX(){
             return dimx;
@@ -174,9 +164,9 @@ public class GameMap {
             for (Spatial s: spatList){
                 s.update();
             }
+            space.update();
             if (!verifyRender())
                 return;
-            space.update();
             renderer.update();
         }
         
@@ -215,5 +205,15 @@ public class GameMap {
         }
         public String getBGMusic(){
             return bgMusic;
+        }
+        public void spawnMob(AbstractMobSpawner spawner){
+            if (mobCounter < mobLimit){
+                this.addSpatial(spawner.getMob());
+                mobCounter++;
+            }
+        }
+        public void removeMob(AbstractMob spat){
+            removeSpatial(spat);
+            mobCounter--;
         }
 }

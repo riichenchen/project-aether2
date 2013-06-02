@@ -19,7 +19,6 @@ public class Stevey extends CharacterSpatial{
     
     public Stevey(float x,float y,float z){
         super(x,y,z,51f,77f,36f,1f,1f,1);
-        addControl(new CharacterAnimControl(AssetManager.getSpriteSet("Steve")));
         setProperty("currentPortal",null);
     }
     
@@ -34,6 +33,11 @@ public class Stevey extends CharacterSpatial{
     public void update(){
         super.update();
         setProperty("currentPortal",null);
+    }
+
+    @Override
+    public CharacterAnimControl getAnimControl() {
+        return new CharacterAnimControl(AssetManager.getSpriteSet("Steve"));
     }
     
 }

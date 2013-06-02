@@ -25,7 +25,7 @@ public abstract class CharacterSpatial extends RenderSpatial{
 //    protected int state;
     public CharacterSpatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         super(x,y,z,l,h,w,m,c,collidable);
-//        this.state = 0; // Default state for stand
+        addControl(getAnimControl());
     }
     //JUMPING = 1,MOVINGLEFT = 2,MOVINGRIGHT = 3,MOVINGUP = 4,MOVINGDOWN = 5
     //potentially add more later... (depends on implementation)
@@ -65,4 +65,5 @@ public abstract class CharacterSpatial extends RenderSpatial{
             System.out.println("Warning: No Character Anim Track for spatial "+this.getId());
         }
     }
+    public abstract CharacterAnimControl getAnimControl();
 }
