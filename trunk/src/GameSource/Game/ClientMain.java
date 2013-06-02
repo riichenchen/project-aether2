@@ -261,7 +261,6 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
     public void actionPerformed(ActionEvent evt) {
         if(evt.getSource().equals(myTimer) && theGame!= null && theGame.ready){
             theGame.requestFocus();
-            theGame.move();
             theGame.update();
             theGame.repaint(); //show current point in time
         }

@@ -22,16 +22,13 @@ import javax.swing.JPanel;
  * @author Shiyang
  */
 public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyListener{
-    private boolean []keys;
     public boolean ready=false,inputstate = true,visibility = true;
 
     private GameMap gameMap;
-    private AetherCam camera;
     private ClientWorldHandler handler;
     
     public void setMap(GameMap gameMap){
         this.gameMap = gameMap;
-        this.camera = gameMap.getCamera();
     }
     
     public void setHandler(ClientWorldHandler handler){
@@ -40,7 +37,6 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
     public AetherGamePanel(){ //initialize game variables, assign map to UI
         addMouseMotionListener(this);
         addKeyListener(this);
-        keys = new boolean[KeyEvent.KEY_LAST+1];
         AssetManager.init();
         SoundManager.init();
         setSize(800,600);
@@ -57,22 +53,13 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         handler.update();
     }
     
-    public void move(){
-        if (keys[KeyEvent.VK_D]){
-            camera.translateLocation(5,0);
-        } if (keys[KeyEvent.VK_A]){
-            camera.translateLocation(-5,0);
-        } if (keys[KeyEvent.VK_W]){
-            camera.translateLocation(0,-5);
-        } if (keys[KeyEvent.VK_S]){
-            camera.translateLocation(0,5);
-        }
-    }
     @Override
     public void paintComponent(Graphics g){//display the UI
-        g.setColor(Color.GRAY);
-        g.fillRect(0,0,800,600);
-	gameMap.render(g,this);
+        if (ready){
+            g.setColor(Color.GRAY);
+            g.fillRect(0,0,800,600);
+            gameMap.render(g,this);
+        }
     }
     
     // ---------- MouseMotionListener ------------------------------------------
@@ -89,13 +76,11 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
-        keys[e.getKeyCode()] = true;
         InputManager.keyDown(e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keys[e.getKeyCode()] = false;
         InputManager.keyUp(e.getKeyCode());
     }
 }

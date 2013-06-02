@@ -16,9 +16,10 @@ public class ClientWorldHandler {
     private AetherClientNetSender netSender;
     private ClientMain theclient;
     private AetherGamePanel thegame;
-    private int boundSpatId = -1;
+    private Spatial boundSpat = null;
     private int boundAccountId = -1;
-            
+    private AetherCameraControl camControl;
+    
     public ClientWorldHandler(ClientMain theclient,AetherGamePanel thegame) {
         this.theclient = theclient;
         this.thegame = thegame;
@@ -26,11 +27,13 @@ public class ClientWorldHandler {
         AbstractControl.setWorld(this);
         SoundManager.addChannel("Effects", false);
         SoundManager.getChannel("Effects").setNumberTracks(6);
+        this.camControl = new AetherCameraControl();
     }
     
     public void setGameMap(String mapid){
         this.myGameMap = AssetManager.getMap(mapid);
         thegame.setMap(this.myGameMap);
+        camControl.bindToCamera(myGameMap.getCamera());
     }
     
     public Spatial addPlayerSpatial(PlayerJoinMessage mymsg){
@@ -47,7 +50,8 @@ public class ClientWorldHandler {
     
     public void bindPlayerToClient(Spatial spat){
         spat.addControl(new SteveyKeyListener());
-        this.boundSpatId = spat.getId();
+        this.boundSpat = spat;
+        camControl.bindToSpatial(spat);
     }
     
     public void bindAccountToClient(int accountId){
@@ -69,10 +73,11 @@ public class ClientWorldHandler {
     }
     public void update(){
         myGameMap.update();
+        camControl.update();
     }
     
     public void disconnect(){
-        Spatial playerSpat = myGameMap.getSpatial(boundSpatId);
+        Spatial playerSpat = boundSpat;
         PlayerData saveData = new PlayerData(boundAccountId,-1,playerSpat.getLocation(),myGameMap.getName());
         netSender.sendMessage(new SaveMessage(saveData));
     }
@@ -82,24 +87,24 @@ public class ClientWorldHandler {
     }
     
     public void enterPortal(){
-        Portal curPort = (Portal)myGameMap.getSpatial(boundSpatId).getProperty("currentPortal");
+        Portal curPort = (Portal)boundSpat.getProperty("currentPortal");
         if (curPort != null)
             enterPortal(curPort);
     }
     
     public void enterPortal(Portal port){
-        Spatial myspat = myGameMap.getSpatial(boundSpatId);
         //Clear old map's previous messages
         myGameMap.clearMessages();
-        AbstractControl hold = (AbstractControl)myspat.getControl(SteveyKeyListener.class);
-        myspat.removeControl(hold);
-        myGameMap.removeSpatial(myspat);
-        myspat.setLocation(port.getNewPos());
+        AbstractControl hold = (AbstractControl)boundSpat.getControl(SteveyKeyListener.class);
+        boundSpat.removeControl(hold);
+        myGameMap.removeSpatial(boundSpat);
+        boundSpat.setLocation(port.getNewPos());
         myGameMap = AssetManager.getMap(port.getToMap());
-        myGameMap.addSpatial(myspat);
+        myGameMap.addSpatial(boundSpat);
         thegame.setMap(myGameMap);
         //Clear new Map's previous messages
         myGameMap.clearMessages();
-        myspat.addControl(hold);
+        camControl.bindToCamera(myGameMap.getCamera());
+        boundSpat.addControl(hold);
     }
 }
