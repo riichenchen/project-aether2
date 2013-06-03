@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-//CURRENT TASK: Order of display/render; use priority queue? LinkedList?
-//KEY ISSUES TO RESOLVE: Line 67
+//Check for locking bug with subComponents
 
 public class AGUI{
 	//Main screen that manages all AComponents; drawing, adding, updating,
@@ -18,20 +18,17 @@ public class AGUI{
 	private int width, height;
 	private AbstractInputSet inputSet;
 	private Map<String,AbstractInputSet> inputSets;
-//	private Map<String,AComponent> popup;
+
 	private Map<String,AComponent> windows;
-	private ArrayList<String> windowNames;
-//	private Map<String,AComponent> perm;
+	//private ArrayList<String> windowNames;
+        private LinkedList<String> windowNames;
+
 	private AComponent focusedScreen;
 
 
 
 	private InputManager keyboard;
 	private AMouseInput mouse;
-//	private AComponent [] popup;
-//	private AComponent [] perm;
-//	private ArrayList <AComponent> popup;	//AComponents that are temporarily opened
-//	private ArrayList <AComponent> perm;	//AComponents that are always displayed (HUD)
 	
 	public static boolean [] keys;			//Input fields; keyboard and mouse
 	public static int mx, my;				//Public for easier updating and
@@ -42,6 +39,11 @@ public class AGUI{
 	private ATextField chat;
 	private ALabel info;
 	private ATextArea write;
+        
+        public void bringToFront(String name){
+            windowNames.remove(name);
+            windowNames.push(name);
+        }
 	
 	public void shiftFocus(String name){
 		if (focusedScreen==null)
@@ -51,13 +53,16 @@ public class AGUI{
 			focusedScreen=windows.get(name);
 			focusedScreen.setFocused(true);
 		}
+                bringToFront(name);
 	}
 	
 	public void openWindow(String name){
 		windows.get(name).setVisible(true);
+                bringToFront(name);
 		shiftFocus(name);
 	}
 	public void closeWindow(String name){
+                windows.get(name).setFocused(false);
 		windows.get(name).setVisible(false);
 	}
 	
@@ -72,12 +77,11 @@ public class AGUI{
 			shiftFocus(name);
 		}
 		else{
-			cWindow.call();				//DO I WANT TO DO THIS?
+			cWindow.call();				
 		}
 	}
 	
 	public void mouseCall(String name){
-		System.out.println(name+" called by mouse");
 		AComponent cWindow=windows.get(name);
 		if (cWindow.visible()){
 			if (cWindow.focus()==false){
@@ -85,9 +89,8 @@ public class AGUI{
 			}
 			if (cWindow.locked()==false)
 				cWindow.lock();
-			else{
-				cWindow.call();				//DO I WANT TO DO THIS?
-			}
+			cWindow.call();				//DO I WANT TO DO THIS?
+
 		}
 	}
 	
@@ -96,10 +99,14 @@ public class AGUI{
 		width=wid; height = hgt;
 		bindTo(input);
 		bindTo(mInput);
+                
 		keys=keyboard.get_keys();
 		mx=mouse.get_x(); my= mouse.get_y();
 		mouseButtons=mouse.get_buttons();
 		
+               // windowNames=new ArrayList<String>();
+		windows = new HashMap<String,AComponent>();
+                windowNames=new LinkedList<String>();
 		
 		//Replace with reading data file
 		invent=new AWindow("invent");
@@ -111,7 +118,7 @@ public class AGUI{
 		shop.setSize(500,500);
 		shop.setBG(255,0,0);
 		shop.setLocation(150,50);
-		AWindow nest = new AWindow("nest");
+		AButton nest = new AButton("nest",AMessage.OPEN_WINDOW,"invent");
 		nest.setSize(20,20);
 		nest.setBG(0,0,255);
 		nest.setLocation(200,200);
@@ -130,10 +137,6 @@ public class AGUI{
 		write=new ATextArea();
 		write.setLocation(450,300);
 		write.setName("textbox");
-		
-		windowNames=new ArrayList<String>();
-		windows = new HashMap<String,AComponent>();
-		
 		
 		windowNames.add("invent");
 		windowNames.add("shop");
@@ -155,6 +158,7 @@ public class AGUI{
 		inputSets.put("battle",new BattleInputSet(this));
 		inputSets.put("normal",new NormalInputSet(this));
 		inputSet=inputSets.get("normal");
+                AProcessor.bindTo(this);
 	}
     public void bindTo(InputManager bound){
         this.keyboard = bound;
@@ -162,7 +166,7 @@ public class AGUI{
     public void bindTo(AMouseInput bound){
         this.mouse = bound;
     }
-    public ArrayList<String> get_windows(){
+    public LinkedList<String> get_windows(){
     	return windowNames;
     }
     public AComponent getWindow(String name){
@@ -192,59 +196,14 @@ public class AGUI{
 
 		inputSet.update();
 		
-		/*Hashmap of Window Frames mapped to String
-		 *Note: use inputSet.update()
-		 *where inside it goes through each key and what not
-		 *in the inputset and does thing accordingly
-		 *When you make the input set, give it a binding to the
-		 *gui so that it can use GUI.attachFrame(), GUI.detachFrame(), etc.*/
-		 /*
-		if (inputSet.invent(keys)){
-			System.out.println("INVENT");
-			System.out.println(popup[INVENTORY].visible()+","+popup[SHOP].visible()+","+popup[INVENTORY].visible());
-			if (popup[INVENTORY].focus()==false){
-				popup[INVENTORY].setFocused(true);
-				popup[INVENTORY].setVisible(true);
-				popup[SHOP].setFocused(false);
-				popup[CHAT].setFocused(false);
-			}
-			else{
-				popup[INVENTORY].setVisible(false);
-				popup[INVENTORY].setFocused(false);
-			}
-		}
-		if (inputSet.shop(keys)){
-			System.out.println("SHOP");
-			System.out.println(popup[INVENTORY].visible()+","+popup[SHOP].visible()+","+popup[INVENTORY].visible());
-			if (popup[SHOP].focus()==false){
-				popup[SHOP].setVisible(true);
-				popup[SHOP].setFocused(true);
-				popup[INVENTORY].setFocused(false);
-				popup[CHAT].setFocused(false);
-			}
-			else{
-				popup[SHOP].setVisible(false);
-				popup[SHOP].setFocused(false);
-			}
-				
-		}
-		if (inputSet.chat(keys)){
-			System.out.println("CHAT");
-			System.out.println(popup[INVENTORY].visible()+","+popup[SHOP].visible()+","+popup[INVENTORY].visible());
-			if (popup[CHAT].focus()==false){
-				popup[CHAT].setFocused(true);
-				popup[SHOP].setFocused(false);
-				popup[INVENTORY].setFocused(false);
-			}
-			else
-				popup[CHAT].setFocused(false);
-		}
-		*/
 	}
 	public void draw(Graphics g){
 	//	g.clearRect(0,0,width,height);
-		for (String k: windowNames){
-			windows.get(k).draw(g);
-		}
+                for (int i=windowNames.size()-1; i>=0; i--){
+                    windows.get(windowNames.get(i)).draw(g);
+                }
+	//	for (String k: windowNames){
+	//		windows.get(k).draw(g);
+	//	}
 	}
 }

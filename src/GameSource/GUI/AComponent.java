@@ -3,6 +3,7 @@ package GameSource.GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 
 //CURRENT TASK AT HAND: Components containing components, AButton, Specialty Components
 //KEY ISSUES TO RESOLVE: Line 95
@@ -15,6 +16,7 @@ public abstract class AComponent{
 	protected String name;
 	protected int id;
 	protected AComponent parent; 
+        protected Image image;
 	
 	private static int idCounter=0;
 	
@@ -27,8 +29,6 @@ public abstract class AComponent{
 		enabled=true;
 		focused=false;
 		id=idCounter++;
-
-		
 	}
 	public AComponent(int nx,int ny,int nw,int nh){
 		x=nx; y=ny; width=nw; height=nh;
@@ -61,6 +61,9 @@ public abstract class AComponent{
 	public void setName(String s){
 		name=s;
 	}
+        public void setImage (Image g){
+                image=g;
+        }
 
 	public void setVisible(boolean b){
 		visible=b;
@@ -72,15 +75,15 @@ public abstract class AComponent{
 		focused=b;
 	}
 	public void lock(){
-		System.out.println(name+" locked");
+//		System.out.println(name+" locked");
 		lx=AGUI.mx-x;
 		ly=AGUI.my-y;
 		locked = true;
 		
 	}
 	public void unlock(){
-		System.out.println(name+" unlocked");
-		System.out.println("("+x+","+y+"),"+lx+","+ly);
+//		System.out.println(name+" unlocked");
+//		System.out.println("("+x+","+y+"),"+lx+","+ly);
 		locked= false;
 	}
 	public void lockShift(){

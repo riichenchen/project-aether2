@@ -1,5 +1,6 @@
 package GameSource.GUI;
 
+import GameSource.Assets.AssetManager;
 import java.awt.Graphics;
 
 /**
@@ -11,19 +12,22 @@ import java.awt.Graphics;
  */
 
 public class AButton extends AComponent{
+    private AMessage message;
     public AButton() {
     	setLocation(0,0);
     }
-    public AButton(String label){
+    public AButton(String label, int msgType, String msgContent){
     	setName(label);
-    	
+//        setImage(AssetManager.getBlockImage(label));
+    	message=new AMessage(msgType, msgContent);
     }
     public void draw(Graphics g){
-    	
+        g.setColor(background);
+    	g.fillRect(x,y,width,height);
     }
-    public void update(){
-    	
-    }
+    public void update(){}
+    
     public void call(){
+        AProcessor.process(message);
     }
 }

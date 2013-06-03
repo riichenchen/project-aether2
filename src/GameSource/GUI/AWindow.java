@@ -27,7 +27,18 @@ public class AWindow extends AComponent{
 		c.parent=this;
 		subComponents.add(c);
 	}
-	public void call(){}
+	public void call(){
+            int rx = AGUI.mx-x;
+            int ry = AGUI.my-y;
+            System.out.println("rx,ry:"+rx+","+ry);
+            for (AComponent c: subComponents){
+                System.out.println(c.name);
+                if (c.collidepoint(rx,ry)){
+                    c.call();
+                    break;
+                }
+            }
+        }
 	
 	public void drawChildren(Graphics g){		//drawChildren or use parent field?
 		for (AComponent c: subComponents){
