@@ -18,22 +18,23 @@ public class NormalInputSet extends AbstractInputSet{
 	}
 
 	public void update(){
-		if (myGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
+		if (AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
 			mouseUsed=false;
-		for (String name: myGUI.get_windows()){
-			if (keyMap.get(name)!=null && AGUI.keys[keyMap.get(name)]){
-				myGUI.keyCall(name);
+                String [] cwindows = myGUI.get_windows().toArray(new String [0]);
+		for (String wname: cwindows){
+			if (keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
+				myGUI.keyCall(wname);
 			}
 
-			if (myGUI.getWindow(name).visible() && myGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONDOWN){
-				if (mouseUsed==false && myGUI.getWindow(name).collidepoint(AGUI.mx,AGUI.my)){
+			if (myGUI.getWindow(wname).visible() && AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONDOWN){
+				if (mouseUsed==false && myGUI.getWindow(wname).collidepoint(AGUI.mx,AGUI.my)){
 					System.out.println("hi");
-					myGUI.mouseCall(name);
+					myGUI.mouseCall(wname);
 					mouseUsed=true;
 				}
 			}
 		}
-		if ((myGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONDOWN) && mouseUsed==false){
+		if ((AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONDOWN) && mouseUsed==false){
 			myGUI.unfocus();
 		}
 	}
