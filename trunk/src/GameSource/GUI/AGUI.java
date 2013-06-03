@@ -173,15 +173,24 @@ public class AGUI{
     	return windows.get(name);
     }
     
+    public boolean hitGUI(int mx, int my){
+	for (String wname: windowNames){
+            AComponent c=windows.get(wname);
+            if (c.visible() && c.collidepoint(mx,my))
+		return true;
+	}
+	return false;
+    }
+    
     public void shiftSet(String newSet){
     	inputSet=inputSets.get(newSet);
     }
-	public void unfocus(){
-            if (focusedScreen!=null){
-		focusedScreen.setFocused(false);
-		focusedScreen=null;
-            }
-	}
+    public void unfocus(){
+        if (focusedScreen!=null){
+            focusedScreen.setFocused(false);
+            focusedScreen=null;
+        }
+    }
 	
 	public void update(){						
 		keys = keyboard.get_keys();
@@ -198,12 +207,8 @@ public class AGUI{
 		
 	}
 	public void draw(Graphics g){
-	//	g.clearRect(0,0,width,height);
                 for (int i=windowNames.size()-1; i>=0; i--){
                     windows.get(windowNames.get(i)).draw(g);
                 }
-	//	for (String k: windowNames){
-	//		windows.get(k).draw(g);
-	//	}
 	}
 }
