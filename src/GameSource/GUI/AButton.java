@@ -12,7 +12,7 @@ import java.awt.Graphics;
  */
 
 public class AButton extends AComponent{
-    private AMessage message;
+    protected AMessage message;
     public AButton() {
     	setLocation(0,0);
     }
