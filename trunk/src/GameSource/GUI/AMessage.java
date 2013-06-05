@@ -15,6 +15,7 @@ public class AMessage {
     public static final int EQUIP = 3;
     public static final int UNEQUIP = 4;
     public static final int USE_ITEM=5;
+    public static final int NPC_CHAT=6;
     
     public static final int SEND_MESSAGE=1000000000;
     

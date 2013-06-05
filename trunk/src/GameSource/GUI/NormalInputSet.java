@@ -10,7 +10,7 @@ public class NormalInputSet extends AbstractInputSet{
 		name="normal";
 		myGUI=g;
 		keyMap=new HashMap<String, Integer>();
-		keyMap.put("invent",KeyEvent.VK_F9);
+		keyMap.put("npcchat",KeyEvent.VK_F9);
 		keyMap.put("shop",KeyEvent.VK_F10);
 		keyMap.put("chat",KeyEvent.VK_F11);
 		keyMap.put("textbox",KeyEvent.VK_F12);
@@ -37,5 +37,8 @@ public class NormalInputSet extends AbstractInputSet{
 		if ((AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONDOWN) && mouseUsed==false){
 			myGUI.unfocus();
 		}
+                if (AGUI.keys[KeyEvent.VK_ESCAPE]){
+                    myGUI.closeWindow();
+                }
 	}
 }

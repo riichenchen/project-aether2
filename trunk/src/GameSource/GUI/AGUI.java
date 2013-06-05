@@ -34,11 +34,12 @@ public class AGUI{
 	public static int mx, my;				//Public for easier updating and
 	public static int [] mouseButtons;		//access by the AComponents
 	
-	private AWindow invent;
+	private ANPCChat invent;
 	private AWindow	shop;
 	private ATextField chat;
 	private ALabel info;
 	private ATextArea write;
+        private AHUD myHUD;
         
         public void bringToFront(String name){
             windowNames.remove(name);
@@ -64,6 +65,13 @@ public class AGUI{
 	public void closeWindow(String name){
                 windows.get(name).setFocused(false);
 		windows.get(name).setVisible(false);
+                if (focusedScreen.equals(windows.get(name)))
+                    unfocus();
+	}
+        public void closeWindow(){
+                if (focusedScreen!=null){
+                    closeWindow(focusedScreen.getName());
+                }
 	}
 	
 	public void keyCall(String name){
@@ -93,12 +101,17 @@ public class AGUI{
 
 		}
 	}
+        public void showNPC(String words){
+            invent.setContent(words);
+            openWindow("npcchat");
+        }
 	
 	
 	public AGUI(InputManager input, AMouseInput mInput, int wid, int hgt){
 		width=wid; height = hgt;
 		bindTo(input);
 		bindTo(mInput);
+               
                 
 		keys=keyboard.get_keys();
 		mx=mouse.get_x(); my= mouse.get_y();
@@ -108,17 +121,17 @@ public class AGUI{
 		windows = new HashMap<String,AComponent>();
                 windowNames=new LinkedList<String>();
 		
+                myHUD=new AHUD();
 		//Replace with reading data file
-		invent=new AWindow("invent");
-		invent.setSize(300,200);
-		invent.setBG(0,255,0);
-		invent.setLocation(50,50);
+		invent=new ANPCChat();
+//                invent.setContent();
+                        
 		
 		shop = new AWindow("shop");
 		shop.setSize(500,500);
 		shop.setBG(255,0,0);
 		shop.setLocation(150,50);
-		AButton nest = new AButton("nest",AMessage.OPEN_WINDOW,"invent");
+		AButton nest = new AButton("nest",AMessage.OPEN_WINDOW,"npcchat");
 		nest.setSize(20,20);
 		nest.setBG(0,0,255);
 		nest.setLocation(200,200);
@@ -138,17 +151,19 @@ public class AGUI{
 		write.setLocation(450,300);
 		write.setName("textbox");
 		
-		windowNames.add("invent");
+		windowNames.add("npcchat");
 		windowNames.add("shop");
 		windowNames.add("chat");
 		windowNames.add("info");
 		windowNames.add("textbox");
+                windowNames.add("hud");
 //		popup= new HashMap<String,AComponent>();
 		windows.put(invent.getName(),invent);
 		windows.put(shop.getName(),shop);
 		windows.put(chat.getName(),chat);
 		windows.put(info.getName(),info);
-		windows.put(write.getName(),write);						
+		windows.put(write.getName(),write);	
+                windows.put(myHUD.getName(),myHUD);
 //		perm= new HashMap<String,AComponent>();						*
 //		perm[0]=info;												*
 				//													*
@@ -210,5 +225,6 @@ public class AGUI{
                 for (int i=windowNames.size()-1; i>=0; i--){
                     windows.get(windowNames.get(i)).draw(g);
                 }
+                myHUD.draw(g);
 	}
 }

@@ -29,6 +29,9 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
     public void keyPressed(KeyEvent e) {
     	in.keyDown(e.getKeyCode());
     	myGUI.update();
+        if (e.getKeyCode()!=KeyEvent.VK_ESCAPE)
+        myGUI.showNPC("\"We faeries don't talk about them much, but \\nthe Underclouds are a place hidden deep \\nwithin the clouds you can normally see up \\nhere. Strange creatures and dark faeries live \\nthere, but they've always kept to themselves. \\n\n" +
+"There's even a rumor that there's some kind of city down there, but nobody who's gone to look has ever returned. I think there might be a path through there that lets you get to Faerie City, but I don't know. But it's probably your only choice.\" ");
     }
     
     public void keyReleased(KeyEvent e) {

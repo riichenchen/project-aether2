@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 
 //CURRENT TASK AT HAND: Components containing components, AButton, Specialty Components
 //KEY ISSUES TO RESOLVE: Line 95
@@ -16,6 +17,7 @@ public abstract class AComponent{
 	protected String name;
 	protected int id;
 	protected AComponent parent; 
+        protected ArrayList<AComponent> subComponents;
         protected Image image;
 	
 	private static int idCounter=0;
@@ -28,6 +30,7 @@ public abstract class AComponent{
 		visible=false;
 		enabled=true;
 		focused=false;
+                subComponents= new ArrayList<AComponent>();
 		id=idCounter++;
 	}
 	public AComponent(int nx,int ny,int nw,int nh){
@@ -110,7 +113,10 @@ public abstract class AComponent{
 	public boolean locked(){
 		return locked;
 	}
-	
+	public void add(AComponent c){
+		c.parent=this;
+		subComponents.add(c);
+	}
 	public abstract void draw(Graphics g);
 	public abstract void update();
 	public abstract void call(); 			//????
