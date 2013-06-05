@@ -302,10 +302,14 @@ public abstract class Spatial {
      on their length, width and location. This boundary is used
      to cull for rendering as well as physics calculations.*/
     public int[] getCullBounds(float S_QUAD){
-        int x = (int)((getX()-getLength()/2)*S_QUAD);
-        int y = (int)((getZ()-getHeight())*S_QUAD);
-        int sizex = (int)(getLength()*S_QUAD);
-        int sizey = (int)(getHeight()*S_QUAD);
+        double tx = Math.max(Math.min(getX()-getLength()/2,boundMap.getDimX()),0);//keep x and y within boundaries by using max and mins
+        double ty = Math.max(Math.min(getZ()-getHeight(),boundMap.getDimY()),0);
+        int x = (int)(tx*S_QUAD);//convert to int
+        int y = (int)(ty*S_QUAD);
+        double tsizex = getLength()+Math.min(Math.min(getX()-getLength()/2,boundMap.getDimX()-(getX()+getLength()/2)),0);// keep the width and height within bounds as well
+        double tsizey = getHeight()+Math.min(Math.min(getZ()-getHeight()/2,boundMap.getDimY()-(getZ()+getHeight()/2)),0);// in accordance to the char's location
+        int sizex = (int)(tsizex*S_QUAD);
+        int sizey = (int)(tsizey*S_QUAD);
         return new int[]{x,y,sizex,sizey};
     }
     
@@ -362,5 +366,10 @@ public abstract class Spatial {
     }
     public void setLocation(GamePoint p){
         this.location = p;
+    }
+    public void setLocation(float x,float y,float z){
+        this.location.setX(x);
+        this.location.setY(y);
+        this.location.setZ(z);
     }
 }

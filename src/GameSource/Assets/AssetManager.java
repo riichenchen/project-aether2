@@ -161,6 +161,7 @@ public class AssetManager {
                         }
                     }
                 }
+                mymap.addBackgroundSpatial(Globals.theMouse);
                 allmaps.put(mymap.getName(), mymap);
                 fin_map.close();
             }
@@ -241,7 +242,9 @@ public class AssetManager {
         System.exit(0);
         return -1;
     }
-
+//    public static NPC getNpc(){
+//        
+//    }
 //    public static void main(String[] args){
 //        AssetManager.init();
 ////        System.out.println(AssetManager.getBlockImage("dirtblock"));

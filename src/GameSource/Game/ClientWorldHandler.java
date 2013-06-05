@@ -4,11 +4,13 @@ import Controls.AbstractControl;
 import Database.PlayerData;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
+import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
 import GameSource.game.GameMap;
 import Networking.Messages.PlayerJoinMessage;
 import Networking.Messages.SaveMessage;
 import Sound.SoundManager;
+import Spatial.AetherMouse;
 import Spatial.Spatial;
 import Testing.SteveyKeyListener;
 
@@ -21,6 +23,7 @@ public class ClientWorldHandler {
     private int boundAccountId = -1;
     private AetherCameraControl camControl;
     private AIHandler aiHandle;
+    private AetherMouse theMouse;
     
     public ClientWorldHandler(ClientMain theclient,AetherGamePanel thegame) {
         this.theclient = theclient;
@@ -33,8 +36,12 @@ public class ClientWorldHandler {
         this.camControl = new AetherCameraControl();
         this.aiHandle = new AIHandler();
         aiHandle.start();
+        this.theMouse = Globals.theMouse;
     }
     
+    public AetherMouse getMouse(){
+        return theMouse;
+    }
     public void setGameMap(String mapid){
         this.myGameMap = AssetManager.getMap(mapid);
         thegame.setMap(this.myGameMap);
@@ -110,5 +117,9 @@ public class ClientWorldHandler {
         SoundManager.getChannel("BackgroundMusic").stopAll();
         SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
         boundSpat.addControl(hold);
+    }
+    public void clickMap(int x,int y){
+        myGameMap.getSpace().grabSpatialsAround(theMouse);
+//        myGameMap.getSpace().grabSpatialsAround();
     }
 }

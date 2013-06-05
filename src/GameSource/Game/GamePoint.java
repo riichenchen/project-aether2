@@ -35,4 +35,13 @@ public class GamePoint implements Serializable{
         public float distanceSquared(GamePoint p){
             return (float)(Math.pow(x-p.x,2)+Math.pow(y-p.y,2)+Math.pow(z-p.z,2));
         }
+        public void setX(float x){
+            this.x = x;
+        }
+        public void setY(float y){
+            this.y = y;
+        }
+        public void setZ(float z){
+            this.z = z;
+        }
 }

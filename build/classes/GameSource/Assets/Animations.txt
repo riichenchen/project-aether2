@@ -19,3 +19,9 @@ walkup
 Effects
 icysprite
 /Effects
+npc/john
+a
+b
+c
+d
+/npc/john

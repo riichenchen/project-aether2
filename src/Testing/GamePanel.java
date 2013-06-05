@@ -4,18 +4,21 @@
  */
 package Testing;
 
-import GameSource.Assets.Portals.Portal;
+import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
+import GameSource.Globals;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Renderer.AetherCam;
 import Sound.SoundChannel;
 import Sound.SoundManager;
+import Spatial.NPC;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
@@ -23,7 +26,7 @@ import javax.swing.JPanel;
  *
  * @author Shiyang
  */
-public class GamePanel extends JPanel implements MouseMotionListener,KeyListener{
+public class GamePanel extends JPanel implements MouseMotionListener,KeyListener,MouseListener{
     private boolean []keys;
     public boolean ready=false,inputstate = true,visibility = true;
     //private int boxx= 200,boxy=200;
@@ -34,10 +37,12 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     private SteveyKeyListener yourkeycontrol;
     private GameMap myMap;
     private AetherCam myCam;
+    private NPC mynpc;
     
     public GamePanel(){ //initialize game variables, assign map to UI
-        addKeyListener(this);
         addMouseMotionListener(this);
+        addKeyListener(this);
+        addMouseListener(this);
         
         keys = new boolean[KeyEvent.KEY_LAST+1];
         //BloonMap gameMap = new BloonMap("monkeyStream");
@@ -61,8 +66,11 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
 //        myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
-        Portal myport = AssetManager.getPortal("testPort1", 400,1,300);
-        myMap.addPermanentSpatial(myport);
+        mynpc = new NPC(400,1,400,"johnny",new CharacterAnimControl(AssetManager.getSpriteSet("npc/john")));
+        myMap.addPermanentSpatial(mynpc);
+        Globals.theMouse.bindToMap(myMap);
+//        Portal myport = AssetManager.getPortal("testPort1", 400,1,300);
+//        myMap.addPermanentSpatial(myport);
 //        Random myrand = new Random();
 //        for (int i = 0; i < 5000; i++){
 //            myMap.addSpatial(new Dirt_Block(myrand.nextInt(1600/50)*50,0,myrand.nextInt(1200/28)*28));
@@ -104,11 +112,10 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     // ---------- MouseMotionListener ------------------------------------------
     @Override
     public void mouseDragged(MouseEvent e){
-//    	GameUI.moveMouse(e.getX(),e.getY());
+//        Globals.theMouse.setLocation(e.getX(),Globals.theMouse.getY(),e.getY());
     }
     @Override    
     public void mouseMoved(MouseEvent e){
-//    	GameUI.moveMouse(e.getX(),e.getY());
     }
 
     @Override
@@ -147,5 +154,34 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
             }
             visibility = !visibility;
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Globals.theMouse.setLocation(e.getX(),Globals.theMouse.getY(),e.getY());
+        Globals.theMouse.click();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+//        System.out.println("DERP");
+//        Globals.theMouse.click();
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+//        System.out.println("MERP");
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+//        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

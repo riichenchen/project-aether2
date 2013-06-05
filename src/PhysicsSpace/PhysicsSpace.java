@@ -9,6 +9,7 @@ import GameSource.Globals;
 import Math.Line2D;
 import Math.Point2D;
 import Math.Vector2D;
+import Spatial.AetherMouse;
 import Spatial.Spatial;
 import java.util.*;
 
@@ -205,7 +206,7 @@ public class PhysicsSpace {
 ////                System.out.println("Wid "+wid);
 ////                mymsg.spat.setLocation(new GamePoint(closest.x,pos.getY(),closest.y-wid*(float)Math.sin(rot)));
 //                mymsg.spat.setLocation(new GamePoint(closest.x,pos.getY(),closest.y));
-                mymsg.spat.setLocation(new GamePoint(newPt.x,pos.getY(),newPt.y));
+                mymsg.spat.setLocation(newPt.x,pos.getY(),newPt.y);
                 performUpdateSpatial(message.spat);
             }
         }
@@ -234,6 +235,8 @@ public class PhysicsSpace {
     }
     
     public void addSpatial(Spatial spat){
+        //give spat reference to this
+        spat.bindToSpace(this);
         spatials.put(spat.getId(), spat);
         int[] cullbounds = spat.getCullBounds(S_QUAD);
         int x = cullbounds[0];
@@ -246,8 +249,6 @@ public class PhysicsSpace {
                 physicsMap[j][i].addObject(spat);
             }
         }
-        //give spat reference to this
-        spat.bindToSpace(this);
     }
     
     public void removeSpatial(Spatial spat){

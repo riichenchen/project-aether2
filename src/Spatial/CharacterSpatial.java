@@ -60,6 +60,7 @@ public abstract class CharacterSpatial extends RenderSpatial{
         }
         Object charAnimControl = this.getControl(CharacterAnimControl.class);
         if (charAnimControl != null){
+//            System.out.println(((CharacterAnimControl)charAnimControl).getImageWidth());
             ((CharacterAnimControl)charAnimControl).render(g, pane, cam);
         } else {
             System.out.println("Warning: No Character Anim Track for spatial "+this.getId());
