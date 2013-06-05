@@ -19,7 +19,7 @@ import Spatial.Spatial;
 public class BillysCow extends AbstractMob{
     
     public BillysCow(float x, float y, float z) {
-        super(x, y, z,78f,95f,20f, 100);
+        super(x, y, z,78f,95f,20f, 100000);
     }
 
     @Override

@@ -5,8 +5,10 @@
 package GameSource.Effects;
 
 import Effects.AbstractEffect;
+import GameSource.Assets.DamageFactory;
 import GameSource.Assets.MobData.AbstractMob;
 import Spatial.Spatial;
+import java.util.Random;
 
 /**
  *
@@ -25,7 +27,10 @@ public class IceyEffect extends AbstractEffect{
     @Override
     public void collideEffect(Spatial s) {
         if (limit<=time+1 && s instanceof AbstractMob){
-            ((AbstractMob)s).addHp(-50);
+            Random myrandom = new Random();
+            int dmg = myrandom.nextInt(100000)+100;
+            ((AbstractMob)s).addHp(-dmg);
+            DamageFactory.addDamage(boundMap, dmg, DamageFactory.RED, location);
         }
     }
     
