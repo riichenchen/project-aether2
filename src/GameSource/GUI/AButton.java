@@ -22,6 +22,7 @@ public class AButton extends AComponent{
     	message=new AMessage(msgType, msgContent);
     }
     public void draw(Graphics g){
+  //      System.out.println(name+" hi!");
         g.setColor(background);
     	g.fillRect(x,y,width,height);
     }

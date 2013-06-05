@@ -29,6 +29,8 @@ public class AProcessor {
                 break;
             case AMessage.USE_ITEM: System.out.println("Use "+m.content());
                 break;
+            case AMessage.NPC_CHAT: System.out.println(m.content());
+                break;
             case AMessage.SEND_MESSAGE: System.out.println(m.content());
                 break;
             default: System.out.println("Invalid Message");

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 //Change to use HashMap instead of ArrayList?
 
 public class AWindow extends AComponent{
-	protected ArrayList<AComponent> subComponents;
+	
 	public AWindow(){
 		super();
 		subComponents= new ArrayList<AComponent>();
@@ -23,10 +23,7 @@ public class AWindow extends AComponent{
 				unlock();
 		}
 	}
-	public void add(AComponent c){
-		c.parent=this;
-		subComponents.add(c);
-	}
+
 	public void call(){
             int rx = AGUI.mx-x;
             int ry = AGUI.my-y;
@@ -44,6 +41,7 @@ public class AWindow extends AComponent{
 		for (AComponent c: subComponents){
 			int ox=c.x; int oy=c.y;
 			c.x+=x; c.y+=y;
+   //                     System.out.println(c.x+","+c.y);
 			c.setVisible(true);
 			c.draw(g);
 			c.x=ox; c.y=oy;
