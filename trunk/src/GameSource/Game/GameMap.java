@@ -67,10 +67,10 @@ public class GameMap {
         //Handles attaching and removing of spatials
         public void addSpatial(Spatial spat){
             clearMessages();
+            spat.bindToMap(this);
             spats.put(spat.getId(), spat);
             nonPermaSpats.put(spat.getId(), spat);
             space.addPlayerSpatial(spat);
-            spat.bindToMap(this);
             
             if (!verifyRender())
                 return;
@@ -81,9 +81,9 @@ public class GameMap {
         
         public void addPermanentSpatial(Spatial spat){
             clearMessages();
+            spat.bindToMap(this);
             spats.put(spat.getId(), spat);
             space.addEnviroSpatial(spat);
-            spat.bindToMap(this);
             
             if (!verifyRender())
                 return;

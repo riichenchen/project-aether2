@@ -56,4 +56,10 @@ public class AnimTrack {
     public int getOffY(){
         return offY;
     }
+    public int getImageWidth(int x){
+        return images[frameOrder.get(x)].getWidth(null);
+    }
+    public int getImageHeight(int x){
+        return images[frameOrder.get(x)].getHeight(null);
+    }
 }

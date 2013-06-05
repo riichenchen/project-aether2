@@ -10,7 +10,7 @@ import GameSource.Globals;
 import Renderer.AetherCam;
 import Spatial.Spatial;
 import java.awt.Graphics;
-import java.util.HashMap;
+import java.util.Random;
 import javax.swing.JPanel;
 
 /**
@@ -23,6 +23,7 @@ public class CharacterAnimControl extends AbstractControl{
     private String lastTrack;
     private String currentTrack;
     private SpriteSet spriteSet;
+    private Random myRandom;
     
     public CharacterAnimControl(SpriteSet spriteSet){
         this.time = 0;
@@ -30,6 +31,7 @@ public class CharacterAnimControl extends AbstractControl{
         this.currentTrack = spriteSet.getDefaultTrack();//just so the thing doesn't die on us
         this.limit = spriteSet.get(currentTrack).getLimit();
         this.spriteSet = spriteSet;
+        myRandom = new Random();
     }
     
     @Override
@@ -51,7 +53,6 @@ public class CharacterAnimControl extends AbstractControl{
             time = 0;
             limit = spriteSet.get(trackName).getLimit();
         }
-//        lastTrack = trackName;
         currentTrack = trackName;
     }
     
@@ -73,4 +74,20 @@ public class CharacterAnimControl extends AbstractControl{
         return limit;
     }
     
+    public void swapRandomAnim(){
+        swapAnim(spriteSet.getKey(myRandom.nextInt(spriteSet.getNumTracks())));
+    }
+    
+    public int getImageWidth(){
+        return spriteSet.get(currentTrack).getImageWidth(time);
+    }
+    public int getImageHeight(){
+        return spriteSet.get(currentTrack).getImageHeight(time);
+    }
+    public int getOffX(){
+        return spriteSet.get(currentTrack).getOffX();
+    }
+    public int getOffY(){
+        return spriteSet.get(currentTrack).getOffY();
+    }
 }
