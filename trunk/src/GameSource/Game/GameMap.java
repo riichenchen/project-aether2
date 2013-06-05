@@ -14,6 +14,7 @@ import Testing.MyTestCharacter;
 import Testing.Stevey;
 import java.awt.Graphics;
 import java.util.HashMap;
+import java.util.LinkedList;
 import javax.swing.JPanel;
 
 public class GameMap {
@@ -146,6 +147,18 @@ public class GameMap {
             spat.unbindFromMap();
         }
         
+        public void removeBackgroundSpatial(Spatial spat){
+            clearMessages();
+            spats.remove(spat.getId());
+            nonPermaSpats.remove(spat.getId());
+            //Remove from render space if the spatial is in the render space
+            if (!verifyRender())
+                return;
+            if (spat instanceof RenderSpatial){
+                renderer.removeSpatial((RenderSpatial)spat);
+            }
+            spat.unbindFromMap();
+        }
         public void clearMessages(){
             space.clearMessages();
             renderer.clearMessages();
