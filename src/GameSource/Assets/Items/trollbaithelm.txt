@@ -1,0 +1,6 @@
+Trollbait Helm
+equip
+head
+trollbaithelm
+attack 300
+def 300

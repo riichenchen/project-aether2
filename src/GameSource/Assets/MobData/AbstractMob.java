@@ -43,9 +43,11 @@ public abstract class AbstractMob extends CharacterSpatial{
         super.update();
         if ((int)getProperty("HP") <= 0){
 //            System.out.println((int)getProperty("HP"));
+            dropItems();
             boundMap.removeMob(this);
         }
     }
+    public abstract void dropItems();
     public void addHp(int diff){
         setProperty("HP",(int)getProperty("HP")+diff);
     }

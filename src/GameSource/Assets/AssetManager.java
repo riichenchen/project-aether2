@@ -17,12 +17,16 @@ import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.Portals.PortalData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Spawners.CowSpawner;
+import GameSource.User.Inventory.ItemData;
 import Testing.Stevey;
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -36,7 +40,14 @@ public class AssetManager {
     private static HashMap<String,SpriteSet> allAnimSets;
     private static HashMap<String,PortalData> allPortalData;
     private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound"};
+    private static HashMap<String,Image> allImages;
+    private static HashMap<String,ItemData> allItemData;
+    
     public static void init(){
+        allImages = new HashMap<>();
+        loadImages();
+        System.out.println("Loaded Images !");
+        
         allAnimSets = new HashMap<>();
         loadAnimations();
         System.out.println("Loaded Animations!");
@@ -54,6 +65,29 @@ public class AssetManager {
         loadMaps();
         System.out.println("Loaded Maps!");
         
+        allItemData = new HashMap<>();
+        loadItemData();
+        System.out.println("Loaded item data!");
+        
+    }
+    private static void loadImages(){
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"ImageData.txt"));
+            String nextline;
+            String[] tempdat;
+            while ((nextline = fin.readLine())!= null){
+                tempdat = nextline.split(" ");
+                allImages.put(tempdat[0], (new ImageIcon(DIRECTORY+"Images/"+tempdat[1])).getImage());
+            }
+            fin.close();
+        } catch (IOException e){
+            System.out.println("Error loading images!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+    public static Image getImage(String key){
+        return allImages.get(key);
     }
     private static void loadBlocks(){
         try {
@@ -75,7 +109,7 @@ public class AssetManager {
         }
     }
     
-    public synchronized static Image getBlockImage(String imgName){
+    public static Image getBlockImage(String imgName){
         return blockimages.get(imgName);
     }
     
@@ -90,6 +124,7 @@ public class AssetManager {
                 String[] portalData = portal_fin.readLine().split(",");
                 allPortalData.put(tempdat[0], new PortalData(portalData[0],Float.parseFloat(portalData[1]),Float.parseFloat(portalData[2]),Float.parseFloat(portalData[3])));
             }
+            fin.close();
         } catch (IOException e){
             System.out.println("Error loading portals!");
             e.printStackTrace();
@@ -172,7 +207,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    public synchronized static GameMap getMap(String identifier){
+    public static GameMap getMap(String identifier){
         if (!allmaps.containsKey(identifier)){
             System.out.println("SEVERE: Unable to find map with key "+identifier+"!");
             System.exit(0);
@@ -180,7 +215,7 @@ public class AssetManager {
         return allmaps.get(identifier);
     }
     
-    public synchronized static GameMap[] getAllMaps(){
+    public static GameMap[] getAllMaps(){
         return allmaps.values().toArray(new GameMap[0]);
     }
     
@@ -241,6 +276,43 @@ public class AssetManager {
         System.out.println("SEVERE: Unable to recognise SpatialID!");
         System.exit(0);
         return -1;
+    }
+    private static void loadItemData(){
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"ItemData.txt"));
+            String nextline;
+            String[] tempdat;
+            while ((nextline = fin.readLine())!= null){
+                tempdat = nextline.split(" ");
+                BufferedReader itemFin = new BufferedReader(new FileReader(DIRECTORY+"Items/"+tempdat[1]));
+                String name = itemFin.readLine();
+                String itemType = itemFin.readLine();
+                String equipType = null;
+                ItemData itemdata = new ItemData(name,itemType);
+                if (itemType.equals("equip")){
+                    equipType = itemFin.readLine();
+                    itemdata.equipItemType = equipType;
+                }
+                String imageKey = itemFin.readLine();
+                itemdata.setImage(imageKey);
+                String itemline;
+                String[] itemStat;
+                while ((itemline = itemFin.readLine())!= null){
+                    itemStat = itemline.split(" ");
+                    itemdata.addStat(itemStat[0], Integer.parseInt(itemStat[1]));
+                }
+                allItemData.put(tempdat[0], itemdata);
+                itemFin.close();
+            }
+            fin.close();
+        } catch (IOException e) {
+            System.out.println("Unable to load in ItemData!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+    public static ItemData getItemData(String key){
+        return allItemData.get(key);
     }
 //    public static NPC getNpc(){
 //        

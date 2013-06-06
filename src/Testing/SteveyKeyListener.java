@@ -6,6 +6,7 @@ package Testing;
 
 import Controls.CharacterAnimControl;
 import GameSource.Effects.IceyEffect;
+import GameSource.User.CharacterHandler;
 import Input.AbstractKeyListener;
 import Math.Point2D;
 import Sound.SoundManager;
@@ -96,6 +97,9 @@ public class SteveyKeyListener extends AbstractKeyListener{
         }
         if (eventKeyDown(KeyEvent.VK_SPACE)){
             world.enterPortal();
+        }
+        if (eventKeyDown(KeyEvent.VK_Z)){
+            CharacterHandler.pickUpItem();
         }
         animControl.swapAnim(currentAnim);        
     }

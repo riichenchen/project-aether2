@@ -10,6 +10,7 @@ import GameSource.Assets.AssetManager;
 import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Controls.CowAIControl;
 import GameSource.Effects.IceyEffect;
+import GameSource.User.ItemFactory;
 import Spatial.Spatial;
 
 /**
@@ -19,7 +20,7 @@ import Spatial.Spatial;
 public class BillysCow extends AbstractMob{
     
     public BillysCow(float x, float y, float z) {
-        super(x, y, z,78f,95f,20f, 100000);
+        super(x, y, z,78f,95f,20f, 10000);
     }
 
     @Override
@@ -35,5 +36,10 @@ public class BillysCow extends AbstractMob{
     @Override
     public void collideEffect(Spatial s) {
         
+    }
+
+    @Override
+    public void dropItems() {
+        ItemFactory.spawnItem("redpot", this, boundMap);
     }
 }
