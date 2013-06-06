@@ -35,6 +35,11 @@ public abstract class InventoryItem extends RenderSpatial{
     public void setImage(Image image){
         this.image = image;
     }
+    
+    public Image getImage(){
+        return image;
+    }
+    
     public abstract void use();
     
     @Override
