@@ -6,6 +6,7 @@ import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
+import GameSource.User.CharacterHandler;
 import GameSource.game.GameMap;
 import Networking.Messages.PlayerJoinMessage;
 import Networking.Messages.SaveMessage;
@@ -32,6 +33,8 @@ public class ClientWorldHandler {
         AbstractControl.setWorld(this);
         SoundManager.addChannel("Effects", false);
         SoundManager.addChannel("BackgroundMusic", true);
+        SoundManager.addChannel("UI",false);
+        SoundManager.getChannel("UI").setNumberTracks(10);
         SoundManager.getChannel("Effects").setNumberTracks(6);
         this.camControl = new AetherCameraControl();
         this.aiHandle = new AIHandler();

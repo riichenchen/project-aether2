@@ -38,7 +38,6 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
     
     @Override
     public void render(Graphics g, JPanel pane,AetherCam camera) {//rendering time C:
-        //TODO: Add perspective to this thing
         int[] camSpaceCoords = camera.convertCoords(location.getX(),location.getZ()*Globals.__PROJECTION_SCALE__);
         
         g.drawImage(image, camSpaceCoords[0]-(int)length/2, camSpaceCoords[1]-(int)width, pane);

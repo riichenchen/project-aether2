@@ -5,9 +5,10 @@
 package GameSource.Game;
 
 import GameSource.Assets.AssetManager;
+import GameSource.User.CharacterHandler;
+import GameSource.User.EquipHandler;
 import GameSource.game.GameMap;
 import Input.InputManager;
-import Renderer.AetherCam;
 import Sound.SoundManager;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -39,6 +40,8 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         addKeyListener(this);
         AssetManager.init();
         SoundManager.init();
+        CharacterHandler.init();
+        EquipHandler.init();
         setSize(800,600);
     }
     

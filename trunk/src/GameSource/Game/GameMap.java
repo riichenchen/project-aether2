@@ -5,6 +5,7 @@ import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.Game.GamePoint;
 import GameSource.Globals;
+import GameSource.User.CharacterHandler;
 import PhysicsSpace.PhysicsSpace;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
@@ -177,6 +178,7 @@ public class GameMap {
             for (Spatial s: spatList){
                 s.update();
             }
+            CharacterHandler.clearCollideItems();
             space.update();
             if (!verifyRender())
                 return;
