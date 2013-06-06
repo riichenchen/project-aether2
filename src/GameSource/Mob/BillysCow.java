@@ -40,6 +40,6 @@ public class BillysCow extends AbstractMob{
 
     @Override
     public void dropItems() {
-        ItemFactory.spawnItem("redpot", this, boundMap);
+        ItemFactory.spawnItem("trollbaithelm", this, boundMap);
     }
 }

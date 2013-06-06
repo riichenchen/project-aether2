@@ -1,1 +1,2 @@
 redpot inventory/use/redpot.png
+trollbaithelm inventory/equip/trollbaithelm.png

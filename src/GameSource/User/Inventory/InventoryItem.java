@@ -19,16 +19,17 @@ import javax.swing.JPanel;
  * @author Shiyang
  */
 public abstract class InventoryItem extends RenderSpatial{
-    private String itemId;
+    private String itemName;
     private Image image;
+    private String key;
     
     public InventoryItem(String itemId, float x, float z) {
         super(x, 1, z, 40, 40, 40, 0,0,0);
-        this.itemId = itemId;
+        this.itemName = itemId;
     }
     
     public String getItemId(){
-        return itemId;
+        return itemName;
     }
     
     public void setImage(Image image){
@@ -39,7 +40,7 @@ public abstract class InventoryItem extends RenderSpatial{
     @Override
     public void render(Graphics g, JPanel pane, AetherCam camera){
         if (image == null){
-            System.out.println("SEVERE: Unable to find image for equip "+itemId);
+            System.out.println("SEVERE: Unable to find image for equip "+itemName);
             System.exit(0);
         }
         int[] camSpaceCoords = camera.convertCoords(location.getX(),location.getZ()*Globals.__PROJECTION_SCALE__);
@@ -50,5 +51,11 @@ public abstract class InventoryItem extends RenderSpatial{
         if (spat instanceof Stevey){
             CharacterHandler.addCollideItem(this);
         }
+    }
+    public void setKey(String k){
+        this.key = k;
+    }
+    public String getKey(){
+        return key;
     }
 }

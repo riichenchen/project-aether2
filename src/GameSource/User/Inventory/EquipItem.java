@@ -16,8 +16,8 @@ public class EquipItem extends InventoryItem{
     private HashMap<String,Integer> stats;
     private String equipType;
     
-    public EquipItem(String itemid,String equipType,int x, int z) {
-        super(itemid,x,z);
+    public EquipItem(String itemKey,String equipType,int x, int z) {
+        super(itemKey,x,z);
         this.equipType = equipType;
         this.stats = new HashMap<>();
     }

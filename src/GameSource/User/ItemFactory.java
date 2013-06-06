@@ -25,12 +25,14 @@ public class ItemFactory {
             for (String stat: dat.stats.keySet().toArray(new String[0]))
                 newItem.addStat(stat, dat.stats.get(stat));
             newItem.setImage(dat.image);
+            newItem.setKey(key);
             return newItem;
         } else if (dat.itemType.equals("equip")){
             EquipItem newItem = new EquipItem(dat.itemName,dat.equipItemType,0,0);
             for (String stat: dat.stats.keySet().toArray(new String[0]))
                 newItem.addStat(stat, dat.stats.get(stat));
             newItem.setImage(dat.image);
+            newItem.setKey(key);
             return newItem;
         }
         return null;

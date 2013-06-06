@@ -2,11 +2,13 @@ package GameSource.Game;
 import ArtificialIntelligence.AIHandler;
 import Controls.AbstractControl;
 import Database.PlayerData;
+import Database.SaveItemData;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
-import GameSource.User.CharacterHandler;
+import GameSource.User.InventoryHandler;
+import GameSource.User.ItemFactory;
 import GameSource.game.GameMap;
 import Networking.Messages.PlayerJoinMessage;
 import Networking.Messages.SaveMessage;
@@ -61,6 +63,9 @@ public class ClientWorldHandler {
         String mapId = pData.getMapId();
         setGameMap(mapId);
         Spatial newSpat = myGameMap.addPlayer(charType,loc);
+        for (SaveItemData dat: pData.getItems()){
+            InventoryHandler.addItem(ItemFactory.getItem(dat.getItemKey()),dat.getQuantity());
+        }
         return newSpat;
     }
     
