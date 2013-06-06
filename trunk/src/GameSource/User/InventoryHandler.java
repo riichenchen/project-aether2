@@ -15,25 +15,37 @@ public class InventoryHandler {
     private static HashMap<String,InventoryItem> allItems = new HashMap<>();
     private static HashMap<String,Integer> itemQuantities = new HashMap<>();
     
-    public static void addItem(InventoryItem item){
-        String itemId = item.getItemId();
-        if (allItems.containsKey(itemId)){
-            itemQuantities.put(itemId,itemQuantities.get(itemId)+1);
-        } else {
-            allItems.put(itemId, item);
-            itemQuantities.put(itemId,1);
-        }
+    public static void clearAll(){
+        allItems = new HashMap<>();
+        itemQuantities = new HashMap<>();
     }
     
+    public static void addItem(InventoryItem item){
+        String itemKey = item.getKey();
+        if (allItems.containsKey(itemKey)){
+            itemQuantities.put(itemKey,itemQuantities.get(itemKey)+1);
+        } else {
+            allItems.put(itemKey, item);
+            itemQuantities.put(itemKey,1);
+        }
+    }
+    //This should ONLY be called when loading in a player because
+    //at this point we guarantee this will be the first appearance
+    //of the item in the inventory
+    public static void addItem(InventoryItem item,int quantity){
+        String itemKey = item.getKey();
+        allItems.put(itemKey,item);
+        itemQuantities.put(itemKey, quantity);
+    }
     public static void removeItem(InventoryItem item){
-        String itemId = item.getItemId();
-        if (allItems.containsKey(itemId)){
-            int val = itemQuantities.get(itemId);
+        String itemKey = item.getKey();
+        if (allItems.containsKey(itemKey)){
+            int val = itemQuantities.get(itemKey);
             if (val == 1){
-                allItems.remove(itemId);
-                itemQuantities.remove(itemId);
+                allItems.remove(itemKey);
+                itemQuantities.remove(itemKey);
             } else {
-                itemQuantities.put(itemId, itemQuantities.get(itemId)-1);
+                itemQuantities.put(itemKey, itemQuantities.get(itemKey)-1);
             }
         } else {
             System.out.println("WARNING: TRYING TO REMOVE NON-EXISTANT INVENTORY ITEM D:");
@@ -48,4 +60,7 @@ public class InventoryHandler {
         return allItems.get(key);
     }
     
+    public static int getItemQuantity(String key){
+        return itemQuantities.get(key);
+    }
 }
