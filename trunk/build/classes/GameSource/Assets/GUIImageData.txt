@@ -1,0 +1,9 @@
+invent inventory/Item.backgrnd.png
+invent_bg2 inventory/Item.backgrnd2.png
+invent_bg3 inventory/Item.backgrnd3.png
+equip inventory/Item.Tab.disabled.0.png
+equip_hover inventory/Item.Tab.enabled.0.png
+use inventory/Item.Tab.disabled.1.png
+use_hover inventory/Item.Tab.enabled.1.png
+other inventory/Item.Tab.disabled.2.png
+other_hover inventory/Item.Tab.enabled.2.png

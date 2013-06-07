@@ -7,6 +7,7 @@ import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
+import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
 import GameSource.game.GameMap;
@@ -66,6 +67,10 @@ public class ClientWorldHandler {
         for (SaveItemData dat: pData.getItems()){
             InventoryHandler.addItem(ItemFactory.getItem(dat.getItemKey()),dat.getQuantity());
         }
+        String[] keys = new String[]{"hp","maxhp","mp","maxmp","money","level","exp","attack","defense"};
+        CharacterHandler.addAllStats(keys,pData.getEntity_data());
+        CharacterHandler.setName(pData.getCharName());
+        
         return newSpat;
     }
     
@@ -105,12 +110,12 @@ public class ClientWorldHandler {
     }
     
     public void enterPortal(){
-        Portal curPort = (Portal)boundSpat.getProperty("currentPortal");
+        Portal curPort = CharacterHandler.getCurrentPortal();
         if (curPort != null)
             enterPortal(curPort);
     }
     
-    public void enterPortal(Portal port){
+    private void enterPortal(Portal port){
         //Clear old map's previous messages
         AbstractControl hold = (AbstractControl)boundSpat.getControl(SteveyKeyListener.class);
         boundSpat.removeControl(hold);

@@ -7,6 +7,7 @@ package Testing;
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
+import GameSource.User.CharacterHandler;
 import Spatial.CharacterSpatial;
 import Spatial.Spatial;
 
@@ -19,7 +20,7 @@ public class Stevey extends CharacterSpatial{
     
     public Stevey(float x,float y,float z){
         super(x,y,z,51f,77f,36f,1f,1f,1);
-        setProperty("currentPortal",null);
+        CharacterHandler.setCurrentPortal(null);
     }
     
     int n = 0;
@@ -32,7 +33,7 @@ public class Stevey extends CharacterSpatial{
     @Override
     public void update(){
         super.update();
-        setProperty("currentPortal",null);
+        CharacterHandler.setCurrentPortal(null);
     }
 
     @Override
