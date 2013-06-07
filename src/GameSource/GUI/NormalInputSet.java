@@ -21,6 +21,8 @@ public class NormalInputSet extends AbstractInputSet{
 	public void update(){
 		if (AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
 			mouseUsed=false;
+                else
+                    myGUI.freeMouse();
                 String [] cwindows = myGUI.get_windows().toArray(new String [0]);
                 if (AGUI.keys[keyMap.get("npcchat")]){
                     myGUI.showNPC("\"We faeries don't talk about them much, but \\nthe Underclouds are a place hidden deep \\nwithin the clouds you can normally see up \\nhere. Strange creatures and dark faeries live \\nthere, but they've always kept to themselves. \\n\n" +

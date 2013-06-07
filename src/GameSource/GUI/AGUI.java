@@ -92,8 +92,12 @@ public class AGUI{
 				shiftFocus(name);
 			}
                         cWindow.call();	
-			if (mouseItem==null && cWindow.moveable()&&cWindow.locked()==false)
-				cWindow.lock();
+			if (mouseItem==null && cWindow.moveable() && cWindow.locked()==false){
+                            if (cWindow.moveBarCollide()){
+                                cWindow.lock();
+                            }
+                        }
+				
 						//DO I WANT TO DO THIS?
 
 		}
@@ -159,10 +163,6 @@ public class AGUI{
 		keys = keyboard.get_keys();
 		mx=mouse.get_x(); my= mouse.get_y();
 		mouseButtons=mouse.get_buttons();
-                
-                if (mouseItem!=null && mouseButtons[0]==AMouseInput.MOUSEBUTTONUP){
-                    freeMouse();
-                }
 		
 		for (String name: visibleWindows){
                     AComponent c=windows.get(name);

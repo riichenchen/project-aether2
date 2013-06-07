@@ -36,6 +36,7 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
         
     }
     public void paintComponent (Graphics g){
+        g.drawImage(ImageFactory.getImage("bg"),0,0,null);
     	myGUI.draw(g);
     	String k="("+MyGUI.mx+","+MyGUI.my+")";
     	g.drawString(k,700,10);

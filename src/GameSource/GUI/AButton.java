@@ -13,8 +13,7 @@ import java.awt.Image;
 
 public class AButton extends AComponent{
     protected AMessage message;
-    protected Image label;
-    protected Image hoverLabel;
+    protected String label;
     protected boolean displayFG;
     public AButton() {
     	setLocation(0,0);
@@ -24,6 +23,7 @@ public class AButton extends AComponent{
 //        setImage(AssetManager.getBlockImage(label));
     	message=new AMessage(msgType, msgContent);
         displayFG=false;
+        label="";
     }
     public AButton(String name, int msgType, String msgContent,int wid, int hgt){
     	setName(name);
@@ -36,6 +36,7 @@ public class AButton extends AComponent{
 * */
     	message=new AMessage(msgType, msgContent);
         displayFG=false;
+        label="";
     }
     
     public void draw(Graphics g){
@@ -63,6 +64,9 @@ public class AButton extends AComponent{
   //          int dx=parent.x+x+(width-bg.getWidth(null))/2; int dy=parent.y+y+(width-bg.getWidth(null))/2;
   //           System.out.println(name+" button drawn at "+dx+","+dy);
         }
+        if (label!="" && label!=null)
+            g.drawString(label,parent.x+x,parent.y+y+10);
+  //      g.drawRect(parent.x+x,parent.y+y,width,height);
     }
     public void update(){}
     
@@ -74,5 +78,8 @@ public class AButton extends AComponent{
     }
     public void displayBG(){
         displayFG=false;
+    }
+    public void setLabel(String s){
+        label=s;
     }
 }
