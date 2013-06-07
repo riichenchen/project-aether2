@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 public class AWindow extends AComponent{
 	
+    //Constructors....a ton of them*****************************************
 	public AWindow(){
-		super();
+            super();
 	}
 	public AWindow (String name){
 		super();
@@ -18,39 +19,24 @@ public class AWindow extends AComponent{
 	public AWindow(int x, int y,int wid,int hgt){
 		super(x,y,wid,hgt);
 	}
+    //*********************************************************************
+        
 	public void update(){
-		if (locked){
-			lockShift();
-			if (MyGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
-				unlock();
-		}
+            if (locked){
+		lockShift();
+		if (MyGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
+                    unlock();
+            }
 	}
 
 	public void call(){
-    //        int rx = MyGUI.mx-x;
-   //         int ry = MyGUI.my-y;
-    //        System.out.println("rx,ry:"+rx+","+ry);
             for (AComponent c: subComponents){
-    //            System.out.println(c.name);
                 if (c.callable() && (c instanceof AContainer || c.collidepoint(MyGUI.mx,MyGUI.my))){
-                    System.out.println(c.getName());
-                    System.out.println(c.callable());
                     c.call();
                     break;
                 }
             }
         }
-	
-	public void drawChildren(Graphics g){		//drawChildren or use parent field?
-		for (AComponent c: subComponents){
-			int ox=c.x; int oy=c.y;
-			c.x+=x; c.y+=y;
-   //                     System.out.println(c.x+","+c.y);
-			c.setVisible(true);
-			c.draw(g);
-			c.x=ox; c.y=oy;
-		}
-	}
 	
 	public void draw(Graphics g){
 		if (visible){
@@ -60,7 +46,6 @@ public class AWindow extends AComponent{
 			g.setColor(background);
 			g.fillRect(x,y,width,height);
                     }
-  //                  drawChildren(g);
                     for (AComponent c: subComponents){
 			c.draw(g);
                     }
