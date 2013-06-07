@@ -86,6 +86,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
+
     public static Image getImage(String key){
         return allImages.get(key);
     }

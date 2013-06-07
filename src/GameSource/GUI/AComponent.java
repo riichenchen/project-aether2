@@ -17,10 +17,11 @@ public abstract class AComponent{
 	protected String name;
 	protected int id;
 	protected AComponent parent; 
-        protected ArrayList<AComponent> subComponents;
-        protected Image image;
+    protected ArrayList<AComponent> subComponents;
+    protected Image bg;
 	
 	private static int idCounter=0;
+	public static final AComponent NULL=new AWindow(0,0,0,0);
 	
 	public AComponent(){
 		x=0; y=0; width=0; height = 0;
@@ -30,7 +31,8 @@ public abstract class AComponent{
 		visible=false;
 		enabled=true;
 		focused=false;
-                subComponents= new ArrayList<AComponent>();
+        subComponents= new ArrayList<AComponent>();
+        parent=AComponent.NULL;
 		id=idCounter++;
 	}
 	public AComponent(int nx,int ny,int nw,int nh){
@@ -38,12 +40,12 @@ public abstract class AComponent{
 		background=new Color(229,229,229);
 	}
 	
-        @Override
+    @Override
 	public int hashCode(){
 		return id;
 	}
 	public boolean collidepoint(int mx, int my){
-		return x<=mx && mx<=x+width && y<=my && my<=y+height;
+		return parent.x+x<=mx && mx<=parent.x+x+width && parent.y+y<=my && my<=parent.y+y+height;
 	}
 	public boolean collide (AComponent a){
 		return x<=a.x && a.x<=x+width && y<=a.y && a.y<=y+height;
@@ -65,9 +67,11 @@ public abstract class AComponent{
 		name=s;
 	}
         public void setImage (Image g){
-                image=g;
+                bg=g;
         }
-
+        public void setParent(AComponent c){
+            parent=c;
+        }
 	public void setVisible(boolean b){
 		visible=b;
 	}
@@ -79,8 +83,8 @@ public abstract class AComponent{
 	}
 	public void lock(){
 //		System.out.println(name+" locked");
-		lx=AGUI.mx-x;
-		ly=AGUI.my-y;
+		lx=MyGUI.mx-x;
+		ly=MyGUI.my-y;
 		locked = true;
 		
 	}
@@ -90,7 +94,7 @@ public abstract class AComponent{
 		locked= false;
 	}
 	public void lockShift(){
-		setLocation(AGUI.mx-lx, AGUI.my-ly);
+		setLocation(MyGUI.mx-lx, MyGUI.my-ly);
 	}
 	public int id(){
 		return id;

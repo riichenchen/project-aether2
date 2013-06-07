@@ -1,4 +1,7 @@
 package GameSource.GUI;
+import GameSource.Assets.AssetManager;
+import GameSource.User.InventoryHandler;
+import GameSource.User.ItemFactory;
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -14,6 +17,7 @@ public class Test extends JFrame implements ActionListener{
 		add(testing);
 		setVisible(true);
 		myTimer.start();
+                ImageFactory.init();
 	}
 	
 	public void actionPerformed(ActionEvent e){
@@ -21,6 +25,9 @@ public class Test extends JFrame implements ActionListener{
 	}
 	
 	public static void main (String [] args){
-		new Test();
+            AssetManager.init();
+            ImageFactory.init();
+            InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
+            new Test();
 	}
 }

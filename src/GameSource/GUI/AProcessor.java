@@ -9,9 +9,9 @@ package GameSource.GUI;
  * @author Joy
  */
 public class AProcessor {
-    private static AGUI myGUI;
+    private static MyGUI myGUI;
     
-    public static void bindTo(AGUI g){
+    public static void bindTo(MyGUI g){
         myGUI=g;
     }
     
@@ -32,6 +32,11 @@ public class AProcessor {
             case AMessage.NPC_CHAT: System.out.println(m.content());
                 break;
             case AMessage.SEND_MESSAGE: System.out.println(m.content());
+                break;
+            case AMessage.INVENTORY: myGUI.changeInventPane(m.content());
+                break;
+            case AMessage.NULL: break;
+            case AMessage.INVENTORY_CLICK: System.out.println(m.content()+" click in inventory");
                 break;
             default: System.out.println("Invalid Message");
         }    

@@ -65,22 +65,22 @@ public class ATextField extends AComponent{
     }
     
     public void update(){
-    	for (int i=0; i<AGUI.keys.length; i++){
-    		if (AGUI.keys[i] && KeyCharMap.isTypeable(i,0)){
-    			insert(KeyCharMap.getChar(i,AGUI.keys[KeyEvent.VK_SHIFT]));
+    	for (int i=0; i<MyGUI.keys.length; i++){
+    		if (MyGUI.keys[i] && KeyCharMap.isTypeable(i,0)){
+    			insert(KeyCharMap.getChar(i,MyGUI.keys[KeyEvent.VK_SHIFT]));
     		}
     	}
-    	if (AGUI.keys[KeyEvent.VK_BACK_SPACE]){
+    	if (MyGUI.keys[KeyEvent.VK_BACK_SPACE]){
     		delete();
     	}
-    	if (AGUI.keys[KeyEvent.VK_ENTER]){
+    	if (MyGUI.keys[KeyEvent.VK_ENTER]){
     		content="";
     		cursorLoc=0;
     	}
-    	if (AGUI.keys[KeyEvent.VK_LEFT]){
+    	if (MyGUI.keys[KeyEvent.VK_LEFT]){
     		cursorLoc=Math.max(cursorLoc-1,0);
     	}
-    	if (AGUI.keys[KeyEvent.VK_RIGHT]){
+    	if (MyGUI.keys[KeyEvent.VK_RIGHT]){
     		cursorLoc=Math.min(cursorLoc+1,content.length());
     	}
     }
@@ -88,17 +88,17 @@ public class ATextField extends AComponent{
     public void draw(Graphics g){
     	if (visible){
 	    	Graphics2D g2= (Graphics2D)g;
- 	   		FontMetrics fm = g2.getFontMetrics();
- 		   	String line = content;			//The portion to draw
+ 	   	FontMetrics fm = g2.getFontMetrics();
+ 		String line = content;			//The portion to draw
     		while (fm.stringWidth(line)>width-20){
-    			//Remove chars from head if string is too long
-    			line=line.substring(1,line.length());
+                    //Remove chars from head if string is too long
+                    line=line.substring(1,line.length());
     		}
     		g2.setColor(background);
-    		g2.fillRect(x,y,width,height);
+    		g2.fillRect(parent.x+x,parent.y+y,width,height);
     		g2.setFont(font);
 			g2.setColor(foreground);
-    		g2.drawString(line,x+10,y+10);
+    		g2.drawString(line,parent.x+x+10,parent.y+y+10);
     	}
     }
     public void call(){};

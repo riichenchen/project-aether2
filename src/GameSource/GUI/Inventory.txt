@@ -1,0 +1,39 @@
+<AWindow
+invent
+172 393
+255 255 255
+0 0 0
+100 250
+<APanel
+invent_tabs
+172 21
+255 255 255
+0 0 0
+6 26
+<APanelButton
+invent_equip
+31 20
+255 255 255
+0 0 0
+6 0
+999
+iequip
+/>
+<APanelButton
+invent_use
+31 20
+255 255 255
+0 0 0
+38 0
+999
+iuse
+/>
+<APanelButton
+invent_other
+31 20
+255 255 255
+0 0 0
+38 0
+999
+iother
+/>
