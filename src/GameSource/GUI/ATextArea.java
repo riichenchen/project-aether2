@@ -80,7 +80,7 @@ public class ATextArea extends AComponent{
     	
     	if (locked){
 			lockShift();
-			if (MyGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
+			if (AMouseInput.released(AMouseInput.LEFT))
 				unlock();
 		}
     }

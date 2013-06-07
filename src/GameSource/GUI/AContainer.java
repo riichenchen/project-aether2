@@ -41,7 +41,7 @@ public class AContainer extends AComponent{
     
     public void call(){
         for (AComponent a: content){
-            if (a.collidepoint(MyGUI.mx, MyGUI.my)){
+            if (a.collidepoint(AMouseInput.mx, AMouseInput.my)){
                 a.call();
             }
         }

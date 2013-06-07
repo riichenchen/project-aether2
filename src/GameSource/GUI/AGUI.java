@@ -13,32 +13,32 @@ import java.util.LinkedList;
 public class AGUI{
 	//Main screen that manages all AComponents; drawing, adding, updating,
 	//and removing them as necessary.
-	protected int width, height;
-	protected AbstractInputSet inputSet;
-	protected Map<String,AbstractInputSet> inputSets;
+	protected static int width, height;
+	protected static AbstractInputSet inputSet;
+	protected static Map<String,AbstractInputSet> inputSets;
 
-	protected Map<String,AComponent> windows;
-        protected ArrayList<String> windowNames;
-        protected LinkedList<String> visibleWindows;
+	protected static Map<String,AComponent> windows;
+        protected static ArrayList<String> windowNames;
+        protected static LinkedList<String> visibleWindows;
 
-	protected AComponent focusedScreen;
+	protected static AComponent focusedScreen;
 
-	protected InputManager keyboard;
-	protected AMouseInput mouse;
-        protected InventoryItem mouseItem;              //Static?
+	protected static InputManager keyboard;
+	protected static AMouseInput mouse;
+        protected static InventoryItem mouseItem;              //Static?
 	
         public static boolean [] keys;			//Input fields; keyboard and mouse
-        public static int mx, my;			//Public for easier updating and
-        public static int [] mouseButtons;		//access by the AComponents
-        public static boolean doubleclick;
+//        public static int mx, my;			//Public for easier updating and
+//        public static int [] mouseButtons;		//access by the AComponents
+//        public static boolean doubleclick;
 
         
-        public void bringToFront(String name){
+        public static void bringToFront(String name){
             visibleWindows.remove(name);
             visibleWindows.push(name);
         }
 	
-	public void shiftFocus(String name){
+	public static void shiftFocus(String name){
 		if (focusedScreen==null)
 			focusedScreen=windows.get(name);
 		else{
@@ -48,29 +48,29 @@ public class AGUI{
 		}
                 bringToFront(name);
 	}
-	public void addNewWindow(AComponent a){
+	public static void addNewWindow(AComponent a){
             windows.put(a.getName(),a);
             windowNames.add(a.getName());
         }
-	public void openWindow(String name){
+	public static void openWindow(String name){
 		windows.get(name).setVisible(true);
                 bringToFront(name);
 		shiftFocus(name);
 	}
-	public void closeWindow(String name){
+	public static void closeWindow(String name){
                 windows.get(name).setFocused(false);
 		windows.get(name).setVisible(false);
                 visibleWindows.remove(name);
                 if (focusedScreen.equals(windows.get(name)))
                     unfocus();
 	}
-        public void closeWindow(){
+        public static void closeWindow(){
                 if (focusedScreen!=null && (focusedScreen instanceof AHUD == false)){
                     closeWindow(focusedScreen.getName());
                 }
 	}
 	
-	public void keyCall(String name){
+	public static void keyCall(String name){
 	//The function is called when the AComponent name has been triggered either by
 	//keyboard, and opens or closes the windows as needed.
 		AComponent cWindow=windows.get(name);
@@ -84,63 +84,63 @@ public class AGUI{
 			cWindow.call();				
 		}
 	}
-	
-	public void mouseCall(String name){
+	public static void mousePressCall(String name){
+            AComponent cWindow=windows.get(name);
+            if (cWindow.visible()){
+			if (cWindow.focus()==false){
+				shiftFocus(name);
+			}
+			if (mouseItem==null && cWindow.moveable() && cWindow.locked()==false){
+                            if (cWindow.moveBarCollide()){
+                                cWindow.lock();
+                            }
+                        }
+
+		}
+        }
+	public static void mouseClickCall(String name){
 		AComponent cWindow=windows.get(name);
 		if (cWindow.visible()){
 			if (cWindow.focus()==false){
 				shiftFocus(name);
 			}
                         cWindow.call();	
-			if (mouseItem==null && cWindow.moveable() && cWindow.locked()==false){
-                            if (cWindow.moveBarCollide()){
-                                cWindow.lock();
-                            }
-                        }
-				
-						//DO I WANT TO DO THIS?
-
 		}
 	}
-	public void bindToMouse(InventoryItem i){
+	public static void bindToMouse(InventoryItem i){
             mouseItem=i;
         }
-        public void freeMouse(){
-            if (mouseItem!=null && hitGUI(mx,my)==false)
-                System.out.println(mouseItem.getKey()+" dropped at ("+mx+","+my+")");
+        public static void freeMouse(){
+            if (mouseItem!=null && hitGUI(AMouseInput.mx,AMouseInput.my)==false)
+                System.out.println(mouseItem.getKey()+" dropped at ("+AMouseInput.mx+","+AMouseInput.my+")");
             mouseItem=null;
         }
-	public AGUI(InputManager input, AMouseInput mInput, int wid, int hgt){
+        
+	public static void init(InputManager input, int wid, int hgt){
+            AMouseInput.init();
 		width=wid; height = hgt;
 		bindTo(input);
-		bindTo(mInput);
               
 		keys=keyboard.get_keys();
-		mx=mouse.get_x(); my= mouse.get_y();
-		mouseButtons=mouse.get_buttons();
 		
 		windows = new HashMap<String,AComponent>();
                 windowNames= new ArrayList<String>();
                 visibleWindows=new LinkedList<String>();
 	
 		inputSets= new HashMap<> ();
-		
-
 	}
-    public void bindTo(InputManager bound){
-        this.keyboard = bound;
+    public static void bindTo(InputManager bound){
+        keyboard = bound;
     }
-    public void bindTo(AMouseInput bound){
-        this.mouse = bound;
-    }
-    public ArrayList<String> get_windows(){
+    
+    public static ArrayList<String> get_windows(){
     	return windowNames;
     }
-    public AComponent getWindow(String name){
+    public static AComponent getWindow(String name){
     	return windows.get(name);
     }
     
-    public boolean hitGUI(int mx, int my){
+    public static boolean hitGUI(int mx, int my){
 	for (String wname: visibleWindows){
             AComponent c=windows.get(wname);
             if (c.visible() && c.collidepoint(mx,my))
@@ -149,20 +149,19 @@ public class AGUI{
 	return false;
     }
     
-    public void shiftSet(String newSet){
+    public static void shiftSet(String newSet){
     	inputSet=inputSets.get(newSet);
     }
-    public void unfocus(){
+    public static void unfocus(){
         if (focusedScreen!=null){
             focusedScreen.setFocused(false);
             focusedScreen=null;
         }
     }
 	
-	public void update(){						
+	public static void update(){						
 		keys = keyboard.get_keys();
-		mx=mouse.get_x(); my= mouse.get_y();
-		mouseButtons=mouse.get_buttons();
+                AMouseInput.tick();
 		
 		for (String name: visibleWindows){
                     AComponent c=windows.get(name);
@@ -170,18 +169,19 @@ public class AGUI{
 			c.update();
 		}
 		inputSet.update();
-		
+		AMouseInput.reset();
 	}
-	public void draw(Graphics g){
+	public static void draw(Graphics g){
                 for (int i=visibleWindows.size()-1; i>=0; i--){
                     windows.get(visibleWindows.get(i)).draw(g);
                 }
                 if (mouseItem!=null){
                     Image img=mouseItem.getImage();
-                    g.drawImage(img,mx-img.getWidth(null)/2,my-img.getHeight(null)/2,null);
+                    g.drawImage(img,AMouseInput.mx-img.getWidth(null)/2,AMouseInput.my-img.getHeight(null)/2,null);
                 }
 	}
-        public void tick(){
-            mouse.tick();
+        public static void tick(){
+            AMouseInput.tick();
         }
+        
 }

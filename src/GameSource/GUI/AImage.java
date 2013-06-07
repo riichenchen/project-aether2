@@ -12,7 +12,7 @@ public class AImage extends AComponent{
         super();
         setCallable(false);
         setName(name);
-        bg=ImageFactory.getImage(name);
+        bg=AImageFactory.getImage(name);
         setSize(bg.getWidth(null),bg.getHeight(null));
         setVisible(true);
     }
@@ -28,7 +28,7 @@ public class AImage extends AComponent{
         super();
         setName(name);
         setCallable(false);
-        bg=ImageFactory.getImage(name);
+        bg=AImageFactory.getImage(name);
         System.out.println("IMAGE CHECK:");
         System.out.println(bg==null);
         setSize(bg.getWidth(null),bg.getHeight(null));

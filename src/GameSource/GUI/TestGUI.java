@@ -8,13 +8,14 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
 	
 	private MyGUI myGUI;
 	private InputManager in;
-	private AMouseInput mouse;
+//	private AMouseInput mouse;
 	
 	public TestGUI(){
 		super();
 		in = new InputManager();
-		mouse = new AMouseInput ();
-		myGUI = new MyGUI(in,mouse, 800,600);
+//		mouse = new AMouseInput ();
+                MyGUI.init(in,800,600);
+//		myGUI = new MyGUI(in,mouse, 800,600);
 		addKeyListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -28,7 +29,7 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
 
     public void keyPressed(KeyEvent e) {
     	in.keyDown(e.getKeyCode());
-    	myGUI.update();
+//    	MyGUI.update();
     }
     
     public void keyReleased(KeyEvent e) {
@@ -36,45 +37,45 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
         
     }
     public void paintComponent (Graphics g){
-        g.drawImage(ImageFactory.getImage("bg"),0,0,null);
-    	myGUI.draw(g);
-    	String k="("+MyGUI.mx+","+MyGUI.my+")";
+        g.drawImage(AImageFactory.getImage("bg"),0,0,null);
+    	MyGUI.draw(g);
+    	String k="("+AMouseInput.mx+","+AMouseInput.my+")";
     	g.drawString(k,700,10);
     }
     public void tick(){
-        myGUI.tick();
+        MyGUI.tick();
     }
 
     public void mouseDragged(MouseEvent e) {
-    	mouse.update(e);
-    	myGUI.update();
+    	AMouseInput.update(e);
     }
 
     public void mouseMoved(MouseEvent e) {
-        mouse.update(e);
-        myGUI.update();
+        AMouseInput.update(e);
+//        MyGUI.update();
     }
     
-    public static void main (String [] args){
-    	TestGUI frame = new TestGUI();
-    }
     public void update(){
-    	myGUI.update();
+    	MyGUI.update();
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+        AMouseInput.click(e);
+        System.out.println("click!");
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouse.press(e);
-        myGUI.update();
+        AMouseInput.press(e);
+        System.out.println("press!");
+//        MyGUI.update();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouse.release(e);
-        myGUI.update();
+        AMouseInput.release(e);
+//        MyGUI.update();
     }
 
     @Override
