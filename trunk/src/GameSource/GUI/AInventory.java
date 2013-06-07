@@ -34,6 +34,7 @@ public class AInventory extends AWindow{
         super("invent");
         setImage(ImageFactory.getImage("invent"));
         setSize(172,393);
+        setMoveBar(0,0,172,22);
         buttons=new AContainer(0,0);
         buttonLocs=new ArrayList<>();
         loadButtonLocs();
@@ -87,6 +88,8 @@ public class AInventory extends AWindow{
                     (c instanceof UseItem && activeTab.equals("use"))){
                     AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
                     b.setImage(c.getImage());
+                    b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
+                    System.out.println(String.format(key+": %d items",InventoryHandler.getItemQuantity(key)));
                     b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
                     b.setVisible(true);
                     b.setParent(this);

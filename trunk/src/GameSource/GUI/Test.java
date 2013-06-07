@@ -31,6 +31,8 @@ public class Test extends JFrame implements ActionListener{
             ImageFactory.init();
             InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
             InventoryHandler.addItem(ItemFactory.getItem("redpot"));
+            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
+            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
             CharacterHandler.init();
                 CharacterHandler.addStat("maxhp",500);
                 CharacterHandler.addStat("maxmp",10000);

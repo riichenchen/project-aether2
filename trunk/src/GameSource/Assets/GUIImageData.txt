@@ -26,3 +26,4 @@ hud_quit hud/mainBar.BtClaim.normal.0.png
 hud_quit_fg hud/mainBar.BtClaim.mouseOver.0.png
 hud_chat hud/mainBar.BtChat.normal.0.png
 hud_chat_fg hud/mainBar.BtChat.mouseOver.0.png
+bg bgTest.jpg

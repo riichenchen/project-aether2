@@ -48,6 +48,7 @@ public class AProcessor {
         if (MyGUI.doubleclick){
             System.out.println("Use "+m.content());
         }
-        myGUI.bindToMouse(InventoryHandler.getItem(m.content()));
+        else
+            myGUI.bindToMouse(InventoryHandler.getItem(m.content()));
     }
 }

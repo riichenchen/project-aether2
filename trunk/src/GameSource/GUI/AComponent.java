@@ -10,16 +10,16 @@ import java.util.ArrayList;
 //KEY ISSUES TO RESOLVE: Line 95
 
 public abstract class AComponent{
-	protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
-	protected Color background, foreground;
-	protected Font font;
-	protected boolean visible, callable, focused, locked, moveable;
-	protected String name;
-	protected int id;
-	protected AComponent parent; 
+    protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
+    protected Color background, foreground;
+    protected Font font;
+    protected boolean visible, callable, focused, locked, moveable;
+    protected String name;
+    protected int id;
+    protected AComponent parent; 
     protected ArrayList<AComponent> subComponents;
-    protected Image bg;
-    protected Image fg;
+    protected Image bg,fg;
+    protected ARect moveBar;
 	
 	private static int idCounter=0;
 	public static final AComponent NULL=new AWindow(0,0,0,0);
@@ -35,6 +35,7 @@ public abstract class AComponent{
                 moveable=true;
             subComponents= new ArrayList<AComponent>();
             parent=AComponent.NULL;
+            moveBar=new ARect(x,y,width,height);
 		id=idCounter++;
 	}
 	public AComponent(int nx,int ny,int nw,int nh){
@@ -52,6 +53,9 @@ public abstract class AComponent{
 	public boolean collide (AComponent a){
 		return x<=a.x && a.x<=x+width && y<=a.y && a.y<=y+height;
 	}
+        public boolean moveBarCollide(){
+            return moveBar==null||moveBar.collidepoint(AGUI.mx,AGUI.my,x+parent.x,y+parent.y);
+        }
 
 	public void setBG(int r, int g, int b){
 		background=new Color(r,g,b);
@@ -76,6 +80,9 @@ public abstract class AComponent{
         }
         public void setParent(AComponent c){
             parent=c;
+        }
+        public void setMoveBar(int x, int y, int w, int h){
+            moveBar=new ARect(x,y,w,h);
         }
 	public void setVisible(boolean b){
 		visible=b;

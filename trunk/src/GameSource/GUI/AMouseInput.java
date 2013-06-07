@@ -6,7 +6,7 @@ public class AMouseInput{
 	public static final int MOUSEBUTTONUP= 0; //unpressed
 	public static final int MOUSEBUTTONDOWN = 1;	//pressed
 	public static final int [] NULL = {0,0,0};
-        public static final int DOUBLECLICK=500;
+        public static final int DOUBLECLICK=400;
         
 	private int mx, my;
 	private int [] buttons;
