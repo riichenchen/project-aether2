@@ -1,6 +1,7 @@
 package GameSource.GUI;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 
 //Change to use HashMap instead of ArrayList?
@@ -9,28 +10,29 @@ public class AWindow extends AComponent{
 	
 	public AWindow(){
 		super();
-		subComponents= new ArrayList<AComponent>();
 	}
 	public AWindow (String name){
 		super();
 		setName(name);
-		subComponents= new ArrayList<AComponent>();
+	}
+	public AWindow(int x, int y,int wid,int hgt){
+		super(x,y,wid,hgt);
 	}
 	public void update(){
 		if (locked){
 			lockShift();
-			if (AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
+			if (MyGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
 				unlock();
 		}
 	}
 
 	public void call(){
-            int rx = AGUI.mx-x;
-            int ry = AGUI.my-y;
+            int rx = MyGUI.mx-x;
+            int ry = MyGUI.my-y;
             System.out.println("rx,ry:"+rx+","+ry);
             for (AComponent c: subComponents){
-                System.out.println(c.name);
-                if (c.collidepoint(rx,ry)){
+    //            System.out.println(c.name);
+                if (c instanceof AContainer || c.collidepoint(rx,ry)){
                     c.call();
                     break;
                 }
@@ -50,9 +52,21 @@ public class AWindow extends AComponent{
 	
 	public void draw(Graphics g){
 		if (visible){
+                    if (ImageFactory.getImage(name)!=null)
+                        g.drawImage(ImageFactory.getImage(name), x, y, null);
+                    else{
 			g.setColor(background);
 			g.fillRect(x,y,width,height);
-			drawChildren(g);
+                    }
+  //                  drawChildren(g);
+                    for (AComponent c: subComponents){
+			c.draw(g);
+                    }
 		}
 	}
+        
+        public void setBackground(String name){
+            bg=ImageFactory.getImage(name);
+            setSize(bg.getWidth(null),bg.getHeight(null));
+        }
 }

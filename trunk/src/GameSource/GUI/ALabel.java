@@ -1,6 +1,8 @@
 package GameSource.GUI;/**/
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 public class ALabel extends AComponent{
@@ -33,15 +35,19 @@ public class ALabel extends AComponent{
 	public void setImage(Image img){
 		pic=img;
 		text="";
+                setSize(pic.getWidth(null),pic.getHeight(null));
 	}
 	public void draw(Graphics g){
 		if (pic!=null){
-			g.drawImage(pic,x,y,background,null);
+			g.drawImage(pic,parent.x+x,parent.y+y,background,null);
 		}
-		else{
+                else{
+                        Graphics2D g2=(Graphics2D)g;
+                        FontMetrics fm=g2.getFontMetrics();
+                        setSize(fm.stringWidth(text)+10,fm.getHeight()+10);
 			g.setFont(font);
 			g.setColor(foreground);
-			g.drawString(text,x,y);
+			g.drawString(text,parent.x+x,parent.y+y);
 		}
 	}
 	

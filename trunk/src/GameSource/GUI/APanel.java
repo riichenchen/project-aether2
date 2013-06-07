@@ -5,6 +5,7 @@
 package GameSource.GUI;
 
 import java.awt.Graphics;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,6 +16,12 @@ public class APanel extends AComponent{
     private Map<String, AComponent> panes;
     private String activePane;
     
+    public APanel(String name){
+        super();
+        setName(name);
+        panes=new HashMap<>();
+        activePane="";
+    }
     class APanelButton extends AButton{
         private APanel panel;
         public APanelButton(String name, int mtype, String mcontent, APanel p){

@@ -16,8 +16,12 @@ public class AMessage {
     public static final int UNEQUIP = 4;
     public static final int USE_ITEM=5;
     public static final int NPC_CHAT=6;
+    public static final int CHANGE_PANE=7;
+    public static final int INVENTORY=8;
+    public static final int NULL=9;
+    public static final int INVENTORY_CLICK=10;
     
-    public static final int SEND_MESSAGE=1000000000;
+    public static final int SEND_MESSAGE=100;
     
     private int type;
     private String content;

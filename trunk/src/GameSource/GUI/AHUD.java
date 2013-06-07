@@ -26,8 +26,8 @@ public class AHUD extends AComponent{
     }
     public void update(){}
     public void call(){
-        int rx = AGUI.mx-x;
-            int ry = AGUI.my-y;
+        int rx = MyGUI.mx-x;
+            int ry = MyGUI.my-y;
             System.out.println("rx,ry:"+rx+","+ry);
             for (AComponent c: subComponents){
                 System.out.println(c.name);

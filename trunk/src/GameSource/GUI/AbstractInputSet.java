@@ -2,7 +2,7 @@ package GameSource.GUI;
 import java.util.Map;
 public abstract class AbstractInputSet{
 	protected String name;
-	protected AGUI myGUI;
+	protected MyGUI myGUI;
 	protected Map<String,Integer> keyMap;
 	protected boolean mouseUsed;
 

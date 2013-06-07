@@ -6,14 +6,14 @@ import java.util.HashMap;
 public class NormalInputSet extends AbstractInputSet{
 	//Inventory: F9, Shop: F10, Chat: F11
 	
-	public NormalInputSet(AGUI g){
+	public NormalInputSet(MyGUI g){
 		name="normal";
 		myGUI=g;
 		keyMap=new HashMap<String, Integer>();
 		keyMap.put("npcchat",KeyEvent.VK_F9);
 		keyMap.put("shop",KeyEvent.VK_F10);
-		keyMap.put("chat",KeyEvent.VK_F11);
-		keyMap.put("textbox",KeyEvent.VK_F12);
+		keyMap.put("invent",KeyEvent.VK_F11);
+		keyMap.put("write",KeyEvent.VK_F12);
 		mouseUsed=false;
 	}
 
@@ -21,8 +21,12 @@ public class NormalInputSet extends AbstractInputSet{
 		if (AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
 			mouseUsed=false;
                 String [] cwindows = myGUI.get_windows().toArray(new String [0]);
+                if (AGUI.keys[keyMap.get("npcchat")]){
+                    myGUI.showNPC("\"We faeries don't talk about them much, but \\nthe Underclouds are a place hidden deep \\nwithin the clouds you can normally see up \\nhere. Strange creatures and dark faeries live \\nthere, but they've always kept to themselves. \\n\n" +
+"There's even a rumor that there's some kind of city down there, but nobody who's gone to look has ever returned. I think there might be a path through there that lets you get to Faerie City, but I don't know. But it's probably your only choice.\" ");
+                }
 		for (String wname: cwindows){
-			if (keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
+			if ((wname.equals("npcchat")==false)&&keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
 				myGUI.keyCall(wname);
 			}
 

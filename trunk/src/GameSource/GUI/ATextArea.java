@@ -36,16 +36,18 @@ public class ATextArea extends AComponent{
 			cursorLoc--;
 		}
 	}
-	public ATextArea(){
+	public ATextArea(String n){
 		//Create a default-sized TextArea in the top-left corner
-    	super ();
-    	content="";
-    	cursorLoc=0;
-    	setSize(300,200);
-    	setBG(255,255,255);
-    	setFG(0,0,0);
-    	setVisible(true);
-    }
+            super ();
+            name=n;
+            content="";
+            cursorLoc=0;
+            setSize(300,200);
+            setBG(255,255,255);
+            setFG(0,0,0);
+            setVisible(true);
+        }
+
     public ATextArea(int wid, int hgt){
     	//Create a custom-sized TextArea
     	super ();
@@ -58,27 +60,27 @@ public class ATextArea extends AComponent{
     }
     
     public void update(){
-    	for (int i=0; i<AGUI.keys.length; i++){
-    		if (AGUI.keys[i] && KeyCharMap.isTypeable(i,0)){
-    			insert(KeyCharMap.getChar(i,AGUI.keys[KeyEvent.VK_SHIFT]));
+    	for (int i=0; i<MyGUI.keys.length; i++){
+    		if (MyGUI.keys[i] && KeyCharMap.isTypeable(i,0)){
+    			insert(KeyCharMap.getChar(i,MyGUI.keys[KeyEvent.VK_SHIFT]));
     		}
     	}
-    	if (AGUI.keys[KeyEvent.VK_BACK_SPACE]){
+    	if (MyGUI.keys[KeyEvent.VK_BACK_SPACE]){
     		delete();
     	}
-    	if (AGUI.keys[KeyEvent.VK_ENTER]){
+    	if (MyGUI.keys[KeyEvent.VK_ENTER]){
     		insert(255);
     	}
-    	if (AGUI.keys[KeyEvent.VK_LEFT]){
+    	if (MyGUI.keys[KeyEvent.VK_LEFT]){
     		cursorLoc=Math.max(cursorLoc-1,0);
     	}
-    	if (AGUI.keys[KeyEvent.VK_RIGHT]){
+    	if (MyGUI.keys[KeyEvent.VK_RIGHT]){
     		cursorLoc=Math.min(cursorLoc+1,content.length());
     	}
     	
     	if (locked){
 			lockShift();
-			if (AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
+			if (MyGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
 				unlock();
 		}
     }
@@ -88,7 +90,7 @@ public class ATextArea extends AComponent{
 	    	Graphics2D g2= (Graphics2D)g;
  	   		FontMetrics fm = g2.getFontMetrics();
     		g2.setColor(background);
-    		g2.fillRect(x,y,width,height);
+    		g2.fillRect(parent.x+x,parent.y+y,width,height);
     		g2.setFont(font);
 			g2.setColor(foreground);
     		
@@ -96,20 +98,20 @@ public class ATextArea extends AComponent{
     		String line = "";
     		for (int i=0; i<content.length() && drawY-y<height-fm.getHeight(); i++){
     			if (content.charAt(i)==(char)255){
-    				g2.drawString(line.substring(0,line.length()),x+10,drawY);
+    				g2.drawString(line.substring(0,line.length()),parent.x+x+10,parent.y+drawY);
     				line="";
     				drawY+=fm.getHeight()+2;
     			}
     			else{
     				line+=content.charAt(i);
     				if (fm.stringWidth(line)>width-20){
-    					g2.drawString(line.substring(0,line.length()-1),x+10,drawY);
+    					g2.drawString(line.substring(0,line.length()-1),parent.x+x+10,parent.y+drawY);
     					line=""+content.charAt(i);
     					drawY+=fm.getHeight()+2;
     				}
     			}
     		}
-    		g2.drawString(line,x+10,drawY);
+    		g2.drawString(line,parent.x+x+10,parent.y+drawY);
     	}
     }
     public void call(){};
