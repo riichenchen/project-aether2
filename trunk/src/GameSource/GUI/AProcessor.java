@@ -33,7 +33,8 @@ public class AProcessor {
                 break;
             case AMessage.SEND_MESSAGE: System.out.println(m.content());
                 break;
-            case AMessage.INVENTORY: myGUI.changeInventPane(m.content());
+            case AMessage.INVENTORY: System.out.println(m.content());
+                                     myGUI.changeInventPane(m.content());
                 break;
             case AMessage.NULL: break;
             case AMessage.INVENTORY_CLICK: System.out.println(m.content()+" click in inventory");

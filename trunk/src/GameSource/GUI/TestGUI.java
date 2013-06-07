@@ -49,6 +49,7 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
 
     public void mouseMoved(MouseEvent e) {
         mouse.update(e);
+        myGUI.update();
     }
     
     public static void main (String [] args){

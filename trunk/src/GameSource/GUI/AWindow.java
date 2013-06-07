@@ -27,12 +27,14 @@ public class AWindow extends AComponent{
 	}
 
 	public void call(){
-            int rx = MyGUI.mx-x;
-            int ry = MyGUI.my-y;
-            System.out.println("rx,ry:"+rx+","+ry);
+    //        int rx = MyGUI.mx-x;
+   //         int ry = MyGUI.my-y;
+    //        System.out.println("rx,ry:"+rx+","+ry);
             for (AComponent c: subComponents){
     //            System.out.println(c.name);
-                if (c instanceof AContainer || c.collidepoint(rx,ry)){
+                if (c.callable() && (c instanceof AContainer || c.collidepoint(MyGUI.mx,MyGUI.my))){
+                    System.out.println(c.getName());
+                    System.out.println(c.callable());
                     c.call();
                     break;
                 }

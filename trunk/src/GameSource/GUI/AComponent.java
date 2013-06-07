@@ -13,12 +13,13 @@ public abstract class AComponent{
 	protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
 	protected Color background, foreground;
 	protected Font font;
-	protected boolean visible, enabled, focused, locked;
+	protected boolean visible, callable, focused, locked;
 	protected String name;
 	protected int id;
 	protected AComponent parent; 
     protected ArrayList<AComponent> subComponents;
     protected Image bg;
+    protected Image fg;
 	
 	private static int idCounter=0;
 	public static final AComponent NULL=new AWindow(0,0,0,0);
@@ -29,7 +30,7 @@ public abstract class AComponent{
 		foreground=new Color(229,229,229);
 		font = new Font ("Arial",Font.PLAIN,10);
 		visible=false;
-		enabled=true;
+		callable=true;
 		focused=false;
         subComponents= new ArrayList<AComponent>();
         parent=AComponent.NULL;
@@ -69,14 +70,17 @@ public abstract class AComponent{
         public void setImage (Image g){
                 bg=g;
         }
+        public void setFGImage(Image g){
+            fg=g;
+        }
         public void setParent(AComponent c){
             parent=c;
         }
 	public void setVisible(boolean b){
 		visible=b;
 	}
-	public void setEnabled(boolean b){
-		enabled=b;
+	public void setCallable(boolean b){
+		callable=b;
 	}
 	public void setFocused(boolean b){
 		focused=b;
@@ -114,6 +118,9 @@ public abstract class AComponent{
 	public boolean visible(){
 		return visible;
 	}
+        public boolean callable(){
+            return callable;
+        }
 	public boolean locked(){
 		return locked;
 	}
@@ -124,5 +131,7 @@ public abstract class AComponent{
 	public abstract void draw(Graphics g);
 	public abstract void update();
 	public abstract void call(); 			//????
+
+  
 		
 }

@@ -9,6 +9,7 @@ import java.awt.Graphics;
 public class AImage extends AComponent{
     public AImage(String name){
         super();
+        setCallable(false);
         setName(name);
         bg=ImageFactory.getImage(name);
         setSize(bg.getWidth(null),bg.getHeight(null));
@@ -17,6 +18,7 @@ public class AImage extends AComponent{
     public AImage(String name, int x, int y){
         super();
         setName(name);
+        setCallable(false);
         bg=ImageFactory.getImage(name);
         System.out.println("IMAGE CHECK:");
         System.out.println(bg==null);

@@ -28,6 +28,7 @@ public class Test extends JFrame implements ActionListener{
             AssetManager.init();
             ImageFactory.init();
             InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
+            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
             new Test();
 	}
 }
