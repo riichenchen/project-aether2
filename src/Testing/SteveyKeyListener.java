@@ -101,6 +101,30 @@ public class SteveyKeyListener extends AbstractKeyListener{
         if (eventKeyDown(KeyEvent.VK_Z)){
             CharacterHandler.pickUpItem();
         }
+        if (eventKeyDown(KeyEvent.VK_S)){
+            System.out.println("Name: "+CharacterHandler.getName());
+            System.out.println("Attack: "+CharacterHandler.getStat("attack"));
+            System.out.println("Defense: "+CharacterHandler.getStat("defense"));
+            System.out.println("Hp: "+CharacterHandler.getStat("hp"));
+            System.out.println("MaxHp: "+CharacterHandler.getStat("maxhp"));
+            System.out.println("Mp: "+CharacterHandler.getStat("mp"));
+            System.out.println("MaxMp: "+CharacterHandler.getStat("maxmp"));
+            System.out.println("Money: "+CharacterHandler.getStat("money"));
+            System.out.println("Level: "+CharacterHandler.getStat("level"));
+            System.out.println("Exp: "+CharacterHandler.getStat("exp"));
+        }
+        if (eventKeyDown(KeyEvent.VK_1)){
+            CharacterHandler.addStat("hp", 50);
+        }
+        if (eventKeyDown(KeyEvent.VK_2)){
+            CharacterHandler.addStat("mp",50);
+        }
+        if (eventKeyDown(KeyEvent.VK_3)){
+            CharacterHandler.addStat("money", 1000);
+        }
+        if (eventKeyDown(KeyEvent.VK_4)){
+            CharacterHandler.addStat("money", -1000);
+        }
         animControl.swapAnim(currentAnim);        
     }
 }

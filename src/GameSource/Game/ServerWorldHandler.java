@@ -56,8 +56,9 @@ public class ServerWorldHandler {
             int characterType = r.getInt("characterType");
             GamePoint loc = new GamePoint(r.getFloat("x"),r.getFloat("y"),r.getFloat("z"));
             String mapType = r.getString("mapid");
-            
-            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid));
+            int[] entity_data = new int[]{r.getInt("hp"),r.getInt("maxhp"),r.getInt("mp"),r.getInt("maxmp"),
+                                          r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense")};
+            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"));
         
         } catch (SQLException e){
             System.out.println("Error fetching player data!");
@@ -92,12 +93,21 @@ public class ServerWorldHandler {
         float y = loc.getY();
         float z = loc.getZ();
         String mapId = playerData.getMapId();
+        int[] entityData = playerData.getEntity_data();
         String template = "update characters set %s = %s where accountid = "+accountId;
         db.makeUpdate(String.format(template,"x",""+x));
         db.makeUpdate(String.format(template,"y",""+y));
         db.makeUpdate(String.format(template,"z",""+z));
         db.makeUpdate(String.format(template,"mapid","'"+mapId+"'"));
-        //TODO LATER: ADD IN MOAR CHAR INFO
+        db.makeUpdate(String.format(template,"hp",""+entityData[0]));
+        db.makeUpdate(String.format(template,"maxhp",""+entityData[1]));
+        db.makeUpdate(String.format(template,"mp",""+entityData[2]));
+        db.makeUpdate(String.format(template,"maxmp",""+entityData[3]));
+        db.makeUpdate(String.format(template,"money",""+entityData[4]));
+        db.makeUpdate(String.format(template,"level",""+entityData[5]));
+        db.makeUpdate(String.format(template,"exp",""+entityData[6]));
+        db.makeUpdate(String.format(template,"attack",""+entityData[7]));
+        db.makeUpdate(String.format(template,"defense",""+entityData[8]));
         
         String invenTemplate = "update inventory set %s = %s where accountId = "+accountId+" and itemId = '%s'";
         
