@@ -10,7 +10,7 @@ import GameSource.Game.GamePoint;
 import GameSource.User.CharacterHandler;
 import Spatial.CharacterSpatial;
 import Spatial.Spatial;
-import Testing.Stevey;
+import Testing.PlayerSpatial;
 
 /**
  *
@@ -38,7 +38,7 @@ public class Portal extends CharacterSpatial{
     @Override
     public void collideEffect(Spatial s) {
         if (location.distanceSquared(s.getLocation()) <= Math.pow(20,2) && getZ()-s.getZ() >= 0){
-            if (s instanceof Stevey)
+            if (s instanceof PlayerSpatial)
                 CharacterHandler.setCurrentPortal(this);
 //                s.setProperty("currentPortal", this);
         }

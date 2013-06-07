@@ -19,7 +19,7 @@ public class Globals {
     public static final String DBIP = "localhost";
     public static final boolean RENDER_DEBUG = false;
     public static final boolean P_SYNC_DEBUG = false;
-    public static final int __PHYSICSDEBUG__ = 4;
+    public static final int __PHYSICSDEBUG__ = 5;
     public static final float __PROJECTION_SCALE__ = (float)Math.cos(Math.toRadians(60));
     public static final int __CAMX__ = 800,__CAMY__ = 600;
     public static AetherMouse theMouse = new AetherMouse(0,0);

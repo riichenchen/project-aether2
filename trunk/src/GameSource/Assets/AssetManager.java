@@ -18,7 +18,7 @@ import GameSource.Assets.Portals.PortalData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Spawners.CowSpawner;
 import GameSource.User.Inventory.ItemData;
-import Testing.Stevey;
+import Testing.PlayerSpatial;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -271,7 +271,7 @@ public class AssetManager {
             return 2;
         } else if (spat instanceof Portal){
             return 3;
-        } else if (spat instanceof Stevey){
+        } else if (spat instanceof PlayerSpatial){
             return 4;
         }
         System.out.println("SEVERE: Unable to recognise SpatialID!");

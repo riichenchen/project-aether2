@@ -12,7 +12,7 @@ import Renderer.RenderSpatial;
 import Renderer.Renderer;
 import Spatial.Spatial;
 import Testing.MyTestCharacter;
-import Testing.Stevey;
+import Testing.PlayerSpatial;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -199,7 +199,7 @@ public class GameMap {
             } else if (characterType == Char_TESTANIM){
                 newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
             } else if (characterType == Char_STEVEY){
-                newChar = new Stevey(loc.getX(),loc.getY(),loc.getZ());
+                newChar = new PlayerSpatial(loc.getX(),loc.getY(),loc.getZ());
             }
             if (newChar == null){
                 System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
