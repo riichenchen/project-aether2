@@ -49,3 +49,6 @@ damage/violet
 8
 9
 /damage/violet
+spellRings
+eruption
+/spellRings
