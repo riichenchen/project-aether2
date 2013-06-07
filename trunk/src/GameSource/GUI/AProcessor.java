@@ -4,6 +4,8 @@
  */
 package GameSource.GUI;
 
+import GameSource.User.InventoryHandler;
+
 /**
  *
  * @author Joy
@@ -27,7 +29,7 @@ public class AProcessor {
                 break;
             case AMessage.UNEQUIP: System.out.println("Unequip: "+m.content());
                 break;
-            case AMessage.USE_ITEM: System.out.println("Use "+m.content());
+            case AMessage.USE_ITEM: 
                 break;
             case AMessage.NPC_CHAT: System.out.println(m.content());
                 break;
@@ -37,9 +39,15 @@ public class AProcessor {
                                      myGUI.changeInventPane(m.content());
                 break;
             case AMessage.NULL: break;
-            case AMessage.INVENTORY_CLICK: System.out.println(m.content()+" click in inventory");
+            case AMessage.INVENTORY_CLICK: process_invent(m);
                 break;
-            default: System.out.println("Invalid Message");
+            default: MyGUI.mouseButtons[0]=AMouseInput.MOUSEBUTTONUP;
         }    
+    }
+    private static void process_invent(AMessage m){
+        if (MyGUI.doubleclick){
+            System.out.println("Use "+m.content());
+        }
+        myGUI.bindToMouse(InventoryHandler.getItem(m.content()));
     }
 }

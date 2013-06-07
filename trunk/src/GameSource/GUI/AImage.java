@@ -5,6 +5,7 @@
 package GameSource.GUI;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 public class AImage extends AComponent{
     public AImage(String name){
@@ -12,6 +13,14 @@ public class AImage extends AComponent{
         setCallable(false);
         setName(name);
         bg=ImageFactory.getImage(name);
+        setSize(bg.getWidth(null),bg.getHeight(null));
+        setVisible(true);
+    }
+    public AImage(String name,Image i){
+        super();
+        setCallable(false);
+        setName(name);
+        bg=i;
         setSize(bg.getWidth(null),bg.getHeight(null));
         setVisible(true);
     }

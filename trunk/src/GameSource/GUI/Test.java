@@ -22,6 +22,7 @@ public class Test extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		repaint();
+                testing.tick();
 	}
 	
 	public static void main (String [] args){

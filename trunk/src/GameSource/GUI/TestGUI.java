@@ -40,7 +40,9 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
     	String k="("+MyGUI.mx+","+MyGUI.my+")";
     	g.drawString(k,700,10);
     }
-
+    public void tick(){
+        myGUI.tick();
+    }
 
     public void mouseDragged(MouseEvent e) {
     	mouse.update(e);

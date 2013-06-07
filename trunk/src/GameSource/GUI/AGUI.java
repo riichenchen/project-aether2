@@ -1,6 +1,8 @@
 package GameSource.GUI;
 
+import GameSource.User.Inventory.InventoryItem;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -23,10 +25,12 @@ public class AGUI{
 
 	protected InputManager keyboard;
 	protected AMouseInput mouse;
+        protected InventoryItem mouseItem;              //Static?
 	
         public static boolean [] keys;			//Input fields; keyboard and mouse
         public static int mx, my;			//Public for easier updating and
         public static int [] mouseButtons;		//access by the AComponents
+        public static boolean doubleclick;
 
         
         public void bringToFront(String name){
@@ -87,13 +91,21 @@ public class AGUI{
 			if (cWindow.focus()==false){
 				shiftFocus(name);
 			}
-			if (cWindow.locked()==false)
+                        cWindow.call();	
+			if (mouseItem==null && cWindow.locked()==false)
 				cWindow.lock();
-			cWindow.call();				//DO I WANT TO DO THIS?
+						//DO I WANT TO DO THIS?
 
 		}
 	}
-	
+	public void bindToMouse(InventoryItem i){
+            mouseItem=i;
+        }
+        public void freeMouse(){
+            if (mouseItem!=null && hitGUI(mx,my)==false)
+                System.out.println(mouseItem.getKey()+" dropped at ("+mx+","+my+")");
+            mouseItem=null;
+        }
 	public AGUI(InputManager input, AMouseInput mInput, int wid, int hgt){
 		width=wid; height = hgt;
 		bindTo(input);
@@ -147,6 +159,10 @@ public class AGUI{
 		keys = keyboard.get_keys();
 		mx=mouse.get_x(); my= mouse.get_y();
 		mouseButtons=mouse.get_buttons();
+                
+                if (mouseItem!=null && mouseButtons[0]==AMouseInput.MOUSEBUTTONUP){
+                    freeMouse();
+                }
 		
 		for (String name: visibleWindows){
                     AComponent c=windows.get(name);
@@ -160,5 +176,12 @@ public class AGUI{
                 for (int i=visibleWindows.size()-1; i>=0; i--){
                     windows.get(visibleWindows.get(i)).draw(g);
                 }
+                if (mouseItem!=null){
+                    Image img=mouseItem.getImage();
+                    g.drawImage(img,mx-img.getWidth(null)/2,my-img.getHeight(null)/2,null);
+                }
 	}
+        public void tick(){
+            mouse.tick();
+        }
 }
