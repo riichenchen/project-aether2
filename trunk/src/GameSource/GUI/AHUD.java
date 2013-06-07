@@ -30,20 +30,20 @@ public class AHUD extends AWindow{
         setSize(800,85);
         setName("hud");
         setMoveable(false);
-        setImage(ImageFactory.getImage("hudback"));
+        setImage(AImageFactory.getImage("hudback"));
         
         addImages();
         AButton quit=new AButton("hud_quit",AMessage.QUIT,"die",23,22);
         quit.setLocation(543,24);
-        quit.setImage(ImageFactory.getImage(quit.getName()));
-        quit.setFGImage(ImageFactory.getImage(quit.getName()+"_fg"));
+        quit.setImage(AImageFactory.getImage(quit.getName()));
+        quit.setFGImage(AImageFactory.getImage(quit.getName()+"_fg"));
         quit.setVisible(true);
         this.add(quit);
         
         AButton open_chat=new AButton("hud_chat",AMessage.OPEN_WINDOW,"chat",23,22);
         open_chat.setLocation(520,24);
-        open_chat.setImage(ImageFactory.getImage(open_chat.getName()));
-        open_chat.setFGImage(ImageFactory.getImage(open_chat.getName()+"_fg"));
+        open_chat.setImage(AImageFactory.getImage(open_chat.getName()));
+        open_chat.setFGImage(AImageFactory.getImage(open_chat.getName()+"_fg"));
         open_chat.setVisible(true);
         this.add(open_chat);
         
@@ -76,7 +76,7 @@ public class AHUD extends AWindow{
  
     }
     public void drawStats(Graphics g){
-        g.drawImage(ImageFactory.getImage("stat"),223,y+49,null);
+        g.drawImage(AImageFactory.getImage("stat"),223,y+49,null);
         Graphics2D g2=(Graphics2D)g;
         FontMetrics fm=g2.getFontMetrics();
         int [] sizes=new int[2];
@@ -92,18 +92,18 @@ public class AHUD extends AWindow{
         g.setFont(new Font ("Arial",Font.PLAIN,10));
         g.setColor(new Color(255,255,255));
         for (int i=0; i<2; i++){
-            g.drawImage(ImageFactory.getImage("stat"+i+"_0"),251+171*i,y+51,null);
-            Image middle= ImageFactory.getImage("stat"+i+"_1");
+            g.drawImage(AImageFactory.getImage("stat"+i+"_0"),251+171*i,y+51,null);
+            Image middle= AImageFactory.getImage("stat"+i+"_1");
             for (int j=0;j<sizes[i];j++){
                 g.drawImage(middle,252+j+171*i,y+51,null);
             }
-            g.drawImage(ImageFactory.getImage("stat"+i+"_2"),252+sizes[i]+171*i,y+51,null);
+            g.drawImage(AImageFactory.getImage("stat"+i+"_2"),252+sizes[i]+171*i,y+51,null);
     //        System.out.println(labels[1].getWidth(null)+","+labels[1].getHeight(null));
    //         g.drawImage(labels[i],386+171*i-labels[i].getWidth(null)+171*i,y+51,null);
             g.drawString(labels[i],390+171*i-fm.stringWidth(labels[i]) ,y+60);
    //         g.drawRect(386-labels[i].getWidth(null)+171*i,y+51,labels[i].getWidth(null),labels[i].getHeight(null));
         }
-        g.drawImage(ImageFactory.getImage("stat_fg"),252,y+49,null);
+        g.drawImage(AImageFactory.getImage("stat_fg"),252,y+49,null);
     }
         
 }
@@ -131,7 +131,7 @@ class TestHUD extends JFrame{
 	}
 	public static void main (String [] args){
             AssetManager.init();
-                ImageFactory.init();
+                AImageFactory.init();
                 CharacterHandler.init();
                 CharacterHandler.addStat("maxhp",500);
                 CharacterHandler.addStat("maxmp",10000);

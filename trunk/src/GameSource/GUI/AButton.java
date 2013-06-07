@@ -45,7 +45,7 @@ public class AButton extends AComponent{
             g.setColor(background);
             g.fillRect(parent.x+x,parent.y+y,width,height);
         }
-        else if (fg!=null && (displayFG||collidepoint(MyGUI.mx, MyGUI.my))){
+        else if (fg!=null && (displayFG||collidepoint(AMouseInput.mx, AMouseInput.my))){
   //          System.out.println("hiii check collision");
   //          System.out.println(collidepoint(MyGUI.mx, MyGUI.my));
             g.drawImage(fg,parent.x+x+(width-bg.getWidth(null))/2,parent.y+y+(height-bg.getHeight(null))/2,null);

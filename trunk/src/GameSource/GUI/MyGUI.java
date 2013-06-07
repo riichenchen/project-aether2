@@ -15,17 +15,17 @@ import java.io.IOException;
  */
 public class MyGUI extends AGUI{
  //   private LinkedList<String> windowNames;
-    private ANPCChat npcchat;
-    private AInventory invent;
-    private AHUD hud;
-    private ATextField chat;
-    private BufferedReader in;
+    private static ANPCChat npcchat;
+    private static AInventory invent;
+    private static AHUD hud;
+    private static ATextField chat;
+    private static BufferedReader in;
     
-   
-    public MyGUI(InputManager inp, AMouseInput min, int wid, int hgt){
-        super(inp,min,wid,hgt);
-        inputSets.put("battle",new BattleInputSet(this));
-	inputSets.put("normal",new NormalInputSet(this));
+
+    public static void init(InputManager inp, int wid, int hgt){
+        AGUI.init(inp,wid,hgt);
+//        inputSets.put("battle",new BattleInputSet());
+	inputSets.put("normal",new NormalInputSet());
 	inputSet=inputSets.get("normal");
         npcchat=new ANPCChat();
         npcchat.setVisible(false);
@@ -60,9 +60,8 @@ public class MyGUI extends AGUI{
         for (String s: windowNames){
             System.out.println(s);
         }
-        AProcessor.bindTo(this);
     }
-    public AButton createAButton(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb,int type,String message){
+    public static AButton createAButton(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb,int type,String message){
         AButton out=new AButton(name,type,message);
         out.setSize(wid,hgt);
         out.setLocation(x,y);
@@ -70,7 +69,7 @@ public class MyGUI extends AGUI{
         out.setBG(br,bg,bb);
         return out;
     }
-    public AWindow createAWindow(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
+    public static AWindow createAWindow(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
         AWindow out=new AWindow(name);
         out.setSize(wid,hgt);
         out.setLocation(x,y);
@@ -79,7 +78,7 @@ public class MyGUI extends AGUI{
         out.setVisible(false);
         return out;
     }
-    public ATextArea createATextArea(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
+    public static ATextArea createATextArea(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
         ATextArea  out=new ATextArea (name);
         out.setSize(wid,hgt);
         out.setLocation(x,y);
@@ -88,7 +87,7 @@ public class MyGUI extends AGUI{
         out.setVisible(false);
         return out;
     }
-    public AComponent createComponent(String line) throws IOException{
+    public static AComponent createComponent(String line) throws IOException{
         System.out.println(line);
         int x,y,wid,hgt,fr,fg,fb,br,bg,bb;
         int type;
@@ -125,18 +124,23 @@ public class MyGUI extends AGUI{
         return out;
     }
 
-    public void showNPC(String words){
+    public static void showNPC(String words){
         npcchat.setContent(words);
         openWindow("npcchat");
     }
-    public void changeInventPane(String newPane){
+    public static void changeInventPane(String newPane){
         if (invent!=null){
             invent.setPane(newPane);
         }
     }
-    @Override
-    public void draw(Graphics g){
-        super.draw(g);
+    public static void updateItems(){
+        if (invent!=null){
+            invent.loadButtons();
+        }
+    }
+    
+    public static void draw(Graphics g){
+        AGUI.draw(g);
         hud.draw(g);
         chat.draw(g);
     }

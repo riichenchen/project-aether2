@@ -32,7 +32,7 @@ public class AInventory extends AWindow{
     
     public AInventory(){
         super("invent");
-        setImage(ImageFactory.getImage("invent"));
+        setImage(AImageFactory.getImage("invent"));
         setSize(172,393);
         setMoveBar(0,0,172,22);
         buttons=new AContainer(0,0);
@@ -44,8 +44,8 @@ public class AInventory extends AWindow{
         for (int i=0; i<3; i++){
             tabs[i]=new AButton(nameDirect[i],AMessage.INVENTORY,nameDirect[i]);
             tabs[i].setSize(31,20);
-            tabs[i].setImage(ImageFactory.getImage(tabs[i].getName()));
-            tabs[i].setFGImage(ImageFactory.getImage(nameDirect[i]+"_hover"));
+            tabs[i].setImage(AImageFactory.getImage(tabs[i].getName()));
+            tabs[i].setFGImage(AImageFactory.getImage(nameDirect[i]+"_hover"));
             tabs[i].setVisible(true);
             tabs[i].setLocation(8+31*i,27);
             this.add(tabs[i]);
@@ -63,6 +63,27 @@ public class AInventory extends AWindow{
         for (int tx=10; tx<148;tx+=36){
             for (int ty=51; ty<150; ty+=36){
                 buttonLocs.add(new APoint(tx,ty));
+            }
+        }
+    }
+    
+    public void loadButtons(){
+        items = InventoryHandler.getItemIds();
+        buttons.clear();
+        int buttonNo=0;
+        for (int i=0;i<Math.min(items.length,24);i++){
+            String key=items[i];
+            InventoryItem c=InventoryHandler.getItem(key);
+            if ((c instanceof EquipItem && activeTab.equals("equip"))||
+                (c instanceof UseItem && activeTab.equals("use"))){
+                AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
+                b.setImage(c.getImage());
+                b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
+                b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
+                b.setVisible(true);
+                b.setParent(this);
+                buttons.add(b);
+                buttonNo++;
             }
         }
     }

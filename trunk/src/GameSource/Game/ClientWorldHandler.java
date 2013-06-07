@@ -70,7 +70,6 @@ public class ClientWorldHandler {
         String[] keys = new String[]{"hp","maxhp","mp","maxmp","money","level","exp","attack","defense"};
         CharacterHandler.addAllStats(keys,pData.getEntity_data());
         CharacterHandler.setName(pData.getCharName());
-        
         return newSpat;
     }
     

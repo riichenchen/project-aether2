@@ -54,7 +54,7 @@ public abstract class AComponent{
 		return x<=a.x && a.x<=x+width && y<=a.y && a.y<=y+height;
 	}
         public boolean moveBarCollide(){
-            return moveBar==null||moveBar.collidepoint(AGUI.mx,AGUI.my,x+parent.x,y+parent.y);
+            return moveBar==null||moveBar.collidepoint(AMouseInput.mx,AMouseInput.my,x+parent.x,y+parent.y);
         }
 
 	public void setBG(int r, int g, int b){
@@ -98,8 +98,8 @@ public abstract class AComponent{
         }
 	public void lock(){
 //		System.out.println(name+" locked");
-		lx=MyGUI.mx-x;
-		ly=MyGUI.my-y;
+		lx=AMouseInput.mx-x;
+		ly=AMouseInput.my-y;
 		locked = true;
 		
 	}
@@ -109,7 +109,7 @@ public abstract class AComponent{
 		locked= false;
 	}
 	public void lockShift(){
-		setLocation(MyGUI.mx-lx, MyGUI.my-ly);
+		setLocation(AMouseInput.mx-lx, AMouseInput.my-ly);
 	}
 	public int id(){
 		return id;

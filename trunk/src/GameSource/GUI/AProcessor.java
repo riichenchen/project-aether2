@@ -11,19 +11,15 @@ import GameSource.User.InventoryHandler;
  * @author Joy
  */
 public class AProcessor {
-    private static MyGUI myGUI;
     
-    public static void bindTo(MyGUI g){
-        myGUI=g;
-    }
     
     public static void process(AMessage m){
         switch (m.type()){
             case AMessage.QUIT: System.out.println("QUIT GAME");
                 break;
-            case AMessage.OPEN_WINDOW: myGUI.openWindow(m.content());
+            case AMessage.OPEN_WINDOW: MyGUI.openWindow(m.content());
                 break;
-            case AMessage.CLOSE_WINDOW: myGUI.closeWindow(m.content());
+            case AMessage.CLOSE_WINDOW: MyGUI.closeWindow(m.content());
                 break;
             case AMessage.EQUIP: System.out.println("Equip: "+m.content());
                 break;
@@ -36,19 +32,19 @@ public class AProcessor {
             case AMessage.SEND_MESSAGE: System.out.println(m.content());
                 break;
             case AMessage.INVENTORY: System.out.println(m.content());
-                                     myGUI.changeInventPane(m.content());
+                                     MyGUI.changeInventPane(m.content());
                 break;
             case AMessage.NULL: break;
             case AMessage.INVENTORY_CLICK: process_invent(m);
                 break;
-            default: MyGUI.mouseButtons[0]=AMouseInput.MOUSEBUTTONUP;
+            default: System.out.println("uselessButton");
         }    
     }
     private static void process_invent(AMessage m){
-        if (MyGUI.doubleclick){
+        if (AMouseInput.buttonsClicked[AMouseInput.LEFT]==2){
             System.out.println("Use "+m.content());
         }
         else
-            myGUI.bindToMouse(InventoryHandler.getItem(m.content()));
+            MyGUI.bindToMouse(InventoryHandler.getItem(m.content()));
     }
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-public class ImageFactory {
+public class AImageFactory {
     private static HashMap<String,Image> allImages;
     private static final String DIRECTORY = "src/GameSource/Assets/";
     public static void init(){

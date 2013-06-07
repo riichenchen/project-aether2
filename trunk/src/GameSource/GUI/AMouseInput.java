@@ -3,50 +3,70 @@ package GameSource.GUI;/**/
 import java.awt.event.MouseEvent;
 
 public class AMouseInput{
-	public static final int MOUSEBUTTONUP= 0; //unpressed
-	public static final int MOUSEBUTTONDOWN = 1;	//pressed
+	public static final int NO= 0; //unpressed
+	public static final int YES = 1;	//pressed
+        public static final int DOUBLE=2;
+        public static final int LEFT=0;
+        public static final int CENTER=1;
+        public static final int RIGHT=2;
 	public static final int [] NULL = {0,0,0};
         public static final int DOUBLECLICK=400;
         
-	private int mx, my;
-	private int [] buttons;
+	public static int mx, my;
+	public static int [] buttonsClicked;       //public?
+        public static int [] buttonsHeld;
+        public static int [] buttonsReleased;
 	
-        private int pressTimer, releaseTimer;
+        private static int clickTimer;
         
+        public static void init(){
+            mx=-1; my=-1;
+            buttonsClicked= new int [3];
+            buttonsHeld= new int [3];
+            buttonsReleased=new int[3];
+            clickTimer=0;
+        }
 	public AMouseInput(){
 		mx=-1; my=-1;
-		buttons= new int [3];
-                pressTimer=0;
-                releaseTimer=0;
+		buttonsClicked= new int [3];
+                buttonsHeld= new int [3];
+                buttonsReleased=new int[3];
+                clickTimer=0;
 	}
-	public void update(MouseEvent e){
+	public static void update(MouseEvent e){
 		mx=e.getX(); my= e.getY();
 	}
-	public void press(MouseEvent e){
-            if (pressTimer<DOUBLECLICK && buttons[e.getButton()-1]==MOUSEBUTTONUP){
-                AGUI.doubleclick=true;
+        public static void click(MouseEvent e){
+            buttonsClicked[e.getButton()-1]=YES;
+            if (clickTimer<DOUBLECLICK){
+                buttonsClicked[e.getButton()-1]=DOUBLE;
             }
-            buttons[e.getButton()-1]=MOUSEBUTTONDOWN;
-            pressTimer=0;
-            
-            
+            clickTimer=0;
+        }
+	public static void press(MouseEvent e){
+            buttonsHeld[e.getButton()-1]=YES;
 	}
-	public void release(MouseEvent e){
-            buttons[e.getButton()-1]=MOUSEBUTTONUP;
-            releaseTimer=0;
-            AGUI.doubleclick=false;
+        public static void release(MouseEvent e){
+            buttonsReleased[e.getButton()-1]=YES;
+        }
+	public static void reset(){
+            for (int i=0; i<3; i++){
+                buttonsClicked[i]=NO;
+                buttonsHeld[i]=NO;
+                buttonsReleased[i]=NO;
+            }
 	}
-	public int get_x(){
-            return mx;
-	}
-	public int get_y(){
-            return my;
-	}
-	public int [] get_buttons(){
-            return buttons;
-	}
-        public void tick(){
-            pressTimer+=10;
-            releaseTimer+=10;
+	
+	public static boolean clicked(int b){
+            return buttonsClicked[b]==YES;
+        }
+        public static boolean held(int b){
+            return buttonsHeld[b]==YES;
+        }
+        public static boolean released(int b){
+            return buttonsReleased[b]==YES;
+        }
+        public static void tick(){
+            clickTimer+=10;
         }
 }

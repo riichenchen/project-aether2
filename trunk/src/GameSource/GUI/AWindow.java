@@ -24,14 +24,14 @@ public class AWindow extends AComponent{
 	public void update(){
             if (locked){
 		lockShift();
-		if (MyGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONUP)
+		if (AMouseInput.released(AMouseInput.LEFT))
                     unlock();
             }
 	}
 
 	public void call(){
             for (AComponent c: subComponents){
-                if (c.callable() && (c instanceof AContainer || c.collidepoint(MyGUI.mx,MyGUI.my))){
+                if (c.callable() && (c instanceof AContainer || c.collidepoint(AMouseInput.mx,AMouseInput.my))){
                     c.call();
                     break;
                 }
@@ -43,8 +43,8 @@ public class AWindow extends AComponent{
                     if (bg!=null){
                         g.drawImage(bg,parent.x+x, parent.y+y, null);
                     }
-                    else if (ImageFactory.getImage(name)!=null)
-                        g.drawImage(ImageFactory.getImage(name), parent.x+x, parent.y+y, null);
+                    else if (AImageFactory.getImage(name)!=null)
+                        g.drawImage(AImageFactory.getImage(name), parent.x+x, parent.y+y, null);
                     else{
 			g.setColor(background);
 			g.fillRect(x,y,width,height);
@@ -56,7 +56,7 @@ public class AWindow extends AComponent{
 	}
         
         public void setBackground(String name){
-            bg=ImageFactory.getImage(name);
+            bg=AImageFactory.getImage(name);
             setSize(bg.getWidth(null),bg.getHeight(null));
         }
 }

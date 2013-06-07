@@ -18,17 +18,17 @@ public class Test extends JFrame implements ActionListener{
 		add(testing);
 		setVisible(true);
 		myTimer.start();
-                ImageFactory.init();
+                AImageFactory.init();
 	}
 	
 	public void actionPerformed(ActionEvent e){
 		repaint();
-                testing.tick();
+                testing.update();
 	}
 	
 	public static void main (String [] args){
             AssetManager.init();
-            ImageFactory.init();
+            AImageFactory.init();
             InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
             InventoryHandler.addItem(ItemFactory.getItem("redpot"));
             InventoryHandler.addItem(ItemFactory.getItem("redpot"));
