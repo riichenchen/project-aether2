@@ -1,5 +1,6 @@
 package GameSource.GUI;
 import GameSource.Assets.AssetManager;
+import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
 import javax.swing.*;
@@ -30,6 +31,11 @@ public class Test extends JFrame implements ActionListener{
             ImageFactory.init();
             InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
             InventoryHandler.addItem(ItemFactory.getItem("redpot"));
+            CharacterHandler.init();
+                CharacterHandler.addStat("maxhp",500);
+                CharacterHandler.addStat("maxmp",10000);
+                CharacterHandler.addStat("hp",352);
+                CharacterHandler.addStat("mp",10000);
             new Test();
 	}
 }

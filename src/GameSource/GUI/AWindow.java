@@ -40,8 +40,11 @@ public class AWindow extends AComponent{
 	
 	public void draw(Graphics g){
 		if (visible){
-                    if (ImageFactory.getImage(name)!=null)
-                        g.drawImage(ImageFactory.getImage(name), x, y, null);
+                    if (bg!=null){
+                        g.drawImage(bg,parent.x+x, parent.y+y, null);
+                    }
+                    else if (ImageFactory.getImage(name)!=null)
+                        g.drawImage(ImageFactory.getImage(name), parent.x+x, parent.y+y, null);
                     else{
 			g.setColor(background);
 			g.fillRect(x,y,width,height);

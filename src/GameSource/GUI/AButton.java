@@ -57,9 +57,10 @@ public class AButton extends AComponent{
         }
         */
         else{
+  //          System.out.println(bg==null);
             g.drawImage(bg,parent.x+x+(width-bg.getWidth(null))/2,parent.y+y+(height-bg.getHeight(null))/2,null);
 
-     //       int dx=parent.x+x+(width-bg.getWidth(null))/2; int dy=parent.y+y+(width-bg.getWidth(null))/2;
+  //          int dx=parent.x+x+(width-bg.getWidth(null))/2; int dy=parent.y+y+(width-bg.getWidth(null))/2;
   //           System.out.println(name+" button drawn at "+dx+","+dy);
         }
     }

@@ -18,6 +18,7 @@ public class MyGUI extends AGUI{
     private ANPCChat npcchat;
     private AInventory invent;
     private AHUD hud;
+    private ATextField chat;
     private BufferedReader in;
     
    
@@ -27,15 +28,23 @@ public class MyGUI extends AGUI{
 	inputSets.put("normal",new NormalInputSet(this));
 	inputSet=inputSets.get("normal");
         npcchat=new ANPCChat();
+        npcchat.setVisible(false);
         windows.put(npcchat.getName(),npcchat);
         windowNames.add(npcchat.getName());
         hud=new AHUD();
         windows.put(hud.getName(),hud);
         windowNames.add(hud.getName());
         invent=new AInventory();
+        invent.setVisible(false);
         windows.put(invent.getName(),invent);
         windowNames.add(invent.getName());
         
+        chat=new ATextField(440,13,65,30);
+        chat.setName("chat");
+        chat.setMoveable(false);
+        chat.setParent(hud);
+        windows.put(chat.getName(),chat);
+        windowNames.add(chat.getName());
         try{
             in=new BufferedReader(new FileReader("src/GameSource/Assets/GUI/TestLayout.txt"));
             String line=in.readLine();
@@ -67,6 +76,7 @@ public class MyGUI extends AGUI{
         out.setLocation(x,y);
         out.setFG(fr,fg,fb);
         out.setBG(br,bg,bb);
+        out.setVisible(false);
         return out;
     }
     public ATextArea createATextArea(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
@@ -75,6 +85,7 @@ public class MyGUI extends AGUI{
         out.setLocation(x,y);
         out.setFG(fr,fg,fb);
         out.setBG(br,bg,bb);
+        out.setVisible(false);
         return out;
     }
     public AComponent createComponent(String line) throws IOException{
@@ -127,5 +138,6 @@ public class MyGUI extends AGUI{
     public void draw(Graphics g){
         super.draw(g);
         hud.draw(g);
+        chat.draw(g);
     }
 }

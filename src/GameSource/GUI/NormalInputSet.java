@@ -10,6 +10,7 @@ public class NormalInputSet extends AbstractInputSet{
 		name="normal";
 		myGUI=g;
 		keyMap=new HashMap<String, Integer>();
+                keyMap.put("chat",KeyEvent.VK_F8);
 		keyMap.put("npcchat",KeyEvent.VK_F9);
 		keyMap.put("shop",KeyEvent.VK_F10);
 		keyMap.put("invent",KeyEvent.VK_F11);
@@ -26,13 +27,13 @@ public class NormalInputSet extends AbstractInputSet{
 "There's even a rumor that there's some kind of city down there, but nobody who's gone to look has ever returned. I think there might be a path through there that lets you get to Faerie City, but I don't know. But it's probably your only choice.\" ");
                 }
 		for (String wname: cwindows){
-			if ((wname.equals("npcchat")==false)&&keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
+			if (keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
 				myGUI.keyCall(wname);
 			}
 
 			if (myGUI.getWindow(wname).visible() && AGUI.mouseButtons[0]==AMouseInput.MOUSEBUTTONDOWN){
 				if (mouseUsed==false && myGUI.getWindow(wname).collidepoint(AGUI.mx,AGUI.my)){
-					System.out.println("hi");
+	//				System.out.println("hi");
 					myGUI.mouseCall(wname);
 					mouseUsed=true;
 				}
