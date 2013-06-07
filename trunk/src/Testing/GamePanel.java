@@ -7,12 +7,15 @@ package Testing;
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
 import GameSource.Globals;
+import GameSource.User.CharacterHandler;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Renderer.AetherCam;
 import Sound.SoundChannel;
 import Sound.SoundManager;
+import Spatial.CharacterSpatial;
 import Spatial.NPC;
+import Spatial.Spatial;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -40,6 +43,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     private NPC mynpc;
     
     public GamePanel(){ //initialize game variables, assign map to UI
+        CharacterHandler.init();
         addMouseMotionListener(this);
         addKeyListener(this);
         addMouseListener(this);
@@ -69,6 +73,17 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         mynpc = new NPC(400,1,400,"johnny",new CharacterAnimControl(AssetManager.getSpriteSet("npc/john")));
         myMap.addPermanentSpatial(mynpc);
         Globals.theMouse.bindToMap(myMap);
+        myMap.addBackgroundSpatial(new CharacterSpatial(350,0.5f,200,64,64,64,0,0,0) {
+
+            @Override
+            public CharacterAnimControl getAnimControl() {
+                return new CharacterAnimControl(AssetManager.getSpriteSet("spellRings"));
+            }
+
+            @Override
+            public void collideEffect(Spatial s) {
+            }
+        });
 //        Portal myport = AssetManager.getPortal("testPort1", 400,1,300);
 //        myMap.addPermanentSpatial(myport);
 //        Random myrand = new Random();
