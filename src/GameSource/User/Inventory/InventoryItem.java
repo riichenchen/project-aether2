@@ -9,7 +9,7 @@ import GameSource.User.CharacterHandler;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
 import Spatial.Spatial;
-import Testing.Stevey;
+import Testing.PlayerSpatial;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
@@ -53,7 +53,7 @@ public abstract class InventoryItem extends RenderSpatial{
     }
     @Override
     public void collideEffect(Spatial spat){
-        if (spat instanceof Stevey){
+        if (spat instanceof PlayerSpatial){
             CharacterHandler.addCollideItem(this);
         }
     }

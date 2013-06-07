@@ -15,10 +15,9 @@ import Spatial.Spatial;
  *
  * @author Shiyang
  */
-public class Stevey extends CharacterSpatial{
-    private Portal currentPort = null;
+public class PlayerSpatial extends CharacterSpatial{
     
-    public Stevey(float x,float y,float z){
+    public PlayerSpatial(float x,float y,float z){
         super(x,y,z,51f,77f,36f,1f,1f,1);
         CharacterHandler.setCurrentPortal(null);
     }

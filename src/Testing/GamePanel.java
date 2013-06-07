@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     //private int boxx= 200,boxy=200;
     
     private MyTestCharacter myBlock;
-    private Stevey yourBlock;
+    private PlayerSpatial yourBlock;
     private MyKeyListener mykeycontrol;
     private SteveyKeyListener yourkeycontrol;
     private GameMap myMap;
@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
         SoundChannel bg = SoundManager.getChannel("Background");
         bg.addTrack("soundTest1");
         myBlock = new MyTestCharacter(300,1,200);
-        yourBlock = new Stevey(350,1,420);
+        yourBlock = new PlayerSpatial(350,1,420);
         mykeycontrol = new MyKeyListener();
         yourkeycontrol = new SteveyKeyListener();
         myBlock.addControl(mykeycontrol);
