@@ -11,6 +11,7 @@ public class AContainer extends AComponent{
     public ArrayList<AComponent> content;
     public AContainer(int xx,int yy){
         super();
+        setName("container");
         setLocation(xx,yy);
         content=new ArrayList<>();
     }
