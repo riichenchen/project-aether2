@@ -13,7 +13,7 @@ public abstract class AComponent{
 	protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
 	protected Color background, foreground;
 	protected Font font;
-	protected boolean visible, callable, focused, locked;
+	protected boolean visible, callable, focused, locked, moveable;
 	protected String name;
 	protected int id;
 	protected AComponent parent; 
@@ -32,8 +32,9 @@ public abstract class AComponent{
 		visible=false;
 		callable=true;
 		focused=false;
-        subComponents= new ArrayList<AComponent>();
-        parent=AComponent.NULL;
+                moveable=true;
+            subComponents= new ArrayList<AComponent>();
+            parent=AComponent.NULL;
 		id=idCounter++;
 	}
 	public AComponent(int nx,int ny,int nw,int nh){
@@ -85,6 +86,9 @@ public abstract class AComponent{
 	public void setFocused(boolean b){
 		focused=b;
 	}
+        public void setMoveable(boolean b){
+            moveable=b;
+        }
 	public void lock(){
 //		System.out.println(name+" locked");
 		lx=MyGUI.mx-x;
@@ -124,6 +128,10 @@ public abstract class AComponent{
 	public boolean locked(){
 		return locked;
 	}
+        public boolean moveable(){
+            return moveable;
+        }
+
 	public void add(AComponent c){
 		c.parent=this;
 		subComponents.add(c);

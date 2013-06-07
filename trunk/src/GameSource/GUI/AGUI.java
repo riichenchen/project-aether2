@@ -65,7 +65,7 @@ public class AGUI{
                     unfocus();
 	}
         public void closeWindow(){
-                if (focusedScreen!=null){
+                if (focusedScreen!=null && (focusedScreen instanceof AHUD == false)){
                     closeWindow(focusedScreen.getName());
                 }
 	}
@@ -92,7 +92,7 @@ public class AGUI{
 				shiftFocus(name);
 			}
                         cWindow.call();	
-			if (mouseItem==null && cWindow.locked()==false)
+			if (mouseItem==null && cWindow.moveable()&&cWindow.locked()==false)
 				cWindow.lock();
 						//DO I WANT TO DO THIS?
 

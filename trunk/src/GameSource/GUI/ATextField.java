@@ -12,9 +12,6 @@ public class ATextField extends AComponent{
 	//If the line is too long, a portion is trimmed from the beginning.
 	//Key states are received from the AGUI public static field 'keys'.
 	
-	public static final int FULL_SCREEN_WIDTH=-10000;
-	public static final int FULL_SCREEN_HEIGHT=-10001;
-	
 	private String content;
 	private int cursorLoc;		//0 means before 1st character, 1 before 2nd, etc.
 	
@@ -51,17 +48,17 @@ public class ATextField extends AComponent{
     	setName("TextBox"+this.id());
     	setVisible(true);
     }
-    public ATextField(int wid, int hgt){
+    public ATextField(int wid, int hgt, int xx, int yy){
     	//Create a custom-sized TextField
     	super ();
     	content="";
     	cursorLoc=0;
-    	setSize(400,30);
     	setBG(255,255,255);
     	setFG(0,0,0);
     	setName("TextBox"+this.id());
     	setVisible(true);
     	setSize(wid,hgt);
+        setLocation(xx,yy);
     }
     
     public void update(){
@@ -90,16 +87,18 @@ public class ATextField extends AComponent{
 	    	Graphics2D g2= (Graphics2D)g;
  	   	FontMetrics fm = g2.getFontMetrics();
  		String line = content;			//The portion to draw
-    		while (fm.stringWidth(line)>width-20){
+    		while (fm.stringWidth(line)>width){
                     //Remove chars from head if string is too long
                     line=line.substring(1,line.length());
     		}
-    		g2.setColor(background);
-    		g2.fillRect(parent.x+x,parent.y+y,width,height);
+    	//	g2.setColor(background);
+    	//	g2.fillRect(parent.x+x,parent.y+y,width,height);
     		g2.setFont(font);
-			g2.setColor(foreground);
+		g2.setColor(foreground);
     		g2.drawString(line,parent.x+x+10,parent.y+y+10);
-    	}
+  //  	int dx=parent.x+x; int dy=parent.y+y;
+  //      System.out.println(name+" textfield drawn at "+dx+","+dy);
+        }
     }
     public void call(){};
     /*
