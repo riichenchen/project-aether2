@@ -33,9 +33,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
     private GameMap gameMap;
     private ClientWorldHandler handler;
     
-    private MyGUI myGUI;
     private GameSource.GUI.InputManager in;
-    private AMouseInput mouse;
     
     public void setMap(GameMap gameMap){
         this.gameMap = gameMap;
@@ -56,7 +54,6 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         setSize(800,600);
         
         in = new GameSource.GUI.InputManager();
-        AMouseInput.init();
         MyGUI.init(in,800,600);
     }
     

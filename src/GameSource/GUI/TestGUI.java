@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
-	
-	private MyGUI myGUI;
+
 	private InputManager in;
 //	private AMouseInput mouse;
 	
