@@ -23,6 +23,9 @@ public class Test extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		repaint();
+                if (AMouseInput.clicked(AMouseInput.LEFT) && AMouseInput.released(AMouseInput.LEFT)){
+                    System.out.println("together");
+                }
                 testing.update();
 	}
 	

@@ -34,6 +34,7 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
     
     public void keyReleased(KeyEvent e) {
         in.keyUp(e.getKeyCode());
+
         
     }
     public void paintComponent (Graphics g){
@@ -62,19 +63,20 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
     @Override
     public void mouseClicked(MouseEvent e) {
         AMouseInput.click(e);
-        System.out.println("click!");
+//        System.out.println("click!");
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         AMouseInput.press(e);
-        System.out.println("press!");
+//        System.out.println("press!");
 //        MyGUI.update();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         AMouseInput.release(e);
+//        System.out.println("release");
 //        MyGUI.update();
     }
 

@@ -41,10 +41,11 @@ public class AProcessor {
         }    
     }
     private static void process_invent(AMessage m){
-        if (AMouseInput.buttonsClicked[AMouseInput.LEFT]==2){
+        if (AMouseInput.doubleclick[AMouseInput.LEFT]==AMouseInput.YES){
             System.out.println("Use "+m.content());
         }
-        else
+        else{
             MyGUI.bindToMouse(InventoryHandler.getItem(m.content()));
+        }
     }
 }

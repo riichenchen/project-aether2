@@ -19,8 +19,13 @@ public class NormalInputSet extends AbstractInputSet{
 	}
 
 	public void update(){
-            if (AMouseInput.released(AMouseInput.LEFT)) {
+            boolean passMouse=MyGUI.mouseFree() && (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT));
+            
+            boolean a=(AMouseInput.held(AMouseInput.LEFT)==false)&&AMouseInput.clicked(AMouseInput.LEFT);
+            boolean b=AMouseInput.released(AMouseInput.LEFT)&&(AMouseInput.clicked(AMouseInput.LEFT)==false);
+            if (a||b||AMouseInput.doubleclick(AMouseInput.LEFT)) {
                 MyGUI.freeMouse();
+                passMouse=false;
             }
 		
             String [] cwindows = MyGUI.get_windows().toArray(new String [0]);
@@ -30,26 +35,36 @@ public class NormalInputSet extends AbstractInputSet{
 "There's even a rumor that there's some kind of city down there, but nobody who's gone to look has ever returned. I think there might be a path through there that lets you get to Faerie City, but I don't know. But it's probably your only choice.\" ");
                 }
                 * */
+            
 		for (String wname: cwindows){
 			if (keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
 				MyGUI.keyCall(wname);
 			}
-
+                }
+               for (String wname: cwindows){
 			if (MyGUI.getWindow(wname).visible() && MyGUI.getWindow(wname).collidepoint(AMouseInput.mx,AMouseInput.my)){
+                            /*
 				if (AMouseInput.clicked(AMouseInput.LEFT)){
 	//				System.out.println("hi");
 					MyGUI.mouseClickCall(wname);
 					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
                                 }
+                                * */
                                 if (AMouseInput.held(AMouseInput.LEFT)){
 	//				System.out.println("hi");
 					MyGUI.mousePressCall(wname);
-					AMouseInput.buttonsHeld[AMouseInput.LEFT]=AMouseInput.NO;
+                                        passMouse=false;
+					break;
+                                }
+                                if (AMouseInput.clicked(AMouseInput.LEFT)){
+                                        MyGUI.mouseClickCall(wname);
+					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
                                 }
 			}
 		}
-		if (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT)){
+		if (passMouse){
                     MyGUI.unfocus();
+                    System.out.println("Mouse call that I have nothing to do with");
 		}
                 if (AGUI.keys[KeyEvent.VK_ESCAPE]){
                     MyGUI.closeWindow();

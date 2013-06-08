@@ -56,8 +56,8 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         setSize(800,600);
         
         in = new GameSource.GUI.InputManager();
-	mouse = new AMouseInput ();
-        myGUI = new MyGUI(in,mouse, 800,600);
+        AMouseInput.init();
+        MyGUI.init(in,800,600);
     }
     
     @Override
@@ -69,7 +69,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
     
     public void update(){
         handler.update();
-        myGUI.update();
+        MyGUI.update();
     }
     
     @Override
@@ -78,18 +78,18 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
             g.setColor(Color.GRAY);
             g.fillRect(0,0,800,600);
             gameMap.render(g,this);
-            myGUI.draw(g);
+            MyGUI.draw(g);
         }
     }
     
     // ---------- MouseMotionListener ------------------------------------------
     @Override
     public void mouseDragged(MouseEvent e){
-        mouse.update(e);
+        AMouseInput.update(e);
     }
     @Override    
     public void mouseMoved(MouseEvent e){
-        mouse.update(e);
+        AMouseInput.update(e);
     }
 
     @Override
@@ -110,17 +110,17 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        throw new UnsupportedOperationException("Not supported yet.");
+        AMouseInput.click(e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouse.press(e);
+        AMouseInput.press(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouse.release(e);
+        AMouseInput.release(e);
     }
 
     @Override

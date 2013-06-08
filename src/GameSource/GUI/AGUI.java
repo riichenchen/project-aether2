@@ -95,6 +95,7 @@ public class AGUI{
                                 cWindow.lock();
                             }
                         }
+                        cWindow.call();
 
 		}
         }
@@ -114,6 +115,9 @@ public class AGUI{
             if (mouseItem!=null && hitGUI(AMouseInput.mx,AMouseInput.my)==false)
                 System.out.println(mouseItem.getKey()+" dropped at ("+AMouseInput.mx+","+AMouseInput.my+")");
             mouseItem=null;
+        }
+        public static boolean mouseFree(){
+            return mouseItem==null;
         }
         
 	public static void init(InputManager input, int wid, int hgt){

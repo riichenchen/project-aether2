@@ -16,6 +16,7 @@ public class AMouseInput{
 	public static int [] buttonsClicked;       //public?
         public static int [] buttonsHeld;
         public static int [] buttonsReleased;
+        public static int [] doubleclick;
 	
         private static int clickTimer;
         
@@ -24,6 +25,7 @@ public class AMouseInput{
             buttonsClicked= new int [3];
             buttonsHeld= new int [3];
             buttonsReleased=new int[3];
+            doubleclick=new int[3];
             clickTimer=0;
         }
 	public AMouseInput(){
@@ -31,6 +33,7 @@ public class AMouseInput{
 		buttonsClicked= new int [3];
                 buttonsHeld= new int [3];
                 buttonsReleased=new int[3];
+                doubleclick=new int[3];
                 clickTimer=0;
 	}
 	public static void update(MouseEvent e){
@@ -39,21 +42,28 @@ public class AMouseInput{
         public static void click(MouseEvent e){
             buttonsClicked[e.getButton()-1]=YES;
             if (clickTimer<DOUBLECLICK){
-                buttonsClicked[e.getButton()-1]=DOUBLE;
+                doubleclick[e.getButton()-1]=YES;
+                System.out.println("Doubleclick!");
             }
             clickTimer=0;
         }
 	public static void press(MouseEvent e){
             buttonsHeld[e.getButton()-1]=YES;
+//            if (clickTimer<DOUBLECLICK){
+//                doubleclick[e.getButton()-1]=YES;
+//                System.out.println("Doubleclick!");
+//            }
 	}
         public static void release(MouseEvent e){
+            buttonsHeld[e.getButton()-1]=NO;
             buttonsReleased[e.getButton()-1]=YES;
         }
 	public static void reset(){
             for (int i=0; i<3; i++){
                 buttonsClicked[i]=NO;
-                buttonsHeld[i]=NO;
+//                buttonsHeld[i]=NO;
                 buttonsReleased[i]=NO;
+                doubleclick[i]=NO;
             }
 	}
 	
@@ -65,6 +75,9 @@ public class AMouseInput{
         }
         public static boolean released(int b){
             return buttonsReleased[b]==YES;
+        }
+        public static boolean doubleclick(int b){
+            return doubleclick[b]==YES;
         }
         public static void tick(){
             clickTimer+=10;
