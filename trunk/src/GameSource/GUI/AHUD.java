@@ -73,22 +73,21 @@ public class AHUD extends AWindow{
     public void draw(Graphics g){
         super.draw(g);
         drawStats(g);
- 
     }
     public void drawStats(Graphics g){
         g.drawImage(AImageFactory.getImage("stat"),223,y+49,null);
         Graphics2D g2=(Graphics2D)g;
         FontMetrics fm=g2.getFontMetrics();
         int [] sizes=new int[2];
-  //      BufferedImage [] labels=new BufferedImage[2];
+//        Image [] labels=new BufferedImage[2];
         String [] labels=new String [2];
         sizes[0]=(140*CharacterHandler.getStat("hp")/CharacterHandler.getStat("maxhp"))-3;      //Beginning and end pieces
         
         labels[0]=String.format("[%d/%d]",CharacterHandler.getStat("hp"),CharacterHandler.getStat("maxhp"));
-  //      labels[0]=TextImageFactory.create(g,String.format("[%d/%d]",CharacterHandler.getStat("hp"),CharacterHandler.getStat("maxhp")));
+//        labels[0]=(Image)TextImageFactory.create(g,String.format("[%d/%d]",CharacterHandler.getStat("hp"),CharacterHandler.getStat("maxhp")));
         sizes[1]=(140*CharacterHandler.getStat("mp")/CharacterHandler.getStat("maxmp"))-3;
-        labels[1]=String.format("[%d/%d]",CharacterHandler.getStat("mp"),CharacterHandler.getStat("maxmp"));
-  //      labels[1]=TextImageFactory.create(g,String.format("[%d/%d]",CharacterHandler.getStat("mp"),CharacterHandler.getStat("maxmp")));
+       labels[1]=String.format("[%d/%d]",CharacterHandler.getStat("mp"),CharacterHandler.getStat("maxmp"));
+//        labels[1]=(Image)TextImageFactory.create(g,String.format("[%d/%d]",CharacterHandler.getStat("mp"),CharacterHandler.getStat("maxmp")));
         g.setFont(new Font ("Arial",Font.PLAIN,10));
         g.setColor(new Color(255,255,255));
         for (int i=0; i<2; i++){
@@ -99,9 +98,9 @@ public class AHUD extends AWindow{
             }
             g.drawImage(AImageFactory.getImage("stat"+i+"_2"),252+sizes[i]+171*i,y+51,null);
     //        System.out.println(labels[1].getWidth(null)+","+labels[1].getHeight(null));
-   //         g.drawImage(labels[i],386+171*i-labels[i].getWidth(null)+171*i,y+51,null);
+//            g.drawImage(labels[i],386+171*i-labels[i].getWidth(null)+171*i,y+51,null);
             g.drawString(labels[i],390+171*i-fm.stringWidth(labels[i]) ,y+60);
-   //         g.drawRect(386-labels[i].getWidth(null)+171*i,y+51,labels[i].getWidth(null),labels[i].getHeight(null));
+//            g.drawRect(386-labels[i].getWidth(null)+171*i,y+51,labels[i].getWidth(null),labels[i].getHeight(null));
         }
         g.drawImage(AImageFactory.getImage("stat_fg"),252,y+49,null);
     }
