@@ -5,14 +5,12 @@
 package Testing;
 
 import Controls.CharacterAnimControl;
-import GameSource.Effects.IceyEffect;
+import GameSource.Assets.AssetManager;
+import GameSource.Skills.ActiveSkillData;
+import GameSource.Skills.GameCasts.IcicleCast;
 import GameSource.User.CharacterHandler;
 import Input.AbstractKeyListener;
-import Math.Point2D;
-import Sound.SoundManager;
-import Spatial.Spatial;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
 
 /**
  *
@@ -66,33 +64,11 @@ public class SteveyKeyListener extends AbstractKeyListener{
             currentAnim = "walkdown";
         }
         if (eventKeyDown(KeyEvent.VK_SHIFT)){
-            Point2D[] pts = boundTo.getPoints();
-            Point2D pt1 = pts[2];
-            Point2D pt2 = pts[3];
-            float nx = (float)(pt1.x+300*Math.cos(Math.toRadians(boundTo.getRotation())));
-            float nz = (float)(pt1.y+300*Math.sin(Math.toRadians(boundTo.getRotation())));
-            Spatial[] hit = boundTo.getMap().getSpace().rayCast(pt1.x,pt1.y,nx,nz);
-            HashMap<Integer,Spatial> allhit = new HashMap<>();
-            for (Spatial spat: hit){
-                if (!allhit.containsKey(spat.getId())){
-                    allhit.put(spat.getId(), spat);
-                }
-            }
-            nx = (float)(pt2.x+300*Math.cos(Math.toRadians(boundTo.getRotation())));
-            nz = (float)(pt2.y+300*Math.sin(Math.toRadians(boundTo.getRotation())));
-            hit = boundTo.getMap().getSpace().rayCast(pt2.x,pt2.y,nx,nz);
-            for (Spatial spat: hit){
-                if (!allhit.containsKey(spat.getId())){
-                    allhit.put(spat.getId(), spat);
-                }
-            }
-            hit = allhit.values().toArray(new Spatial[0]);
-            for (Spatial spat: hit){
-                if (spat != boundTo){
-                    boundTo.getMap().addSpatial(new IceyEffect(spat.getX(),1,spat.getZ()));
-                    SoundManager.getChannel("Effects").addTrack("iceySound");
-                    break;
-                }
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("icicle"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("icicle"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new IcicleCast(CharacterHandler.getPlayer()));
             }
         }
         if (eventKeyDown(KeyEvent.VK_SPACE)){

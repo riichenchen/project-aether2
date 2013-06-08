@@ -16,17 +16,16 @@ import Testing.MyTestCharacter;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.Portals.PortalData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
+import GameSource.Skills.ActiveSkillData;
+import GameSource.Skills.SkillData;
 import GameSource.Spawners.CowSpawner;
 import GameSource.User.Inventory.ItemData;
 import Testing.PlayerSpatial;
 import java.awt.Image;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -42,6 +41,7 @@ public class AssetManager {
     private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound"};
     private static HashMap<String,Image> allImages;
     private static HashMap<String,ItemData> allItemData;
+    private static HashMap<String, SkillData> allSkillData;
     
     public static void init(){
         allImages = new HashMap<>();
@@ -69,7 +69,57 @@ public class AssetManager {
         loadItemData();
         System.out.println("Loaded item data!");
         
+        allSkillData = new HashMap<>();
+        loadSkillData();
+        System.out.println("Loaded skill data!");
+        
     }
+    
+    private static void loadSkillData(){
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"skillData.txt"));
+            String nextline;
+            String[] tempdata;
+            while ((nextline = fin.readLine())!= null){
+                tempdata = nextline.split(" ");
+                BufferedReader skillFin = new BufferedReader(new FileReader(DIRECTORY+"SkillData/"+tempdata[1]));
+                String skillName = skillFin.readLine();
+                String skillType = skillFin.readLine();
+                if (skillType.equals("active")){
+                    String type = skillFin.readLine();
+                    ActiveSkillData dat = new ActiveSkillData(skillName,type);
+                    int n = Integer.parseInt(skillFin.readLine());
+                    for (int i = 1; i <= n; i++){
+                        //Set Range
+                        dat.setRange(i, Integer.parseInt(skillFin.readLine()));
+                    }
+                    for (int i = 1; i <= n; i++){
+                        //Set mpCost
+                        dat.setMpCost(i, Integer.parseInt(skillFin.readLine()));
+                    }
+                    for (int i = 1; i <= n; i++){
+                        //set damage modifier
+                        dat.setDamagePercentile(i, Integer.parseInt(skillFin.readLine())/(double)100);
+                    }
+                    for (int i = 1; i <= n; i++){
+                        //set cast time
+                        dat.setCastTime(i, Integer.parseInt(skillFin.readLine())/10);
+                    }
+                    allSkillData.put(tempdata[0],dat);
+                }
+                
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to load skills!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+    
+    public static SkillData getSkillData(String key){
+        return allSkillData.get(key);
+    }
+    
     private static void loadImages(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"ImageData.txt"));

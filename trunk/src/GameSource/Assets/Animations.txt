@@ -18,6 +18,7 @@ walkup
 /Steve
 Effects
 icysprite
+icicle
 /Effects
 npc/john
 a
@@ -51,4 +52,5 @@ damage/violet
 /damage/violet
 spellRings
 eruption
+icicle
 /spellRings

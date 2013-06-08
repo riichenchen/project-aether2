@@ -192,19 +192,19 @@ public class GameMap {
             return spats.get(id);
         }
         
-        public Spatial addPlayer(int characterType,GamePoint loc){
-            Spatial newChar = null;
-            if (characterType == Char_TESTBLOCK){
-                newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
-            } else if (characterType == Char_TESTANIM){
-                newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
-            } else if (characterType == Char_STEVEY){
-                newChar = new PlayerSpatial(loc.getX(),loc.getY(),loc.getZ());
-            }
-            if (newChar == null){
-                System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
-                System.exit(0);
-            }
+        public PlayerSpatial addPlayer(GamePoint loc){
+            PlayerSpatial newChar = null;
+//            if (characterType == Char_TESTBLOCK){
+//                newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
+//            } else if (characterType == Char_TESTANIM){
+//                newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
+//            } else if (characterType == Char_STEVEY){
+            newChar = new PlayerSpatial(loc.getX(),loc.getY(),loc.getZ());
+//            }
+//            if (newChar == null){
+//                System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
+//                System.exit(0);
+//            }
             addSpatial(newChar);
             return newChar;
         }

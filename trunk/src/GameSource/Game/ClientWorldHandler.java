@@ -16,6 +16,7 @@ import Networking.Messages.SaveMessage;
 import Sound.SoundManager;
 import Spatial.AetherMouse;
 import Spatial.Spatial;
+import Testing.PlayerSpatial;
 import Testing.SteveyKeyListener;
 
 public class ClientWorldHandler {
@@ -56,20 +57,18 @@ public class ClientWorldHandler {
     }
     
     public Spatial addPlayerSpatial(PlayerJoinMessage mymsg){
-        //System.out.println(mymsg.getSpatId());
         PlayerData pData = mymsg.getpData();
-        int charType = pData.getCharacterType();
         GamePoint loc = pData.getLocation();
-        //Future: Add support for different maps!
         String mapId = pData.getMapId();
         setGameMap(mapId);
-        Spatial newSpat = myGameMap.addPlayer(charType,loc);
+        PlayerSpatial newSpat = myGameMap.addPlayer(loc);
         for (SaveItemData dat: pData.getItems()){
             InventoryHandler.addItem(ItemFactory.getItem(dat.getItemKey()),dat.getQuantity());
         }
         String[] keys = new String[]{"hp","maxhp","mp","maxmp","money","level","exp","attack","defense"};
         CharacterHandler.addAllStats(keys,pData.getEntity_data());
         CharacterHandler.setName(pData.getCharName());
+        CharacterHandler.bindPlayer(newSpat);
         return newSpat;
     }
     
