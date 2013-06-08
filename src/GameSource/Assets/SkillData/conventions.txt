@@ -1,0 +1,6 @@
+name
+type // single, pierce, area
+typeinfo
+...
+numberLevels
+moar shit
