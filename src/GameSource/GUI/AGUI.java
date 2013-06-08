@@ -81,7 +81,7 @@ public class AGUI{
 			shiftFocus(name);
 		}
 		else{
-			cWindow.call();				
+			//closeWindow(name);				
 		}
 	}
 	public static void mousePressCall(String name){
