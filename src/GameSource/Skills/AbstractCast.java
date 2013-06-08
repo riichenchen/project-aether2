@@ -118,7 +118,7 @@ public abstract class AbstractCast extends CharacterSpatial {
     protected Spatial[] areaEffect(){
         length += ((ActiveSkillData)data).getRange(CharacterHandler.getSkillLevel(skillName));
         height += Globals.__PROJECTION_SCALE__*((ActiveSkillData)data).getRange(CharacterHandler.getSkillLevel(skillName));
-        Spatial[] allspats = space.grabSpatialsAround(this)[0];
+        Spatial[] allspats = boundMap.getSpace().grabSpatialsAround(this)[0];
         length -= ((ActiveSkillData)data).getRange(CharacterHandler.getSkillLevel(skillName));
         height -= Globals.__PROJECTION_SCALE__*((ActiveSkillData)data).getRange(CharacterHandler.getSkillLevel(skillName));
         return allspats;
