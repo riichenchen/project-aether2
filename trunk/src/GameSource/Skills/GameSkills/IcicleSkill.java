@@ -11,6 +11,7 @@ import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Skills.AbstractActiveSkill;
 import GameSource.Skills.ActiveSkillData;
 import GameSource.User.CharacterHandler;
+import Sound.SoundManager;
 import Spatial.Spatial;
 
 /**
@@ -34,8 +35,9 @@ public class IcicleSkill extends AbstractActiveSkill{
         if (s instanceof AbstractMob){
             ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData(skillName));
             int dmg = CharacterHandler.calculateDamage(dat.getDamagePercentile(CharacterHandler.getSkillLevel(skillName)),(AbstractMob)s);
-            ((AbstractMob)s).addHp(dmg);
+            ((AbstractMob)s).addHp(-dmg);
             DamageFactory.addDamage(boundMap,dmg,DamageFactory.RED,location);
+            invokeHitSound();
         }
     }
 
@@ -44,6 +46,11 @@ public class IcicleSkill extends AbstractActiveSkill{
         CharacterAnimControl cont = new CharacterAnimControl(AssetManager.getSpriteSet("Effects"));
         cont.swapAnim("icicle");
         return cont;
+    }
+
+    @Override
+    public void invokeHitSound() {
+        SoundManager.getChannel("Effects").addTrack("icicle");
     }
     
 }

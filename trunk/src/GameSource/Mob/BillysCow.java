@@ -9,7 +9,7 @@ import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Controls.CowAIControl;
-import GameSource.Effects.IceyEffect;
+import GameSource.Skills.AbstractActiveSkill;
 import GameSource.User.ItemFactory;
 import Spatial.Spatial;
 
@@ -35,7 +35,6 @@ public class BillysCow extends AbstractMob{
     int n = 0;
     @Override
     public void collideEffect(Spatial s) {
-        
     }
 
     @Override

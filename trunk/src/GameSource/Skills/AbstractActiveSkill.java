@@ -20,6 +20,7 @@ public abstract class AbstractActiveSkill extends CharacterSpatial{
     
     public abstract int[] getEffectTimes();
     public abstract void skillEffect(Spatial s);
+    public abstract void invokeHitSound();
     
     public AbstractActiveSkill(float x, float z, float l, float w,String skillName) {
         super(x, 1.5f, z, l, 100, w,0,0,0);
