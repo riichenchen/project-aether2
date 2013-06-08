@@ -1,6 +1,6 @@
 Icicle
 active
-area
+single
 10
 50
 50

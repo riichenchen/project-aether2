@@ -7,6 +7,7 @@ package Testing;
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
 import GameSource.Skills.ActiveSkillData;
+import GameSource.Skills.GameCasts.BlastBurnCast;
 import GameSource.Skills.GameCasts.IcicleCast;
 import GameSource.User.CharacterHandler;
 import Input.AbstractKeyListener;
@@ -69,6 +70,14 @@ public class SteveyKeyListener extends AbstractKeyListener{
             if (CharacterHandler.getStat("mp") > cost){
                 CharacterHandler.addStat("mp", -cost);
                 CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new IcicleCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_B)){
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("blastburn"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("blastburn"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new BlastBurnCast(CharacterHandler.getPlayer()));
             }
         }
         if (eventKeyDown(KeyEvent.VK_SPACE)){

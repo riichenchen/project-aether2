@@ -45,6 +45,7 @@ public class CharacterHandler {
         stats.put("money", 0);
         stats.put("level",0);
         skillLevels.put("icicle", 10);
+        skillLevels.put("blastburn", 10);
     }
     public static void bindPlayer(PlayerSpatial spat){
         player = spat;

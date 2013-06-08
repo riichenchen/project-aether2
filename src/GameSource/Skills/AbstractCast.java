@@ -6,6 +6,7 @@ package GameSource.Skills;
 
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
+import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Globals;
 import GameSource.User.CharacterHandler;
 import PhysicsSpace.DistanceComparator;
@@ -64,7 +65,7 @@ public abstract class AbstractCast extends CharacterSpatial {
             if (tempdata.getActiveType().equals("single")){
                 Spatial[] hits = rayCast();
                 for (Spatial s: hits){
-                    if (s != CharacterHandler.getPlayer()){
+                    if ((s instanceof AbstractMob)){
                         Spatial skill = getSkill();
                         skill.setLocation(s.getX(),skill.getY(),s.getZ());
                         boundMap.addSpatial(skill);
@@ -75,7 +76,7 @@ public abstract class AbstractCast extends CharacterSpatial {
                 Spatial[] hits = rayCast();
                 for (Spatial s: hits){
                     Spatial skill = getSkill();
-                    if (s != null && s!= CharacterHandler.getPlayer()){
+                    if (s != null && (s instanceof AbstractMob)){
                         skill.setLocation(s.getX(),skill.getY(),s.getZ());
                         boundMap.addSpatial(skill);
                     }
@@ -84,7 +85,7 @@ public abstract class AbstractCast extends CharacterSpatial {
                 Spatial[] hits = areaEffect();
                 for (Spatial s: hits){
                     Spatial skill = getSkill();
-                    if (s != null && s!= CharacterHandler.getPlayer()){
+                    if (s != null && (s instanceof AbstractMob)){
                         skill.setLocation(s.getX(),skill.getY(),s.getZ());
                         boundMap.addSpatial(skill);
                     }
@@ -99,8 +100,9 @@ public abstract class AbstractCast extends CharacterSpatial {
     
     protected Spatial[] rayCast(){
         PlayerSpatial p = CharacterHandler.getPlayer();
-        float nx = (float)(getX()+300*Math.cos(Math.toRadians(p.getRotation())));
-        float nz = (float)(getZ()+300*Math.sin(Math.toRadians(p.getRotation())));
+        double range = ((ActiveSkillData)data).getRange(CharacterHandler.getSkillLevel(skillName));
+        float nx = (float)(getX()+range*Math.cos(Math.toRadians(p.getRotation())));
+        float nz = (float)(getZ()+range*Math.sin(Math.toRadians(p.getRotation())));
         Spatial[] hit = boundMap.getSpace().rayCast(getX(),getZ(),nx,nz);
         HashMap<Integer,Spatial> allhit = new HashMap<>();
         DistanceComparator comp = new DistanceComparator();

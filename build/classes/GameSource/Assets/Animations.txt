@@ -19,6 +19,7 @@ walkup
 Effects
 icysprite
 icicle
+blastburn
 /Effects
 npc/john
 a
