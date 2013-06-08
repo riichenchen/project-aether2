@@ -4,6 +4,7 @@ import Database.DatabaseHandler;
 import Database.LoginReply;
 import Database.PlayerData;
 import Database.SaveItemData;
+import Database.SaveSkillData;
 import GameSource.Assets.AssetManager;
 import GameSource.User.CharacterHandler;
 import GameSource.User.EquipHandler;
@@ -58,7 +59,7 @@ public class ServerWorldHandler {
             String mapType = r.getString("mapid");
             int[] entity_data = new int[]{r.getInt("hp"),r.getInt("maxhp"),r.getInt("mp"),r.getInt("maxmp"),
                                           r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense")};
-            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"));
+            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),getSkillLevels(accountid));
         
         } catch (SQLException e){
             System.out.println("Error fetching player data!");
@@ -140,6 +141,12 @@ public class ServerWorldHandler {
             System.out.println("Severe: Failed to save inventoryData!");
             e.printStackTrace();
         }
+        
+        //Save skill levels
+        String skillTemplate = "update skillSet set skillLevel = %s where accountId = "+accountId+" and skillId = '%s'";
+        for (SaveSkillData data: playerData.getSkillData()){
+            db.makeUpdate(String.format(skillTemplate,""+data.getLevel(),data.getSkillName()));
+        }
         //Log them out
         db.makeUpdate("update accounts set loggedin = false where idaccounts = "+accountId);
     }
@@ -159,5 +166,20 @@ public class ServerWorldHandler {
             System.exit(0);
         }
         return alldata.toArray(new SaveItemData[0]);
+    }
+    
+    public SaveSkillData[] getSkillLevels(int accountId){
+        ResultSet r = db.makeQuerry("select * from skillSet where accountId = "+accountId);
+        LinkedList<SaveSkillData> allSkillData = new LinkedList<>();
+        try {
+            while (r.next()){
+                allSkillData.add(new SaveSkillData(r.getString("skillId"),r.getInt("skillLevel")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching skill levels!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return allSkillData.toArray(new SaveSkillData[0]);
     }
 }

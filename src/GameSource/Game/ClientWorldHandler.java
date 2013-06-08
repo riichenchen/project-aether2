@@ -67,6 +67,7 @@ public class ClientWorldHandler {
         }
         String[] keys = new String[]{"hp","maxhp","mp","maxmp","money","level","exp","attack","defense"};
         CharacterHandler.addAllStats(keys,pData.getEntity_data());
+        CharacterHandler.addAllSkills(pData.getSkillData());
         CharacterHandler.setName(pData.getCharName());
         CharacterHandler.bindPlayer(newSpat);
         return newSpat;

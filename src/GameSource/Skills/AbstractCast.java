@@ -13,6 +13,7 @@ import PhysicsSpace.DistanceComparator;
 import Spatial.CharacterSpatial;
 import Spatial.Spatial;
 import Testing.PlayerSpatial;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -65,7 +66,7 @@ public abstract class AbstractCast extends CharacterSpatial {
             if (tempdata.getActiveType().equals("single")){
                 Spatial[] hits = rayCast();
                 for (Spatial s: hits){
-                    if ((s instanceof AbstractMob)){
+                    if (s instanceof AbstractMob){
                         Spatial skill = getSkill();
                         skill.setLocation(s.getX(),skill.getY(),s.getZ());
                         boundMap.addSpatial(skill);
@@ -104,6 +105,7 @@ public abstract class AbstractCast extends CharacterSpatial {
         float nx = (float)(getX()+range*Math.cos(Math.toRadians(p.getRotation())));
         float nz = (float)(getZ()+range*Math.sin(Math.toRadians(p.getRotation())));
         Spatial[] hit = boundMap.getSpace().rayCast(getX(),getZ(),nx,nz);
+        System.out.println(Arrays.toString(hit));
         HashMap<Integer,Spatial> allhit = new HashMap<>();
         DistanceComparator comp = new DistanceComparator();
         PriorityQueue<Spatial> organizeByDistance = new PriorityQueue(10,comp);

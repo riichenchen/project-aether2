@@ -4,6 +4,7 @@
  */
 package GameSource.User;
 
+import Database.SaveSkillData;
 import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Assets.Portals.Portal;
 import GameSource.User.Inventory.InventoryItem;
@@ -44,8 +45,6 @@ public class CharacterHandler {
         stats.put("exp",0);
         stats.put("money", 0);
         stats.put("level",0);
-        skillLevels.put("icicle", 10);
-        skillLevels.put("blastburn", 10);
     }
     public static void bindPlayer(PlayerSpatial spat){
         player = spat;
@@ -109,13 +108,25 @@ public class CharacterHandler {
     public static void enableUserControls(){
         player.addControl(userControl);
     }
+    public static SaveSkillData[] getSaveSkillData(){
+        LinkedList<SaveSkillData> export = new LinkedList<>();
+        for (String skill: skillLevels.keySet().toArray(new String[0])){
+            export.add(new SaveSkillData(skill,skillLevels.get(skill)));
+        }
+        return export.toArray(new SaveSkillData[0]);
+    }
+    public static void addAllSkills(SaveSkillData[] Import){
+        for (SaveSkillData dat: Import){
+            addSkillLevel(dat.getSkillName(),dat.getLevel());
+        }
+    }
 //    TODO:
 //    public static int calculateHurtDamage(AbstractMob mob){
 //        
 //    }
 //    
     public static int calculateDamage(double modifier,AbstractMob mob){
-        return (int)(Math.max((new Random()).nextDouble()+0.6,1.2)*getStat("attack")*modifier);
+        return (int)(((new Random()).nextDouble()/1.0*0.4+0.8)*getStat("attack")*modifier);
     }
     
 }
