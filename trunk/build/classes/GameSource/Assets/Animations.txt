@@ -52,6 +52,6 @@ damage/violet
 9
 /damage/violet
 spellRings
-eruption
+blastburn
 icicle
 /spellRings
