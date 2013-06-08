@@ -10,7 +10,7 @@ public class AMouseInput{
         public static final int CENTER=1;
         public static final int RIGHT=2;
 	public static final int [] NULL = {0,0,0};
-        public static final int DOUBLECLICK=400;
+        public static final int DOUBLECLICK=300;
         
 	public static int mx, my;
 	public static int [] buttonsClicked;       //public?
