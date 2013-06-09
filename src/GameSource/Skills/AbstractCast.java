@@ -105,7 +105,6 @@ public abstract class AbstractCast extends CharacterSpatial {
         float nx = (float)(getX()+range*Math.cos(Math.toRadians(p.getRotation())));
         float nz = (float)(getZ()+range*Math.sin(Math.toRadians(p.getRotation())));
         Spatial[] hit = boundMap.getSpace().rayCast(getX(),getZ(),nx,nz);
-        System.out.println(Arrays.toString(hit));
         HashMap<Integer,Spatial> allhit = new HashMap<>();
         DistanceComparator comp = new DistanceComparator();
         PriorityQueue<Spatial> organizeByDistance = new PriorityQueue(10,comp);

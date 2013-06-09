@@ -6,6 +6,7 @@ package Testing;
 
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
+import GameSource.Script.NPCFrame;
 import GameSource.Skills.ActiveSkillData;
 import GameSource.Skills.GameCasts.BlastBurnCast;
 import GameSource.Skills.GameCasts.IcicleCast;
@@ -19,6 +20,7 @@ import java.awt.event.KeyEvent;
  */
 public class SteveyKeyListener extends AbstractKeyListener{
     float speed = 3f;
+    NPCFrame myFrame = new NPCFrame("john");
     @Override
     public void resolveKeyEvents() {
         Object charCont = boundTo.getControl(CharacterAnimControl.class);
@@ -109,6 +111,12 @@ public class SteveyKeyListener extends AbstractKeyListener{
         }
         if (eventKeyDown(KeyEvent.VK_4)){
             CharacterHandler.addStat("money", -1000);
+        }
+        if (eventKeyDown(KeyEvent.VK_5)){
+            myFrame = new NPCFrame("john");
+        }
+        if (eventKeyDown(KeyEvent.VK_6)){
+            System.out.println(myFrame.next());
         }
         animControl.swapAnim(currentAnim);        
     }
