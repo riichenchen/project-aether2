@@ -130,7 +130,7 @@ public class MyGUI extends AGUI{
 
     public static void showNPC(NPCFrame f){
         npcchat.setFrame(f);
-        npcchat.setContent(f.getText());
+        npcchat.setContent(f.next());
         openWindow("npcchat");
     }
     public static void showNPC(String text){
