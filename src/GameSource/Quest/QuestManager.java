@@ -53,7 +53,15 @@ public class QuestManager {
             allQuestRequirementData.get(mob).add(req);
         }
     }
-    
+    public static QuestData[] exportQuestData(){
+        return allQuests.values().toArray(new QuestData[0]);
+    }
+    public static void importQuestData(QuestData[] data){
+        System.out.println("Importing Quests!");
+        for (QuestData q: data){
+            addQuestData(q);
+        }
+    }
     // main method used to test the questManager before networking
     // a sample quest is made and manually added to until completion is detected
     public static void main(String[] args){

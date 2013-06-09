@@ -8,9 +8,9 @@ import GameSource.Assets.AssetManager;
 import GameSource.GUI.AImageFactory;
 import GameSource.GUI.AMouseInput;
 import GameSource.GUI.MyGUI;
+import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
 import GameSource.User.EquipHandler;
-import GameSource.User.ItemFactory;
 import GameSource.game.GameMap;
 import Input.InputManager;
 import Sound.SoundManager;
@@ -49,6 +49,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         CharacterHandler.init();
         EquipHandler.init();
         AImageFactory.init();
+        QuestManager.init();
         setSize(800,600);
         
         MyGUI.init(800,600);

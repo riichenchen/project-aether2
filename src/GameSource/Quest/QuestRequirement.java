@@ -4,11 +4,13 @@
  */
 package GameSource.Quest;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Shiyang
  */
-public class QuestRequirement {
+public class QuestRequirement implements Serializable{
     private String mobId;
     private String questId;
     private int number;

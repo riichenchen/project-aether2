@@ -5,6 +5,8 @@
 package Database;
 
 import GameSource.Game.GamePoint;
+import GameSource.Quest.QuestData;
+import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 import java.io.Serializable;
@@ -22,6 +24,7 @@ public class PlayerData implements Serializable{
     private int hp,maxhp,mp,maxmp,money,level,exp,attack,defense;
     private String charName;
     private SaveSkillData[] allSkills;
+    private QuestData[] allQuestData;
     
     public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType){
         this.characterType = CharacterType;
@@ -44,9 +47,10 @@ public class PlayerData implements Serializable{
         this.attack = CharacterHandler.getStat("attack");
         this.defense = CharacterHandler.getStat("defense");
         this.allSkills = CharacterHandler.getSaveSkillData();
+        this.allQuestData = QuestManager.exportQuestData();
     }
     
-    public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType,SaveItemData[] loadData,int[] entity_data,String charName,SaveSkillData[] allSkills){
+    public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType,SaveItemData[] loadData,int[] entity_data,String charName,SaveSkillData[] allSkills,QuestData[] allQuestData){
         this.characterType = CharacterType;
         this.location = location;
         this.mapType = mapType;
@@ -64,6 +68,7 @@ public class PlayerData implements Serializable{
         this.defense = entity_data[8];
         this.charName = charName;
         this.allSkills = allSkills;
+        this.allQuestData = allQuestData;
     }
     
     public int getCharacterType() {
@@ -92,5 +97,8 @@ public class PlayerData implements Serializable{
     }
     public SaveSkillData[] getSkillData(){
         return allSkills;
+    }
+    public QuestData[] getQuestData(){
+        return allQuestData;
     }
 }

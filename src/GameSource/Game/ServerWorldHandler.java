@@ -6,6 +6,8 @@ import Database.PlayerData;
 import Database.SaveItemData;
 import Database.SaveSkillData;
 import GameSource.Assets.AssetManager;
+import GameSource.Quest.QuestData;
+import GameSource.Quest.QuestRequirement;
 import GameSource.User.CharacterHandler;
 import GameSource.User.EquipHandler;
 import GameSource.game.GameMap;
@@ -15,8 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ServerWorldHandler {
     private DatabaseHandler db;
@@ -59,7 +59,7 @@ public class ServerWorldHandler {
             String mapType = r.getString("mapid");
             int[] entity_data = new int[]{r.getInt("hp"),r.getInt("maxhp"),r.getInt("mp"),r.getInt("maxmp"),
                                           r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense")};
-            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),getSkillLevels(accountid));
+            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),getSkillLevels(accountid),getQuestData(accountid));
         
         } catch (SQLException e){
             System.out.println("Error fetching player data!");
@@ -143,15 +143,23 @@ public class ServerWorldHandler {
         }
         
         //Save skill levels
-        String skillTemplate = "update skillSet set skillLevel = %s where accountId = "+accountId+" and skillId = '%s'";
+        String skillTemplate = "update skillset set skillLevel = %s where accountId = "+accountId+" and skillId = '%s'";
         for (SaveSkillData data: playerData.getSkillData()){
             db.makeUpdate(String.format(skillTemplate,""+data.getLevel(),data.getSkillName()));
+        }
+        
+        //Save quest information
+        String questTemplate = "update questdata set number = %s where accountId = "+accountId+" and questId = '%s'";
+        for (QuestData quest: playerData.getQuestData()){
+            for (QuestRequirement req: quest.getRequirements()){
+                db.makeUpdate(String.format(questTemplate,""+req.getNumber(),req.getQuestId()));
+            }
         }
         //Log them out
         db.makeUpdate("update accounts set loggedin = false where idaccounts = "+accountId);
     }
     
-    public SaveItemData[] getItemData(int accountId){
+    private SaveItemData[] getItemData(int accountId){
         ResultSet r = db.makeQuerry("select * from inventory where accountId = "+accountId);
         LinkedList<SaveItemData> alldata = new LinkedList<>();
         try {
@@ -168,7 +176,7 @@ public class ServerWorldHandler {
         return alldata.toArray(new SaveItemData[0]);
     }
     
-    public SaveSkillData[] getSkillLevels(int accountId){
+    private SaveSkillData[] getSkillLevels(int accountId){
         ResultSet r = db.makeQuerry("select * from skillSet where accountId = "+accountId);
         LinkedList<SaveSkillData> allSkillData = new LinkedList<>();
         try {
@@ -181,5 +189,25 @@ public class ServerWorldHandler {
             System.exit(0);
         }
         return allSkillData.toArray(new SaveSkillData[0]);
+    }
+    
+    private QuestData[] getQuestData(int accountId){
+        ResultSet allQuests = db.makeQuerry("select * from quests");
+        LinkedList<QuestData> allQuestData = new LinkedList<>();
+        try {
+            while (allQuests.next()){
+                QuestData newQuest = new QuestData(allQuests.getString("questId"));
+                ResultSet questData = db.makeQuerry("select * from questdata where accountid = "+accountId+" and questId = '"+allQuests.getString("questId") +"'");
+                while (questData.next()){
+                    newQuest.addRequirement(new QuestRequirement(questData.getString("requiredMob"),questData.getString("questId"),questData.getInt("number"),questData.getInt("requiredNumber")));
+                }
+                allQuestData.add(newQuest);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching quest data!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return allQuestData.toArray(new QuestData[0]);
     }
 }
