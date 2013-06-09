@@ -1,2 +1,0 @@
-testPort1;testPort1.txt
-cowPort1;cowPort1.txt
