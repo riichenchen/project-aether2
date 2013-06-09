@@ -66,7 +66,12 @@ public class CharacterHandler {
         } else if (stat.equals("mp")) {
             stats.put("mp", Math.min(stats.get("maxmp"), stats.get("mp")+val));
         } else if (stat.equals("exp")){
-            LevelManager.addExp(val);
+            stats.put("exp",stats.get("exp")+val);
+            int required = LevelManager.requiredExp(stats.get("level"));
+            while (stats.get("exp") > required){
+                stats.put("exp", stats.get("exp")-required);
+                stats.put("level",stats.get("level")+1);
+            }
         } else {
             stats.put(stat, stats.get(stat)+val);
         }
