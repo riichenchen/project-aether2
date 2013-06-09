@@ -6,6 +6,7 @@ package Testing;
 
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
+import GameSource.GUI.MyGUI;
 import GameSource.Script.NPCFrame;
 import GameSource.Skills.ActiveSkillData;
 import GameSource.Skills.GameCasts.BlastBurnCast;
@@ -74,7 +75,7 @@ public class SteveyKeyListener extends AbstractKeyListener{
                 CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new IcicleCast(CharacterHandler.getPlayer()));
             }
         }
-        if (eventKeyDown(KeyEvent.VK_B)){
+        if (eventKeyDown(KeyEvent.VK_B) && CharacterHandler.getSkillLevel("blastburn")>0){
             ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("blastburn"));
             int cost = dat.getMpCost(CharacterHandler.getSkillLevel("blastburn"));
             if (CharacterHandler.getStat("mp") > cost){
@@ -114,10 +115,11 @@ public class SteveyKeyListener extends AbstractKeyListener{
         }
         if (eventKeyDown(KeyEvent.VK_5)){
             myFrame = new NPCFrame("john");
+            MyGUI.showNPC(myFrame);
         }
-        if (eventKeyDown(KeyEvent.VK_6)){
-            System.out.println(myFrame.next());
-        }
+//        if (eventKeyDown(KeyEvent.VK_6)){
+//            MyGUI.showNPC(myFrame.next());
+//        }
         animControl.swapAnim(currentAnim);        
     }
 }

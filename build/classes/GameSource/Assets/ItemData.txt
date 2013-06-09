@@ -1,2 +1,0 @@
-redpot redpot.txt
-trollbaithelm trollbaithelm.txt

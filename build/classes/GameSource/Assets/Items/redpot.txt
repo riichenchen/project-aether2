@@ -1,4 +1,0 @@
-Red Potion
-use
-redpot
-hp 50
