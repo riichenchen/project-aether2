@@ -6,33 +6,41 @@ import java.awt.event.*;
 
 class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
 
-	private InputManager in;
+//	private InputManager in;
 //	private AMouseInput mouse;
 	
 	public TestGUI(){
 		super();
-		in = new InputManager();
+//		in = new InputManager();
 //		mouse = new AMouseInput ();
-                MyGUI.init(in,800,600);
+                MyGUI.init(800,600);
 //		myGUI = new MyGUI(in,mouse, 800,600);
 		addKeyListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
-	public void addNotify() {
+    public void addNotify() {
         super.addNotify();
         requestFocus();
     }
     
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+//        InputManager.keyTyped(e.getKeyCode());
+//        System.out.println("typed " + e.getKeyCode()+":"+(char)(e.getKeyCode()));
+    }
 
     public void keyPressed(KeyEvent e) {
-    	in.keyDown(e.getKeyCode());
+    	InputManager.keyDown(e.getKeyCode());
+        if (e.getKeyCode()==KeyEvent.VK_SHIFT){
+            System.out.println("Shift");
+        }
+//        System.out.println("pressed "+ e.getKeyCode()+":"+(char)(e.getKeyCode()));
 //    	MyGUI.update();
     }
     
     public void keyReleased(KeyEvent e) {
-        in.keyUp(e.getKeyCode());
+        InputManager.keyUp(e.getKeyCode());
+//        System.out.println("released");
 
         
     }

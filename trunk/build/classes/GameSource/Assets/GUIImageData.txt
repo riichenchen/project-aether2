@@ -54,3 +54,11 @@ npc_previous_call NPCChat/buttons/previous2.png
 npc_yes NPCChat/buttons/yes0.png
 npc_yes_fg NPCChat/buttons/yes1.png
 npc_yes_call NPCChat/buttons/yes2.png
+scroll_up scrollbar/chat.scroll.normal.0.png
+scroll_mid scrollbar/chat.scroll.normal.1.png
+scroll_down scrollbar/chat.scroll.normal.2.png
+scroll_bar scrollbar/chat.scroll.normal.3.png
+scroll_up_fg scrollbar/chat.scroll.over.0.png
+scroll_mid_fg scrollbar/chat.scroll.over.2.png
+scroll_down_fg scrollbar/chat.scroll.over.3.png
+scroll_bar_fg scrollbar/chat.scroll.over.1.png

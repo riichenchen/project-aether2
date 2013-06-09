@@ -60,21 +60,23 @@ public class ATextArea extends AComponent{
     }
     
     public void update(){
-    	for (int i=0; i<MyGUI.keys.length; i++){
-    		if (MyGUI.keys[i] && KeyCharMap.isTypeable(i,0)){
-    			insert(KeyCharMap.getChar(i,MyGUI.keys[KeyEvent.VK_SHIFT]));
+    	for (int i=0; i<InputManager.keys.length; i++){
+    		if (KeyCharMap.isTypeable(i,0)&&(InputManager.keys[i]||InputManager.heldKeys[i])){
+    			insert(KeyCharMap.getChar(i,InputManager.down(KeyEvent.VK_SHIFT)));
+                        InputManager.keys[i]=false;
+                        InputManager.heldKeys[i]=false;
     		}
     	}
-    	if (MyGUI.keys[KeyEvent.VK_BACK_SPACE]){
+    	if (InputManager.down(KeyEvent.VK_BACK_SPACE)){
     		delete();
     	}
-    	if (MyGUI.keys[KeyEvent.VK_ENTER]){
+    	if (InputManager.down(KeyEvent.VK_ENTER)){
     		insert(255);
     	}
-    	if (MyGUI.keys[KeyEvent.VK_LEFT]){
+    	if (InputManager.down(KeyEvent.VK_LEFT)){
     		cursorLoc=Math.max(cursorLoc-1,0);
     	}
-    	if (MyGUI.keys[KeyEvent.VK_RIGHT]){
+    	if (InputManager.down(KeyEvent.VK_RIGHT)){
     		cursorLoc=Math.min(cursorLoc+1,content.length());
     	}
     	

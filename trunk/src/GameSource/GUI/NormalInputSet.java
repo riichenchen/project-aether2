@@ -37,8 +37,9 @@ public class NormalInputSet extends AbstractInputSet{
                 * */
             
 		for (String wname: cwindows){
-			if (keyMap.get(wname)!=null && AGUI.keys[keyMap.get(wname)]){
+			if (keyMap.get(wname)!=null && InputManager.keys[keyMap.get(wname)]){
 				MyGUI.keyCall(wname);
+                                InputManager.clearKey(keyMap.get(wname));
 			}
                 }
                for (String wname: cwindows){
@@ -66,7 +67,7 @@ public class NormalInputSet extends AbstractInputSet{
                     MyGUI.unfocus();
                     System.out.println("Mouse call that I have nothing to do with");
 		}
-                if (AGUI.keys[KeyEvent.VK_ESCAPE]){
+                if (InputManager.keys[KeyEvent.VK_ESCAPE]){
                     MyGUI.closeWindow();
                 }
 	}
