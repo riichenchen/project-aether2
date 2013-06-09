@@ -21,7 +21,7 @@ public class PlayerData implements Serializable{
     private String mapType;
     private int accountId;
     private SaveItemData[] items;
-    private int hp,maxhp,mp,maxmp,money,level,exp,attack,defense;
+    private int hp,maxhp,mp,maxmp,money,level,exp,attack,defense,statPoints,skillPoints;
     private String charName;
     private SaveSkillData[] allSkills;
     private QuestData[] allQuestData;
@@ -46,6 +46,8 @@ public class PlayerData implements Serializable{
         this.exp = CharacterHandler.getStat("exp");
         this.attack = CharacterHandler.getStat("attack");
         this.defense = CharacterHandler.getStat("defense");
+        this.statPoints = CharacterHandler.getStat("statPoints");
+        this.skillPoints = CharacterHandler.getStat("skillPoints");
         this.allSkills = CharacterHandler.getSaveSkillData();
         this.allQuestData = QuestManager.exportQuestData();
     }
@@ -66,6 +68,8 @@ public class PlayerData implements Serializable{
         this.exp = entity_data[6];
         this.attack = entity_data[7];
         this.defense = entity_data[8];
+        this.statPoints = entity_data[9];
+        this.skillPoints = entity_data[10];
         this.charName = charName;
         this.allSkills = allSkills;
         this.allQuestData = allQuestData;
@@ -90,7 +94,7 @@ public class PlayerData implements Serializable{
         return items;
     }
     public int[] getEntity_data(){
-        return new int[]{maxhp,hp,maxmp,mp,money,level,exp,attack,defense};
+        return new int[]{maxhp,hp,maxmp,mp,money,level,exp,attack,defense,statPoints,skillPoints};
     }
     public String getCharName(){
         return charName;

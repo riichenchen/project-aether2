@@ -42,6 +42,8 @@ public class CharacterHandler {
         stats.put("maxmp",0);
         stats.put("attack",0);
         stats.put("defense",0);
+        stats.put("statPoints",0);
+        stats.put("skillPoints",0);
         stats.put("exp",0);
         stats.put("money", 0);
         stats.put("level",0);

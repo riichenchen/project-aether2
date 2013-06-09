@@ -66,7 +66,7 @@ public class ClientWorldHandler {
         for (SaveItemData dat: pData.getItems()){
             InventoryHandler.addItem(ItemFactory.getItem(dat.getItemKey()),dat.getQuantity());
         }
-        String[] keys = new String[]{"maxhp","hp","maxmp","mp","money","level","exp","attack","defense"};
+        String[] keys = new String[]{"maxhp","hp","maxmp","mp","money","level","exp","attack","defense","statPoints","skillPoints"};
         CharacterHandler.addAllStats(keys,pData.getEntity_data());
         CharacterHandler.addAllSkills(pData.getSkillData());
         CharacterHandler.setName(pData.getCharName());
