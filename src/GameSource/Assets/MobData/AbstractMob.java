@@ -6,9 +6,9 @@ package GameSource.Assets.MobData;
 
 import ArtificialIntelligence.AIControl;
 import GameSource.Quest.QuestManager;
+import GameSource.User.CharacterHandler;
 import GameSource.game.GameMap;
 import Spatial.CharacterSpatial;
-import Spatial.Spatial;
 
 /**
  *
@@ -40,12 +40,14 @@ public abstract class AbstractMob extends CharacterSpatial{
     public abstract AIControl getAIControl();
     public abstract String getName();
     public abstract void dropItems();
+    public abstract int getExp();
     
     @Override
     public void update(){
         super.update();
         if ((int)getProperty("HP") <= 0){
 //            System.out.println((int)getProperty("HP"));
+            CharacterHandler.addStat("exp",getExp());
             QuestManager.addMobKill(this);
             dropItems();
             boundMap.removeMob(this);

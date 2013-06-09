@@ -46,4 +46,9 @@ public class BillysCow extends AbstractMob{
     public String getName() {
         return "billyscow";
     }
+    
+    @Override
+    public int getExp(){
+        return 1000;
+    }
 }
