@@ -4,6 +4,7 @@
  */
 package GameSource.User;
 
+import GameSource.GUI.MyGUI;
 import GameSource.User.Inventory.InventoryItem;
 import java.util.HashMap;
 
@@ -28,6 +29,7 @@ public class InventoryHandler {
             allItems.put(itemKey, item);
             itemQuantities.put(itemKey,1);
         }
+        MyGUI.updateItems();
     }
     //This should ONLY be called when loading in a player because
     //at this point we guarantee this will be the first appearance
@@ -36,6 +38,7 @@ public class InventoryHandler {
         String itemKey = item.getKey();
         allItems.put(itemKey,item);
         itemQuantities.put(itemKey, quantity);
+        MyGUI.updateItems();
     }
     public static void removeItem(InventoryItem item){
         String itemKey = item.getKey();
@@ -50,6 +53,7 @@ public class InventoryHandler {
         } else {
             System.out.println("WARNING: TRYING TO REMOVE NON-EXISTANT INVENTORY ITEM D:");
         }
+        MyGUI.updateItems();
     }
     
     public static String[] getItemIds(){

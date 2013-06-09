@@ -41,4 +41,9 @@ public class BillysCow extends AbstractMob{
     public void dropItems() {
         ItemFactory.spawnItem("trollbaithelm", this, boundMap);
     }
+
+    @Override
+    public String getName() {
+        return "billyscow";
+    }
 }
