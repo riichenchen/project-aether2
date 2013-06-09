@@ -48,7 +48,7 @@ public class AProcessor {
         }
     }
     public static void process_npcchat(AMessage m){
-        if (m.content().equals("next")){
+        if (m.content().equals("next") ||m.content().equals("okay")){
             MyGUI.npc_next();
         }else if (m.content().equals("prev")){
             MyGUI.npc_prev();

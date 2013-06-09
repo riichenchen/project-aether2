@@ -11,7 +11,7 @@ Outcome
 /Frame
 
 Frame
-endchat null ok
+endchat null okay
 Text
 Alrighty! Go and slay em down!
 /Text
@@ -21,7 +21,7 @@ setqueststatus firstA,1
 /Frame
 
 Frame
-endchat null ok
+endchat null okay
 Text
 Baiiii :DD
 /Text
@@ -30,7 +30,7 @@ Outcome
 /Frame
 
 Frame
-endchat null ok
+endchat null okay
 Text
 Oh wow! You really did it! Here's your reward:
 -10 Red pots
@@ -46,7 +46,7 @@ setqueststatus firstA,2
 /Frame
 
 Frame
-endchat null ok
+endchat null okay
 Text
 Looks like you're not done yet. Go and SLAY EM!
 /Text
@@ -55,7 +55,7 @@ Outcome
 /Frame
 
 Frame
-endchat null ok
+endchat null okay
 Text
 Man these cows...
 /Text
@@ -64,7 +64,7 @@ Outcome
 /Frame
 
 Frame
-endchat null ok
+endchat null okay
 Text
 It's you!
 Thanks for helping me earlier.

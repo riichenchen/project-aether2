@@ -59,7 +59,7 @@ public class AGUI{
                 windows.get(name).setFocused(false);
 		windows.get(name).setVisible(false);
                 visibleWindows.remove(name);
-                if (focusedScreen.equals(windows.get(name)))
+                if (focusedScreen!= null && focusedScreen.equals(windows.get(name)))
                     unfocus();
 	}
         public static void closeWindow(){
