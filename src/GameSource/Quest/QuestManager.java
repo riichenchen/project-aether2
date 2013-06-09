@@ -39,7 +39,7 @@ public class QuestManager {
         if (allQuestRequirementData.containsKey(monster.getName())){
             QuestRequirement[] questReq = allQuestRequirementData.get(monster.getName()).toArray(new QuestRequirement[0]);
             for (QuestRequirement req: questReq){
-                if (!req.isCompleted()){
+                if (getQuestStatus(req.getQuestId()) == 1 && !req.isCompleted()){
                     req.addNumber();
                 }
             }

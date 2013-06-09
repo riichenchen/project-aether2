@@ -195,11 +195,12 @@ public class ServerWorldHandler {
     }
     
     private QuestData[] getQuestData(int accountId){
-        ResultSet allQuests = db.makeQuerry("select * from quests");
+        ResultSet allQuests = db.makeQuerry("select * from quests where accountId = "+accountId);
         LinkedList<QuestData> allQuestData = new LinkedList<>();
         try {
             while (allQuests.next()){
                 QuestData newQuest = new QuestData(allQuests.getString("questId"),allQuests.getInt("status"));
+                System.out.println(allQuests.getInt("status"));
                 ResultSet questData = db.makeQuerry("select * from questdata where accountid = "+accountId+" and questId = '"+allQuests.getString("questId") +"'");
                 while (questData.next()){
                     newQuest.addRequirement(new QuestRequirement(questData.getString("requiredMob"),questData.getString("questId"),questData.getInt("number"),questData.getInt("requiredNumber")));
