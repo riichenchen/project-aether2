@@ -6,6 +6,8 @@ package GameSource.Script;
 
 import GameSource.Assets.AssetManager;
 import GameSource.User.CharacterHandler;
+import GameSource.User.InventoryHandler;
+import GameSource.User.ItemFactory;
 import java.util.LinkedList;
 
 /**
@@ -72,15 +74,11 @@ public class NPCFrame {
         AssetManager.init();
         CharacterHandler.init();
         CharacterHandler.addStat("level", 11);
+        InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"),10);
         NPCFrame myframe = new NPCFrame("john");
-        System.out.println(myframe.next());
-        System.out.println(myframe.next());
-        System.out.println(myframe.next());
-        System.out.println(myframe.prev());
-        System.out.println(myframe.next());
-        System.out.println(myframe.next());
-//        System.out.println(Arrays.toString(InventoryHandler.getItemIds()));
-//        System.out.println(InventoryHandler.getItemQuantity("redpot"));
-//        System.out.println(InventoryHandler.getItemQuantity("trollbaithelm"));
+        while (myframe.next() != null);
+        System.out.println(CharacterHandler.getStat("exp"));
+        System.out.println(CharacterHandler.getStat("money"));
+        System.out.println(InventoryHandler.getItemQuantity("trollbaithelm"));
     }
 }

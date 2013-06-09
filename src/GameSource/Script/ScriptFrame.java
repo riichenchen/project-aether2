@@ -43,10 +43,16 @@ public class ScriptFrame {
                 for (int i = 0; i < Integer.parseInt(outcome.values[1]);i++){
                     InventoryHandler.addItem(temp);
                 }
-            } else if (outcome.dataType.equals("exp")){
+            } else if (outcome.dataType.equals("takeitem")){
+                InventoryItem temp = ItemFactory.getItem(outcome.values[0]);
+                for (int i = 0; i < Integer.parseInt(outcome.values[1]);i++){
+                    InventoryHandler.removeItem(temp);
+                }
+            } else if (outcome.dataType.equals("addexp")){
                 CharacterHandler.addStat("exp", Integer.parseInt(outcome.values[0]));
-            } //else if (outcome.dataType )
-            //Todo: add alot more shit, complete quests, etc
+            } else if (outcome.dataType.equals("addmoney")){
+                CharacterHandler.addStat("money", Integer.parseInt(outcome.values[0]));
+            } //todo: finish quests
         }
     }
     
