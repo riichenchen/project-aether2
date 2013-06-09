@@ -63,4 +63,11 @@ public class InventoryHandler {
     public static int getItemQuantity(String key){
         return itemQuantities.get(key);
     }
+    
+    public static boolean hasItem(String id, int quantity){
+        if (!allItems.containsKey(id) || itemQuantities.get(id) < quantity){
+            return false;
+        }
+        return true;
+    }
 }

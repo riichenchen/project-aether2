@@ -231,4 +231,8 @@ public class GameMap {
             removeSpatial(spat);
             mobCounter--;
         }
+        
+        public int getMobCount(){
+            return mobCounter;
+        }
 }

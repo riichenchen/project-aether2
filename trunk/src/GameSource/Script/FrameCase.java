@@ -5,6 +5,7 @@
 package GameSource.Script;
 
 import GameSource.User.CharacterHandler;
+import GameSource.User.InventoryHandler;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +40,11 @@ public class FrameCase {
                 return false;
             } else if (dat.dataType.equals("money") && CharacterHandler.getStat("money") < Integer.parseInt(dat.values[0])){
                 return false;
-            } //else if (dat.dataType.equals("item") && InventoryHandler.countItem(dat.values))
+            } else if (dat.dataType.equals("item") && !InventoryHandler.hasItem(dat.values[0],Integer.parseInt(dat.values[1]))){
+                return false;
+            } else if (dat.dataType.equals("clearmap") && CharacterHandler.getPlayer().getMap().getMobCount() != 0){
+                return false;
+            }
         }
         return true;
     }

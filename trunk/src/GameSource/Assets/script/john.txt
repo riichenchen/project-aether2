@@ -8,9 +8,10 @@ Gord non? :DDD
 I'm giving you 100 red pots and 10 trollbaithelms for clicking me :3
 /Text
 Outcome
-additem trollbaithelm,10
+takeitem trollbaithelm,9
 additem redpot,100
 addexp 1000
+addmoney 1000
 /Outcome
 /Frame
 
@@ -20,7 +21,7 @@ Text
 K so anyhow what I'm trying to say is this is supposedly going to work
 /Text
 Outcome
-addexp 10000
+addmoney -500
 /Outcome
 /Frame
 
@@ -38,6 +39,7 @@ Case
 Require
 frame -1
 level 10
+item trollbaithelm,10
 /Require
 0
 /Case
