@@ -162,12 +162,19 @@ public class ANPCChat extends AWindow{
     }
 
     public void next() {
-        setContent(frame.next());
+        String s=frame.next();
+        if (s!=null){
+            setContent(s);
+        }
+        else{
+            end();
+        }
     }
     public void prev() {
         setContent(frame.prev());
     }
     public void end() {
         frame.endChat();
+        MyGUI.closeWindow("npcchat");
     }
 }
