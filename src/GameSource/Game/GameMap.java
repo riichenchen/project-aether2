@@ -16,6 +16,9 @@ import Testing.PlayerSpatial;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import javax.swing.JPanel;
 
 public class GameMap {
@@ -235,4 +238,24 @@ public class GameMap {
         public int getMobCount(){
             return mobCounter;
         }
+        
+        public char [][] getCharMap() {
+            char [][] ret = new char[dimx][dimy];
+            Arrays.fill(ret, 0);
+            for (Map.Entry<Integer, Spatial> entry : spats.entrySet()) {
+                Spatial curSpat = entry.getValue();
+                ret[(int)(curSpat.getX())][(int)(curSpat.getY())] = 1;
+            }
+            return ret;
+        }
+        
+        public ArrayList getSpatials() {
+            ArrayList mySpats = new ArrayList<Spatial>();
+            for (Map.Entry<Integer, Spatial> entry: spats.entrySet()) {
+                Spatial curSpat = entry.getValue();
+                mySpats.add(curSpat);
+            }
+            return mySpats;
+        }
 }
+
