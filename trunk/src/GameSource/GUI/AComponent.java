@@ -100,7 +100,7 @@ public abstract class AComponent{
             moveable=b;
         }
 	public void lock(){
-//		System.out.println(name+" locked");
+		System.out.println("AComponent/lock   "+name+" locked");
 		lx=AMouseInput.mx-x;
 		ly=AMouseInput.my-y;
 		locked = true;

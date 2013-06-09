@@ -27,7 +27,7 @@ public class AProcessor {
                 break;
             case AMessage.USE_ITEM: 
                 break;
-            case AMessage.NPC_CHAT: System.out.println(m.content());
+            case AMessage.NPC_CHAT: process_npcchat(m);
                 break;
             case AMessage.SEND_MESSAGE: System.out.println(m.content());
                 break;
@@ -45,6 +45,19 @@ public class AProcessor {
         }
         else{
             MyGUI.bindToMouse(InventoryHandler.getItem(m.content()));
+        }
+    }
+    public static void process_npcchat(AMessage m){
+        if (m.content().equals("next")){
+            MyGUI.npc_next();
+        }else if (m.content().equals("prev")){
+            MyGUI.npc_prev();
+        }else if (m.content().equals("end")){
+            MyGUI.npc_end();
+            MyGUI.closeWindow("npcchat");
+        }
+        else{
+            System.out.println(m.content());
         }
     }
 }
