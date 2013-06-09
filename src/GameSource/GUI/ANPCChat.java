@@ -54,10 +54,10 @@ public class ANPCChat extends AWindow{
         no.setImage(AImageFactory.getImage("npc_no"));
         no.setFGImage(AImageFactory.getImage("npc_no_fg"));
         buttons.put("no",no);
-        AButton ok=new AButton("ok",AMessage.NPC_CHAT,"ok",40,16);
+        AButton ok=new AButton("okay",AMessage.NPC_CHAT,"okay",40,16);
         ok.setImage(AImageFactory.getImage("npc_ok"));
         ok.setFGImage(AImageFactory.getImage("npc_ok_fg"));
-        buttons.put("ok",ok);
+        buttons.put("okay",ok);
     }
     public void setContent(String c){
         content=c;
