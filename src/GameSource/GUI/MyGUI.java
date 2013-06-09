@@ -22,8 +22,8 @@ public class MyGUI extends AGUI{
     private static BufferedReader in;
     
 
-    public static void init(InputManager inp, int wid, int hgt){
-        AGUI.init(inp,wid,hgt);
+    public static void init(int wid, int hgt){
+        AGUI.init(wid,hgt);
 //        inputSets.put("battle",new BattleInputSet());
 	inputSets.put("normal",new NormalInputSet());
 	inputSet=inputSets.get("normal");

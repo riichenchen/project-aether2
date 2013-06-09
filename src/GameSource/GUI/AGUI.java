@@ -23,11 +23,9 @@ public class AGUI{
 
 	protected static AComponent focusedScreen;
 
-	protected static InputManager keyboard;
-	protected static AMouseInput mouse;
         protected static InventoryItem mouseItem;              //Static?
 	
-        public static boolean [] keys;			//Input fields; keyboard and mouse
+//        public static boolean [] keys;			//Input fields; keyboard and mouse
 //        public static int mx, my;			//Public for easier updating and
 //        public static int [] mouseButtons;		//access by the AComponents
 //        public static boolean doubleclick;
@@ -77,11 +75,11 @@ public class AGUI{
 		if (cWindow.visible()==false){
 			openWindow(name);
 		}
-		else if (cWindow.focus()==false){
+		if (cWindow.focus()==false){
 			shiftFocus(name);
 		}
 		else{
-			//closeWindow(name);				
+			closeWindow(name);				
 		}
 	}
 	public static void mousePressCall(String name){
@@ -120,12 +118,10 @@ public class AGUI{
             return mouseItem==null;
         }
         
-	public static void init(InputManager input, int wid, int hgt){
+	public static void init(int wid, int hgt){
             AMouseInput.init();
+            InputManager.init();
 		width=wid; height = hgt;
-		bindTo(input);
-              
-		keys=keyboard.get_keys();
 		
 		windows = new HashMap<String,AComponent>();
                 windowNames= new ArrayList<String>();
@@ -133,9 +129,6 @@ public class AGUI{
 	
 		inputSets= new HashMap<> ();
 	}
-    public static void bindTo(InputManager bound){
-        keyboard = bound;
-    }
     
     public static ArrayList<String> get_windows(){
     	return windowNames;
@@ -164,7 +157,6 @@ public class AGUI{
     }
 	
 	public static void update(){						
-		keys = keyboard.get_keys();
                 AMouseInput.tick();
 		
 		for (String name: visibleWindows){
@@ -174,6 +166,7 @@ public class AGUI{
 		}
 		inputSet.update();
 		AMouseInput.reset();
+//                InputManager.clearTyped();
 	}
 	public static void draw(Graphics g){
                 for (int i=visibleWindows.size()-1; i>=0; i--){
