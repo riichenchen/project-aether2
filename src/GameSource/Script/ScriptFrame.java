@@ -50,4 +50,7 @@ public class ScriptFrame {
         }
     }
     
+    public String[] getButtons(){
+        return buttons;
+    }
 }

@@ -2,74 +2,64 @@
 
 Frame
 endchat null next
-
 Text
 Hi there! I'm the first test npc :D how does that make you feel?
 Gord non? :DDD
 I'm giving you 100 red pots and 10 trollbaithelms for clicking me :3
 /Text
-
 Outcome
 additem trollbaithelm,10
 additem redpot,100
 addexp 1000
 /Outcome
-
 /Frame
-
 
 Frame
 endchat prev next
-
 Text
 K so anyhow what I'm trying to say is this is supposedly going to work
 /Text
-
 Outcome
 addexp 10000
 /Outcome
-
 /Frame
 
-
 Frame
-endchat null ok
-
+endchat prev ok
 Text
 Baiiii :DD
 /Text
-
 Outcome
 /Outcome
-
 /Frame
-3
+4
 
 Case
-
 Require
 frame -1
 level 10
 /Require
 0
-
 /Case
 
 Case
-
 Require
 frame 0
 /Require
 1
-
 /Case
 
 Case
-
 Require
 frame 1
 /Require
 2
+/Case
 
+Case
+Require
+frame 2
+/Require
+-2
 /Case
 2
