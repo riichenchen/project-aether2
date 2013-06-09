@@ -1,5 +1,6 @@
 package GameSource.GUI;
 import GameSource.Assets.AssetManager;
+import GameSource.Script.NPCFrame;
 import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
@@ -9,6 +10,7 @@ import java.awt.event.*;
 public class Test extends JFrame implements ActionListener{
 	private TestGUI testing;
 	private Timer myTimer;
+        public static NPCFrame john;
 	public Test(){
 		super("Test A GUI");
 		setSize(800,600);

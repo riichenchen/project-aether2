@@ -23,6 +23,12 @@ public class NPCFrame {
     public NPCFrame(String framename) {
         this.data = AssetManager.getScriptData(framename);
     }
+    public String [] getButtons(){
+        return currentFrame.getButtons();
+    }
+    public String getText(){
+        return currentFrame.getText();
+    }
     
     public String next(){
         if (currentFrameNumber == -1 || !currentFrame.getButtons()[2].equals("null")){ // first frame guarantees it can go further

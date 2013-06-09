@@ -45,10 +45,7 @@ public class AWindow extends AComponent{
                     }
                     else if (AImageFactory.getImage(name)!=null)
                         g.drawImage(AImageFactory.getImage(name), parent.x+x, parent.y+y, null);
-                    else{
-			g.setColor(background);
-			g.fillRect(x,y,width,height);
-                    }
+
                     for (AComponent c: subComponents){
 			c.draw(g);
                     }

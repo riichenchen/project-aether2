@@ -4,10 +4,10 @@
  */
 package GameSource.GUI;
 
+import GameSource.Script.NPCFrame;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  *
@@ -128,8 +128,13 @@ public class MyGUI extends AGUI{
         return out;
     }
 
-    public static void showNPC(String words){
-        npcchat.setContent(words);
+    public static void showNPC(NPCFrame f){
+        npcchat.setFrame(f);
+        npcchat.setContent(f.getText());
+        openWindow("npcchat");
+    }
+    public static void showNPC(String text){
+        npcchat.setContent(text);
         openWindow("npcchat");
     }
     public static void changeInventPane(String newPane){
@@ -147,5 +152,16 @@ public class MyGUI extends AGUI{
         AGUI.draw(g);
         hud.draw(g);
         chat.draw(g);
+    }
+
+    public static void npc_next() {
+        npcchat.next();
+    }
+    public static void npc_prev() {
+        npcchat.prev();
+    }
+    public static void npc_end() {
+        npcchat.end();
+        closeWindow("npcchat");
     }
 }
