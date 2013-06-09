@@ -7,6 +7,7 @@ import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
+import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
@@ -70,6 +71,7 @@ public class ClientWorldHandler {
         CharacterHandler.addAllSkills(pData.getSkillData());
         CharacterHandler.setName(pData.getCharName());
         CharacterHandler.bindPlayer(newSpat);
+        QuestManager.importQuestData(pData.getQuestData());
         return newSpat;
     }
     

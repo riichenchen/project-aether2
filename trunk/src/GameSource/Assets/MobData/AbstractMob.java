@@ -5,6 +5,7 @@
 package GameSource.Assets.MobData;
 
 import ArtificialIntelligence.AIControl;
+import GameSource.Quest.QuestManager;
 import GameSource.game.GameMap;
 import Spatial.CharacterSpatial;
 import Spatial.Spatial;
@@ -45,6 +46,7 @@ public abstract class AbstractMob extends CharacterSpatial{
         super.update();
         if ((int)getProperty("HP") <= 0){
 //            System.out.println((int)getProperty("HP"));
+            QuestManager.addMobKill(this);
             dropItems();
             boundMap.removeMob(this);
         }
