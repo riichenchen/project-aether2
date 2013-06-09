@@ -14,7 +14,7 @@ import Spatial.Spatial;
  * @author Shiyang
  */
 public abstract class AbstractMob extends CharacterSpatial{
-    AIControl control;
+    private AIControl control;
     
     public AbstractMob(float x, float y, float z, float l, float h, float w,int hp) {
         super(x, y, z, l, h, w, 0,0,0);
@@ -37,6 +37,8 @@ public abstract class AbstractMob extends CharacterSpatial{
     }
     
     public abstract AIControl getAIControl();
+    public abstract String getName();
+    public abstract void dropItems();
     
     @Override
     public void update(){
@@ -47,7 +49,7 @@ public abstract class AbstractMob extends CharacterSpatial{
             boundMap.removeMob(this);
         }
     }
-    public abstract void dropItems();
+
     public void addHp(int diff){
         setProperty("HP",(int)getProperty("HP")+diff);
     }
