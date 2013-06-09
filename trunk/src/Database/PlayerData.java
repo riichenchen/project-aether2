@@ -57,10 +57,10 @@ public class PlayerData implements Serializable{
         this.accountId = accountId;
         String[] allItemIds = InventoryHandler.getItemIds();
         this.items = loadData;
-        this.hp = entity_data[0];
-        this.maxhp = entity_data[1];
-        this.mp = entity_data[2];
-        this.maxmp = entity_data[3];
+        this.maxhp = entity_data[0];
+        this.hp = entity_data[1];
+        this.maxmp = entity_data[2];
+        this.mp = entity_data[3];
         this.money = entity_data[4];
         this.level = entity_data[5];
         this.exp = entity_data[6];
@@ -90,7 +90,7 @@ public class PlayerData implements Serializable{
         return items;
     }
     public int[] getEntity_data(){
-        return new int[]{hp,maxhp,mp,maxmp,money,level,exp,attack,defense};
+        return new int[]{maxhp,hp,maxmp,mp,money,level,exp,attack,defense};
     }
     public String getCharName(){
         return charName;

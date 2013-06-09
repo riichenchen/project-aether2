@@ -57,7 +57,7 @@ public class ServerWorldHandler {
             int characterType = r.getInt("characterType");
             GamePoint loc = new GamePoint(r.getFloat("x"),r.getFloat("y"),r.getFloat("z"));
             String mapType = r.getString("mapid");
-            int[] entity_data = new int[]{r.getInt("hp"),r.getInt("maxhp"),r.getInt("mp"),r.getInt("maxmp"),
+            int[] entity_data = new int[]{r.getInt("maxhp"),r.getInt("hp"),r.getInt("maxmp"),r.getInt("mp"),
                                           r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense")};
             return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),getSkillLevels(accountid),getQuestData(accountid));
         
@@ -100,10 +100,10 @@ public class ServerWorldHandler {
         db.makeUpdate(String.format(template,"y",""+y));
         db.makeUpdate(String.format(template,"z",""+z));
         db.makeUpdate(String.format(template,"mapid","'"+mapId+"'"));
-        db.makeUpdate(String.format(template,"hp",""+entityData[0]));
-        db.makeUpdate(String.format(template,"maxhp",""+entityData[1]));
-        db.makeUpdate(String.format(template,"mp",""+entityData[2]));
-        db.makeUpdate(String.format(template,"maxmp",""+entityData[3]));
+        db.makeUpdate(String.format(template,"maxhp",""+entityData[0]));
+        db.makeUpdate(String.format(template,"hp",""+entityData[1]));
+        db.makeUpdate(String.format(template,"maxmp",""+entityData[2]));
+        db.makeUpdate(String.format(template,"mp",""+entityData[3]));
         db.makeUpdate(String.format(template,"money",""+entityData[4]));
         db.makeUpdate(String.format(template,"level",""+entityData[5]));
         db.makeUpdate(String.format(template,"exp",""+entityData[6]));

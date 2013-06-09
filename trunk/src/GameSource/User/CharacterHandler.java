@@ -61,7 +61,15 @@ public class CharacterHandler {
     }
     
     public static void addStat(String stat,int val){
-        stats.put(stat, stats.get(stat)+val);
+        if (stat.equals("hp")){
+            stats.put("hp", Math.min(stats.get("maxhp"), stats.get("hp")+val));
+        } else if (stat.equals("mp")) {
+            stats.put("mp", Math.min(stats.get("maxmp"), stats.get("mp")+val));
+        } else if (stat.equals("exp")){
+            LevelManager.addExp(val);
+        } else {
+            stats.put(stat, stats.get(stat)+val);
+        }
     }
     
     public static int getStat(String stat){
