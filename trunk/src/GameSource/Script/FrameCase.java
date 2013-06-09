@@ -4,6 +4,7 @@
  */
 package GameSource.Script;
 
+import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 import java.util.ArrayList;
@@ -43,6 +44,10 @@ public class FrameCase {
             } else if (dat.dataType.equals("item") && !InventoryHandler.hasItem(dat.values[0],Integer.parseInt(dat.values[1]))){
                 return false;
             } else if (dat.dataType.equals("clearmap") && CharacterHandler.getPlayer().getMap().getMobCount() != 0){
+                return false;
+            } else if (dat.dataType.equals("questcomplete") && !QuestManager.checkQuest(dat.values[0])){
+                return false;
+            } else if (dat.dataType.equals("queststatus") && QuestManager.getQuestStatus(dat.values[0]) != Integer.parseInt(dat.values[1])){
                 return false;
             }
         }

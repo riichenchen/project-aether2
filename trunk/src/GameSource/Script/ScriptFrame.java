@@ -4,6 +4,7 @@
  */
 package GameSource.Script;
 
+import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
 import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.InventoryHandler;
@@ -52,7 +53,9 @@ public class ScriptFrame {
                 CharacterHandler.addStat("exp", Integer.parseInt(outcome.values[0]));
             } else if (outcome.dataType.equals("addmoney")){
                 CharacterHandler.addStat("money", Integer.parseInt(outcome.values[0]));
-            } //todo: finish quests
+            } else if (outcome.dataType.equals("setqueststatus")){
+                QuestManager.setQuestStatus(outcome.values[0],Integer.parseInt(outcome.values[1]));
+            }
         }
     }
     

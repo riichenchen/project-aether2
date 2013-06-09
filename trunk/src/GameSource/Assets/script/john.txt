@@ -1,45 +1,84 @@
-3
+7
 
 Frame
-endchat null next
+endchat null okay
 Text
-Hi there! I'm the first test npc :D how does that make you feel?
-Gord non? :DDD
-I'm giving you 100 red pots and 10 trollbaithelms for clicking me :3
+Hey. I'm John. Listen. You seen to be the strong type
+D'you recken you can kill 10 cowz foar me?
 /Text
 Outcome
-takeitem trollbaithelm,9
-additem redpot,100
-addexp 1000
-addmoney 1000
 /Outcome
 /Frame
 
 Frame
-endchat prev next
+endchat null ok
 Text
-K so anyhow what I'm trying to say is this is supposedly going to work
+Alrighty! Go and slay em down!
 /Text
 Outcome
-addmoney -500
+setqueststatus firstA,1
 /Outcome
 /Frame
 
 Frame
-endchat prev ok
+endchat null ok
 Text
 Baiiii :DD
 /Text
 Outcome
 /Outcome
 /Frame
-4
+
+Frame
+endchat null ok
+Text
+Oh wow! You really did it! Here's your reward:
+-10 Red pots
+-a trollbaithelm
+-1000 exp
+/Text
+Outcome
+additem redpot,10
+additem trollbaithelm,1
+addexp 1000
+setqueststatus firstA,2
+/Outcome
+/Frame
+
+Frame
+endchat null ok
+Text
+Looks like you're not done yet. Go and SLAY EM!
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null ok
+Text
+Man these cows...
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null ok
+Text
+It's you!
+Thanks for helping me earlier.
+/Text
+Outcome
+/Outcome
+/Frame
+11
 
 Case
 Require
 frame -1
+queststatus firstA,0
 level 10
-item trollbaithelm,10
 /Require
 0
 /Case
@@ -55,7 +94,60 @@ Case
 Require
 frame 1
 /Require
-2
+-2
+/Case
+
+Case
+Require
+frame -1
+queststatus firstA,1
+questcomplete firstA
+/Require
+3
+/Case
+
+Case
+Require
+frame -1
+queststatus firstA,1
+/Require
+4
+/Case
+
+Case
+Require
+frame -1
+queststatus firstA,2
+/Require
+6
+/Case
+
+Case
+Require
+frame -1
+/Require
+5
+/Case
+
+Case
+Require
+frame 4
+/Require
+-2
+/Case
+
+Case
+Require
+frame 5
+/Require
+-2
+/Case
+
+Case
+Require
+frame 6
+/Require
+-2
 /Case
 
 Case

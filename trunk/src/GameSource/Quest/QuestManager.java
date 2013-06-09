@@ -27,6 +27,14 @@ public class QuestManager {
         return allQuests.get(id).isComplete();
     }
     
+    public static int getQuestStatus(String id){
+        return allQuests.get(id).getStatus();
+    }
+    
+    public static void setQuestStatus(String id,int newStatus){
+        allQuests.get(id).setStatus(newStatus);
+    }
+    
     public static void addMobKill(AbstractMob monster){
         if (allQuestRequirementData.containsKey(monster.getName())){
             QuestRequirement[] questReq = allQuestRequirementData.get(monster.getName()).toArray(new QuestRequirement[0]);
@@ -57,7 +65,6 @@ public class QuestManager {
         return allQuests.values().toArray(new QuestData[0]);
     }
     public static void importQuestData(QuestData[] data){
-        System.out.println("Importing Quests!");
         for (QuestData q: data){
             addQuestData(q);
         }
@@ -67,8 +74,8 @@ public class QuestManager {
     public static void main(String[] args){
         AssetManager.init();
         QuestManager.init();
-        QuestData meep = new QuestData("questA");
-        QuestData merp = new QuestData("questB");
+        QuestData meep = new QuestData("questA",0);
+        QuestData merp = new QuestData("questB",0);
         meep.addRequirement(new QuestRequirement("billyscow","questA",1,1));
         merp.addRequirement(new QuestRequirement("billyscow","questA",0,2));
         QuestManager.addQuestData(meep);

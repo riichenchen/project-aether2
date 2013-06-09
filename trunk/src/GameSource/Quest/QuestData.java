@@ -14,9 +14,11 @@ import java.util.ArrayList;
 public class QuestData implements Serializable{
     private ArrayList<QuestRequirement> allRequirements;
     private String questId;
+    private int status;
     
-    public QuestData(String questId){
+    public QuestData(String questId,int status){
         this.questId = questId;
+        this.status = status;
         this.allRequirements = new ArrayList<>();
     }
     
@@ -41,4 +43,11 @@ public class QuestData implements Serializable{
         return questId;
     }
     
+    public int getStatus(){
+        return status;
+    }
+    
+    public void setStatus(int newStatus){
+        this.status = newStatus;
+    }
 }

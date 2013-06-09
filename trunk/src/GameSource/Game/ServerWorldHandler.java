@@ -150,7 +150,10 @@ public class ServerWorldHandler {
         
         //Save quest information
         String questTemplate = "update questdata set number = %s where accountId = "+accountId+" and questId = '%s'";
+        String statusTemplate = "update quests set status = %s where accountId = "+accountId+" and questId = '%s'";
+        
         for (QuestData quest: playerData.getQuestData()){
+            db.makeUpdate(String.format(statusTemplate,""+quest.getStatus(),quest.getQuestId()));
             for (QuestRequirement req: quest.getRequirements()){
                 db.makeUpdate(String.format(questTemplate,""+req.getNumber(),req.getQuestId()));
             }
@@ -196,7 +199,7 @@ public class ServerWorldHandler {
         LinkedList<QuestData> allQuestData = new LinkedList<>();
         try {
             while (allQuests.next()){
-                QuestData newQuest = new QuestData(allQuests.getString("questId"));
+                QuestData newQuest = new QuestData(allQuests.getString("questId"),allQuests.getInt("status"));
                 ResultSet questData = db.makeQuerry("select * from questdata where accountid = "+accountId+" and questId = '"+allQuests.getString("questId") +"'");
                 while (questData.next()){
                     newQuest.addRequirement(new QuestRequirement(questData.getString("requiredMob"),questData.getString("questId"),questData.getInt("number"),questData.getInt("requiredNumber")));
