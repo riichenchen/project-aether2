@@ -22,9 +22,9 @@ public class AGUI{
         protected static LinkedList<String> visibleWindows;
 
 	protected static AComponent focusedScreen;
-
+        
         protected static InventoryItem mouseItem;              //Static?
-	
+	private static ArrayList<AContainer.AScrollButton> scrollbars;
 //        public static boolean [] keys;			//Input fields; keyboard and mouse
 //        public static int mx, my;			//Public for easier updating and
 //        public static int [] mouseButtons;		//access by the AComponents
@@ -128,6 +128,7 @@ public class AGUI{
                 visibleWindows=new LinkedList<String>();
 	
 		inputSets= new HashMap<> ();
+                scrollbars=new ArrayList<>();
 	}
     
     public static ArrayList<String> get_windows(){
@@ -164,8 +165,15 @@ public class AGUI{
                     if (c.focus())          //Needed?
 			c.update();
 		}
+                for (AContainer.AScrollButton s: scrollbars){
+                    if (s.parent.focus()){
+                        s.update();
+                    }
+                }
 		inputSet.update();
 		AMouseInput.reset();
+                
+                
 //                InputManager.clearTyped();
 	}
 	public static void draw(Graphics g){
@@ -179,6 +187,9 @@ public class AGUI{
 	}
         public static void tick(){
             AMouseInput.tick();
+        }
+        public static void add(AContainer.AScrollButton b){
+            scrollbars.add(b);
         }
         
 }

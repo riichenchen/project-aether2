@@ -66,6 +66,9 @@ public abstract class AComponent{
 	public void setLocation(int x, int y) {
 		this.x=x; this.y=y;
 	}
+        public void setLocation(APoint a){
+            x=a.x; y=a.y;
+        }
 	public void setSize(int wid, int hght){
 		width=wid; height = hght;
 	}

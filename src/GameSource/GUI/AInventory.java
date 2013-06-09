@@ -35,9 +35,10 @@ public class AInventory extends AWindow{
         setImage(AImageFactory.getImage("invent"));
         setSize(172,393);
         setMoveBar(0,0,172,22);
-        buttons=new AContainer(0,0);
         buttonLocs=new ArrayList<>();
         loadButtonLocs();
+        buttons=new AContainer(0,0,24, buttonLocs);
+        
         tabs=new AButton [3];
         this.add(new AImage("invent_bg2",6,23));
         this.add(new AImage("invent_bg3",7,45));
@@ -55,9 +56,9 @@ public class AInventory extends AWindow{
         setVisible(true);
         activeTabButton=tabs[0];
         setPane("equip");
+        buttons.addScrollBar(153,65,183);
         
     }
-
     
     public void loadButtonLocs(){
         for (int tx=10; tx<148;tx+=36){
@@ -70,27 +71,27 @@ public class AInventory extends AWindow{
     public void loadButtons(){
         items = InventoryHandler.getItemIds();
         buttons.clear();
-        int buttonNo=0;
-        for (int i=0;i<Math.min(items.length,24);i++){
+//        int buttonNo=0;
+        for (int i=0;i<items.length;i++){
             String key=items[i];
             InventoryItem c=InventoryHandler.getItem(key);
             if ((c instanceof EquipItem && activeTab.equals("equip"))||
                 (c instanceof UseItem && activeTab.equals("use"))){
                 AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
                 b.setImage(c.getImage());
+                b.setFGImage(TextImageFactory.merge(c.getImage(),AImageFactory.getImage("item_fg")));
                 b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
-                b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
-                b.setVisible(true);
+//                b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
                 b.setParent(this);
                 buttons.add(b);
-                buttonNo++;
+   //             buttonNo++;
             }
         }
+        buttons.updateActiveContent();
     }
     
     public void setPane(String paneName){
         if (paneName.equals(activeTab)==false){
-            items = InventoryHandler.getItemIds();
  //           System.out.println("Pane Switch to "+paneName+"Items: "+items.length);
             activeTab=paneName;
             for (int i=0; i<3; i++){
@@ -100,27 +101,15 @@ public class AInventory extends AWindow{
                     activeTabButton.displayFG();
                 }
             }
-            buttons.clear();
-            int buttonNo=0;
-            for (int i=0;i<Math.min(items.length,24);i++){
-                String key=items[i];
-                InventoryItem c=InventoryHandler.getItem(key);
-                if ((c instanceof EquipItem && activeTab.equals("equip"))||
-                    (c instanceof UseItem && activeTab.equals("use"))){
-                    AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
-                    b.setImage(c.getImage());
-                    b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
-                    System.out.println(String.format(key+": %d items",InventoryHandler.getItemQuantity(key)));
-                    b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
-                    b.setVisible(true);
-                    b.setParent(this);
-                    buttons.add(b);
-                    buttonNo++;
-                }
-            }
+            loadButtons();
         }
     }
     
+    @Override
+    public void update(){
+        super.update();
+        buttons.update();
+    }
     /*
     @Override
     public void call(){

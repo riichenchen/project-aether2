@@ -20,6 +20,7 @@ public class AMessage {
     public static final int INVENTORY=8;
     public static final int NULL=9;
     public static final int INVENTORY_CLICK=10;
+    public static final int SCROLL=11;
     
     public static final int SEND_MESSAGE=100;
     
