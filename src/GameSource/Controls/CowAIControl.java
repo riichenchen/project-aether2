@@ -15,12 +15,18 @@ import java.util.Random;
  */
 public class CowAIControl extends AIControl{
 
+    protected GameMap curMap;
+    
     public CowAIControl(GameMap map) {
         super(new CowAICalculation());
+        curMap = map;
     }
 
     @Override
     public void update(Object returnValue) {
+        int curX = (int)boundTo.getX();
+        int curY = (int)boundTo.getY();
+        
 //        System.out.println("Updating cow "+boundTo.getId());
 //        Random meep = new Random();
 //        int xdist = meep.nextInt(3)-1;
