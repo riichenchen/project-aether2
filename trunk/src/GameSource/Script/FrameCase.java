@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class FrameCase {
     private ArrayList<FrameData> caseData;
-    private int toFrame = -1;
+    private int toFrame;
     
     public FrameCase() {
         this.caseData = new ArrayList<>();
@@ -25,6 +25,10 @@ public class FrameCase {
     
     public void setToFrame(int frame){
         this.toFrame = frame;
+    }
+    
+    public int getToFrame(){
+        return toFrame;
     }
     
     public boolean checkCaseData(int frame){
