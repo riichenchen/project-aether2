@@ -72,8 +72,8 @@ public class ANPCChat extends AWindow{
            int ySize=((calcHeight(g2)+13)/13)*13;
            setSize(519,28+44+ySize);
            String [] stuff={"null","prev","no"};
-           setButtons(stuff);
-//           setButtons(frame.getButtons());
+ //          setButtons(stuff);
+           setButtons(frame.getButtons());
            drawBG(g);
            g2.setFont(new Font ("Arial",Font.PLAIN,10));
            g2.setColor(foreground);
