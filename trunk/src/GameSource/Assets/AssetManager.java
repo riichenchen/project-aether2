@@ -16,6 +16,10 @@ import Testing.MyTestCharacter;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.Portals.PortalData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
+import GameSource.Script.FrameCase;
+import GameSource.Script.FrameData;
+import GameSource.Script.ScriptData;
+import GameSource.Script.ScriptFrame;
 import GameSource.Skills.ActiveSkillData;
 import GameSource.Skills.SkillData;
 import GameSource.Spawners.CowSpawner;
@@ -42,6 +46,7 @@ public class AssetManager {
     private static HashMap<String,Image> allImages;
     private static HashMap<String,ItemData> allItemData;
     private static HashMap<String, SkillData> allSkillData;
+    private static HashMap<String, ScriptData> allScriptData;
     
     public static void init(){
         allImages = new HashMap<>();
@@ -73,6 +78,74 @@ public class AssetManager {
         loadSkillData();
         System.out.println("Loaded skill data!");
         
+        allScriptData = new HashMap<>();
+        loadScriptData();
+        System.out.println("Loaded script data!");
+        
+    }
+    
+    private static void loadScriptData(){
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"scriptData.txt"));
+            String nextline;
+            String[] tempdata;
+            while ((nextline = fin.readLine())!= null){
+                tempdata = nextline.split(" ");
+                BufferedReader scriptFin = new BufferedReader(new FileReader(DIRECTORY+"script/"+tempdata[1]));
+                int nFrames = Integer.parseInt(scriptFin.readLine());
+                //Load in all frames
+                String scriptFinNext;
+                ScriptData newDat = new ScriptData();
+                for (int i = 0; i < nFrames; i++){
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("Frame")); // skip to next Frame tag
+                    String[] allButtons = scriptFin.readLine().split(" ");
+                    ScriptFrame newFrame = new ScriptFrame(allButtons);
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("Text")); // skip to next Text tag
+                    
+                    String text = "";
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("/Text")){
+                        text+= scriptFinNext+"\n";
+                    }
+                    text = text.substring(0,text.length()-1); // trim last \n
+                    newFrame.setText(text);
+                    
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("Outcome")); // skip to next Outcome tag
+                    
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("/Outcome")){
+                        String[] temp = scriptFinNext.split(" ");
+                        FrameData outcomeDat = new FrameData(temp[0],temp[1].split(","));
+                        newFrame.addOutcome(outcomeDat);
+                    }
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("/Frame"));// skip to endFrame tag
+                    newDat.addFrame(newFrame);
+                }
+                
+                //Load in all outcomes
+                int nOutcomes = Integer.parseInt(scriptFin.readLine());
+                for (int i = 0; i < nOutcomes; i++){
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("Case"));// skip to case tag
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("Require"));// skip to require tag
+                    FrameCase newCase = new FrameCase();
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("/Require")){
+                        String[] temp = scriptFinNext.split(" ");
+                        newCase.addData(temp[0], temp[1].split(","));
+                    }
+                    newCase.setToFrame(Integer.parseInt(scriptFin.readLine()));
+                    newDat.addCase(newCase);
+                    while (!(scriptFinNext = scriptFin.readLine()).equals("/Case"));// skip to end case tag
+                }
+                newDat.setFinalCase(Integer.parseInt(scriptFin.readLine()));
+                allScriptData.put(tempdata[0], newDat);
+            }
+        } catch (IOException e){
+            System.out.println("Error loading scripts!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+    
+    public static ScriptData getScriptData(String key){
+        return allScriptData.get(key);
     }
     
     private static void loadSkillData(){
