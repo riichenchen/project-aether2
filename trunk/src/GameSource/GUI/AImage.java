@@ -29,8 +29,8 @@ public class AImage extends AComponent{
         setName(name);
         setCallable(false);
         bg=AImageFactory.getImage(name);
-        System.out.println("IMAGE CHECK:");
-        System.out.println(bg==null);
+//        System.out.println("IMAGE CHECK:");
+//        System.out.println(bg==null);
         setSize(bg.getWidth(null),bg.getHeight(null));
         setVisible(true);
         setLocation(x,y);

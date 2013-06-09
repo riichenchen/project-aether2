@@ -32,4 +32,13 @@ public class TextImageFactory {
         gImg.dispose();
         return out;
     }
+    
+    public static BufferedImage merge(Image a, Image b){
+        BufferedImage out=new BufferedImage(b.getWidth(null),b.getHeight(null),BufferedImage.TYPE_INT_ARGB);
+        Graphics2D gImg= out.createGraphics();
+        gImg.drawImage(a,0,0,null);
+        gImg.drawImage(b,0,0,null);
+        gImg.dispose();
+        return out;
+    }
 }

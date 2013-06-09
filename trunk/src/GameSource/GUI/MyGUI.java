@@ -6,8 +6,8 @@ package GameSource.GUI;
 
 import java.awt.Graphics;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,7 +20,7 @@ public class MyGUI extends AGUI{
     private static AHUD hud;
     private static ATextField chat;
     private static BufferedReader in;
-    
+
 
     public static void init(int wid, int hgt){
         AGUI.init(wid,hgt);
@@ -45,6 +45,9 @@ public class MyGUI extends AGUI{
         chat.setParent(hud);
         windows.put(chat.getName(),chat);
         windowNames.add(chat.getName());
+        
+        
+        /*
         try{
             in=new BufferedReader(new FileReader("src/GameSource/Assets/GUI/TestLayout.txt"));
             String line=in.readLine();
@@ -60,6 +63,7 @@ public class MyGUI extends AGUI{
         for (String s: windowNames){
             System.out.println(s);
         }
+        */
     }
     public static AButton createAButton(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb,int type,String message){
         AButton out=new AButton(name,type,message);

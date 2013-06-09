@@ -31,7 +31,7 @@ public class AWindow extends AComponent{
 
 	public void call(){
             for (AComponent c: subComponents){
-                if (c.callable() && (c instanceof AContainer || c.collidepoint(AMouseInput.mx,AMouseInput.my))){
+                if (c.callable() && ( c instanceof AContainer ||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
                     c.call();
                     break;
                 }
