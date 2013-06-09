@@ -108,10 +108,10 @@ public class SteveyKeyListener extends AbstractKeyListener{
             CharacterHandler.addStat("mp",50);
         }
         if (eventKeyDown(KeyEvent.VK_3)){
-            CharacterHandler.addStat("money", 1000);
+            CharacterHandler.addStat("statPoints", 10);
         }
         if (eventKeyDown(KeyEvent.VK_4)){
-            CharacterHandler.addStat("money", -1000);
+            CharacterHandler.addStat("skillPoints", 10);
         }
         if (eventKeyDown(KeyEvent.VK_5)){
             myFrame = new NPCFrame("john");

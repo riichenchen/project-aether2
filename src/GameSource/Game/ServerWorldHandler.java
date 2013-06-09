@@ -58,7 +58,8 @@ public class ServerWorldHandler {
             GamePoint loc = new GamePoint(r.getFloat("x"),r.getFloat("y"),r.getFloat("z"));
             String mapType = r.getString("mapid");
             int[] entity_data = new int[]{r.getInt("maxhp"),r.getInt("hp"),r.getInt("maxmp"),r.getInt("mp"),
-                                          r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense")};
+                                          r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense"),
+                                          r.getInt("statPoints"),r.getInt("skillPoints")};
             return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),getSkillLevels(accountid),getQuestData(accountid));
         
         } catch (SQLException e){
@@ -109,6 +110,8 @@ public class ServerWorldHandler {
         db.makeUpdate(String.format(template,"exp",""+entityData[6]));
         db.makeUpdate(String.format(template,"attack",""+entityData[7]));
         db.makeUpdate(String.format(template,"defense",""+entityData[8]));
+        db.makeUpdate(String.format(template,"statPoints",""+entityData[9]));
+        db.makeUpdate(String.format(template,"skillPoints",""+entityData[10]));
         
         String invenTemplate = "update inventory set %s = %s where accountId = "+accountId+" and itemId = '%s'";
         
