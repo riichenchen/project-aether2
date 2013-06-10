@@ -5,6 +5,7 @@ import Database.PlayerData;
 import Database.SaveItemData;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.Portals.Portal;
+import GameSource.GUI.MyGUI;
 import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
 import GameSource.Quest.QuestManager;
@@ -74,6 +75,7 @@ public class ClientWorldHandler {
         EquipHandler.equipAll(pData.getEquipData());
         CharacterHandler.bindPlayer(newSpat);
         QuestManager.importQuestData(pData.getQuestData());
+        MyGUI.updateStatWindow();
         return newSpat;
     }
     
