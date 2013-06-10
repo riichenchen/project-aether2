@@ -15,6 +15,7 @@ import Spatial.Spatial;
 import Testing.MyTestCharacter;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.Portals.PortalData;
+import GameSource.Assets.Shop.ShopData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Script.FrameCase;
 import GameSource.Script.FrameData;
@@ -47,6 +48,7 @@ public class AssetManager {
     private static HashMap<String,ItemData> allItemData;
     private static HashMap<String, SkillData> allSkillData;
     private static HashMap<String, ScriptData> allScriptData;
+    private static HashMap<String, ShopData> allShopData;
     
     public static void init(){
         allImages = new HashMap<>();
@@ -82,8 +84,39 @@ public class AssetManager {
         loadScriptData();
         System.out.println("Loaded script data!");
         
+        allShopData = new HashMap<>();
+        loadShopData();
+        System.out.println("Loaded shop data!");
     }
     
+    private static void loadShopData(){
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"shopData.txt"));
+            String nextline;
+            String[] tempdat;
+            while ((nextline = fin.readLine())!= null){
+                tempdat = nextline.split(" ");
+                BufferedReader shopFin = new BufferedReader(new FileReader(DIRECTORY+"Shop/"+tempdat[1]));
+                String shopNextLine = shopFin.readLine();
+                String[] shopdat;
+                ShopData dat = new ShopData(shopNextLine); //Line 1: npc name
+                while ((shopNextLine = shopFin.readLine())!= null){
+                    shopdat = shopNextLine.split(" ");
+                    dat.addItem(shopdat[0], Integer.parseInt(shopdat[1]));
+                }
+                allShopData.put(tempdat[0],dat);
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to load shopData!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+        
+    }
+    
+    public ShopData getShopData(String key){
+        return allShopData.get(key);
+    }
     private static void loadScriptData(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"scriptData.txt"));
