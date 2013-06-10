@@ -3,7 +3,7 @@ package ArtificialIntelligence;
 import java.util.*;
 
 public class Pathfinding {
-	public final int INF, X_MAX, Y_MAX;
+	public static int INF, X_MAX, Y_MAX;
 	
 	private char [][] grid;
 	private int [] dist, prev;

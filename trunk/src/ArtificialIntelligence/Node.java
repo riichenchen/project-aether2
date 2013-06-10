@@ -14,4 +14,12 @@ public class Node {
                     location = _location;
                     cost = _cost;
             }
+            
+            public int getX() {
+                return location / (Pathfinding.Y_MAX);
+            }
+            
+            public int getY() {
+                return location % (Pathfinding.Y_MAX);
+            }
 }
