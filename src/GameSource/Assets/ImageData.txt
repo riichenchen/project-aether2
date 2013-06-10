@@ -1,3 +1,5 @@
 redpot inventory/use/redpot.png
 trollbaithelm inventory/equip/trollbaithelm.png
 trollbaitarmor inventory/equip/trollbaitarmor.png
+trollbaitsneakers inventory/equip/trollbaitsneakers.png
+trollbaitstaff inventory/equip/trollbaitstaff.png

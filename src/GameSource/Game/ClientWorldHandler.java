@@ -9,6 +9,7 @@ import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetSender;
 import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
+import GameSource.User.EquipHandler;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
 import GameSource.game.GameMap;
@@ -70,6 +71,7 @@ public class ClientWorldHandler {
         CharacterHandler.addAllStats(keys,pData.getEntity_data());
         CharacterHandler.addAllSkills(pData.getSkillData());
         CharacterHandler.setName(pData.getCharName());
+        EquipHandler.equipAll(pData.getEquipData());
         CharacterHandler.bindPlayer(newSpat);
         QuestManager.importQuestData(pData.getQuestData());
         return newSpat;

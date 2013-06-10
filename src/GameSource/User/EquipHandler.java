@@ -40,9 +40,25 @@ public class EquipHandler {
         EquipItem swap = allEquipped.get(type);
         if (swap != null){
             reverseEffects(swap);
+            InventoryHandler.addItem(swap);
         }
         allEquipped.put(type, item);
         addEffects(item);
         return swap;
+    }
+    
+    public static String[] exportItems(){
+        String[] export = new String[4];
+        InventoryItem[] equipItems = allEquipped.values().toArray(new InventoryItem[0]);
+        for (int i = 0; i < 4; i++){
+            reverseEffects((EquipItem)equipItems[i]);
+            export[i] = equipItems[i].getKey();
+        }
+        return export;
+    }
+    public static void equipAll(String[] equipData){
+        for (String each: equipData){
+            equip((EquipItem)ItemFactory.getItem(each));
+        }
     }
 }
