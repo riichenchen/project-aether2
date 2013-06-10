@@ -104,9 +104,13 @@ public class Pathfinding {
 				continue;
 			
 			visited[cur_v] = true;
+                        
 			
 			int cx = cur_v / Y_MAX;
 			int cy = cur_v % Y_MAX;
+                        
+                        if (cx == tar_x && cy == tar_y)
+                            break;
 			
 			//System.out.printf("%d %d %d\n", cx, cy, cur_cost);
 			
