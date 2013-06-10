@@ -8,6 +8,7 @@ import GameSource.User.CharacterHandler;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 
 public class AStats extends AWindow{
     
@@ -48,10 +49,16 @@ public class AStats extends AWindow{
     public void draw(Graphics g){
         String [] stats={"attack","defense","maxhp","maxmp","level","exp"};
         g.drawImage(bg,x,y,null);
+        Image disabled=AImageFactory.getImage("stat_up_no");
+        for (int i=0; i<6; i++){
+            g.drawImage(disabled,x+55,y+28+18*i,null);
+        }
         for (AComponent a: subComponents){
             if (a.visible())
                 a.draw(g);
         }
+        
+        
         g.setFont(new Font("Arial",Font.PLAIN,11));
         g.setColor(new Color(0,0,0));
         for (int i=0; i<6; i++){

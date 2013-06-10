@@ -4,6 +4,7 @@
  */
 package GameSource.GUI;
 
+import GameSource.Assets.AssetManager;
 import GameSource.User.Inventory.InventoryItem;
 import java.awt.Color;
 import java.awt.Font;
@@ -39,7 +40,9 @@ public class TextImageFactory {
         gImg.dispose();
         return out;
     }
-    
+    public static BufferedImage createDes(InventoryItem i){
+        return createDes(i.getItemId(),AssetManager.getItemData(i.getKey()).itemDescription);
+    }
     public static BufferedImage createDes(String name, String des){
         BufferedImage out=new BufferedImage(240,138,BufferedImage.TYPE_INT_ARGB);
         Graphics2D gImg= out.createGraphics();
@@ -82,6 +85,19 @@ public class TextImageFactory {
         gImg.drawString(title,39,14);
         gImg.setFont(new Font("Arial", Font.PLAIN, 10));
         gImg.drawString(i.getItemId(),38,32);
+        gImg.dispose();
+        return out;
+    }
+    
+    public static BufferedImage createShopLabel(InventoryItem i){
+        BufferedImage out=new BufferedImage(202,35,BufferedImage.TYPE_INT_ARGB);
+        Graphics2D gImg= out.createGraphics();
+        gImg.drawImage(i.getImage(),0,0,null);
+        gImg.setColor(new Color (0,0,0));
+        gImg.setFont(new Font("Arial", Font.BOLD, 10));
+        gImg.drawString(i.getItemId(),39,14);
+        gImg.setFont(new Font("Arial", Font.PLAIN, 10));
+        gImg.drawString("Sell Price: "+AssetManager.getItemData(i.getKey()).sellPrice,38,32);
         gImg.dispose();
         return out;
     }

@@ -74,7 +74,7 @@ public class AGUI{
 	//The function is called when the AComponent name has been triggered either by
 	//keyboard, and opens or closes the windows as needed.
 		AComponent cWindow=windows.get(name);
-		if (cWindow.focus()==true){
+		if (cWindow.visible()==true){
                     closeWindow(name);
 		}
                 else if (cWindow.visible()==false){
