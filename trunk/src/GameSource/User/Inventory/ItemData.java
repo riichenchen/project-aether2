@@ -17,6 +17,7 @@ public class ItemData {
     public String itemName;
     public String itemType;
     public String equipItemType = null;//Should be null unless this is an equipItem
+    public String itemDescription = "";
     public Image image;
     public HashMap<String,Integer> stats;
     
@@ -33,5 +34,8 @@ public class ItemData {
     }
     public void setImage(String key){
         this.image = AssetManager.getImage(key);
+    }
+    public void setItemDescription(String descrip){
+        this.itemDescription = descrip;
     }
 }

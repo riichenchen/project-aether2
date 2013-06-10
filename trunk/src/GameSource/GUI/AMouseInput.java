@@ -39,23 +39,35 @@ public class AMouseInput{
 	public static void update(MouseEvent e){
 		mx=e.getX(); my= e.getY();
 	}
+        
         public static void click(MouseEvent e){
-            buttonsClicked[e.getButton()-1]=YES;
-            if (clickTimer<DOUBLECLICK){
-                doubleclick[e.getButton()-1]=YES;
-                System.out.println("Doubleclick!");
-            }
-            clickTimer=0;
-        }
-	public static void press(MouseEvent e){
-            buttonsHeld[e.getButton()-1]=YES;
+//            buttonsClicked[e.getButton()-1]=YES;
 //            if (clickTimer<DOUBLECLICK){
 //                doubleclick[e.getButton()-1]=YES;
 //                System.out.println("Doubleclick!");
 //            }
+//            clickTimer=0;
+        }
+        
+	public static void press(MouseEvent e){
+            if (buttonsClicked[e.getButton()-1]==YES){
+                buttonsHeld[e.getButton()-1]=YES;
+                buttonsClicked[e.getButton()-1]=NO;
+            }
+            else if (buttonsHeld[e.getButton()-1]==NO){
+                buttonsClicked[e.getButton()-1]=YES;
+                if (clickTimer<DOUBLECLICK){
+                    doubleclick[e.getButton()-1]=YES;
+                    System.out.println("AMouseInput/press  Doubleclicked!");
+                }
+                clickTimer=0;
+            }    
+//            buttonsHeld[e.getButton()-1]=YES;
+
 	}
         public static void release(MouseEvent e){
             buttonsHeld[e.getButton()-1]=NO;
+ //           buttonsClicked[e.getButton()-1]=NO;
             buttonsReleased[e.getButton()-1]=YES;
         }
 	public static void reset(){

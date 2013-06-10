@@ -82,7 +82,7 @@ public class AGUI{
 			closeWindow(name);				
 		}
 	}
-	public static void mousePressCall(String name){
+	public static void mouseClickCall(String name){
             AComponent cWindow=windows.get(name);
             if (cWindow.visible()){
 			if (cWindow.focus()==false){
@@ -97,7 +97,7 @@ public class AGUI{
 
 		}
         }
-	public static void mouseClickCall(String name){
+	public static void mousePressCall(String name){
 		AComponent cWindow=windows.get(name);
 		if (cWindow.visible()){
 			if (cWindow.focus()==false){

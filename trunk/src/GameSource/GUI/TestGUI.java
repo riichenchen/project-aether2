@@ -56,6 +56,7 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
 
     public void mouseDragged(MouseEvent e) {
     	AMouseInput.update(e);
+      //  AMouseInput.press(e);
     }
 
     public void mouseMoved(MouseEvent e) {
