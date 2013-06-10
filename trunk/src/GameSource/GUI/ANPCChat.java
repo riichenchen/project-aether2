@@ -4,7 +4,9 @@
  */
 package GameSource.GUI;
 
+import GameSource.Assets.AssetManager;
 import GameSource.Script.NPCFrame;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -13,6 +15,7 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 
+//AssetManager.getImage(frame.getKey());
 /**
  *
  * @author Joy
@@ -81,6 +84,11 @@ public class ANPCChat extends AWindow{
            for (AComponent c: subComponents){
                 c.draw(g);
            }
+           Image cImg=AssetManager.getImage(frame.getKey());
+           g.drawImage(cImg,x+27,y+27,null);
+           g.drawImage(AssetManager.getImage("npc_name"), x+27,y+27+cImg.getHeight(null), null);
+           g2.setColor(new Color(255,255,255));
+           g.drawString(name,x+40,y+27+cImg.getHeight(null)+30);
         }
     }
     public void drawBG(Graphics g){

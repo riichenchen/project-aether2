@@ -11,15 +11,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class AStats extends AWindow{
-    
+    private int statPoints;
     public AStats(){
         super();
         setName("user_stats");
         setSize(192,216);
         setMoveBar(0,0,192,20);
         setImage(AImageFactory.getImage("stat_stat"));
+        statPoints=CharacterHandler.getStat("statPoints");
         loadButtons();
         updateButtons();
+        
     }
     public void loadButtons(){
         String [] stats={"attack","defense","maxhp","maxmp"};
@@ -33,13 +35,13 @@ public class AStats extends AWindow{
         }
     }
     public void updateButtons(){
-        if (CharacterHandler.getStat("statPoints")>0 && (subComponents.get(0).visible()==false)){
+        if (statPoints>0 && (subComponents.get(0).visible()==false)){
             System.out.println("AStats/updateButtons   Buttons are visible!");
             for (AComponent a: subComponents){
                 a.setVisible(true);
             }
         }
-        else if ((CharacterHandler.getStat("statPoints")<=0 && (subComponents.get(0).visible()))){
+        else if ((statPoints<=0 && (subComponents.get(0).visible()))){
             System.out.println("AStats/updateButtons   Buttons are invisible!");
             for (AComponent a: subComponents){
                 a.setVisible(false);
@@ -72,5 +74,12 @@ public class AStats extends AWindow{
                     break;
                 }
             }
+    }
+    public void update(){
+        super.update();
+        if (CharacterHandler.getStat("statPoints")!=statPoints){
+            statPoints=CharacterHandler.getStat("statPoints");
+            updateButtons();
+        }
     }
 }
