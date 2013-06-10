@@ -14,6 +14,7 @@ public class NormalInputSet extends AbstractInputSet{
                 keyMap.put("equipment",KeyEvent.VK_E);
                 keyMap.put("user_stats",KeyEvent.VK_T);
                 keyMap.put("skills",KeyEvent.VK_K);
+                keyMap.put("shop",KeyEvent.VK_S);
 		mouseUsed=false;
 	}
 
