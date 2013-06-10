@@ -27,6 +27,7 @@ public class AMessage {
     public static final int SHOP=14;
     public static final int SHOP_SELL=15;
     public static final int SHOP_BUY=16;
+    public static final int SHOP_CLICK=17;
     private int type;
     private String content;
     

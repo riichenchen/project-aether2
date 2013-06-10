@@ -115,7 +115,7 @@ public class SteveyKeyListener extends AbstractKeyListener{
         }
         if (eventKeyDown(KeyEvent.VK_5)){
             myFrame = new NPCFrame("john");
-            MyGUI.showNPC(myFrame);
+            MyGUI.showNPC(myFrame,"john");
         }
 //        if (eventKeyDown(KeyEvent.VK_6)){
 //            MyGUI.showNPC(myFrame.next());

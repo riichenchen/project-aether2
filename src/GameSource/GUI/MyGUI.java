@@ -70,7 +70,8 @@ public class MyGUI extends AGUI{
     }
 
 
-    public static void showNPC(NPCFrame f){
+    public static void showNPC(NPCFrame f,String n){
+        npcchat.setName(n);
         npcchat.setFrame(f);
         npcchat.setContent(f.next());
         openWindow("npcchat");
@@ -93,6 +94,12 @@ public class MyGUI extends AGUI{
         if (skills!=null){
             skills.setPane(newPane);
         }
+    }
+    public static void setShopBuyItem(String i){
+        shop.setBuyItem(i);
+    }
+    public static void setShopSellItem(String i){
+        shop.setSellItem(i);
     }
     public static void updateItems(){
         if (invent!=null){

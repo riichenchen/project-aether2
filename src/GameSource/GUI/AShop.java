@@ -36,6 +36,8 @@ public class AShop extends AWindow{
     private String [] itemsL; private String [] itemsR;
     private ArrayList<APoint> buttonLocsL; private ArrayList<APoint> buttonLocsR;
     private AContainer buttonsL; private AContainer buttonsR;
+    private String buyItem="";
+    private String sellItem="";
     
     public AShop(){
         super("shop");
@@ -60,24 +62,38 @@ public class AShop extends AWindow{
         System.out.println("AShop/Constr.   activeTabButton:"+activeTabButtonR);
         activeTabButtonR.setVisible(true);
         setRightPane("equip");
-  
+        
+        loadHeader();
+        
+        
+        setVisible(true);
+    }
+    public void setBuyItem(String s){
+        buyItem=s;
+    }
+    public void setSellItem(String s){
+        sellItem=s;
+    }
+    
+    public void loadHeader(){
         buyNum=new ATextField(84,14,21,50);
         add(buyNum);
         sellNum=new ATextField(84,14,252,50);
         add(sellNum);
         buyConfirm=new AButton("shop_buy",AMessage.SHOP_BUY,"buying!");
+        buyConfirm.setSize(64,16);
         buyConfirm.setImage(AImageFactory.getImage("shop_buy"));
         buyConfirm.setFGImage(AImageFactory.getImage("shop_buy_fg"));
         buyConfirm.setLocation(140,50);
+        buyConfirm.setVisible(true);
         add(buyConfirm);
         sellConfirm=new AButton("shop_sell",AMessage.SHOP_SELL,"selling!");
+        sellConfirm.setSize(64,16);
         sellConfirm.setImage(AImageFactory.getImage("shop_sell"));
         sellConfirm.setFGImage(AImageFactory.getImage("shop_sell_fg"));
         sellConfirm.setLocation(140+231,50);
+        sellConfirm.setVisible(true);
         add(sellConfirm);
-        
-        
-        setVisible(true);
     }
     public void loadTabs(){
         for (int i=0; i<3; i++){
@@ -117,7 +133,6 @@ public class AShop extends AWindow{
             loadRightButtons();
         }
     }
-    
     public void loadRightButtons(){
         itemsR = InventoryHandler.getItemIds();
         buttonsR.clear();
@@ -137,7 +152,6 @@ public class AShop extends AWindow{
         }
         buttonsR.updateActiveContent();
     } 
-    
      public void loadLeftButtons(){
         itemsL = InventoryHandler.getItemIds();
         buttonsL.clear();

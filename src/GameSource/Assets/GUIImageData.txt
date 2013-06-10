@@ -90,7 +90,7 @@ skill_2_fg skills/Skill.main.Tab.enabled.2.png
 skills_main skills/Skill.main.backgrnd.png
 shop_main shop/Shop.backgrnd.png
 shop_sell shop/Shop.BtSell.normal.0.png
-shop_sell_fg shop/Shop.BtSell.pressed.0.png
+shop_sell_fg shop/Shop.BtSell.mouseOver.0.png
 shop_all shop/Shop.TabBuy.enabled.0.png
 shop_item_fg shop/Shop.selected.png
 shop_buy_fg shop/Shop.BtBuy.mouseOver.0.png
