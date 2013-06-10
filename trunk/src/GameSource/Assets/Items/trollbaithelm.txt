@@ -1,5 +1,6 @@
 Trollbait Helm
 A troll baithelm Very trolly +300 attk, +300 def.
+30000
 equip
 head
 trollbaithelm

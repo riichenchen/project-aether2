@@ -1,5 +1,6 @@
 Red Potion
 A red potion. Heals some quantity of hp (100).
+50
 use
 redpot
 hp 50

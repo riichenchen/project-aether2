@@ -19,6 +19,8 @@ public class ItemData {
     public String equipItemType = null;//Should be null unless this is an equipItem
     public String itemDescription = "";
     public Image image;
+    public int sellPrice;
+    
     public HashMap<String,Integer> stats;
     
     public ItemData(String itemName,String itemType){
@@ -37,5 +39,8 @@ public class ItemData {
     }
     public void setItemDescription(String descrip){
         this.itemDescription = descrip;
+    }
+    public void setSellPrice(int price){
+        this.sellPrice = price;
     }
 }
