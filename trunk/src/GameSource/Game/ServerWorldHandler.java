@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ServerWorldHandler {
     private DatabaseHandler db;
@@ -60,7 +62,8 @@ public class ServerWorldHandler {
             int[] entity_data = new int[]{r.getInt("maxhp"),r.getInt("hp"),r.getInt("maxmp"),r.getInt("mp"),
                                           r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense"),
                                           r.getInt("statPoints"),r.getInt("skillPoints")};
-            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),getSkillLevels(accountid),getQuestData(accountid));
+            return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),
+                                  getSkillLevels(accountid),getQuestData(accountid),getEquipData(accountid));
         
         } catch (SQLException e){
             System.out.println("Error fetching player data!");
@@ -161,6 +164,13 @@ public class ServerWorldHandler {
                 db.makeUpdate(String.format(questTemplate,""+req.getNumber(),req.getQuestId()));
             }
         }
+        
+        //Save equipment information
+        db.makeUpdate("delete from equip where accountId = "+accountId);
+        String equipTemplate = "insert into equip(accountId,itemId) values(%d,'%s')";
+        for (String equipment: playerData.getEquipData()){
+            db.makeUpdate(String.format(equipTemplate,accountId,equipment));
+        }
         //Log them out
         db.makeUpdate("update accounts set loggedin = false where idaccounts = "+accountId);
     }
@@ -216,5 +226,18 @@ public class ServerWorldHandler {
             System.exit(0);
         }
         return allQuestData.toArray(new QuestData[0]);
+    }
+    private String[] getEquipData(int accountId){
+        ResultSet allItems = db.makeQuerry("select * from equip where accountId = "+accountId);
+        String[] equips = new String[4];
+        try {
+            for (int i = 0; i < 4; i++){//should always have a max of 4 items equiped at a time :3
+                allItems.next();
+                equips[i] = allItems.getString("itemId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServerWorldHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return equips;
     }
 }

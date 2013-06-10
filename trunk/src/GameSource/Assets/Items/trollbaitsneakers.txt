@@ -1,0 +1,7 @@
+Trollbait Sneakers
+Chen's old sneakers that she forced on you; kinda cozy. +10 defense
+100
+equip
+feet
+trollbaitsneakers
+defense 10

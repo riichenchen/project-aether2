@@ -8,6 +8,7 @@ import GameSource.Game.GamePoint;
 import GameSource.Quest.QuestData;
 import GameSource.Quest.QuestManager;
 import GameSource.User.CharacterHandler;
+import GameSource.User.EquipHandler;
 import GameSource.User.InventoryHandler;
 import java.io.Serializable;
 
@@ -25,12 +26,14 @@ public class PlayerData implements Serializable{
     private String charName;
     private SaveSkillData[] allSkills;
     private QuestData[] allQuestData;
+    private String[] equipData;
     
     public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType){
         this.characterType = CharacterType;
         this.location = location;
         this.mapType = mapType;
         this.accountId = accountId;
+        this.equipData = EquipHandler.exportItems();
         String[] allItemIds = InventoryHandler.getItemIds();
         this.items = new SaveItemData[allItemIds.length];
         for (int i = 0; i < allItemIds.length; i++){
@@ -52,7 +55,8 @@ public class PlayerData implements Serializable{
         this.allQuestData = QuestManager.exportQuestData();
     }
     
-    public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType,SaveItemData[] loadData,int[] entity_data,String charName,SaveSkillData[] allSkills,QuestData[] allQuestData){
+    public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType,SaveItemData[] loadData,
+                      int[] entity_data,String charName,SaveSkillData[] allSkills,QuestData[] allQuestData,String[] equipData){
         this.characterType = CharacterType;
         this.location = location;
         this.mapType = mapType;
@@ -73,6 +77,7 @@ public class PlayerData implements Serializable{
         this.charName = charName;
         this.allSkills = allSkills;
         this.allQuestData = allQuestData;
+        this.equipData = equipData;
     }
     
     public int getCharacterType() {
@@ -104,5 +109,8 @@ public class PlayerData implements Serializable{
     }
     public QuestData[] getQuestData(){
         return allQuestData;
+    }
+    public String[] getEquipData(){
+        return equipData;
     }
 }

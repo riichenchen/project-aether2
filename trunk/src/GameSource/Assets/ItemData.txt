@@ -1,3 +1,5 @@
 redpot redpot.txt
 trollbaithelm trollbaithelm.txt
 trollbaitarmor trollbaitarmor.txt
+trollbaitstaff trollbaitstaff.txt
+trollbaitsneakers trollbaitsneakers.txt

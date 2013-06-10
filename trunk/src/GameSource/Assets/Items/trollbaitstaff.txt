@@ -1,0 +1,7 @@
+Trollbait Staff
+A troll baithelm Very trolly +30 attk
+300
+equip
+weapon
+trollbaitstaff
+attack 30

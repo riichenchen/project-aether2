@@ -97,27 +97,7 @@ public class AShop extends AWindow{
         }
     }
     
-    public void loadRightButtons(){
-        items = InventoryHandler.getItemIds();
-        buttons.clear();
-//        int buttonNo=0;
-        for (int i=0;i<items.length;i++){
-            String key=items[i];
-            InventoryItem c=InventoryHandler.getItem(key);
-            if ((c instanceof EquipItem && activeTab.equals("equip"))||
-                (c instanceof UseItem && activeTab.equals("use"))){
-                AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
-                b.setImage(c.getImage());
-                b.setFGImage(TextImageFactory.merge(c.getImage(),AImageFactory.getImage("item_fg")));
-                b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
-//                b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
-                b.setParent(this);
-                buttons.add(b);
-   //             buttonNo++;
-            }
-        }
-        buttons.updateActiveContent();
-    }
+
     
     
     
