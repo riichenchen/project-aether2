@@ -40,6 +40,7 @@ public class AEquip extends AWindow{
         }
     }
     public void update(){
+        super.update();
         loadImages();
     }
     

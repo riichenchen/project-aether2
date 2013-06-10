@@ -57,8 +57,6 @@ public class AStats extends AWindow{
             if (a.visible())
                 a.draw(g);
         }
-        
-        
         g.setFont(new Font("Arial",Font.PLAIN,11));
         g.setColor(new Color(0,0,0));
         for (int i=0; i<6; i++){
