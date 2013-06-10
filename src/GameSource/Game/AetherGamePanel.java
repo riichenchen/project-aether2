@@ -106,7 +106,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        AMouseInput.click(e);
+        //AMouseInput.click(e);
     }
 
     @Override

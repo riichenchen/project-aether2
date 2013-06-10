@@ -1,4 +1,5 @@
 package GameSource.GUI;
+import GameSource.Globals;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
@@ -22,16 +23,13 @@ public class NormalInputSet extends AbstractInputSet{
 
 	public void update(){
             boolean passMouse=MyGUI.mouseFree() && (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT));
-            
             boolean a=AMouseInput.clicked(AMouseInput.LEFT);
-            boolean b=AMouseInput.released(AMouseInput.LEFT)&& (AMouseInput.held(AMouseInput.LEFT));
+            boolean b=AMouseInput.released(AMouseInput.LEFT)&&(AMouseInput.held(AMouseInput.LEFT));
             if (a||b||AMouseInput.doubleclick(AMouseInput.LEFT)) {
-                System.out.println("NormalInputSet/update    FreeMouse case a:");
-                System.out.println(a);
-                System.out.println("NormalInputSet/update    FreeMouse case b:");
-                System.out.println(b);
-                MyGUI.freeMouse();
-                passMouse=false;
+                if (MyGUI.mouseFree()==false){
+                    MyGUI.freeMouse();
+                    passMouse=false;
+                }
             }
 		
             String [] cwindows = MyGUI.get_windows().toArray(new String [0]);
@@ -50,29 +48,16 @@ public class NormalInputSet extends AbstractInputSet{
                 }
                for (String wname: cwindows){
 			if (MyGUI.getWindow(wname).visible() && MyGUI.getWindow(wname).collidepoint(AMouseInput.mx,AMouseInput.my)){
-                            /*
-				if (AMouseInput.clicked(AMouseInput.LEFT)){
-	//				System.out.println("hi");
-					MyGUI.mouseClickCall(wname);
-					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
-                                }
-                                * */
                                 if (AMouseInput.clicked(AMouseInput.LEFT)){
-	//				System.out.println("hi");
 					MyGUI.mouseClickCall(wname);
                                         passMouse=false;
 					break;
                                 }
-                                
-//                                if (AMouseInput.clicked(AMouseInput.LEFT)){
-//                                        MyGUI.mouseClickCall(wname);
-//					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
-//                                }
 			}
 		}
 		if (passMouse){
                     MyGUI.unfocus();
-                    System.out.println("Mouse call that I have nothing to do with");
+                    Globals.theMouse.click(AMouseInput.mx, AMouseInput.my);
 		}
                 if (InputManager.keys[KeyEvent.VK_ESCAPE]){
                     MyGUI.closeWindow();

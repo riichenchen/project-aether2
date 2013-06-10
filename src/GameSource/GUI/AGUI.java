@@ -37,8 +37,10 @@ public class AGUI{
         }
 	
 	public static void shiftFocus(String name){
-		if (focusedScreen==null)
+		if (focusedScreen==null){
 			focusedScreen=windows.get(name);
+                        focusedScreen.setFocused(true);
+                }
 		else{
 			focusedScreen.setFocused(false);
 			focusedScreen=windows.get(name);
@@ -72,14 +74,14 @@ public class AGUI{
 	//The function is called when the AComponent name has been triggered either by
 	//keyboard, and opens or closes the windows as needed.
 		AComponent cWindow=windows.get(name);
-		if (cWindow.visible()==false){
-			openWindow(name);
+		if (cWindow.focus()==true){
+                    closeWindow(name);
 		}
-		if (cWindow.focus()==false){
-			shiftFocus(name);
+                else if (cWindow.visible()==false){
+                    openWindow(name);
 		}
-		else{
-			closeWindow(name);				
+                else if (cWindow.focus()==false){
+                    shiftFocus(name);			
 		}
 	}
 	public static void mouseClickCall(String name){
@@ -97,15 +99,7 @@ public class AGUI{
 
 		}
         }
-	public static void mousePressCall(String name){
-		AComponent cWindow=windows.get(name);
-		if (cWindow.visible()){
-			if (cWindow.focus()==false){
-				shiftFocus(name);
-			}
-                        cWindow.call();	
-		}
-	}
+
 	public static void bindToMouse(InventoryItem i){
             mouseItem=i;
         }
@@ -158,8 +152,6 @@ public class AGUI{
     }
 	
 	public static void update(){						
-                AMouseInput.tick();
-		
 		for (String name: visibleWindows){
                     AComponent c=windows.get(name);
                     if (c.focus())          //Needed?
@@ -170,11 +162,9 @@ public class AGUI{
                         s.update();
                     }
                 }
-		inputSet.update();
+                inputSet.update();
 		AMouseInput.reset();
-                
-                
-//                InputManager.clearTyped();
+                AMouseInput.tick();
 	}
 	public static void draw(Graphics g){
                 for (int i=visibleWindows.size()-1; i>=0; i--){
@@ -193,3 +183,16 @@ public class AGUI{
         }
         
 }
+
+/* Unused junk
+ * 
+ * 	public static void mousePressCall(String name){
+		AComponent cWindow=windows.get(name);
+		if (cWindow.visible()){
+			if (cWindow.focus()==false){
+				shiftFocus(name);
+			}
+                        cWindow.call();	
+		}
+	}
+ */

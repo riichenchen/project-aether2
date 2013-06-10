@@ -28,26 +28,12 @@ public class AMouseInput{
             doubleclick=new int[3];
             clickTimer=0;
         }
-	public AMouseInput(){
-		mx=-1; my=-1;
-		buttonsClicked= new int [3];
-                buttonsHeld= new int [3];
-                buttonsReleased=new int[3];
-                doubleclick=new int[3];
-                clickTimer=0;
-	}
+	
 	public static void update(MouseEvent e){
 		mx=e.getX(); my= e.getY();
 	}
         
-        public static void click(MouseEvent e){
-//            buttonsClicked[e.getButton()-1]=YES;
-//            if (clickTimer<DOUBLECLICK){
-//                doubleclick[e.getButton()-1]=YES;
-//                System.out.println("Doubleclick!");
-//            }
-//            clickTimer=0;
-        }
+        
         
 	public static void press(MouseEvent e){
             if (buttonsClicked[e.getButton()-1]==YES){
@@ -58,11 +44,9 @@ public class AMouseInput{
                 buttonsClicked[e.getButton()-1]=YES;
                 if (clickTimer<DOUBLECLICK){
                     doubleclick[e.getButton()-1]=YES;
-                    System.out.println("AMouseInput/press  Doubleclicked!");
                 }
                 clickTimer=0;
             }    
-//            buttonsHeld[e.getButton()-1]=YES;
 
 	}
         public static void release(MouseEvent e){
@@ -95,3 +79,24 @@ public class AMouseInput{
             clickTimer+=10;
         }
 }
+
+/* Unused Junk
+ * 
+ * public AMouseInput(){
+		mx=-1; my=-1;
+		buttonsClicked= new int [3];
+                buttonsHeld= new int [3];
+                buttonsReleased=new int[3];
+                doubleclick=new int[3];
+                clickTimer=0;
+	}
+        * 
+ *public static void click(MouseEvent e){
+            buttonsClicked[e.getButton()-1]=YES;
+            if (clickTimer<DOUBLECLICK){
+                doubleclick[e.getButton()-1]=YES;
+                System.out.println("Doubleclick!");
+            }
+            clickTimer=0;
+        }
+ */
