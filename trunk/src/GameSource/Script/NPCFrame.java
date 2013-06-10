@@ -19,8 +19,10 @@ public class NPCFrame {
     private int currentFrameNumber = -1;
     private LinkedList<Integer> history = new LinkedList<>();
     private ScriptFrame currentFrame;
+    private String key;
     
     public NPCFrame(String framename) {
+        this.key = framename;
         this.data = AssetManager.getScriptData(framename);
     }
     public String [] getButtons(){
@@ -86,5 +88,8 @@ public class NPCFrame {
         System.out.println(CharacterHandler.getStat("exp"));
         System.out.println(CharacterHandler.getStat("money"));
         System.out.println(InventoryHandler.getItemQuantity("trollbaithelm"));
+    }
+    public String getKey(){
+        return key;
     }
 }
