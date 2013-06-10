@@ -12,7 +12,7 @@ import java.awt.Point;
  * @author Shiyang
  */
 public class AetherMouse extends Spatial{
-
+    
     public AetherMouse(float x,float z) {
         super(x, 1, z, 100, 430, 0,0,0,0);
     }
@@ -20,6 +20,10 @@ public class AetherMouse extends Spatial{
     @Override
     public void collideEffect(Spatial s) {
         //shouldn't eber be called
+    }
+    
+    public void click(int mx,int my){
+        
     }
     
     @Override
