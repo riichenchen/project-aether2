@@ -1,4 +1,5 @@
 Icicle
+Drives an icicle into single target.
 active
 single
 10

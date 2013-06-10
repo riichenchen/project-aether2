@@ -157,10 +157,12 @@ public class AssetManager {
                 tempdata = nextline.split(" ");
                 BufferedReader skillFin = new BufferedReader(new FileReader(DIRECTORY+"SkillData/"+tempdata[1]));
                 String skillName = skillFin.readLine();
+                String skillDescrip = skillFin.readLine();
                 String skillType = skillFin.readLine();
                 if (skillType.equals("active")){
                     String type = skillFin.readLine();
                     ActiveSkillData dat = new ActiveSkillData(skillName,type);
+                    dat.setDescription(skillDescrip);
                     int n = Integer.parseInt(skillFin.readLine());
                     for (int i = 1; i <= n; i++){
                         //Set Range
@@ -411,10 +413,12 @@ public class AssetManager {
                 BufferedReader itemFin = new BufferedReader(new FileReader(DIRECTORY+"Items/"+tempdat[1]));
                 String name = itemFin.readLine();
                 String description = itemFin.readLine();
+                int sellPrice = Integer.parseInt(itemFin.readLine());
                 String itemType = itemFin.readLine();
                 String equipType = null;
                 ItemData itemdata = new ItemData(name,itemType);
                 itemdata.setItemDescription(description);
+                itemdata.setSellPrice(sellPrice);
                 if (itemType.equals("equip")){
                     equipType = itemFin.readLine();
                     itemdata.equipItemType = equipType;
@@ -449,7 +453,8 @@ public class AssetManager {
 //    }
     public static void main(String[] args){
         AssetManager.init();
-        System.out.println(AssetManager.getItemData("redpot").itemDescription);
-        System.out.println(AssetManager.getItemData("trollbaithelm").itemDescription);
+//        System.out.println(AssetManager.getSkillData("blastburn").getName()+AssetManager.getSkillData("blastburn").getDescription());
+//        System.out.println(AssetManager.getSkillData("icicle").getName()+AssetManager.getSkillData("icicle").getDescription());
+        System.out.println(AssetManager.getItemData("trollbaithelm").sellPrice);
     }
 }

@@ -1,4 +1,5 @@
 Blast Burn
+Call flames from the heavens to roast thy foe.
 active
 area
 10
