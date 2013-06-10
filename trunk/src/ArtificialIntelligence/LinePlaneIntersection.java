@@ -9,6 +9,8 @@
  
  //Refer to: http://mathworld.wolfram.com/Line-PlaneIntersection.html
  
+package ArtificialIntelligence;
+
 public class LinePlaneIntersection {
    public class Point {
        double x, y, z;

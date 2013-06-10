@@ -1,3 +1,5 @@
+package ArtificialIntelligence;
+
 public class MobCounter {
 	
 	public int X_MAX, Y_MAX;

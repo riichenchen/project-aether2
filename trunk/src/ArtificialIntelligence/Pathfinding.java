@@ -1,34 +1,8 @@
+package ArtificialIntelligence;
+
 import java.util.*;
 
 public class Pathfinding {
-	
-	public class Edge {
-		int to, cost;
-		public Edge(int _to, int _cost) {
-			to = _to;
-			cost = _cost;
-		}
-	}
-	
-	public class Node {
-		int location, cost;
-		public Node(int _location, int _cost) {
-			location = _location;
-			cost = _cost;
-		}
-	}
-	
-	public class NodeComparator implements Comparator<Node> {
-		public int compare (Node x, Node y) {
-			if (x.cost < y.cost)
-				return -1;
-			
-			if (x.cost > y.cost)
-				return 1;
-			
-			return 0;
-		}
-	}
 	public final int INF, X_MAX, Y_MAX;
 	
 	private char [][] grid;
@@ -182,7 +156,7 @@ public class Pathfinding {
 		solve();
 	}
 	
-	public static void main(String [] args) {
+	/*public static void main(String [] args) {
 		char [][] test_grid = {
 		{0, 0, 0, 0},
 		{0, 0, 1, 0},
@@ -198,6 +172,6 @@ public class Pathfinding {
 		
 		for (int i = 0; i < bPathLen; i++)
 			System.out.printf("%d %d\n", (int)bPath.get(i) / test.Y_MAX, (int)bPath.get(i) % test.Y_MAX);
-	}
+	}*/
 	
 }
