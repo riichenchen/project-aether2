@@ -31,9 +31,6 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
 
     public void keyPressed(KeyEvent e) {
     	InputManager.keyDown(e.getKeyCode());
-        if (e.getKeyCode()==KeyEvent.VK_SHIFT){
-            System.out.println("Shift");
-        }
 //        System.out.println("pressed "+ e.getKeyCode()+":"+(char)(e.getKeyCode()));
 //    	MyGUI.update();
     }
@@ -70,7 +67,7 @@ class TestGUI extends JPanel implements MouseListener, MouseMotionListener, KeyL
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        AMouseInput.click(e);
+//        AMouseInput.click(e);
 //        System.out.println("click!");
     }
 
