@@ -43,9 +43,6 @@ public class AEquip extends AWindow{
         loadImages();
     }
     
-    public void update(){
-        loadImages();
-    }
 //    public void draw(Graphics g){
 //        
 //        Image back=TextImageFactory.createEquipLabel(ItemFactory.getItem("trollbaithelm"),"TROLL");
