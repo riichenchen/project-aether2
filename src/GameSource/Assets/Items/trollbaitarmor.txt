@@ -1,0 +1,8 @@
+Trollbait Armour
+Some armour which shall do something. hp+100, mp+100
+50000
+equip
+body
+trollbaitarmor
+maxhp 100
+maxmp 100

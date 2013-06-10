@@ -43,6 +43,8 @@ public class AProcessor {
                 CharacterHandler.addStat("statPoints", -1);
                 MyGUI.updateStatWindow();
                 break;
+            case AMessage.SHOP: MyGUI.changeShopInventPane(m.content());
+                break;
             default: System.out.println("uselessButton");
         }    
     }

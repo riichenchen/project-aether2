@@ -22,6 +22,7 @@ public class MyGUI extends AGUI{
     private static AEquip equip;
     private static AStats stats;
     private static ASkills skills;
+    private static AShop shop;
     private static BufferedReader in;
 
 
@@ -53,6 +54,10 @@ public class MyGUI extends AGUI{
         skills.setVisible(false);
         windows.put(skills.getName(),skills);
         windowNames.add(skills.getName());
+        shop=new AShop();
+        shop.setVisible(false);
+        windows.put(shop.getName(),shop);
+        windowNames.add(shop.getName());
         
         chat=new ATextField(440,13,65,30);
         chat.setName("chat");
@@ -77,6 +82,11 @@ public class MyGUI extends AGUI{
     public static void changeInventPane(String newPane){
         if (invent!=null){
             invent.setPane(newPane);
+        }
+    }
+    public static void changeShopInventPane(String newPane){
+        if (shop!=null){
+            shop.setRightPane(newPane);
         }
     }
     public static void changeSkillsPane(String newPane){
