@@ -39,6 +39,9 @@ public class AEquip extends AWindow{
             }
         }
     }
+    public void update(){
+        loadImages();
+    }
     
     public void update(){
         loadImages();

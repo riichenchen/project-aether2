@@ -72,6 +72,7 @@ scroll_up_fg scrollbar/chat.scroll.over.0.png
 scroll_down_fg scrollbar/chat.scroll.over.2.png
 scroll_bar_fg scrollbar/chat.scroll.over.3.png
 scroll_mid_fg scrollbar/chat.scroll.over.1.png
+stat_up_no stat/Stat.main.BtHpUp.disabled.0.png
 stat_up stat/Stat.main.BtHpUp.normal.0.png
 stat_up_fg stat/Stat.main.BtHpUp.mouseOver.0.png
 stat_up_call stat/Stat.main.BtHpUp.pressed.0.png
@@ -91,3 +92,6 @@ shop_main shop/Shop.backgrnd.png
 shop_sell shop/Shop.BtSell.normal.0.png
 shop_sell_fg shop/Shop.BtSell.pressed.0.png
 shop_all shop/Shop.TabBuy.enabled.0.png
+shop_item_fg shop/Shop.selected.png
+shop_buy_fg shop/Shop.BtBuy.mouseOver.0.png
+shop_buy shop/Shop.BtBuy.normal.0.png

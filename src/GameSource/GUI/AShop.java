@@ -11,6 +11,7 @@ import GameSource.User.Inventory.EquipItem;
 import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.Inventory.UseItem;
 import GameSource.User.InventoryHandler;
+import GameSource.User.ItemFactory;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -26,9 +27,13 @@ public class AShop extends AWindow{
     private AButton activeTabButtonL;
     private String activeTabR;
     private AButton activeTabButtonR;
+    private AButton sellConfirm;
+    private AButton buyConfirm;
+    private ATextField sellNum;
+    private ATextField buyNum;
     
     private AButton [] tabsL; private AButton [] tabsR;
-    private String [] items; private String [] itemsR;
+    private String [] itemsL; private String [] itemsR;
     private ArrayList<APoint> buttonLocsL; private ArrayList<APoint> buttonLocsR;
     private AContainer buttonsL; private AContainer buttonsR;
     
@@ -51,12 +56,27 @@ public class AShop extends AWindow{
         this.add(buttonsL);
         
         activeTabButtonL=tabsL[0];
-       
         activeTabButtonR=tabsR[0];
         System.out.println("AShop/Constr.   activeTabButton:"+activeTabButtonR);
         activeTabButtonR.setVisible(true);
         setRightPane("equip");
   
+        buyNum=new ATextField(84,14,21,50);
+        add(buyNum);
+        sellNum=new ATextField(84,14,252,50);
+        add(sellNum);
+        buyConfirm=new AButton("shop_buy",AMessage.SHOP_BUY,"buying!");
+        buyConfirm.setImage(AImageFactory.getImage("shop_buy"));
+        buyConfirm.setFGImage(AImageFactory.getImage("shop_buy_fg"));
+        buyConfirm.setLocation(140,50);
+        add(buyConfirm);
+        sellConfirm=new AButton("shop_sell",AMessage.SHOP_SELL,"selling!");
+        sellConfirm.setImage(AImageFactory.getImage("shop_sell"));
+        sellConfirm.setFGImage(AImageFactory.getImage("shop_sell_fg"));
+        sellConfirm.setLocation(140+231,50);
+        add(sellConfirm);
+        
+        
         setVisible(true);
     }
     public void loadTabs(){
@@ -94,16 +114,51 @@ public class AShop extends AWindow{
                     activeTabButtonR.displayFG();
                 }
             }
+            loadRightButtons();
         }
     }
     
+    public void loadRightButtons(){
+        itemsR = InventoryHandler.getItemIds();
+        buttonsR.clear();
+        for (int i=0;i<itemsR.length;i++){
+            String key=itemsR[i];
+            InventoryItem c=InventoryHandler.getItem(key);
+            if ((c instanceof EquipItem && activeTabR.equals("equip"))||
+                (c instanceof UseItem && activeTabR.equals("use"))){
+                AButton b=new AButton (key,AMessage.SHOP_SELL,key,202,35);
+                b.setImage(TextImageFactory.createShopLabel(c));
+                b.setFGImage(AImageFactory.getImage("shop_item_fg"));
+                b.setHover(TextImageFactory.createDes(c));
+                b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
+                b.setParent(this);
+                buttonsR.add(b);
+            }
+        }
+        buttonsR.updateActiveContent();
+    } 
+    
+     public void loadLeftButtons(){
+        itemsL = InventoryHandler.getItemIds();
+        buttonsL.clear();
+        for (int i=0;i<itemsL.length;i++){
+            String key=itemsL[i];
+            InventoryItem c=InventoryHandler.getItem(key);
+            if ((c instanceof EquipItem && activeTabL.equals("equip"))||
+                (c instanceof UseItem && activeTabL.equals("use"))){
+                AButton b=new AButton (key,AMessage.SHOP_SELL,key,202,35);
+                b.setImage(TextImageFactory.createShopLabel(c));
+                b.setFGImage(AImageFactory.getImage("shop_item_fg"));
+                b.setHover(TextImageFactory.createDes(c));
+                b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
+                b.setParent(this);
+                buttonsL.add(b);
+            }
+        }
+        buttonsL.updateActiveContent();
+    } 
+    
 
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -135,6 +190,10 @@ class TestShop extends JFrame{
 	public static void main (String [] args){
             AssetManager.init();
                 AImageFactory.init();
+            InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
+            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
+            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
+            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
                 CharacterHandler.init();
                 CharacterHandler.addStat("maxhp",500);
                 CharacterHandler.addStat("maxmp",10000);
