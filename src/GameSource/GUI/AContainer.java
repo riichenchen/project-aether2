@@ -122,8 +122,6 @@ public class AContainer extends AComponent{
             setSize(bg.getWidth(null),bg.getHeight(null));
             cparent=c;
             setParent(c.parent);
-            System.out.println("AContainer/AScrollButton/Const.  Check Scroll Parent: ");
-            System.out.println(parent.getName()+" at "+parent.x+","+parent.y);
             ly=-1;
             setVisible(true);
         }

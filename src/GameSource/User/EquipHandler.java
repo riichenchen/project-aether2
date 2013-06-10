@@ -31,6 +31,10 @@ public class EquipHandler {
             CharacterHandler.addStat(s, item.getStat(s));
     }
     
+    public static InventoryItem getItem(String key){
+        return allEquipped.get(key);
+    }
+    
     public static InventoryItem equip(EquipItem item){
         String type = item.getEquipType();
         EquipItem swap = allEquipped.get(type);

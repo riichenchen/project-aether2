@@ -24,13 +24,20 @@ public class AImage extends AComponent{
         setSize(bg.getWidth(null),bg.getHeight(null));
         setVisible(true);
     }
+    public AImage(String name, int x, int y, Image i, Image j){
+        super();
+        setCallable(false);
+        setName(name);
+        bg=i; fg=j;
+        setSize(bg.getWidth(null),bg.getHeight(null));
+        setLocation(x,y);
+        setVisible(true);
+    }
     public AImage(String name, int x, int y){
         super();
         setName(name);
         setCallable(false);
         bg=AImageFactory.getImage(name);
-//        System.out.println("IMAGE CHECK:");
-//        System.out.println(bg==null);
         setSize(bg.getWidth(null),bg.getHeight(null));
         setVisible(true);
         setLocation(x,y);
@@ -38,6 +45,12 @@ public class AImage extends AComponent{
     public void update(){}
     public void call(){}
     public void draw(Graphics g){
-        g.drawImage(bg,parent.x+x,parent.y+y,null);
+        if (visible() && parent.visible()){
+            g.drawImage(bg,parent.x+x,parent.y+y,null);
+            if (fg!=null && (collidepoint(AMouseInput.mx, AMouseInput.my))){
+                g.drawImage(fg,AMouseInput.mx,AMouseInput.my+20,null);
+            }
+        }
+        
     }
 }

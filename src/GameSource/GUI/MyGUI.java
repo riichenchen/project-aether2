@@ -19,6 +19,9 @@ public class MyGUI extends AGUI{
     private static AInventory invent;
     private static AHUD hud;
     private static ATextField chat;
+    private static AEquip equip;
+    private static AStats stats;
+    private static ASkills skills;
     private static BufferedReader in;
 
 
@@ -38,6 +41,18 @@ public class MyGUI extends AGUI{
         invent.setVisible(false);
         windows.put(invent.getName(),invent);
         windowNames.add(invent.getName());
+        equip=new AEquip();
+        equip.setVisible(false);
+        windows.put(equip.getName(),equip);
+        windowNames.add(equip.getName());
+        stats=new AStats();
+        stats.setVisible(false);
+        windows.put(stats.getName(),stats);
+        windowNames.add(stats.getName());
+        skills=new ASkills();
+        skills.setVisible(false);
+        windows.put(skills.getName(),skills);
+        windowNames.add(skills.getName());
         
         chat=new ATextField(440,13,65,30);
         chat.setName("chat");
@@ -64,6 +79,11 @@ public class MyGUI extends AGUI{
             invent.setPane(newPane);
         }
     }
+    public static void changeSkillsPane(String newPane){
+        if (skills!=null){
+            skills.setPane(newPane);
+        }
+    }
     public static void updateItems(){
         if (invent!=null){
             invent.loadButtons();
@@ -85,6 +105,10 @@ public class MyGUI extends AGUI{
     public static void npc_end() {
         npcchat.end();
         closeWindow("npcchat");
+    }
+
+    public static void updateStatWindow() {
+        stats.updateButtons();
     }
 }
 

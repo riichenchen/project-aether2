@@ -21,9 +21,10 @@ public class AMessage {
     public static final int NULL=9;
     public static final int INVENTORY_CLICK=10;
     public static final int SCROLL=11;
-    
+    public static final int STAT_WINDOW=12;
+    public static final int SKILLS=13;
     public static final int SEND_MESSAGE=100;
-    
+    public static final int SHOP=14;
     private int type;
     private String content;
     
