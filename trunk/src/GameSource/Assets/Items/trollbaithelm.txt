@@ -5,4 +5,4 @@ equip
 head
 trollbaithelm
 attack 300
-def 300
+defense 300

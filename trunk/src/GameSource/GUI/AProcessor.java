@@ -4,6 +4,7 @@
  */
 package GameSource.GUI;
 
+import GameSource.User.CharacterHandler;
 import GameSource.User.InventoryHandler;
 
 /**
@@ -33,8 +34,14 @@ public class AProcessor {
                 break;
             case AMessage.INVENTORY: MyGUI.changeInventPane(m.content());
                 break;
+            case AMessage.SKILLS: MyGUI.changeSkillsPane(m.content());
+                break;
             case AMessage.NULL: break;
             case AMessage.INVENTORY_CLICK: process_invent(m);
+                break;
+            case AMessage.STAT_WINDOW: CharacterHandler.addStat(m.content(), 1);
+                CharacterHandler.addStat("statPoints", -1);
+                MyGUI.updateStatWindow();
                 break;
             default: System.out.println("uselessButton");
         }    

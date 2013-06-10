@@ -2,6 +2,8 @@ package GameSource.GUI;
 import GameSource.Assets.AssetManager;
 import GameSource.Script.NPCFrame;
 import GameSource.User.CharacterHandler;
+import GameSource.User.EquipHandler;
+import GameSource.User.Inventory.EquipItem;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
 import javax.swing.*;
@@ -25,7 +27,6 @@ public class Test extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		repaint();
-                
                 testing.update();
 	}
 	
@@ -41,6 +42,11 @@ public class Test extends JFrame implements ActionListener{
                 CharacterHandler.addStat("maxmp",10000);
                 CharacterHandler.addStat("hp",352);
                 CharacterHandler.addStat("mp",10000);
+                CharacterHandler.addStat("exp",5);
+                CharacterHandler.addStat("statPoints",2);
+            EquipHandler.init();
+            EquipHandler.equip((EquipItem)(ItemFactory.getItem("trollbaithelm")));
+            EquipHandler.equip((EquipItem)(ItemFactory.getItem("trollbaitarmor")));
             new Test();
 	}
 }

@@ -5,19 +5,15 @@ import java.util.HashMap;
 
 
 public class NormalInputSet extends AbstractInputSet{
-	//Inventory: F9, Shop: F10, Chat: F11
-	public void init(){
-            name="normal";
-            keyMap=new HashMap<String, Integer>();
-            keyMap.put("invent",KeyEvent.VK_I);
-            keyMap.put("npcchat",KeyEvent.VK_F9);
-            mouseUsed=false;
-        }
+
 	public NormalInputSet(){
 		name="normal";
 		keyMap=new HashMap<String, Integer>();
 		keyMap.put("invent",KeyEvent.VK_I);
                 keyMap.put("npcchat",KeyEvent.VK_F9);
+                keyMap.put("equipment",KeyEvent.VK_E);
+                keyMap.put("user_stats",KeyEvent.VK_T);
+                keyMap.put("skills",KeyEvent.VK_K);
 		mouseUsed=false;
 	}
 
