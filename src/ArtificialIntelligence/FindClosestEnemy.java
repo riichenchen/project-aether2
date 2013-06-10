@@ -1,3 +1,5 @@
+package ArtificialIntelligence;
+
 import GameSource.Assets.MobData.AbstractMob;
 import Spatial.Spatial;
 import java.util.*;
