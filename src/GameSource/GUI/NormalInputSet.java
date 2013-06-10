@@ -23,9 +23,13 @@ public class NormalInputSet extends AbstractInputSet{
 	public void update(){
             boolean passMouse=MyGUI.mouseFree() && (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT));
             
-            boolean a=(AMouseInput.held(AMouseInput.LEFT)==false)&&AMouseInput.clicked(AMouseInput.LEFT);
-            boolean b=AMouseInput.released(AMouseInput.LEFT)&&(AMouseInput.clicked(AMouseInput.LEFT)==false);
+            boolean a=AMouseInput.clicked(AMouseInput.LEFT);
+            boolean b=AMouseInput.released(AMouseInput.LEFT)&& (AMouseInput.held(AMouseInput.LEFT));
             if (a||b||AMouseInput.doubleclick(AMouseInput.LEFT)) {
+                System.out.println("NormalInputSet/update    FreeMouse case a:");
+                System.out.println(a);
+                System.out.println("NormalInputSet/update    FreeMouse case b:");
+                System.out.println(b);
                 MyGUI.freeMouse();
                 passMouse=false;
             }
@@ -53,16 +57,17 @@ public class NormalInputSet extends AbstractInputSet{
 					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
                                 }
                                 * */
-                                if (AMouseInput.held(AMouseInput.LEFT)){
+                                if (AMouseInput.clicked(AMouseInput.LEFT)){
 	//				System.out.println("hi");
-					MyGUI.mousePressCall(wname);
+					MyGUI.mouseClickCall(wname);
                                         passMouse=false;
 					break;
                                 }
-                                if (AMouseInput.clicked(AMouseInput.LEFT)){
-                                        MyGUI.mouseClickCall(wname);
-					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
-                                }
+                                
+//                                if (AMouseInput.clicked(AMouseInput.LEFT)){
+//                                        MyGUI.mouseClickCall(wname);
+//					AMouseInput.buttonsClicked[AMouseInput.LEFT]=AMouseInput.NO;
+//                                }
 			}
 		}
 		if (passMouse){

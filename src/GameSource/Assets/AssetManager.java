@@ -410,9 +410,11 @@ public class AssetManager {
                 tempdat = nextline.split(" ");
                 BufferedReader itemFin = new BufferedReader(new FileReader(DIRECTORY+"Items/"+tempdat[1]));
                 String name = itemFin.readLine();
+                String description = itemFin.readLine();
                 String itemType = itemFin.readLine();
                 String equipType = null;
                 ItemData itemdata = new ItemData(name,itemType);
+                itemdata.setItemDescription(description);
                 if (itemType.equals("equip")){
                     equipType = itemFin.readLine();
                     itemdata.equipItemType = equipType;
@@ -445,4 +447,9 @@ public class AssetManager {
 //        AssetManager.init();
 ////        System.out.println(AssetManager.getBlockImage("dirtblock"));
 //    }
+    public static void main(String[] args){
+        AssetManager.init();
+        System.out.println(AssetManager.getItemData("redpot").itemDescription);
+        System.out.println(AssetManager.getItemData("trollbaithelm").itemDescription);
+    }
 }
