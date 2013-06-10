@@ -3,3 +3,4 @@ trollbaithelm inventory/equip/trollbaithelm.png
 trollbaitarmor inventory/equip/trollbaitarmor.png
 trollbaitsneakers inventory/equip/trollbaitsneakers.png
 trollbaitstaff inventory/equip/trollbaitstaff.png
+john npc/john.png

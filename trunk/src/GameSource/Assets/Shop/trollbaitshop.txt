@@ -1,0 +1,4 @@
+john
+trollbaithelm 1000
+trollbaitarmor 9000
+redpot 100
