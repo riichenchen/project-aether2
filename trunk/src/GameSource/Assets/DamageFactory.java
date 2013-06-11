@@ -26,7 +26,7 @@ public class DamageFactory {
         }
     }
     
-    /*This method takes in a number and returns a linked list containing it's digits*/
+    /*This method takes in a number and returns a linked list containing its digits*/
     private static LinkedList<Integer> getDigits(int x){
         LinkedList<Integer> digits = new LinkedList<>();
         if (x == 0)

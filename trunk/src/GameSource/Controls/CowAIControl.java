@@ -38,28 +38,28 @@ public class CowAIControl extends AIControl {
 
     @Override
     public void update(Object returnValue) {
-        if (boundTo != null && !isLoaded)
-            init();
-        
-        if (myPath == null)
-            return;
-        
-        if (myPath.isEmpty()) {
-            Random rnd = new Random();
-            int xdist = rnd.nextInt(5) - 1;
-            int ydist = rnd.nextInt(5) - 1;
-            boundTo.move(xdist, 0, ydist);
-        } else {
-            int dx = ((Node)(myPath.get(0))).getX() - curX;
-            int dy = ((Node)(myPath.get(0))).getY() - curY;
-         
-            boundTo.move(dx, 0, dy);
-       }
+//        if (boundTo != null && !isLoaded)
+//            init();
+//        
+//        if (myPath == null)
+//            return;
+//        
+//        if (myPath.isEmpty()) {
+//            Random rnd = new Random();
+//            int xdist = rnd.nextInt(5) - 1;
+//            int ydist = rnd.nextInt(5) - 1;
+//            boundTo.move(xdist, 0, ydist);
+//        } else {
+//            int dx = ((Node)(myPath.get(0))).getX() - curX;
+//            int dy = ((Node)(myPath.get(0))).getY() - curY;
+//         
+//            boundTo.move(dx, 0, dy);
+//       }
     }
     
     public void init() {
         curX = (int)boundTo.getX();
-        curY = (int)boundTo.getY();
+        curY = (int)boundTo.getZ();
         
         if (curMap == null) {
             System.out.println("Are you serious!");

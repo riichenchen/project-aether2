@@ -241,10 +241,12 @@ public class GameMap {
         
         public char [][] getCharMap() {
             char [][] ret = new char[dimx][dimy];
-            Arrays.fill(ret, 0);
+            for (char [] c: ret){
+                Arrays.fill(c, (char)0);
+            }
             for (Map.Entry<Integer, Spatial> entry : spats.entrySet()) {
                 Spatial curSpat = entry.getValue();
-                ret[(int)(curSpat.getX())][(int)(curSpat.getY())] = 1;
+                ret[(int)(curSpat.getX())][(int)(curSpat.getZ())] = 1;
             }
             return ret;
         }
