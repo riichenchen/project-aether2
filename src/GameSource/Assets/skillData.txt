@@ -1,2 +1,12 @@
 icicle icicle.txt
 blastburn blastburn.txt
+arroweruption arroweruption.txt
+divinesaber divinesaber.txt
+judgement judgement.txt
+lightningstrike lightningstrike.txt
+magicclaw magicclaw.txt
+plasmashock plasmashock.txt
+sheolfear sheolfear.txt
+spiritbomb spiritbomb.txt
+stalagamite stalagamite.txt
+staticvortex staticvortex.txt

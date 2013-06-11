@@ -128,12 +128,13 @@ public abstract class Spatial {
             s.setLocalRotation(-arot);
         } 
         if (collided){
-            if (aYmin >= bYmax && aYmax <= bYmin){
-                return true;
-            } else if (aYmin <= bYmin && aYmax >= bYmax){
-                return true;
-            }
-            return false;
+            return true;
+//            if (aYmin >= bYmax && aYmax <= bYmin){
+//                return true;
+//            } else if (aYmin <= bYmin && aYmax >= bYmax){
+//                return true;
+//            }
+//            return false;
         }
         return false;
     }

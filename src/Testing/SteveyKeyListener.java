@@ -9,8 +9,11 @@ import GameSource.Assets.AssetManager;
 import GameSource.GUI.MyGUI;
 import GameSource.Script.NPCFrame;
 import GameSource.Skills.ActiveSkillData;
+import GameSource.Skills.GameCasts.ArrowEruptionCast;
 import GameSource.Skills.GameCasts.BlastBurnCast;
+import GameSource.Skills.GameCasts.DivineSaberCast;
 import GameSource.Skills.GameCasts.IcicleCast;
+import GameSource.Skills.GameCasts.JudgementCast;
 import GameSource.User.CharacterHandler;
 import Input.AbstractKeyListener;
 import java.awt.event.KeyEvent;
@@ -93,6 +96,33 @@ public class SteveyKeyListener extends AbstractKeyListener{
             if (CharacterHandler.getStat("mp") > cost){
                 CharacterHandler.addStat("mp", -cost);
                 CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new BlastBurnCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_A) && CharacterHandler.getSkillLevel("arroweruption")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("arroweruption"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("arroweruption"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new ArrowEruptionCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_T) && CharacterHandler.getSkillLevel("divinesaber")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("divinesaber"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("divinesaber"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new DivineSaberCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_J) && CharacterHandler.getSkillLevel("judgement")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("judgement"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("judgement"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new JudgementCast(CharacterHandler.getPlayer()));
             }
         }
         if (eventKeyDown(KeyEvent.VK_SPACE)){

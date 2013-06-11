@@ -4,20 +4,11 @@
  */
 package GameSource.Assets.TerrainBlocks.Blocks.DirtBlock;
 
-import GameSource.Assets.AssetManager;
 import GameSource.Assets.TerrainBlocks.AbstractTerrainBlock;
-import Renderer.AetherCam;
-import Renderer.RenderChunk;
 import Spatial.Spatial;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-//import java.awt.Image;
-import java.util.LinkedList;
-import javax.swing.JPanel;
 
 /**
- *
+ * A basic dirt block. Fairly self explanatory.
  * @author Shiyang
  */
 public class Dirt_Block extends AbstractTerrainBlock {
@@ -32,7 +23,7 @@ public class Dirt_Block extends AbstractTerrainBlock {
 
     @Override
     public void collideEffect(Spatial s) {
-//        System.out.println("COLLIDED!"+id);
+        //shouldn't do anything
     }
 
 }
