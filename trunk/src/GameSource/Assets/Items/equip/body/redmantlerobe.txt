@@ -1,0 +1,12 @@
+Red Mantle
+An professional spellcastor's armor. +150 def, +100 hp, +80 mp, +40 attack
+5000
+equip
+body
+redmantlerobe
+maxhp 100
+hp 100
+defense 150
+maxmp 80
+mp 80
+attack 40

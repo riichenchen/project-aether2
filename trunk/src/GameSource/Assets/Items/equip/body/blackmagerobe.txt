@@ -1,0 +1,10 @@
+Black Mage Robe
+The robe of a mage in the dark arts. +60 def, +30 hp, +15 attack
+1000
+equip
+body
+blackmagerobe
+maxhp 30
+hp 30
+defense 60
+attack 15

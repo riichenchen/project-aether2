@@ -1,0 +1,10 @@
+LeFay Jester
+A hat for the experienced wizard. +20 attk, +20 def, +30mp
+1000
+equip
+head
+lefayjesterhat
+attack 20
+defense 20
+maxmp 30
+mp 30

@@ -1,0 +1,10 @@
+Golden Pride
+The circlet of a proud magician. +30 attk, +40 def, +70mp
+2000
+equip
+head
+goldenpridehat
+attack 30
+defense 40
+maxmp 70
+mp 70

@@ -1,0 +1,11 @@
+Blue Moonlight
+Grants its wearer sweet dreams :DD. +100 def, +60 hp, +40 mp
+2500
+equip
+body
+moonlightrobe
+maxhp 60
+hp 60
+defense 100
+maxmp 40
+mp 40

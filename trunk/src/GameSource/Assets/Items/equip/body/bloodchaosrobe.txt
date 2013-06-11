@@ -1,0 +1,9 @@
+Blood Chaos Robe
+This robe has been dyed in the blood of many enemies. +70 def, +80 hp
+1500
+equip
+body
+bloodchaosrobe
+maxhp 80
+hp 80
+defense 70
