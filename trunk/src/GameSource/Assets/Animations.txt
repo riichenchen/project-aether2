@@ -100,4 +100,6 @@ blastburn
 icicle
 arroweruption
 judgement
+lightningstrike
+magicclaw
 /spellRings

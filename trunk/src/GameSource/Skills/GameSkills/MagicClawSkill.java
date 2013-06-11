@@ -18,15 +18,15 @@ import Spatial.Spatial;
  *
  * @author Shiyang
  */
-public class DivineSaberSkill extends AbstractActiveSkill{
+public class MagicClawSkill extends AbstractActiveSkill{
 
-    public DivineSaberSkill(float x, float z) {
-        super(x, z, 214, 200, "divinesaber");
+    public MagicClawSkill(float x, float z) {
+        super(x, z, 100, 200, "magicclaw");
     }
 
     @Override
     public int[] getEffectTimes() {
-        return new int[]{54,72};
+        return new int[]{0,25};
     }
 
     @Override
@@ -35,7 +35,7 @@ public class DivineSaberSkill extends AbstractActiveSkill{
             ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData(skillName));
             int dmg = CharacterHandler.calculateDamage(dat.getDamagePercentile(CharacterHandler.getSkillLevel(skillName)),(AbstractMob)s);
             ((AbstractMob)s).addHp(-dmg);
-            DamageFactory.addDamage(boundMap,dmg,DamageFactory.RED,s.getLocation());
+            DamageFactory.addDamage(boundMap,dmg,DamageFactory.RED,location);
             invokeHitSound();
         }
     }
@@ -48,7 +48,7 @@ public class DivineSaberSkill extends AbstractActiveSkill{
     @Override
     public CharacterAnimControl getAnimControl() {
         CharacterAnimControl cont = new CharacterAnimControl(AssetManager.getSpriteSet("Effects"));
-        cont.swapAnim("divinesaber");
+        cont.swapAnim("magicclaw");
         return cont;
     }
     
