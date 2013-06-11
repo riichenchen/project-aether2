@@ -1,0 +1,10 @@
+Timeless Aeas
+This staff transcends time itself. +300 attk, +250 mp, +75 defense
+28000
+equip
+weapon
+timelessaeasstaff
+attack 300
+maxmp 250
+mp 250
+defense 75

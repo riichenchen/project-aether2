@@ -1,0 +1,10 @@
+Blue GoldRunner
+Shoes worn by a powerful alchemist said to have created the elixer of life. +130 hp, +75 attack, +30 defense
+4200
+equip
+feet
+bluegoldrunners
+maxhp 130
+hp 130
+attack 75
+defense 30

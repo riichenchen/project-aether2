@@ -1,0 +1,12 @@
+Blue Elemental Shoes
+These shoes are said to be crafted from a Dragon's powerful hide. +170 hp, +40mp, +200 attack, +50 defense
+7200
+equip
+feet
+blueelementalshoes
+maxhp 170
+hp 170
+maxmp 40
+mp 40
+attack 200
+defense 50

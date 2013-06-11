@@ -1,0 +1,9 @@
+Red Jewel Shoes
+Shoes embeded with a red jewel. +30 hp +30 defense
+800
+equip
+feet
+redjewelshoes
+maxhp 30
+hp 30
+defense 30

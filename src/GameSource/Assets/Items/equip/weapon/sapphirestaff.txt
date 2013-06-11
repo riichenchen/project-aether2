@@ -1,0 +1,7 @@
+Sapphire Staff
+A staff with pure sapphire mounted on it. +50 attk
+600
+equip
+weapon
+sapphirestaff
+attack 50

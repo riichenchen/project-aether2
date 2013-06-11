@@ -1,0 +1,9 @@
+Blue Marine
+It is said this staff has the power of dragons. +200 attk, +130 mp
+14000
+equip
+weapon
+bluemarinestaff
+attack 200
+maxmp 130
+mp 130

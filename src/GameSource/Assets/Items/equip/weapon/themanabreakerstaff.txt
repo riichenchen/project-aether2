@@ -1,0 +1,9 @@
+The Manabreaker
+This staff is specially designed for mana. +110 attk, +100 mp
+2200
+equip
+weapon
+themanabreakerstaff
+attack 110
+maxmp 100
+mp 100

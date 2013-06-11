@@ -1,0 +1,12 @@
+Von Leon Shoes
+The shoes of the almighty lion, Von Leon! +250 hp, +100mp, +300 attack, +100 defense
+10000
+equip
+feet
+vonleonshoes
+maxhp 250
+hp 250
+maxmp 100
+mp 100
+attack 300
+defense 100

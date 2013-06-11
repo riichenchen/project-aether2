@@ -1,0 +1,9 @@
+Astaroth Staff
+A staff imbued with Astaroth's Dark Energy. +80 attk, +30 mp
+1300
+equip
+weapon
+astarothstaff
+attack 80
+maxmp 30
+mp 30

@@ -1,0 +1,9 @@
+Dark Ritual Staff
+A staff of the dark arts. +160 attk, -30 mp
+7000
+equip
+weapon
+darkritualstaff
+attack 160
+maxmp -30
+mp -30
