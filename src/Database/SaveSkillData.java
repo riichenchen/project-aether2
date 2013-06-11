@@ -7,7 +7,9 @@ package Database;
 import java.io.Serializable;
 
 /**
- *
+ * This data contains information about a skill and it's level.
+ * It is sent from client to server and vice versa to update
+ * and save data regarding skills and their levels
  * @author Shiyang
  */
 public class SaveSkillData implements Serializable{

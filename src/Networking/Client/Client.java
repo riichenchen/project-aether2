@@ -4,9 +4,6 @@
  */
 package Networking.Client;
 
-import GameSource.LoginFrame;
-import GameSource.Net.Client.ClientNetListener;
-import GameSource.Net.Client.ClientNetSender;
 import GameSource.Globals;
 import GameSource.Net.Client.AetherClientNetListener;
 import GameSource.Net.Client.AetherClientNetSender;
@@ -20,26 +17,11 @@ import java.net.Socket;
 public abstract class Client
 {
     protected static Socket csocket = null;
-    //private ObjectOutputStream out = null;
     protected boolean started = false;
     protected ClientListenThread netlistener = null;
     protected ClientSendThread netSender = null;
-    protected LoginFrame world;
     protected int clientId;
     
-    public Client (LoginFrame world){
-        this.world = world;
-        try {
-            csocket = new Socket (Globals.__IP__, Globals.__PORT__);
-            csocket.setTcpNoDelay(true);
-            System.out.println ("Connected to host" + csocket.getRemoteSocketAddress ());
-            netlistener = new ClientNetListener(csocket,this);
-            netSender = new ClientNetSender(csocket,this);
-        } catch (Exception e){
-	    System.out.println ("Unable to connect to host with localhost");
-            System.exit(0);
-	}
-    } 
     public Client(){
         try {
             csocket = new Socket (Globals.__IP__, 4186);
@@ -53,10 +35,7 @@ public abstract class Client
 	}
     }
     public void start(){
-//            netlistener.setWorld(world);
-            //initListener();
         netlistener.start();
-        //netSender.connect();
         netSender.start();
         started = true;
     }
@@ -77,6 +56,4 @@ public abstract class Client
     public int getClientId(){
         return clientId;
     }
-    
-    //public abstract void initListener();
-} // ChatClient class
+} 

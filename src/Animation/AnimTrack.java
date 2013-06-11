@@ -8,7 +8,10 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 /**
- *
+ * The animation track class keeps track of a single animation inside a spriteset.
+ * It tracks the order of display for frames and also supports repeating frames
+ * without copying the frame's image resource. It also tracks the offset x and y
+ * of the specific image.
  * @author Shiyang
  */
 public class AnimTrack {
@@ -37,25 +40,28 @@ public class AnimTrack {
     }
     
     public void addImage(Image img){
-        if (imageCounter == images.length){
+        if (imageCounter == images.length){ // should never occur, but just incase,
             System.out.println("WARNING: Trying to add more images to AnimTrack than specified!");
             return;
         }
         images[imageCounter++] = img;
     }
     
-    public int getLimit(){
+    public int getLimit(){ // The number of frames in this track
         return frameOrder.size();
     }
-    public Image getAt(int time){
+    public Image getAt(int time){ // returns the image at a specific time t
         return images[frameOrder.get(time)];
     }
+    
+    //off x and y of the image (often the center of the image)
     public int getOffX(){
         return offX;
     }
     public int getOffY(){
         return offY;
     }
+    //Returns the width and height of the image
     public int getImageWidth(int x){
         return images[frameOrder.get(x)].getWidth(null);
     }
