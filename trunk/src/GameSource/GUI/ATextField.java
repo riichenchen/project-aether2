@@ -60,7 +60,13 @@ public class ATextField extends AComponent{
     	setSize(wid,hgt);
         setLocation(xx,yy);
     }
-    
+    public String getText(){
+        return content;
+    }
+    public void setText(String s){
+        content=s;
+        cursorLoc=s.length();
+    }
     public void update(){
     	for (int i=0; i<InputManager.keys.length; i++){
     		if (KeyCharMap.isTypeable(i,0)&& (InputManager.keys[i] ||InputManager.heldKeys[i])){
@@ -103,11 +109,17 @@ public class ATextField extends AComponent{
     		g2.setFont(font);
 		g2.setColor(foreground);
     		g2.drawString(line,parent.x+x+10,parent.y+y+10);
+                
+                if (collidepoint(parent.x+AMouseInput.mx,parent.y+AMouseInput.my)){
+                    g2.drawRect(x,y,width,height);
+                }
   //  	int dx=parent.x+x; int dy=parent.y+y;
   //      System.out.println(name+" textfield drawn at "+dx+","+dy);
         }
     }
-    public void call(){};
+    public void call(){
+        setFocused(true);
+    };
     /*
     public static void main (String [] args){
     	ATextField test=new ATextField();

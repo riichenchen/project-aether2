@@ -114,7 +114,7 @@ public class AssetManager {
         
     }
     
-    public ShopData getShopData(String key){
+    public static ShopData getShopData(String key){
         return allShopData.get(key);
     }
     private static void loadScriptData(){

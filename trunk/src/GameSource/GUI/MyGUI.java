@@ -127,6 +127,16 @@ public class MyGUI extends AGUI{
     public static void updateStatWindow() {
         stats.updateButtons();
     }
+
+    public static void shopBuyItem(String content) {
+        shop.buy();
+    }
+
+    public static void shopSellItem(String content) {
+        shop.sell();
+    }
+    
+    public static void setShopData(String key){}
 }
 
 /*
