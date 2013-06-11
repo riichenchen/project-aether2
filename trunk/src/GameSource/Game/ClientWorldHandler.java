@@ -65,6 +65,7 @@ public class ClientWorldHandler {
         String mapId = pData.getMapId();
         setGameMap(mapId);
         PlayerSpatial newSpat = myGameMap.addPlayer(loc);
+        EquipHandler.equipAll(pData.getEquipData());
         for (SaveItemData dat: pData.getItems()){
             InventoryHandler.addItem(ItemFactory.getItem(dat.getItemKey()),dat.getQuantity());
         }
@@ -72,7 +73,6 @@ public class ClientWorldHandler {
         CharacterHandler.addAllStats(keys,pData.getEntity_data());
         CharacterHandler.addAllSkills(pData.getSkillData());
         CharacterHandler.setName(pData.getCharName());
-        EquipHandler.equipAll(pData.getEquipData());
         CharacterHandler.bindPlayer(newSpat);
         QuestManager.importQuestData(pData.getQuestData());
         MyGUI.updateStatWindow();
