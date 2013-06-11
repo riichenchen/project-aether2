@@ -44,6 +44,7 @@ public class EquipHandler {
         }
         allEquipped.put(type, item);
         addEffects(item);
+        InventoryHandler.removeItem(item);
         return swap;
     }
     
