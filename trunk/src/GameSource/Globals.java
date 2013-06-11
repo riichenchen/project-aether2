@@ -13,7 +13,7 @@ import Spatial.AetherMouse;
 public class Globals {
     public static final int __PORT__ = 4186;
     public static final float __SERVERVERSION__ = 1.00f;
-    public static final String __IP__ = "192.168.2.135";//"24.57.115.97"; //"localhost";
+    public static final String __IP__ = "localhost";//"24.57.115.97"; //"localhost";
     public static final String __SQLUSER__ = "root";
     public static final String __SQLPASS__ = "";
     public static final String DBIP = "localhost";  //"localhost";
