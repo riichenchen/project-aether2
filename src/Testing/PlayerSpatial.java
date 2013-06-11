@@ -37,7 +37,7 @@ public class PlayerSpatial extends CharacterSpatial{
 
     @Override
     public CharacterAnimControl getAnimControl() {
-        return new CharacterAnimControl(AssetManager.getSpriteSet("Steve"));
+        return new CharacterAnimControl(AssetManager.getSpriteSet("Sola"));
     }
     
 }

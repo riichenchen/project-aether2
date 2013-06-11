@@ -1,4 +1,5 @@
 redpot inventory/use/redpot.png
+bluepot inventory/use/bluepot.png
 trollbaithelm inventory/equip/head/trollbaithelm.png
 bluemoonhat inventory/equip/head/bluemoonhat.png
 lefayjesterhat inventory/equip/head/lefayjesterhat.png

@@ -1,0 +1,6 @@
+Blue Potion
+A blue potion. Heals some quantity of mp (100).
+50
+use
+bluepot
+mp 100

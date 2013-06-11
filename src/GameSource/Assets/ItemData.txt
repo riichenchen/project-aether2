@@ -1,4 +1,5 @@
 redpot use/redpot.txt
+bluepot use/bluepot.txt
 trollbaithelm equip/head/trollbaithelm.txt
 bluemoonhat equip/head/bluemoonhat.txt
 lefayjesterhat equip/head/lefayjesterhat.txt

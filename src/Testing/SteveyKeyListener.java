@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
  */
 public class SteveyKeyListener extends AbstractKeyListener{
     float speed = 3f;
+    String state = "stand";
+    String direction = "down";
     NPCFrame myFrame = new NPCFrame("john");
     @Override
     public void resolveKeyEvents() {
@@ -32,42 +34,51 @@ public class SteveyKeyListener extends AbstractKeyListener{
             System.out.println("Warning: no animation control :C unable to move character!");
             return;
         }
-        String currentAnim = "walkdown";
+        state = "stand";
         float diagonal = (float)Math.sin(Math.toRadians(45));
         if (keyDown(KeyEvent.VK_RIGHT) && keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(speed*diagonal, 0, speed*diagonal);
             boundTo.rotate(Math.toRadians(135));
-            currentAnim = "walkdownright";
+            state = "walk";
+            direction = "downright";
         } else if (keyDown(KeyEvent.VK_RIGHT) && keyDown(KeyEvent.VK_UP)){
             boundTo.move(speed*diagonal,0,-speed*diagonal);
             boundTo.rotate(Math.toRadians(45));
-            currentAnim = "walkupright";
+            state = "walk";
+            direction = "upright";
         } else if (keyDown(KeyEvent.VK_LEFT) && keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(-speed*diagonal,0,speed*diagonal);
             boundTo.rotate(Math.toRadians(225));
-            currentAnim = "walkdownleft";
+            state = "walk";
+            direction = "downleft";
         } else if (keyDown(KeyEvent.VK_LEFT) && keyDown(KeyEvent.VK_UP)){
             boundTo.move(-speed*diagonal,0,-speed*diagonal);
             boundTo.rotate(Math.toRadians(315));
-            currentAnim = "walkupleft";
+            state = "walk";
+            direction = "upleft";
         }  else if (keyDown(KeyEvent.VK_RIGHT)){
             boundTo.move(speed,0,0);
             boundTo.setRotation(90);
-            currentAnim = "walkright";
+            state = "walk";
+            direction = "right";
         } else if (keyDown(KeyEvent.VK_LEFT)){
             boundTo.move(-speed,0,0);
             boundTo.setRotation(270);
-            currentAnim = "walkleft";
+            state = "walk";
+            direction = "left";
         } else if (keyDown(KeyEvent.VK_UP)){
             boundTo.move(0,0,-speed);
             boundTo.setRotation(0);
-            currentAnim = "walkup";
+            state = "walk";
+            direction = "up";
         } else if (keyDown(KeyEvent.VK_DOWN)){
             boundTo.move(0,0,speed);
             boundTo.setRotation(180);
-            currentAnim = "walkdown";
+            state = "walk";
+            direction = "down";
         }
         if (eventKeyDown(KeyEvent.VK_SHIFT)){
+            state = "cast";
             ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("icicle"));
             int cost = dat.getMpCost(CharacterHandler.getSkillLevel("icicle"));
             if (CharacterHandler.getStat("mp") > cost){
@@ -76,6 +87,7 @@ public class SteveyKeyListener extends AbstractKeyListener{
             }
         }
         if (eventKeyDown(KeyEvent.VK_B) && CharacterHandler.getSkillLevel("blastburn")>0){
+            state = "cast";
             ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("blastburn"));
             int cost = dat.getMpCost(CharacterHandler.getSkillLevel("blastburn"));
             if (CharacterHandler.getStat("mp") > cost){
@@ -120,6 +132,6 @@ public class SteveyKeyListener extends AbstractKeyListener{
 //        if (eventKeyDown(KeyEvent.VK_6)){
 //            MyGUI.showNPC(myFrame.next());
 //        }
-        animControl.swapAnim(currentAnim);        
+        animControl.swapAnim(state+direction);        
     }
 }
