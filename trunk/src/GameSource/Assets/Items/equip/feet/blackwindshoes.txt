@@ -1,0 +1,10 @@
+Black Wind Shoes
+The shoes of a dark wizard. +10 defense, +20 attack, +5 mp
+1500
+equip
+feet
+blackwindshoes
+maxmp 30
+mp 30
+defense 10
+attack 20

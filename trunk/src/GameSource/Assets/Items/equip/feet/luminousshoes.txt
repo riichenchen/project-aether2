@@ -1,0 +1,12 @@
+Luminous Shoes
+Shoes with celestial power. +450 hp, +300mp, +500 attack, +200 defense
+13000
+equip
+feet
+luminousshoes
+maxhp 450
+hp 450
+maxmp 300
+mp 300
+attack 500
+defense 200

@@ -1,0 +1,9 @@
+Revolution Staff
+This staff signifies the start of a Revolution. +100 attk, +50 mp
+1800
+equip
+weapon
+revolutionstaff
+attack 100
+maxmp 50
+mp 50

@@ -1,0 +1,9 @@
+White Magic Shoes
+White shoes specially crafted for seasoned spellcastor. +100 mp, +50 attack
+2300
+equip
+feet
+whitemagicshoes
+maxmp 100
+mp 100
+attack 50
