@@ -6,17 +6,14 @@ package GameSource.Assets;
 
 import Animation.AnimTrack;
 import Animation.SpriteSet;
-import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
-import GameSource.Assets.TerrainBlocks.Blocks.GrassBlock.Grass_Block;
-import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
-import GameSource.Globals;
-import GameSource.game.GameMap;
-import Spatial.Spatial;
-import Testing.MyTestCharacter;
 import GameSource.Assets.Portals.Portal;
 import GameSource.Assets.Portals.PortalData;
 import GameSource.Assets.Shop.ShopData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
+import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
+import GameSource.Assets.TerrainBlocks.Blocks.GrassBlock.Grass_Block;
+import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
+import GameSource.Globals;
 import GameSource.Script.FrameCase;
 import GameSource.Script.FrameData;
 import GameSource.Script.ScriptData;
@@ -25,6 +22,9 @@ import GameSource.Skills.ActiveSkillData;
 import GameSource.Skills.SkillData;
 import GameSource.Spawners.CowSpawner;
 import GameSource.User.Inventory.ItemData;
+import GameSource.game.GameMap;
+import Spatial.Spatial;
+import Testing.MyTestCharacter;
 import Testing.PlayerSpatial;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -34,22 +34,25 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * The AssetManager handles the grabbing of all resources ever used in
+ * the game itself. The static class needs to be initialized before
+ * it can be used.
  * @author Shiyang
  */
 public class AssetManager {
-    private static HashMap<String,Image> blockimages;
-    private static final String DIRECTORY = "src/GameSource/Assets/";
-    private static HashMap<String,GameMap> allmaps;
-    private static HashMap<String,SpriteSet> allAnimSets;
-    private static HashMap<String,PortalData> allPortalData;
-    private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound"};
+    private static HashMap<String,Image> blockimages; // map block images
+    private static final String DIRECTORY = "src/GameSource/Assets/";//directory of assets
+    private static HashMap<String,GameMap> allmaps; // maps
+    private static HashMap<String,SpriteSet> allAnimSets; //all spritesets
+    private static HashMap<String,PortalData> allPortalData; //all portal dat
+    private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound"}; // tags that load map uses
     private static HashMap<String,Image> allImages;
     private static HashMap<String,ItemData> allItemData;
     private static HashMap<String, SkillData> allSkillData;
     private static HashMap<String, ScriptData> allScriptData;
     private static HashMap<String, ShopData> allShopData;
     
+    /*The init method loads up everything. Literally*/
     public static void init(){
         allImages = new HashMap<>();
         loadImages();
@@ -65,7 +68,6 @@ public class AssetManager {
         
         blockimages = new HashMap<>();
         loadBlocks();
-        //if (Globals.Assetdebug)
         System.out.println("Loaded Blocks!");
         
         allmaps = new HashMap<>();
@@ -88,13 +90,13 @@ public class AssetManager {
         loadShopData();
         System.out.println("Loaded shop data!");
     }
-    
+    /*This method loads all information and data regarding shops*/
     private static void loadShopData(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"shopData.txt"));
             String nextline;
             String[] tempdat;
-            while ((nextline = fin.readLine())!= null){
+            while ((nextline = fin.readLine())!= null){ // read each line, storing info as we go into a shopdata object
                 tempdat = nextline.split(" ");
                 BufferedReader shopFin = new BufferedReader(new FileReader(DIRECTORY+"Shop/"+tempdat[1]));
                 String shopNextLine = shopFin.readLine();
@@ -104,7 +106,7 @@ public class AssetManager {
                     shopdat = shopNextLine.split(" ");
                     dat.addItem(shopdat[0], Integer.parseInt(shopdat[1]));
                 }
-                allShopData.put(tempdat[0],dat);
+                allShopData.put(tempdat[0],dat); //map the given key to this object
             }
         } catch (IOException e) {
             System.out.println("Failed to load shopData!");
@@ -113,10 +115,15 @@ public class AssetManager {
         }
         
     }
+<<<<<<< .mine
+    /*This method loads all information and data regarding npc scripts, including
+     the actual interpretation of the script itself into data*/
+=======
     
     public static ShopData getShopData(String key){
         return allShopData.get(key);
     }
+>>>>>>> .r165
     private static void loadScriptData(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"scriptData.txt"));
@@ -132,7 +139,7 @@ public class AssetManager {
                 for (int i = 0; i < nFrames; i++){
                     while (!(scriptFinNext = scriptFin.readLine()).equals("Frame")); // skip to next Frame tag
                     String[] allButtons = scriptFin.readLine().split(" ");
-                    ScriptFrame newFrame = new ScriptFrame(allButtons);
+                    ScriptFrame newFrame = new ScriptFrame(allButtons);//create a frame with the provided buttons array
                     while (!(scriptFinNext = scriptFin.readLine()).equals("Text")); // skip to next Text tag
                     
                     String text = "";
@@ -158,16 +165,16 @@ public class AssetManager {
                 for (int i = 0; i < nOutcomes; i++){
                     while (!(scriptFinNext = scriptFin.readLine()).equals("Case"));// skip to case tag
                     while (!(scriptFinNext = scriptFin.readLine()).equals("Require"));// skip to require tag
-                    FrameCase newCase = new FrameCase();
+                    FrameCase newCase = new FrameCase(); // create a new case object
                     while (!(scriptFinNext = scriptFin.readLine()).equals("/Require")){
                         String[] temp = scriptFinNext.split(" ");
-                        newCase.addData(temp[0], temp[1].split(","));
+                        newCase.addData(temp[0], temp[1].split(",")); // add in some requirements
                     }
-                    newCase.setToFrame(Integer.parseInt(scriptFin.readLine()));
+                    newCase.setToFrame(Integer.parseInt(scriptFin.readLine())); // what frame does this case lead to?
                     newDat.addCase(newCase);
                     while (!(scriptFinNext = scriptFin.readLine()).equals("/Case"));// skip to end case tag
                 }
-                newDat.setFinalCase(Integer.parseInt(scriptFin.readLine()));
+                newDat.setFinalCase(Integer.parseInt(scriptFin.readLine())); // if nothing matches go to this case
                 allScriptData.put(tempdata[0], newDat);
             }
         } catch (IOException e){
@@ -176,11 +183,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    
-    public static ScriptData getScriptData(String key){
-        return allScriptData.get(key);
-    }
-    
+    /*This method loads all information and data regarding skills*/
     private static void loadSkillData(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"skillData.txt"));
@@ -223,11 +226,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    
-    public static SkillData getSkillData(String key){
-        return allSkillData.get(key);
-    }
-    
+    /*This method loads all images and maps them to a provided key*/
     private static void loadImages(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"ImageData.txt"));
@@ -244,10 +243,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
-
-    public static Image getImage(String key){
-        return allImages.get(key);
-    }
+    /*This method loads in all block image information.*/
     private static void loadBlocks(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"blockdata.txt"));
@@ -267,11 +263,7 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    
-    public static Image getBlockImage(String imgName){
-        return blockimages.get(imgName);
-    }
-    
+    /*This method loads all information and data regarding portals.*/
     private static void loadPortals(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"portaldata.txt"));
@@ -281,6 +273,7 @@ public class AssetManager {
                 tempdat = nextline.split(";");
                 BufferedReader portal_fin = new BufferedReader(new FileReader(DIRECTORY+"portals/allPortals/"+tempdat[1]));
                 String[] portalData = portal_fin.readLine().split(",");
+                //each portal has a destination and location on the destination map
                 allPortalData.put(tempdat[0], new PortalData(portalData[0],Float.parseFloat(portalData[1]),Float.parseFloat(portalData[2]),Float.parseFloat(portalData[3])));
             }
             fin.close();
@@ -290,12 +283,8 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    
-    public static Portal getPortal(String key,float x,float y,float z){
-        PortalData dat = allPortalData.get(key);
-        return new Portal(x,y,z,dat.getToMap(),dat.getTx(),dat.getTy(),dat.getTz());
-    }
-    
+    /*Perhaps the longest method, load maps loads in all information regarding 
+     * a map and stores it into an actual GameMap object.*/
     private static void loadMaps(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"mapdata.txt"));
@@ -314,6 +303,7 @@ public class AssetManager {
                     while (!nextline.equals(s)){
                         nextline = fin_map.readLine();
                     }
+                    //Load all blocks
                     if (s.equals("Blocks")){
                         nextline = fin_map.readLine();
                         while (!nextline.equals("/"+s)){    
@@ -325,6 +315,7 @@ public class AssetManager {
                             }
                             nextline = fin_map.readLine();
                         }
+                        //Load all portals
                     } else if (s.equals("Portals")){
                         nextline = fin_map.readLine();
                         while (!nextline.equals("/"+s)){    
@@ -332,6 +323,7 @@ public class AssetManager {
                             mymap.addPermanentSpatial(AssetManager.getPortal(tempdat[0], Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3])));
                             nextline = fin_map.readLine();
                         }
+                        //Load all mob spawners
                     } else if (s.equals("Spawners")){
                         nextline = fin_map.readLine();
                         while (!nextline.equals("/"+s)){    
@@ -347,6 +339,7 @@ public class AssetManager {
                             mymap.addBackgroundSpatial(spawner);
                             nextline = fin_map.readLine();
                         }
+                        //Load in the background sound key
                     } else if (s.equals("BGSound")){
                         nextline = fin_map.readLine();
                         while (!nextline.equals("/"+s)){    
@@ -355,6 +348,7 @@ public class AssetManager {
                         }
                     }
                 }
+                //Register the global mouse with each map
                 mymap.addBackgroundSpatial(Globals.theMouse);
                 allmaps.put(mymap.getName(), mymap);
                 fin_map.close();
@@ -365,17 +359,6 @@ public class AssetManager {
             e.printStackTrace();
             System.exit(0);
         }
-    }
-    public static GameMap getMap(String identifier){
-        if (!allmaps.containsKey(identifier)){
-            System.out.println("SEVERE: Unable to find map with key "+identifier+"!");
-            System.exit(0);
-        }
-        return allmaps.get(identifier);
-    }
-    
-    public static GameMap[] getAllMaps(){
-        return allmaps.values().toArray(new GameMap[0]);
     }
     
     private static void loadAnimations(){
@@ -415,11 +398,8 @@ public class AssetManager {
             System.exit(0);
         }
     }
-    
-    public static SpriteSet getSpriteSet(String key){
-        return allAnimSets.get(key);
-    }
-    
+    //All spatials that are communicated over the net must be registered. Spatial to type converts 
+    //an object to an integer representation of it.
     public static int SpatialToType(Spatial spat){
         if (spat instanceof Other_Block){
             return 0;
@@ -436,6 +416,8 @@ public class AssetManager {
         System.exit(0);
         return -1;
     }
+    //All itemdata is loaded in through this method, which reads from itemdata and loads
+    //in all specified items to a given key
     private static void loadItemData(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"ItemData.txt"));
@@ -452,7 +434,7 @@ public class AssetManager {
                 ItemData itemdata = new ItemData(name,itemType);
                 itemdata.setItemDescription(description);
                 itemdata.setSellPrice(sellPrice);
-                if (itemType.equals("equip")){
+                if (itemType.equals("equip")){ // if it's an equip item, we must add an equipment type
                     equipType = itemFin.readLine();
                     itemdata.equipItemType = equipType;
                 }
@@ -474,8 +456,44 @@ public class AssetManager {
             System.exit(0);
         }
     }
+    
+    /*The "get information section"*/
     public static ItemData getItemData(String key){
         return allItemData.get(key);
+    }
+    public static SpriteSet getSpriteSet(String key){
+        return allAnimSets.get(key);
+    }
+    public static GameMap getMap(String identifier){
+        if (!allmaps.containsKey(identifier)){
+            System.out.println("SEVERE: Unable to find map with key "+identifier+"!");
+            System.exit(0);
+        }
+        return allmaps.get(identifier);
+    }
+    public static GameMap[] getAllMaps(){
+        return allmaps.values().toArray(new GameMap[0]);
+    }
+    public static Portal getPortal(String key,float x,float y,float z){
+        PortalData dat = allPortalData.get(key);
+        return new Portal(x,y,z,dat.getToMap(),dat.getTx(),dat.getTy(),dat.getTz());
+    }
+    
+    public static Image getBlockImage(String imgName){
+        return blockimages.get(imgName);
+    }
+    public static Image getImage(String key){
+        return allImages.get(key);
+    }
+    public static ScriptData getScriptData(String key){
+        return allScriptData.get(key);
+    }
+    
+    public ShopData getShopData(String key){
+        return allShopData.get(key);
+    }
+    public static SkillData getSkillData(String key){
+        return allSkillData.get(key);
     }
 //    public static NPC getNpc(){
 //        
@@ -484,10 +502,4 @@ public class AssetManager {
 //        AssetManager.init();
 ////        System.out.println(AssetManager.getBlockImage("dirtblock"));
 //    }
-    public static void main(String[] args){
-        AssetManager.init();
-//        System.out.println(AssetManager.getSkillData("blastburn").getName()+AssetManager.getSkillData("blastburn").getDescription());
-//        System.out.println(AssetManager.getSkillData("icicle").getName()+AssetManager.getSkillData("icicle").getDescription());
-        System.out.println(AssetManager.getItemData("trollbaithelm").sellPrice);
-    }
 }
