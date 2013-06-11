@@ -1,0 +1,11 @@
+White Calas
+The robe of a royal priest. +120 def, +70 hp, +60 mp
+3200
+equip
+body
+calasrobe
+maxhp 70
+hp 70
+defense 120
+maxmp 60
+mp 60

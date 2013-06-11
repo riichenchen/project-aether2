@@ -1,0 +1,9 @@
+Blue Doros Robe
+Plain armor that offers some defense and hp. +30 def, +40 hp
+600
+equip
+body
+bluedorosrobe
+maxhp 40
+hp 40
+defense 30

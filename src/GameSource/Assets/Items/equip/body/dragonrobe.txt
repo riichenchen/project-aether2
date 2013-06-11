@@ -1,0 +1,12 @@
+Dragon Armor
+Made from dragons' hide. +200 def, +120 hp, +80 mp, +60 attack
+5000
+equip
+body
+dragonrobe
+maxhp 120
+hp 120
+defense 200
+maxmp 80
+mp 80
+attack 60

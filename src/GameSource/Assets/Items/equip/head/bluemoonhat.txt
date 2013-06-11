@@ -1,0 +1,8 @@
+Bluemoon Hat
+A hat for the apprentice mage. +10 attk, +20 def.
+400
+equip
+head
+bluemoonhat
+attack 10
+defense 20

@@ -1,0 +1,10 @@
+Brown Guiltian
+It is said this hat belonged to an Archmage. +45 attk, +50 def, +100mp
+2500
+equip
+head
+guiltianhat
+attack 45
+defense 50
+maxmp 100
+mp 100

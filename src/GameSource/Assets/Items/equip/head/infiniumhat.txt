@@ -1,0 +1,10 @@
+Infinium Circlet
+Grants the user immense mana at the cost of attack. -15 attk, +80 def, +200mp
+3200
+equip
+head
+infiniumhat
+attack -15
+defense 80
+maxmp 200
+mp 200
