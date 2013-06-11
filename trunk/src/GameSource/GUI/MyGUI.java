@@ -137,7 +137,15 @@ public class MyGUI extends AGUI{
     }
     
     public static void setShopData(String key){}
+    
+    public static void update(){
+        AGUI.update();
+        if (equip.visible()){
+            equip.update();
+        }
+    }
 }
+
 
 /*
  *     public static AButton createAButton(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb,int type,String message){

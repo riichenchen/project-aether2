@@ -61,11 +61,16 @@ public class AInventory extends AWindow{
     }
     
     public void loadButtonLocs(){
-        for (int tx=10; tx<148;tx+=36){
-            for (int ty=51; ty<150; ty+=36){
-                buttonLocs.add(new APoint(tx,ty));
+        for (int ty=0; ty<6; ty++){
+            for (int tx=0; tx<4; tx++){
+                buttonLocs.add(new APoint (10+36*tx,51+36*ty));
             }
         }
+//        for (int tx=10; tx<148;tx+=36){
+//            for (int ty=51; ty<150; ty+=36){
+//                buttonLocs.add(new APoint(tx,ty));
+//            }
+//        }
     }
     
     public void loadButtons(){
