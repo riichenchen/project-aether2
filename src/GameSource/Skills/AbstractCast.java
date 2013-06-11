@@ -7,13 +7,13 @@ package GameSource.Skills;
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.MobData.AbstractMob;
+import GameSource.Game.GamePoint;
 import GameSource.Globals;
 import GameSource.User.CharacterHandler;
 import PhysicsSpace.DistanceComparator;
 import Spatial.CharacterSpatial;
 import Spatial.Spatial;
 import Testing.PlayerSpatial;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -91,6 +91,11 @@ public abstract class AbstractCast extends CharacterSpatial {
                         boundMap.addSpatial(skill);
                     }
                 }
+            } else if (tempdata.getActiveType().equals("player")){
+                Spatial skill = getSkill();
+                GamePoint loc = CharacterHandler.getPlayer().getLocation();
+                skill.setLocation(new GamePoint(loc.getX(),loc.getY()+1,loc.getZ()));
+                boundMap.addSpatial(skill);
             }
         }
     }
