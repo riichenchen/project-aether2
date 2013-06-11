@@ -29,7 +29,7 @@ public class InventoryHandler {
             allItems.put(itemKey, item);
             itemQuantities.put(itemKey,1);
         }
-        //MyGUI.updateItems();
+        MyGUI.updateItems();
     }
     //This should ONLY be called when loading in a player because
     //at this point we guarantee this will be the first appearance
