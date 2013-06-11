@@ -73,8 +73,11 @@ public class AContainer extends AComponent{
     }
     public void call(){
         for (AComponent a: content){
+            System.out.println("AContainer/call   "+a.getName()+" checked");
             if (a.visible() && a.collidepoint(AMouseInput.mx, AMouseInput.my)){
+                System.out.println("AContainer/call   "+a.getName()+" called");
                 a.call();
+                break;
             }
         }
         if (scrollBar!=null){

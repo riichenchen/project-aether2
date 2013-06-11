@@ -117,7 +117,7 @@ public class AShop extends AWindow{
             tabsR[i].setLocation(238+31*i,89);
             add(tabsR[i]);
         }
-        tabsL[0]=new AButton("shop_all",AMessage.SHOP,"shop_all");
+        tabsL[0]=new AButton("shop_all",AMessage.NULL,"shop_all");
         tabsL[0].setSize(31,20);
         tabsL[0].setImage(AImageFactory.getImage("shop_all"));
         tabsL[0].setFGImage(AImageFactory.getImage("shop_all_fg"));
