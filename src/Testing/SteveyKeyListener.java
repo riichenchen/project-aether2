@@ -14,6 +14,8 @@ import GameSource.Skills.GameCasts.BlastBurnCast;
 import GameSource.Skills.GameCasts.DivineSaberCast;
 import GameSource.Skills.GameCasts.IcicleCast;
 import GameSource.Skills.GameCasts.JudgementCast;
+import GameSource.Skills.GameCasts.LightningStrikeCast;
+import GameSource.Skills.GameCasts.MagicClawCast;
 import GameSource.User.CharacterHandler;
 import Input.AbstractKeyListener;
 import java.awt.event.KeyEvent;
@@ -123,6 +125,24 @@ public class SteveyKeyListener extends AbstractKeyListener{
             if (CharacterHandler.getStat("mp") > cost){
                 CharacterHandler.addStat("mp", -cost);
                 CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new JudgementCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_C) && CharacterHandler.getSkillLevel("magicclaw")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("magicclaw"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("magicclaw"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new MagicClawCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_R) && CharacterHandler.getSkillLevel("lightningstrike")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("lightningstrike"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("lightningstrike"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new LightningStrikeCast(CharacterHandler.getPlayer()));
             }
         }
         if (eventKeyDown(KeyEvent.VK_SPACE)){
