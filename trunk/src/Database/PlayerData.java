@@ -13,10 +13,14 @@ import GameSource.User.InventoryHandler;
 import java.io.Serializable;
 
 /**
- *
+ * This class contains all information about a character
+ * when the character has been loaded and the updated information about 
+ * a character when they save. Since we use TCP, file size
+ * and memory loss is not a problem.
  * @author Shiyang
  */
 public class PlayerData implements Serializable{
+    //Some stats
     private int characterType;
     private GamePoint location;
     private String mapType;
@@ -28,16 +32,19 @@ public class PlayerData implements Serializable{
     private QuestData[] allQuestData;
     private String[] equipData;
     
+    //The first contructor is called whenever the client attempts to save
+    //All data is acquired from the static classes in the game that handle
+    //game flow and logic
     public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType){
         this.characterType = CharacterType;
         this.location = location;
         this.mapType = mapType;
         this.accountId = accountId;
         this.equipData = EquipHandler.exportItems();
-        String[] allItemIds = InventoryHandler.getItemIds();
+        String[] allItemIds = InventoryHandler.getItemIds(); // Retrive items
         this.items = new SaveItemData[allItemIds.length];
         for (int i = 0; i < allItemIds.length; i++){
-            //save and load using the item's key and not name as the name can have spacing
+            //save and load using the item's key and not name, as the name can have spacing
             items[i] = new SaveItemData(InventoryHandler.getItem(allItemIds[i]).getKey(),InventoryHandler.getItemQuantity(allItemIds[i]));
         }
         this.hp = CharacterHandler.getStat("hp");
@@ -55,13 +62,14 @@ public class PlayerData implements Serializable{
         this.allQuestData = QuestManager.exportQuestData();
     }
     
+    /*This second constructor is used by the serverworldhandler when loading in information
+     The contructor is rather large (lol)*/
     public PlayerData(int accountId,int CharacterType,GamePoint location,String mapType,SaveItemData[] loadData,
                       int[] entity_data,String charName,SaveSkillData[] allSkills,QuestData[] allQuestData,String[] equipData){
         this.characterType = CharacterType;
         this.location = location;
         this.mapType = mapType;
         this.accountId = accountId;
-        String[] allItemIds = InventoryHandler.getItemIds();
         this.items = loadData;
         this.maxhp = entity_data[0];
         this.hp = entity_data[1];
@@ -80,6 +88,7 @@ public class PlayerData implements Serializable{
         this.equipData = equipData;
     }
     
+    //Lots of get methods
     public int getCharacterType() {
         return characterType;
     }

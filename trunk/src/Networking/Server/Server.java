@@ -53,15 +53,14 @@ public abstract class Server extends Thread{
                 cSocket.setTcpNoDelay(true);
                 System.out.println("Client Connected: " + cSocket.getInetAddress().getHostAddress());
                 // Start a thread to handle each client, the client will add itself to the managers list
-                //addListener(manager).start();
                 ServerClient client = new ServerClient(cSocket, manager,this);
                 client.start();
-                //client.send(new ServerHandshakeMessage(Globals.__SERVERVERSION__));
                 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
     }
+    //Called to add the manager
     public abstract ServerNetListener addListener(ClientManager manager);
 }

@@ -7,7 +7,9 @@ package Database;
 import java.io.Serializable;
 
 /**
- *
+ * This class is transfered over between the client and server
+ * to load and save item data.
+ * An object of this class represents 1 inventoryitem
  * @author Shiyang
  */
 public class SaveItemData implements Serializable{

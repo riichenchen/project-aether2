@@ -5,11 +5,15 @@
 package ArtificialIntelligence.AIMessages;
 
 /**
- *
+ * The AIHandle Message class takes care of all messages to the AIHandler
+ * As the handler supports multi-threading, some form of synchronization
+ * is necessary so that AI ticks once per game time
  * @author Shiyang
  */
 public class AIHandleMessage {
-    public static final int REMOVECALCULATION = 0;
+    //This class simply sends action messages regarding ai calculations
+    //to the main handler
+    public static final int REMOVECALCULATION = 0; //Id declarations, more to be added later
     private int AIId;
     private int msgtype;
     

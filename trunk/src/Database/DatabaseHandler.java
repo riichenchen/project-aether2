@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,16 +17,16 @@ import java.util.Formatter;
  */
 
 /**
- *
+ * The DatabaseHandler class handles all ingoing and outbound
+ * connections and queries to the database.
+ * It provides a query and update method for sql execution.
  * @author Shiyang
  */
 public class DatabaseHandler {
     private Connection connect = null;
     private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-//    private String sqluser = "aetherServer";
-//    private String sqluserpw = "15201599298";
+
     public DatabaseHandler(){
         try {
             // This will load the MySQL driver, each DB has its own driver
@@ -43,6 +42,7 @@ public class DatabaseHandler {
             System.out.println("Error: "+e.getMessage());
         } 
     }
+    
     /*Two method tools that are used for SHA hashing for password security and what not*/
     public static String SHAsum(String inputString){
         try {
@@ -54,7 +54,8 @@ public class DatabaseHandler {
             return null;
         }
     }
-
+    //Since the hashing returns the sha-code in a byte array, we must
+    //convert back to a String
     private static String byteArray2Hex(final byte[] hash) {
         Formatter formatter = new Formatter();
         for (byte b : hash) {
@@ -62,6 +63,7 @@ public class DatabaseHandler {
         }
         return formatter.toString();
     }
+    //Basic querry method. Takes in a string and executes it in sql
     public ResultSet makeQuerry(String querry){
         try {
           resultSet = connect.prepareStatement(querry).executeQuery();
@@ -72,7 +74,7 @@ public class DatabaseHandler {
             return null;
         } 
     }
-  
+    //Basic update method. Takes in a string and executes it in sql
     public boolean makeUpdate(String update){
         try {
             connect.prepareStatement(update).executeUpdate();
@@ -84,26 +86,8 @@ public class DatabaseHandler {
         }
     }
 
-    public void writeResultSet(ResultSet resultSet) {
-        try{
-            if (resultSet == null){
-                System.out.println("ERROR: NULL RESULT SET!");
-                return;
-            }
-        // ResultSet is initially before the first data set
-            //ResultSet tmp = resultSet.
-            while (resultSet.next()) {
-                System.out.println("-----");
-                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++){
-                    System.out.println(resultSet.getMetaData().getColumnName(i)+" = "+resultSet.getString(resultSet.getMetaData().getColumnName(i)));   
-                }
-            }
-        } catch (SQLException e){
-            System.out.println("Error writing Resultset: "+e.getMessage());
-        }
-    }
-
-    // You need to close the resultSet
+    // A close method to kill the connection after each session
+    // Note: may not be used depending on future implementations
     private void close() {
         try {
             if (resultSet != null) {
@@ -120,11 +104,5 @@ public class DatabaseHandler {
         } catch (Exception e) {
             System.out.println("ERROR: Unable to CLOSE! -"+e.getMessage());
         }
-    }
-    public static void main(String[] args) throws Exception{
-        DatabaseHandler db = new DatabaseHandler();
-        String sha1pass = DatabaseHandler.SHAsum("TULIO6011996");
-        ResultSet r = db.makeQuerry("select * from accounts where username = 'shiratori' and password = '"+sha1pass+"'");
-        db.writeResultSet(r);
     }
 }

@@ -14,20 +14,21 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 /**
- *
+ * The CharacterAnimControl class is the medium by which
+ * an animated spatial can be seen in the map. It requires
+ * a sprite set upon initialization and will use that spriteset
+ * to render onto the screen.
  * @author Shiyang
  */
 public class CharacterAnimControl extends AbstractControl{
     private int time;
-    private int limit;
-    private String lastTrack;
+    private int limit; //how much time before the track animation wraps
     private String currentTrack;
     private SpriteSet spriteSet;
     private Random myRandom;
     
     public CharacterAnimControl(SpriteSet spriteSet){
         this.time = 0;
-//        this.lastTrack = "";
         this.currentTrack = spriteSet.getDefaultTrack();//just so the thing doesn't die on us
         this.limit = spriteSet.get(currentTrack).getLimit();
         this.spriteSet = spriteSet;
@@ -44,14 +45,16 @@ public class CharacterAnimControl extends AbstractControl{
     }
     
     @Override
-    public void update() {
+    public void update() {//the only update required really is increasing time
         time = (time+1)%limit;
     }
 
+    //The swapAnim method switches the current track being played
+    //to a new track using a track name string.
     public void swapAnim(String trackName){
         if (!currentTrack.equals(trackName)){
-            time = 0;
-            limit = spriteSet.get(trackName).getLimit();
+            time = 0;//If this is a new track, start at time = 0
+            limit = spriteSet.get(trackName).getLimit();//update the limit
         }
         currentTrack = trackName;
     }
@@ -74,6 +77,7 @@ public class CharacterAnimControl extends AbstractControl{
         return limit;
     }
     
+    //Returns a random animation (used by things like npc that pick random animations)
     public void swapRandomAnim(){
         swapAnim(spriteSet.getKey(myRandom.nextInt(spriteSet.getNumTracks())));
     }

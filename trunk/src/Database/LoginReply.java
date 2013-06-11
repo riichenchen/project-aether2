@@ -4,11 +4,15 @@
  */
 package Database;
 
+import java.io.Serializable;
+
 /**
- *
+ * The login reply class is sent to the client
+ * containing information about acceptance or rejection
+ * and a message why if rejection occurred
  * @author Shiyang
  */
-public class LoginReply {
+public class LoginReply implements Serializable{
     private boolean accepted;
     private int accId;
     private String message;
