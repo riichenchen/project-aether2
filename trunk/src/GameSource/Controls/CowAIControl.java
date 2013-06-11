@@ -21,35 +21,43 @@ import java.util.Random;
 public class CowAIControl extends AIControl {
 
     protected GameMap curMap;
+    protected ArrayList myPath;
+    protected Pathfinding pf;
+    protected FindClosestEnemy fce;
+    protected int curX, curY;
+    protected Spatial target;
     
     public CowAIControl(GameMap map) {
         super(new CowAICalculation());
         curMap = map;
+        if (boundTo != null) {
+            curX = (int)boundTo.getX();
+            curY = (int)boundTo.getY();
+
+            fce = new FindClosestEnemy(curX, curY, curMap.getSpatials());
+            target = fce.getTarget();
+
+            pf = new Pathfinding(curMap.getCharMap(), curX, curY, (int)target.getX(), (int)target.getY());
+            myPath = pf.getPath();
+        }
     }
 
     @Override
     public void update(Object returnValue) {
+        if (myPath == null)
+            return;
         
-//        int curX = (int)boundTo.getX();
-//        int curY = (int)boundTo.getY();
-//        
-//        FindClosestEnemy fce = new FindClosestEnemy(curX, curY, curMap.getSpatials());
-//        Spatial target = fce.getTarget();
-//        
-//        Pathfinding pf = new Pathfinding(curMap.getCharMap(), curX, curY, (int)target.getX(), (int)target.getY());
-//        ArrayList myPath = pf.getPath();
-//        
-//        if (myPath.isEmpty()) {
-//            Random rnd = new Random();
-//            int xdist = rnd.nextInt(5)-1;
-//            int ydist = rnd.nextInt(5)-1;
-//            boundTo.move(xdist * 5, 0, ydist * 5);
-//        } else {
-//            int dx = ((Node)(myPath.get(0))).getX() - curX;
-//            int dy = ((Node)(myPath.get(0))).getY() - curY;
-//
-//            boundTo.move(dx * 5, 0, dy * 5);
-//        }
+        if (myPath.isEmpty()) {
+            Random rnd = new Random();
+            int xdist = rnd.nextInt(5) - 1;
+            int ydist = rnd.nextInt(5) - 1;
+            boundTo.move(xdist, 0, ydist);
+        } else {
+            int dx = ((Node)(myPath.get(0))).getX() - curX;
+            int dy = ((Node)(myPath.get(0))).getY() - curY;
+         
+            boundTo.move(dx, 0, dy);
+       }
     }
     
 }
