@@ -10,6 +10,7 @@ import GameSource.Assets.AssetManager;
 import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Controls.CowAIControl;
 import GameSource.Skills.AbstractActiveSkill;
+import GameSource.User.CharacterHandler;
 import GameSource.User.ItemFactory;
 import Spatial.Spatial;
 
@@ -25,7 +26,7 @@ public class BillysCow extends AbstractMob{
 
     @Override
     public AIControl getAIControl() {
-        return new CowAIControl(boundMap);
+        return new CowAIControl(CharacterHandler.getPlayer().getMap());
     }
 
     @Override

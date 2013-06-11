@@ -115,15 +115,8 @@ public class AssetManager {
         }
         
     }
-<<<<<<< .mine
     /*This method loads all information and data regarding npc scripts, including
      the actual interpretation of the script itself into data*/
-=======
-    
-    public static ShopData getShopData(String key){
-        return allShopData.get(key);
-    }
->>>>>>> .r165
     private static void loadScriptData(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"scriptData.txt"));
@@ -488,12 +481,11 @@ public class AssetManager {
     public static ScriptData getScriptData(String key){
         return allScriptData.get(key);
     }
-    
-    public ShopData getShopData(String key){
-        return allShopData.get(key);
-    }
     public static SkillData getSkillData(String key){
         return allSkillData.get(key);
+    }
+    public static ShopData getShopData(String key){
+        return allShopData.get(key);
     }
 //    public static NPC getNpc(){
 //        
