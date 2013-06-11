@@ -5,7 +5,11 @@
 package GameSource.GUI;
 
 import GameSource.User.CharacterHandler;
+import GameSource.User.EquipHandler;
+import GameSource.User.Inventory.EquipItem;
+import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.InventoryHandler;
+import GameSource.User.ItemFactory;
 
 /**
  *
@@ -45,12 +49,23 @@ public class AProcessor {
                 break;
             case AMessage.SHOP: MyGUI.changeShopInventPane(m.content());
                 break;
+            case AMessage.SHOP_SELL: MyGUI.setShopSellItem(m.content());
+                break;
+            case AMessage.SHOP_BUY: MyGUI.setShopBuyItem(m.content());
+                break;
+            case AMessage.SHOP_BUY_CONFIRM: MyGUI.shopBuyItem(m.content());
+                break;
+            case AMessage.SHOP_SELL_CONFIRM: MyGUI.shopSellItem(m.content());
+                break;
             default: System.out.println("uselessButton");
         }    
     }
     private static void process_invent(AMessage m){
         if (AMouseInput.doubleclick[AMouseInput.LEFT]==AMouseInput.YES){
-            System.out.println("Use "+m.content());
+            InventoryItem c=ItemFactory.getItem(m.content());
+            if (c instanceof EquipItem){
+                EquipHandler.equip((EquipItem)c);
+            }
         }
         else{
             MyGUI.bindToMouse(InventoryHandler.getItem(m.content()));

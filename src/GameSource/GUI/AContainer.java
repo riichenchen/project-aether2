@@ -18,7 +18,7 @@ public class AContainer extends AComponent{
     private int size;
     public AContainer(int xx,int yy, int sz, ArrayList<APoint> pos){
         super();
-        setName("container");
+        setName("container"+this.id());
         setLocation(xx,yy);
         size=sz;
         allContent=new ArrayList<>();

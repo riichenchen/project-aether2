@@ -36,13 +36,13 @@ public class AStats extends AWindow{
     }
     public void updateButtons(){
         if (statPoints>0 && (subComponents.get(0).visible()==false)){
-            System.out.println("AStats/updateButtons   Buttons are visible!");
+//            System.out.println("AStats/updateButtons   Buttons are visible!");
             for (AComponent a: subComponents){
                 a.setVisible(true);
             }
         }
         else if ((statPoints<=0 && (subComponents.get(0).visible()))){
-            System.out.println("AStats/updateButtons   Buttons are invisible!");
+//            System.out.println("AStats/updateButtons   Buttons are invisible!");
             for (AComponent a: subComponents){
                 a.setVisible(false);
             }

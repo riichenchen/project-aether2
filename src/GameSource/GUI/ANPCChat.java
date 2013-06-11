@@ -139,7 +139,7 @@ public class ANPCChat extends AWindow{
                 lineWidth+=fm.stringWidth(" ");
             }
         }
-        return Math.min(130,ans*fm.getHeight()+20);
+        return Math.max(130,ans*fm.getHeight()+20);
     }
     
     public void setButtons(String[]info){
