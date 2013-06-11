@@ -17,18 +17,14 @@ import javax.swing.JPanel;
 
 
 /**
- *
+ * All terrain blocks must extend this template.
+ * Terrain blocks must provide an image
  * @author Shiyang
  */
 public abstract class AbstractTerrainBlock extends RenderSpatial{
     
     protected boolean solid = true;// is this a solid block? solid by default
-    //protected String imageType;//block type for rendering
     protected Image image;
-    
-    /*TODO:
-     - Change block image to an image set
-     - one for the top view and one for the front profile of the block*/
     
     public AbstractTerrainBlock(float x,float y, float z,int dx,int dz,int dy,String imageType,int collidable){
         super(x,y,z,dx,dz,dy,0,0,collidable);
@@ -36,6 +32,7 @@ public abstract class AbstractTerrainBlock extends RenderSpatial{
         this.solid = getSolid();
     }
     
+    //simply blit the picture on the screen.
     @Override
     public void render(Graphics g, JPanel pane,AetherCam camera) {//rendering time C:
         int[] camSpaceCoords = camera.convertCoords(location.getX(),location.getZ()*Globals.__PROJECTION_SCALE__);

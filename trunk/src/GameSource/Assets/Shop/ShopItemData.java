@@ -7,7 +7,8 @@ package GameSource.Assets.Shop;
 import GameSource.User.Inventory.InventoryItem;
 
 /**
- *
+ * The single item data for shop. Tracks how much the item costs
+ * and the item itself
  * @author Shiyang
  */
 public class ShopItemData {

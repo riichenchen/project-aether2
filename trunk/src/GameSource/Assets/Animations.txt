@@ -54,6 +54,16 @@ Effects
 icysprite
 icicle
 blastburn
+arroweruption
+divinesaber
+judgement
+lightningstrike
+magicclaw
+plasmashock
+sheolfear
+spiritbomb
+stalagamite
+staticvortex
 /Effects
 npc/john
 a
@@ -88,4 +98,6 @@ damage/violet
 spellRings
 blastburn
 icicle
+arroweruption
+judgement
 /spellRings

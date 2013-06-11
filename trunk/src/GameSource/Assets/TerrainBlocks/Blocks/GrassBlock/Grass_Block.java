@@ -8,7 +8,7 @@ import GameSource.Assets.TerrainBlocks.AbstractTerrainBlock;
 import Spatial.Spatial;
 
 /**
- *
+ * Basic grass block. Fairly self explanatory
  * @author Shiyang
  */
 public class Grass_Block extends AbstractTerrainBlock{

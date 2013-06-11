@@ -9,7 +9,8 @@ import GameSource.User.ItemFactory;
 import java.util.LinkedList;
 
 /**
- *
+ * The data class for shop. Loaded in through the asset manager. Keeps a 
+ * linked list of all items in the shop.
  * @author Shiyang
  */
 public class ShopData {

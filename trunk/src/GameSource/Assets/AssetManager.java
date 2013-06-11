@@ -12,7 +12,6 @@ import GameSource.Assets.Shop.ShopData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
 import GameSource.Assets.TerrainBlocks.Blocks.GrassBlock.Grass_Block;
-import GameSource.Assets.TerrainBlocks.Blocks.otherblock.Other_Block;
 import GameSource.Globals;
 import GameSource.Script.FrameCase;
 import GameSource.Script.FrameData;
@@ -394,9 +393,7 @@ public class AssetManager {
     //All spatials that are communicated over the net must be registered. Spatial to type converts 
     //an object to an integer representation of it.
     public static int SpatialToType(Spatial spat){
-        if (spat instanceof Other_Block){
-            return 0;
-        } else if (spat instanceof MyTestCharacter){
+        if (spat instanceof MyTestCharacter){
             return 1;
         } else if (spat instanceof Dirt_Block){
             return 2;

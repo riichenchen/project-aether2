@@ -5,7 +5,8 @@
 package GameSource.Assets.Portals;
 
 /**
- *
+ * The data class for portals. Contains information required to generate a portal
+ * Loaded in from the AssetManager
  * @author Shiyang
  */
 public class PortalData {
