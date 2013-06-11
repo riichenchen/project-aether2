@@ -26,24 +26,21 @@ public class CowAIControl extends AIControl {
     protected FindClosestEnemy fce;
     protected int curX, curY;
     protected Spatial target;
+    protected boolean isLoaded;
     
     public CowAIControl(GameMap map) {
         super(new CowAICalculation());
         curMap = map;
-        if (boundTo != null) {
-            curX = (int)boundTo.getX();
-            curY = (int)boundTo.getY();
-
-            fce = new FindClosestEnemy(curX, curY, curMap.getSpatials());
-            target = fce.getTarget();
-
-            pf = new Pathfinding(curMap.getCharMap(), curX, curY, (int)target.getX(), (int)target.getY());
-            myPath = pf.getPath();
-        }
+        if (map == null)
+            System.out.println("Who needs a map?");
+        isLoaded = false;
     }
 
     @Override
     public void update(Object returnValue) {
+        if (boundTo != null && !isLoaded)
+            init();
+        
         if (myPath == null)
             return;
         
@@ -58,6 +55,23 @@ public class CowAIControl extends AIControl {
          
             boundTo.move(dx, 0, dy);
        }
+    }
+    
+    public void init() {
+        curX = (int)boundTo.getX();
+        curY = (int)boundTo.getY();
+        
+        if (curMap == null) {
+            System.out.println("Are you serious!");
+        }
+
+        fce = new FindClosestEnemy(curX, curY, curMap.getSpatials());
+        target = fce.getTarget();
+
+        pf = new Pathfinding(curMap.getCharMap(), curX, curY, (int)target.getX(), (int)target.getY());
+        myPath = pf.getPath();
+        
+        isLoaded = true;
     }
     
 }
