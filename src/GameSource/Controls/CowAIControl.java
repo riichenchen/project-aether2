@@ -39,10 +39,7 @@ public class CowAIControl extends AIControl {
         if (boundTo != null && !isLoaded)
             init();
         
-        if (myPath == null)
-            return;
-        
-        if (myPath.isEmpty()) {
+        if (myPath == null || myPath.isEmpty()) {
             Random rnd = new Random();
             int xdist = rnd.nextInt(5) - 1;
             int ydist = rnd.nextInt(5) - 1;
@@ -65,14 +62,15 @@ public class CowAIControl extends AIControl {
         
         mp = new MapParser(inRange);
         
+        if (mp.getCharMap() != null) {
+            fce = new FindClosestEnemy(curX, curY, inRange);
+            target = fce.getTarget();
 
-        fce = new FindClosestEnemy(curX, curY, inRange);
-        target = fce.getTarget();
+            pf = new Pathfinding(mp.getCharMap(), curX - mp.getxOffset(), curY - mp.getyOffset(), (int)target.getX() - mp.getxOffset(), (int)target.getY() - mp.getyOffset());
+            myPath = pf.getPath();
 
-        pf = new Pathfinding(mp.getCharMap(), curX - mp.getxOffset(), curY - mp.getyOffset(), (int)target.getX() - mp.getxOffset(), (int)target.getY() - mp.getyOffset());
-        myPath = pf.getPath();
-        
-        isLoaded = true;
+            isLoaded = true;
+        }
     }
     
     public int countSpatials() {
