@@ -38,6 +38,7 @@ public class GrabSpatial {
         y = _y;
         boundary_length = DEFAULT_LENGTH;
         boundary_width = DEFAULT_WIDTH;
+        gm = map;
         ps = map.getPhysicsSpace();
         init();
     }
@@ -56,6 +57,8 @@ public class GrabSpatial {
     
     private void init() {
         dummySpat = new DummySpatial(x, y, boundary_length, boundary_width);
+        if (gm == null)
+            System.out.println("Passing in null map");
         dummySpat.bindToMap(gm);
         inRange = ps.grabSpatialsAround(dummySpat);
     }
