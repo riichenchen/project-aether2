@@ -23,6 +23,7 @@ public class MapParser {
         int lx, ly, rx, ry;
         lx = ly = 1 << 30;
         rx = ry = - (1 << 30);
+        boolean somethingInRange = false;
         boolean hasObstacles = false;
         
         for (int i = 0; i < mySpats[0].length; i++) {
@@ -39,6 +40,8 @@ public class MapParser {
                 rx = cx;
             if (cy > ry)
                 ry = cy;
+            
+            somethingInRange = true;
         }
         
         for (int i = 0; i < mySpats[1].length; i++) {
@@ -59,7 +62,7 @@ public class MapParser {
             hasObstacles = true;
         
         }
-        
+        if (somethingInRange) {
             xOffset = lx;
             yOffset = ly;
 
@@ -67,7 +70,7 @@ public class MapParser {
             
             for (char [] c: charMap)
                 Arrays.fill(c, (char)0);
-        
+        }
         if (hasObstacles) {
             System.out.println("There are obstacles");
             
