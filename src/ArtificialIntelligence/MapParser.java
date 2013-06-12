@@ -4,53 +4,66 @@
  */
 package ArtificialIntelligence;
 
+import PhysicsSpace.PhysicsSpace;
 import Spatial.Spatial;
+import java.util.Arrays;
 
 /**
  *
  * @author Angus
  */
 public class MapParser {
-    
-    public static final int DEFAULT_LENGTH = 64;
-    public static final int DEFAULT_WIDTH = 64;
-    protected int x, y;
-    protected int boundary_length, boundary_width;
-    protected DummySpatial dummySpat;
+   
     protected char [][] charMap;
+    protected Spatial [][] mySpats;
+    protected int xOffset, yOffset;
     
-    public MapParser(int _x, int _y, int _boundary_length, int _boundary_width) {
-        x = _x;
-        y = _y;
-        boundary_length = _boundary_length;
-        boundary_width = _boundary_width;
-        init();
-    }
-    
-    public MapParser(int _x, int _y) {
-        x = _x;
-        y = _y;
-        boundary_length = DEFAULT_LENGTH;
-        boundary_width = DEFAULT_WIDTH;
-        init();
-    }
-    
-    public void updateLocation(int _x, int _y) {
-        x = _x;
-        y = _y;
-        init();
-    }
-    
-    public void updateBoundary(int _boundary_length, int _boundary_width) {
-        boundary_length = _boundary_length;
-        boundary_width = _boundary_width;
-        init();
-    }
-    
-    private void init() {
-        dummySpat = new DummySpatial(x, y, boundary_length, boundary_width);
-        charMap = new char[boundary_length][boundary_width];
+    public MapParser(Spatial[][] _mySpats) {
+        mySpats = _mySpats;
+        int lx, ly, rx, ry;
+        lx = ly = 1 << 30;
+        rx = ry = - (1 << 30);
+        for (int i = 0; i < mySpats[1].length; i++) {
+            
+            int cx = (int)mySpats[1][i].getX();
+            int cy = (int)mySpats[1][i].getZ();
+            
+            if (cx < lx)
+                lx = cx;
+            if (cy < ly)
+                ly = cy;
+            
+            if (cx > rx)
+                rx = cx;
+            if (cy > ry)
+                ry = cy;
+        }
         
+        xOffset = lx;
+        yOffset = ly;
+        
+        charMap = new char [rx - xOffset][ry - yOffset];
+        
+        for (char [] c: charMap)
+            Arrays.fill(c, (char)0);
+        
+        for (int i = 0; i < mySpats[1].length; i++) {
+            int cx = (int)mySpats[1][i].getX();
+            int cy = (int)mySpats[1][i].getZ();
+            charMap[cx - xOffset][cy - yOffset] = 1;
+        }
+    }
+    
+    public int getxOffset() {
+        return xOffset;
+    }
+    
+    public int getyOffset() {
+        return yOffset;
+    }
+    
+    public char[][] getCharMap() {
+        return charMap;
     }
     
     
