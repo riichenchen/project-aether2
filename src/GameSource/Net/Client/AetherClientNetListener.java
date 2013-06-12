@@ -19,8 +19,9 @@ import Spatial.Spatial;
 import java.net.Socket;
 
 /**
- *
  * @author Shiyang
+ * The network message listener class. Listens for messages from the user
+ * and then loads in the player using that information.
  */
 public class AetherClientNetListener extends ClientListenThread{
     private ClientWorldHandler world;
@@ -33,6 +34,8 @@ public class AetherClientNetListener extends ClientListenThread{
         this.world = world;
     }
 
+    //Overridden receive message. Logs the user in and binds the client as well as loads
+    //the character data.
     @Override
     public void ReceiveMessage(Message msg) {
         if (msg instanceof PlayerJoinMessage) {

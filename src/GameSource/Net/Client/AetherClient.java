@@ -8,16 +8,16 @@ import GameSource.Game.ClientWorldHandler;
 import Networking.Client.Client;
 
 /**
- *
  * @author Shiyang
+ * Example implementation of a Client
+ * Make sure the client has a handle the world
  */
 public class AetherClient extends Client{
     ClientWorldHandler world;
     public AetherClient(ClientWorldHandler world){
         super();
-        this.world = world;
+        this.world = world; //set the world, bind the net sender to the world
         world.bindSender((AetherClientNetSender)netSender);
-        //System.out.println(netlistener);
         ((AetherClientNetListener)netlistener).setWorld(world);
     }
 }

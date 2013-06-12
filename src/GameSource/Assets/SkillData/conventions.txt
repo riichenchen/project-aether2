@@ -1,6 +1,9 @@
 name
-type // single, pierce, area
-typeinfo
-...
+descript
+type (active)
+typeinfo area,single,ray (pierces)
 numberLevels
-moar shit
+range for level
+mp for level	(350 max)
+dmg for level	(500)
+cast time for level	(7000)
