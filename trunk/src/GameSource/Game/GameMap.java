@@ -236,6 +236,8 @@ public class GameMap {
             return mobCounter;
         }
         
+        //Methods for AI
+        
         public char [][] getCharMap() {
             char [][] ret = new char[dimx][dimy];
             for (char [] c: ret){
@@ -255,6 +257,10 @@ public class GameMap {
                 mySpats.add(curSpat);
             }
             return mySpats;
+        }
+        
+        public PhysicsSpace getPhysicsSpace() {
+            return space;
         }
 }
 
