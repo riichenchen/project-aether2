@@ -303,6 +303,8 @@ public abstract class Spatial {
      on their length, width and location. This boundary is used
      to cull for rendering as well as physics calculations.*/
     public int[] getCullBounds(float S_QUAD){
+        if (boundMap == null)
+            System.out.println("No map");
         double tx = Math.max(Math.min(getX()-getLength()/2,boundMap.getDimX()),0);//keep x and y within boundaries by using max and mins
         double ty = Math.max(Math.min(getZ()-getHeight(),boundMap.getDimY()),0);
         int x = (int)(tx*S_QUAD);//convert to int
