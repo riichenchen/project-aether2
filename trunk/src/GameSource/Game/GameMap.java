@@ -17,250 +17,273 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import javax.swing.JPanel;
-
+/* GameMap
+ * @author Shiyang Han
+ * 
+ * The main map class that handles all spatials - effects, casts, mobs, etc.
+ * Literally handles almost everything in-game logic related.
+ */
 public class GameMap {
-        protected int mobCounter = 0;
-        protected int mobLimit;
-        protected int dimx,dimy;        
-        protected HashMap<Integer,Spatial> spats;
-        protected HashMap<Integer,Spatial> nonPermaSpats;
-        //Only client maps can render. This saves space and allows
-        //the server to use this class as well
-        protected Renderer renderer = null;
-        protected AetherCam camera = null;
-        protected boolean canRender = false;
-        protected String mapName;
-        protected PhysicsSpace space;
-        private String bgMusic;
-        
-        public static final int Char_TESTBLOCK = 0,Char_TESTANIM = 1,Char_STEVEY = 4;
-                
-        public GameMap(String mapName, int mobLimit,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
-            this.dimx = dimx;
-            this.dimy = dimy;
-            this.mobLimit = mobLimit;
-            spats = new HashMap<>();
-            this.mapName = mapName;
-            this.nonPermaSpats = new HashMap<>();
-            this.space = new PhysicsSpace(9.81f,dimx,dimy);
-            //Clean this up later maybe
-            if (canRender){
-                this.canRender = true;
-                camera = new AetherCam(this,camlen,camwid);
-                renderer = new Renderer(this,camera);
-            }
-        }
+    protected int mobCounter = 0;
+    protected int mobLimit; // the mob limit of this map
+    protected int dimx,dimy; //dimensions
+    protected HashMap<Integer,Spatial> spats; //separate permanent and non permanents for ease of clearing the map of animate objects
+    protected HashMap<Integer,Spatial> nonPermaSpats;
+    //Only client maps can render. This saves space and allows
+    //the server to use this class as well if required
+    //(In this case, not exactly required)
+    protected Renderer renderer = null;
+    protected AetherCam camera = null;
+    protected boolean canRender = false;
+    protected String mapName; //very handy to store a key (for easy assetmanager reference)
+    protected PhysicsSpace space;
+    private String bgMusic; // key for bgm
 
-        //returns a handle to the camera for the game to control if needed
-        public AetherCam getCamera(){
-            return camera;
+    //Constructor: initializes and sets everything
+    public GameMap(String mapName, int mobLimit,int dimx,int dimy,int camlen,int camwid,boolean canRender) {
+        this.dimx = dimx; 
+        this.dimy = dimy;
+        this.mobLimit = mobLimit;
+        spats = new HashMap<>();
+        this.mapName = mapName;
+        this.nonPermaSpats = new HashMap<>();
+        this.space = new PhysicsSpace(9.81f,dimx,dimy); //note: gravity isn't exactly used at the point
+        //Clean this up later maybe
+        if (canRender){
+            this.canRender = true;
+            camera = new AetherCam(this,camlen,camwid);
+            renderer = new Renderer(this,camera); // create a renderer for this map
         }
-        //Verifies the existance of a renderer before allowing
-        //a call to it
-        private boolean verifyRender(){
-            if (renderer == null && canRender){
-                if (Globals.RENDER_DEBUG)
-                    System.out.println("Warning: No renderer set to map. Unable to attach spatial to render space.");
-                return false;
-            }
-            return true;
-        }
+    }
 
-        //Handles attaching and removing of spatials
-        public void addSpatial(Spatial spat){
-            clearMessages();
-            spat.bindToMap(this);
-            spats.put(spat.getId(), spat);
-            nonPermaSpats.put(spat.getId(), spat);
-            space.addPlayerSpatial(spat);
-            
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.addSpatial((RenderSpatial)spat);
-            }
+    //returns a handle to the camera for the game to control if needed
+    public AetherCam getCamera(){
+        return camera;
+    }
+    //Verifies the existance of a renderer before allowing
+    //a call to it
+    private boolean verifyRender(){
+        if (renderer == null && canRender){
+            if (Globals.RENDER_DEBUG)
+                System.out.println("Warning: No renderer set to map. Unable to attach spatial to render space.");
+            return false;
         }
-        
-        public void addPermanentSpatial(Spatial spat){
-            clearMessages();
-            spat.bindToMap(this);
-            spats.put(spat.getId(), spat);
-            space.addEnviroSpatial(spat);
-            
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.addSpatial((RenderSpatial)spat);
-            }
-        }
-        
-        public void addBackgroundSpatial(Spatial spat){
-            clearMessages();
-            spats.put(spat.getId(), spat);
-            spat.bindToMap(this);
-            
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.addSpatial((RenderSpatial)spat);
-            }
-        }
-        
-        public void render(Graphics g,JPanel pane){
-            if (!verifyRender())
-                return;
-            renderer.render(g, pane);
-        }
-        
-        //Only hides the spatial from the renderer, spatial still behaves
-        //and moves normally. (Not sure if will be used)
-        public void hideSpatial(Spatial spat){
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.removeSpatial((RenderSpatial)spat);
-            } else {
-                System.out.println("Warning: Trying to hide non-renderable Spatial!");
-            }
-        }
-        
-        public void revealSpatial(Spatial spat){
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.addSpatial((RenderSpatial)spat);
-            } else {
-                System.out.println("Warning: Trying to reveal non-renderable Spaial!");
-            }
-        }
-        
-        public void removeSpatial(Spatial spat){
-            clearMessages();
-            spats.remove(spat.getId());
-            nonPermaSpats.remove(spat.getId());
-            space.removeSpatial(spat);
-            //Remove from render space if the spatial is in the render space
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.removeSpatial((RenderSpatial)spat);
-            }
-            spat.unbindFromMap();
-        }
-        
-        public void removeBackgroundSpatial(Spatial spat){
-            clearMessages();
-            spats.remove(spat.getId());
-            nonPermaSpats.remove(spat.getId());
-            //Remove from render space if the spatial is in the render space
-            if (!verifyRender())
-                return;
-            if (spat instanceof RenderSpatial){
-                renderer.removeSpatial((RenderSpatial)spat);
-            }
-            spat.unbindFromMap();
-        }
-        public void clearMessages(){
-            space.clearMessages();
-            renderer.clearMessages();
-        }
-        
+        return true;
+    }
 
-        public int getDimX(){
-            return dimx;
+    //standard addspat method, spatials are added into the physics space as well
+    public void addSpatial(Spatial spat){
+        clearMessages();//to preserve synchronization, messages are cleared from all spaces
+        spat.bindToMap(this); //bind spatial to this map
+        spats.put(spat.getId(), spat); //add the spatial to all containers
+        nonPermaSpats.put(spat.getId(), spat);
+        space.addPlayerSpatial(spat);
+
+        if (!verifyRender()) // verify that spatial is renderable
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.addSpatial((RenderSpatial)spat);
         }
-        public int getDimY(){
-            return dimy;
+    }
+    
+    //Handles attaching of spatials to the background
+    //Spatials added here are also added to the physicsspace
+    public void addPermanentSpatial(Spatial spat){
+        clearMessages();
+        spat.bindToMap(this);
+        spats.put(spat.getId(), spat);
+        space.addEnviroSpatial(spat);
+
+        if (!verifyRender())
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.addSpatial((RenderSpatial)spat);
         }
-        
-        public void update(){
-            Spatial[] spatList = spats.values().toArray(new Spatial[0]);
-            for (Spatial s: spatList){
-                s.update();
-            }
-            CharacterHandler.clearCollideItems();
-            space.update();
-            if (!verifyRender())
-                return;
-            renderer.update();
+    }
+
+    //Special add method; adds spatials to then render map only
+    //So no operations are wasted on a spatial that'l never have
+    //a collision
+    public void addBackgroundSpatial(Spatial spat){
+        clearMessages();
+        spats.put(spat.getId(), spat);
+        spat.bindToMap(this);
+
+        if (!verifyRender())
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.addSpatial((RenderSpatial)spat);
         }
-        
-        public String getName(){
-            return mapName;
+    }
+    //Render method. Calls upon the renderer's render method
+    public void render(Graphics g,JPanel pane){
+        if (!verifyRender())
+            return;
+        renderer.render(g, pane);
+    }
+
+    //Only hides the spatial from the renderer, spatial still behaves
+    //and moves normally. (Not sure if will be used)
+    public void hideSpatial(Spatial spat){
+        if (!verifyRender())
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.removeSpatial((RenderSpatial)spat);
+        } else {
+            System.out.println("Warning: Trying to hide non-renderable Spatial!");
         }
-        public Spatial getSpatial(int id){
-            return spats.get(id);
+    }
+    
+    //Reveals a hidden spatial.
+    public void revealSpatial(Spatial spat){
+        if (!verifyRender())
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.addSpatial((RenderSpatial)spat);
+        } else {
+            System.out.println("Warning: Trying to reveal non-renderable Spaial!");
         }
-        
-        public PlayerSpatial addPlayer(GamePoint loc){
-            PlayerSpatial newChar = null;
-//            if (characterType == Char_TESTBLOCK){
-//                newChar = new Other_Block(loc.getX(),loc.getY(),loc.getZ());
-//            } else if (characterType == Char_TESTANIM){
-//                newChar = new MyTestCharacter(loc.getX(),loc.getY(),loc.getZ());
-//            } else if (characterType == Char_STEVEY){
-            newChar = new PlayerSpatial(loc.getX(),loc.getY(),loc.getZ());
-//            }
-//            if (newChar == null){
-//                System.out.println("SEVERE: UNABLE TO LOAD CHARACTER!");
-//                System.exit(0);
-//            }
-            addSpatial(newChar);
-            return newChar;
+    }
+
+    //Removes a spatial from the gamemap and space.
+    //Permanent spats are an exception
+    public void removeSpatial(Spatial spat){
+        clearMessages();
+        spats.remove(spat.getId());
+        nonPermaSpats.remove(spat.getId());
+        space.removeSpatial(spat);
+        //Remove from render space if the spatial is in the render space
+        if (!verifyRender())
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.removeSpatial((RenderSpatial)spat);
         }
-        
-        public HashMap<Integer,Spatial> getNonPermanents(){
-            return nonPermaSpats;
+        spat.unbindFromMap();
+    }
+    
+    //Special remove spatial method.
+    //Assumes spatial to be removed isn't bound to physics space
+    public void removeBackgroundSpatial(Spatial spat){
+        clearMessages();
+        spats.remove(spat.getId());
+        nonPermaSpats.remove(spat.getId());
+        //Remove from render space if the spatial is in the render space
+        if (!verifyRender())
+            return;
+        if (spat instanceof RenderSpatial){
+            renderer.removeSpatial((RenderSpatial)spat);
         }
-        public PhysicsSpace getSpace(){
-            return space;
+        spat.unbindFromMap();
+    }
+    
+    //Clear messages clears all current messages going on
+    //used to synchronize (and prevent concurrent exceptions)
+    public void clearMessages(){
+        space.clearMessages();
+        renderer.clearMessages();
+    }
+
+    //Standard get methods
+    public int getDimX(){
+        return dimx;
+    }
+    public int getDimY(){
+        return dimy;
+    }
+
+    //Main update method. Updates all controls, collisions, and the renderer
+    public void update(){
+        Spatial[] spatList = spats.values().toArray(new Spatial[0]);
+        for (Spatial s: spatList){
+            s.update();
         }
-        public void setBGMusic(String musicKey){
-            this.bgMusic = musicKey;
+        CharacterHandler.clearCollideItems();
+        space.update();
+        if (!verifyRender())
+            return;
+        renderer.update();
+    }
+
+    public String getName(){
+        return mapName;
+    }
+    //Returns a spatial with the id passed in
+    public Spatial getSpatial(int id){
+        return spats.get(id);
+    }
+
+    //Spatial passed in is assumed to be the player. So a "sola" character
+    //is added
+    public PlayerSpatial addPlayer(GamePoint loc){
+        PlayerSpatial newChar = null;
+        newChar = new PlayerSpatial(loc.getX(),loc.getY(),loc.getZ());
+        addSpatial(newChar);
+        return newChar;
+    }
+    
+    //Returns all non-permanent spatials in this map
+    public HashMap<Integer,Spatial> getNonPermanents(){
+        return nonPermaSpats;
+    }
+    //Standard get space method
+    public PhysicsSpace getSpace(){
+        return space;
+    }
+    //Used by the AssetManager to set a musicKey
+    public void setBGMusic(String musicKey){
+        this.bgMusic = musicKey;
+    }
+    //Standard get BGMusic method
+    public String getBGMusic(){
+        return bgMusic;
+    }
+    //This method checks for whether a mob can be spawned before generating and
+    //adding a mob to the map using the provided spawner
+    //Note: As abstract mob initializes an AI control and ai controls are 
+    //handled by the ai thread, it's crucial that no new instances are made
+    //and then thrown away. (Otherwise the handler may result in "ghost" controls
+    public void spawnMob(AbstractMobSpawner spawner){
+        if (mobCounter < mobLimit){
+            this.addSpatial(spawner.getMob());
+            mobCounter++;
         }
-        public String getBGMusic(){
-            return bgMusic;
+    }
+    
+    //Removes a given mob
+    public void removeMob(AbstractMob spat){
+        removeSpatial(spat);
+        mobCounter--;
+    }
+    
+    //gets mob count
+    public int getMobCount(){
+        return mobCounter;
+    }
+
+    //Methods for AI
+    public char [][] getCharMap() {
+        char [][] ret = new char[dimx][dimy];
+        for (char [] c: ret){
+            Arrays.fill(c, (char)0);
         }
-        public void spawnMob(AbstractMobSpawner spawner){
-            if (mobCounter < mobLimit){
-                this.addSpatial(spawner.getMob());
-                mobCounter++;
-            }
+        for (Map.Entry<Integer, Spatial> entry : spats.entrySet()) {
+            Spatial curSpat = entry.getValue();
+            ret[(int)(curSpat.getX())][(int)(curSpat.getZ())] = 1;
         }
-        public void removeMob(AbstractMob spat){
-            removeSpatial(spat);
-            mobCounter--;
+        return ret;
+    }
+
+    public ArrayList getSpatials() {
+        ArrayList mySpats = new ArrayList<Spatial>();
+        for (Map.Entry<Integer, Spatial> entry: spats.entrySet()) {
+            Spatial curSpat = entry.getValue();
+            mySpats.add(curSpat);
         }
-        
-        public int getMobCount(){
-            return mobCounter;
-        }
-        
-        //Methods for AI
-        
-        public char [][] getCharMap() {
-            char [][] ret = new char[dimx][dimy];
-            for (char [] c: ret){
-                Arrays.fill(c, (char)0);
-            }
-            for (Map.Entry<Integer, Spatial> entry : spats.entrySet()) {
-                Spatial curSpat = entry.getValue();
-                ret[(int)(curSpat.getX())][(int)(curSpat.getZ())] = 1;
-            }
-            return ret;
-        }
-        
-        public ArrayList getSpatials() {
-            ArrayList mySpats = new ArrayList<Spatial>();
-            for (Map.Entry<Integer, Spatial> entry: spats.entrySet()) {
-                Spatial curSpat = entry.getValue();
-                mySpats.add(curSpat);
-            }
-            return mySpats;
-        }
-        
-        public PhysicsSpace getPhysicsSpace() {
-            return space;
-        }
+        return mySpats;
+    }
+
+    public PhysicsSpace getPhysicsSpace() {
+        return space;
+    }
 }
 

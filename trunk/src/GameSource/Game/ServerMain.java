@@ -7,6 +7,11 @@ import GameSource.Net.Server.AetherServer;
 import GameSource.game.GameMap;
 import PhysicsSpace.PhysicsSpace;
 
+/*
+ * @author Shiyang Han
+ * The class run when starting the server.
+ * Starts an aetherserver as well as a database handler
+ */
 public class ServerMain {
 
     private static DatabaseHandler myDB;
@@ -14,9 +19,9 @@ public class ServerMain {
     private static ServerWorldHandler world;
     
     public static void main(String [] args) {
-        AssetManager.init();
+        AssetManager.init(); //incase we need to send any game content involving assets
         myDB = new DatabaseHandler();
-        world = new ServerWorldHandler(myDB);
+        world = new ServerWorldHandler(myDB); // start the game
         theServer = new AetherServer(world);
         theServer.start();
     }

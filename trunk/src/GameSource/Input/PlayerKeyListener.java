@@ -10,8 +10,11 @@ import PhysicsSync.SpatActionMessage;
 import java.awt.event.KeyEvent;
 
 /**
- *
  * @author Shiyang
+ * This keyListener was once used for the multiplayer beta and an example
+ * implementation of abstractkeylistener.
+ * 
+ * Not used anymore.
  */
 public class PlayerKeyListener extends AbstractKeyListener{
 

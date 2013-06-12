@@ -19,35 +19,43 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/*
+ * @author Shiyang Han
+ * 
+ * The class that holds everything together.
+ * Has a handle to the database as well as network clientmanager for messaging
+ */
 public class ServerWorldHandler {
     private DatabaseHandler db;
     private ClientManager clientManager;
-    private GameMap[] allMaps;
 
     public ServerWorldHandler(DatabaseHandler db) {
         this.db = db;     
-        this.allMaps = AssetManager.getAllMaps();
         EquipHandler.init();
         CharacterHandler.init();
     }
     
+    //Standard bind method
     public void bindManager(ClientManager clientManager){
         this.clientManager = clientManager;
     }
     
+    //Broadcasts a passed message to all clients
     public void broadcastMessage(Message m){
-        if (clientManager == null){
+        if (clientManager == null){ //debugging purposes
             System.out.println("SEVERE: NO CLIENTMANAGER!");
             System.exit(0);
         }
         clientManager.broadcast(m);
     }
     
+    //Broadcasts a passed message to the client with the specified id
     public void sendToOne(int clientId,Message msg){
         clientManager.sendToOne(clientId,msg);
     }
     
+    //Retrieves player data from the database and returns it into a nicely packaged
+    //PlayerData object
     public PlayerData getPlayerData(int accountid){
         ResultSet r = db.makeQuerry("Select * from characters where accountid = "+accountid);
         try{
@@ -56,16 +64,17 @@ public class ServerWorldHandler {
             //Anymore, and itl only take the first character!
             //Future: Add in multiple character support
             
-            int characterType = r.getInt("characterType");
-            GamePoint loc = new GamePoint(r.getFloat("x"),r.getFloat("y"),r.getFloat("z"));
-            String mapType = r.getString("mapid");
-            int[] entity_data = new int[]{r.getInt("maxhp"),r.getInt("hp"),r.getInt("maxmp"),r.getInt("mp"),
+            int characterType = r.getInt("characterType"); // future use (there may be multiple characters)
+            GamePoint loc = new GamePoint(r.getFloat("x"),r.getFloat("y"),r.getFloat("z")); // retrieve its location
+            String mapType = r.getString("mapid");//retrieve its map
+            int[] entity_data = new int[]{r.getInt("maxhp"),r.getInt("hp"),r.getInt("maxmp"),r.getInt("mp"), //get the stats of the player
                                           r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense"),
                                           r.getInt("statPoints"),r.getInt("skillPoints")};
+            //construct a player data object
             return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),
                                   getSkillLevels(accountid),getQuestData(accountid),getEquipData(accountid));
         
-        } catch (SQLException e){
+        } catch (SQLException e){ // debugging purposes
             System.out.println("Error fetching player data!");
             e.printStackTrace();
             System.exit(0);
@@ -73,24 +82,29 @@ public class ServerWorldHandler {
         return null;
     }
     
+    //Requests a login from the server. Incase multiple requests arrive,
+    //the method's synchronized
     public synchronized LoginReply RequestLogin(String username, String password){
         ResultSet r = db.makeQuerry("Select * from accounts where username = '"+username+"' and password = '"+password+"'");
         try {
-            if (r.next()){
+            if (r.next()){ // if any result sets are returned, we know the account exists
                 if (!r.getBoolean("loggedin")){
                     db.makeUpdate("update accounts set loggedin = true where username = '"+username+"'");
                     return new LoginReply(r.getInt("idaccounts"),true,"");
                 } else{
-                    return new LoginReply(-1,false,"This user is already logged in!");
+                    return new LoginReply(-1,false,"This user is already logged in!");//return error messages accordingly
                 }
             } else {
                 return new LoginReply(-1,false,"Either your user or pass is wrong!");
             }
         } catch (SQLException e){
             System.out.println("ERROR LOGGING IN! "+e.getMessage());
-            return new LoginReply(-1,false,"Something wrong occured with the server!");
+            return new LoginReply(-1,false,"Something wrong occured with the server!"); //incase jdbc goes wack
         }
     }
+    
+    //Takes in a PlayerData object and writes all it's information to the database
+    //in the provided account
     public synchronized void savePlayerData(PlayerData playerData){
         int accountId = playerData.getAccountId();
         GamePoint loc = playerData.getLocation();
@@ -99,12 +113,13 @@ public class ServerWorldHandler {
         float z = loc.getZ();
         String mapId = playerData.getMapId();
         int[] entityData = playerData.getEntity_data();
+        //template to save time typing :3
         String template = "update characters set %s = %s where accountid = "+accountId;
-        db.makeUpdate(String.format(template,"x",""+x));
+        db.makeUpdate(String.format(template,"x",""+x));//location
         db.makeUpdate(String.format(template,"y",""+y));
         db.makeUpdate(String.format(template,"z",""+z));
-        db.makeUpdate(String.format(template,"mapid","'"+mapId+"'"));
-        db.makeUpdate(String.format(template,"maxhp",""+entityData[0]));
+        db.makeUpdate(String.format(template,"mapid","'"+mapId+"'"));//map
+        db.makeUpdate(String.format(template,"maxhp",""+entityData[0])); // character info
         db.makeUpdate(String.format(template,"hp",""+entityData[1]));
         db.makeUpdate(String.format(template,"maxmp",""+entityData[2]));
         db.makeUpdate(String.format(template,"mp",""+entityData[3]));
@@ -116,22 +131,23 @@ public class ServerWorldHandler {
         db.makeUpdate(String.format(template,"statPoints",""+entityData[9]));
         db.makeUpdate(String.format(template,"skillPoints",""+entityData[10]));
         
+        //Template to insert an inventory item
         String invenTemplate = "update inventory set %s = %s where accountId = "+accountId+" and itemId = '%s'";
         
         ResultSet r = db.makeQuerry("select * from inventory where accountId = "+accountId);
         try {
-            HashMap<String,SaveItemData> addedItems = new HashMap<>();
-            for (SaveItemData data: playerData.getItems()){
+            HashMap<String,SaveItemData> addedItems = new HashMap<>(); // hashmap used to keep track of 
+            for (SaveItemData data: playerData.getItems()){ // what's in the inven but not in database
                 addedItems.put(data.getItemKey(),data);
             }
             while (r.next()){
                 String itemType = r.getString("itemId");
-                addedItems.remove(itemType);
-                boolean exists = false;
+                addedItems.remove(itemType); // remove it from the hasmap
+                boolean exists = false; // used to track what doesn't exist anymore
                 for (SaveItemData data: playerData.getItems()){
                     if (data.getItemKey().equals(itemType)){
-                        exists = true;
-                        db.makeUpdate(String.format(invenTemplate,"quantity",""+data.getQuantity(),data.getItemKey()));
+                        exists = true; // we know it still exists
+                        db.makeUpdate(String.format(invenTemplate,"quantity",""+data.getQuantity(),data.getItemKey())); //update it's quantity
                         break;
                     }
                 }
@@ -175,6 +191,7 @@ public class ServerWorldHandler {
         db.makeUpdate("update accounts set loggedin = false where idaccounts = "+accountId);
     }
     
+    //used internally to get all saved item data from the database
     private SaveItemData[] getItemData(int accountId){
         ResultSet r = db.makeQuerry("select * from inventory where accountId = "+accountId);
         LinkedList<SaveItemData> alldata = new LinkedList<>();
@@ -192,6 +209,7 @@ public class ServerWorldHandler {
         return alldata.toArray(new SaveItemData[0]);
     }
     
+    //used internally to get all skill level data from the database
     private SaveSkillData[] getSkillLevels(int accountId){
         ResultSet r = db.makeQuerry("select * from skillSet where accountId = "+accountId);
         LinkedList<SaveSkillData> allSkillData = new LinkedList<>();
@@ -207,6 +225,7 @@ public class ServerWorldHandler {
         return allSkillData.toArray(new SaveSkillData[0]);
     }
     
+    //used internally to get all quest data from the database
     private QuestData[] getQuestData(int accountId){
         ResultSet allQuests = db.makeQuerry("select * from quests where accountId = "+accountId);
         LinkedList<QuestData> allQuestData = new LinkedList<>();
@@ -214,6 +233,7 @@ public class ServerWorldHandler {
             while (allQuests.next()){
                 QuestData newQuest = new QuestData(allQuests.getString("questId"),allQuests.getInt("status"));
                 System.out.println(allQuests.getInt("status"));
+                //Grab all quest requirements pertaining to that quest from the database
                 ResultSet questData = db.makeQuerry("select * from questdata where accountid = "+accountId+" and questId = '"+allQuests.getString("questId") +"'");
                 while (questData.next()){
                     newQuest.addRequirement(new QuestRequirement(questData.getString("requiredMob"),questData.getString("questId"),questData.getInt("number"),questData.getInt("requiredNumber")));
@@ -227,11 +247,13 @@ public class ServerWorldHandler {
         }
         return allQuestData.toArray(new QuestData[0]);
     }
+    
+    //used internally to grab all data regarding equipped items from the database
     private String[] getEquipData(int accountId){
         ResultSet allItems = db.makeQuerry("select * from equip where accountId = "+accountId);
         String[] equips = new String[4];
         try {
-            for (int i = 0; i < 4; i++){//should always have a max of 4 items equiped at a time :3
+            for (int i = 0; i < 4; i++){//should always have 4 items equiped at a time :3
                 allItems.next();
                 equips[i] = allItems.getString("itemId");
             }

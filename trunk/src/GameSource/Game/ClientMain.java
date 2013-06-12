@@ -12,7 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
- *
+ * This class is run initially to start the game
+ * Made using gridbag with netbeans
  * @author Shiyang1996
  */
 public class ClientMain extends javax.swing.JFrame implements java.awt.event.ActionListener {
@@ -36,6 +37,8 @@ public class ClientMain extends javax.swing.JFrame implements java.awt.event.Act
         theGame.setVisible(false);
         world = new ClientWorldHandler(this,theGame);
         client = new AetherClient(world);
+        //add a listener to confirm system.exit as well as send a disconnect save message.
+        //(if jpanel crashes this works as a back)
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {

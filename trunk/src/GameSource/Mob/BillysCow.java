@@ -15,8 +15,9 @@ import GameSource.User.ItemFactory;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The very first mob ever. :DD A test implementation of abstract mob.
+ * May or may not be used in the actual game itself.
  */
 public class BillysCow extends AbstractMob{
     
@@ -30,7 +31,7 @@ public class BillysCow extends AbstractMob{
     }
 
     @Override
-    public CharacterAnimControl getAnimControl() {
+    public CharacterAnimControl getAnimControl() { // just use a simple test animation
         return new CharacterAnimControl(AssetManager.getSpriteSet("MyTestAnimation"));
     }
     int n = 0;
@@ -39,17 +40,17 @@ public class BillysCow extends AbstractMob{
     }
 
     @Override
-    public void dropItems() {
+    public void dropItems() { // drop trollbaithelm at a 100% rate for now
         ItemFactory.spawnItem("trollbaithelm", this, boundMap);
     }
 
     @Override
     public String getName() {
-        return "billyscow";
+        return "billyscow"; // return the data name
     }
     
     @Override
     public int getExp(){
-        return 1000;
+        return 1000; // how much exp this mob gives
     }
 }
