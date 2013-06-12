@@ -53,10 +53,11 @@ public class AInventory extends AWindow{
         }
         
         this.add(buttons);
+        buttons.addScrollBar(153,65,183);
         setVisible(true);
         activeTabButton=tabs[0];
         setPane("equip");
-        buttons.addScrollBar(153,65,183);
+        
         
     }
     
@@ -85,6 +86,7 @@ public class AInventory extends AWindow{
                 AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
                 b.setImage(c.getImage());
                 b.setFGImage(TextImageFactory.merge(c.getImage(),AImageFactory.getImage("item_fg")));
+                b.setHover(TextImageFactory.createDes(c));
                 b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
 //                b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
                 b.setParent(this);

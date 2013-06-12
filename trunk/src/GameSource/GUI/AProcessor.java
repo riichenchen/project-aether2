@@ -40,6 +40,8 @@ public class AProcessor {
                 break;
             case AMessage.SKILLS: MyGUI.changeSkillsPane(m.content());
                 break;
+            case AMessage.SKILL_UP: MyGUI.increaseSkill(Integer.parseInt(m.content()));
+                break;
             case AMessage.NULL: break;
             case AMessage.INVENTORY_CLICK: process_invent(m);
                 break;

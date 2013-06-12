@@ -106,7 +106,9 @@ public class MyGUI extends AGUI{
             invent.loadButtons();
         }
     }
-    
+    public static void increaseSkill(int i){
+        skills.increase(i);
+    }
     public static void draw(Graphics g){
         AGUI.draw(g);
         hud.draw(g);

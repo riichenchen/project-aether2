@@ -35,7 +35,7 @@ public class AEquip extends AWindow{
                 Image back=TextImageFactory.createEquipLabel(item,parts[i]);
                 String des= AssetManager.getItemData(item.getKey()).itemDescription;
                 Image front=TextImageFactory.createDes(item.getItemId(),des);
-                add(new AImage(parts[i],16,34+43*i,back,front));
+                add(new AImage(parts[i],16,34+42*i,back,front));
             }
         }
     }

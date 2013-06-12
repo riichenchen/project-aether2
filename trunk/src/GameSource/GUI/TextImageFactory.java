@@ -89,7 +89,8 @@ public class TextImageFactory {
         return out;
     }
     
-    public static BufferedImage createShopLabel(InventoryItem i){
+    public static BufferedImage createShopLabel(InventoryItem i, int buy){
+        String [] tmp={"","Sell Price: ","Buy Price: "};
         BufferedImage out=new BufferedImage(202,35,BufferedImage.TYPE_INT_ARGB);
         Graphics2D gImg= out.createGraphics();
         gImg.drawImage(i.getImage(),0,0,null);
@@ -97,7 +98,20 @@ public class TextImageFactory {
         gImg.setFont(new Font("Arial", Font.BOLD, 10));
         gImg.drawString(i.getItemId(),39,14);
         gImg.setFont(new Font("Arial", Font.PLAIN, 10));
-        gImg.drawString("Sell Price: "+AssetManager.getItemData(i.getKey()).sellPrice,38,32);
+        gImg.drawString(tmp[buy]+buy*AssetManager.getItemData(i.getKey()).sellPrice,38,32);
+        gImg.dispose();
+        return out;
+    }
+    
+    public static BufferedImage createSkillsLabel(String key){
+        BufferedImage out=new BufferedImage(202,35,BufferedImage.TYPE_INT_ARGB);
+        Graphics2D gImg= out.createGraphics();
+        gImg.drawImage(AssetManager.getImage(key),0,0,null);
+        gImg.setColor(new Color (0,0,0));
+        gImg.setFont(new Font("Arial", Font.BOLD, 10));
+        gImg.drawString(AssetManager.getSkillData(key).getName(),39,14);
+        gImg.setFont(new Font("Arial", Font.PLAIN, 10));
+        gImg.drawString("20",38,32);
         gImg.dispose();
         return out;
     }
