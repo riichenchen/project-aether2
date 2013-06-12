@@ -21,8 +21,6 @@ import java.util.Random;
  */
 public class CharacterHandler {
     private static HashMap<String,Integer> stats;
-    private static InventoryHandler invenHandle;
-    private static EquipHandler equipHandle;
     private static LinkedList<InventoryItem> collideItems;
     private static Portal currentPortal = null;
     private static String charName;
@@ -64,9 +62,9 @@ public class CharacterHandler {
     
     public static void addStat(String stat,int val){
         if (stat.equals("hp")){
-            stats.put("hp", Math.min(stats.get("maxhp"), stats.get("hp")+val));
+            stats.put("hp", Math.max(0,Math.min(stats.get("maxhp"), stats.get("hp")+val)));
         } else if (stat.equals("mp")) {
-            stats.put("mp", Math.min(stats.get("maxmp"), stats.get("mp")+val));
+            stats.put("mp", Math.max(0,Math.min(stats.get("maxmp"), stats.get("mp")+val)));
         } else if (stat.equals("exp")){
             stats.put("exp",stats.get("exp")+val);
             int required = LevelManager.requiredExp(stats.get("level"));

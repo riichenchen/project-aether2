@@ -48,7 +48,7 @@ public abstract class AbstractCast extends CharacterSpatial {
     @Override
     public void update(){
         super.update();
-        time++;
+        time+=2;
         int level = CharacterHandler.getSkillLevel(skillName);
         if ((data instanceof ActiveSkillData)){
             ActiveSkillData tempdata = ((ActiveSkillData)data);

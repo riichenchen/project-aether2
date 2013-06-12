@@ -8,7 +8,11 @@ import GameSource.Globals;
 import Renderer.CameraControls.AbstractCameraControl;
 
 /**
- *
+ * The camera control of the game. It limits the cameras movement to within the map
+ * by using max and min.
+ * 
+ * Note: Globals.__PROJECTION_SCALE__ converts the camera's width to it's actual value
+ * when projected into game space
  * @author Shiyang
  */
 public class AetherCameraControl extends AbstractCameraControl{

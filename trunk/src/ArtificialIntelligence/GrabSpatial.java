@@ -40,6 +40,7 @@ public class GrabSpatial {
         boundary_width = DEFAULT_WIDTH;
         gm = map;
         ps = map.getPhysicsSpace();
+        gm = map;
         init();
     }
     

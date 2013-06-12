@@ -11,7 +11,8 @@ import Spatial.Spatial;
 import java.util.Random;
 
 /**
- *
+ * a test icy effect in the game. (The first abstracteffect prototype)
+ * Not exactly used in the game.
  * @author Shiyang
  */
 public class IceyEffect extends AbstractEffect{
@@ -25,7 +26,7 @@ public class IceyEffect extends AbstractEffect{
     }
 
     @Override
-    public void collideEffect(Spatial s) {
+    public void collideEffect(Spatial s) { // testing for damage
         if (limit<=time+1 && s instanceof AbstractMob){
             Random myrandom = new Random();
             int dmg = myrandom.nextInt(100000)+100;
