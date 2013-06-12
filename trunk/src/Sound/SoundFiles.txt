@@ -2,4 +2,15 @@ soundTest1 OST_Test.mp3
 iceySound IceySound.mp3
 farmy Farmy.mp3
 PickUpSound PickUpItem.mp3
-icicle skills/icicleDamage.mp3
+icicle skills/icicle.mp3
+arroweruption skills/arroweruption.mp3
+blastburn skills/blastburn.mp3
+divinesaber skills/divinesaber.mp3
+judgement skills/judgement.mp3
+lightningstrike skills/lightningstrike.mp3
+magicclaw skills/magicclaw.mp3
+plasmashock skills/plasmashock.mp3
+sheolfear skills/sheolfear.mp3
+spiritbomb skills/spiritbomb.mp3
+stalagamite skills/stalagamite.mp3
+staticvortex skills/staticvortex.mp3
