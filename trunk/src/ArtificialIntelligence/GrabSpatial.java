@@ -1,0 +1,67 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ArtificialIntelligence;
+
+import GameSource.game.GameMap;
+import PhysicsSpace.PhysicsSpace;
+import Spatial.Spatial;
+
+/**
+ *
+ * @author Angus
+ */
+public class GrabSpatial {
+    
+    public static final int DEFAULT_LENGTH = 64;
+    public static final int DEFAULT_WIDTH = 64;
+    protected int x, y;
+    protected int boundary_length, boundary_width;
+    protected DummySpatial dummySpat;
+    protected Spatial [][] inRange;
+    protected PhysicsSpace ps;
+    protected GameMap gm;
+    
+    public GrabSpatial(GameMap map, int _x, int _y, int _boundary_length, int _boundary_width) {
+        x = _x;
+        y = _y;
+        boundary_length = _boundary_length;
+        boundary_width = _boundary_width;
+        gm = map;
+        ps = map.getPhysicsSpace();
+        init();
+    }
+    
+    public GrabSpatial(GameMap map, int _x, int _y) {
+        x = _x;
+        y = _y;
+        boundary_length = DEFAULT_LENGTH;
+        boundary_width = DEFAULT_WIDTH;
+        ps = map.getPhysicsSpace();
+        init();
+    }
+    
+    public void updateLocation(int _x, int _y) {
+        x = _x;
+        y = _y;
+        init();
+    }
+    
+    public void updateBoundary(int _boundary_length, int _boundary_width) {
+        boundary_length = _boundary_length;
+        boundary_width = _boundary_width;
+        init();
+    }
+    
+    private void init() {
+        dummySpat = new DummySpatial(x, y, boundary_length, boundary_width);
+        dummySpat.bindToMap(gm);
+        inRange = ps.grabSpatialsAround(dummySpat);
+    }
+    
+    public Spatial[][] getSpatials() {
+        return inRange;
+    }
+    
+}

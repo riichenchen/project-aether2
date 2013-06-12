@@ -8,7 +8,7 @@ public class FindClosestEnemy {
         
         protected int bestIdx;
         protected double best, curX, curY;
-        protected ArrayList spats;
+        protected Spatial [][] spats;
         protected final double EPS = 1e-10;
     
         private double calcDist(Spatial spat) {
@@ -17,15 +17,15 @@ public class FindClosestEnemy {
             return Math.sqrt((x - curX) * (x - curX) + (y - curY) * (y - curY));
         }
         
-	public FindClosestEnemy (double _curX, double _curY, ArrayList _spats) {
+	public FindClosestEnemy (double _curX, double _curY, Spatial [][] _spats) {
             bestIdx = -1;
             curX = _curX;
             curY = _curY;
             spats = _spats;
             best = 1 << 30;
             
-            for (int i = 0; i < spats.size(); i++) {
-                Spatial curSpat = (Spatial) spats.get(i);
+            for (int i = 0; i < spats[0].length; i++) {
+                Spatial curSpat = spats[0][i];
 		if (!(curSpat instanceof AbstractMob)) {
                     double curDist = calcDist(curSpat);
                     if (curDist < best) {
@@ -37,6 +37,6 @@ public class FindClosestEnemy {
 	}
         
         public Spatial getTarget() {
-            return (Spatial)spats.get(bestIdx);
+            return (Spatial)spats[0][bestIdx];
         }
 }
