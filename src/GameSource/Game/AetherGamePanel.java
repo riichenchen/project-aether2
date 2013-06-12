@@ -24,24 +24,26 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
 /**
- *
+ * The main game panel of the game and the medium that gets input from then
+ * keyboard and mouse as well as outputting content to the player.
+ * 
  * @author Shiyang
  */
 public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyListener, MouseListener{
     public boolean ready=false,inputstate = true,visibility = true;
 
-    private GameMap gameMap;
+    private GameMap gameMap; //gamepanel has a handle to the main map for rendering
     private ClientWorldHandler handler;
     
-    public void setMap(GameMap gameMap){
+    public void setMap(GameMap gameMap){ // standard setMap method
         this.gameMap = gameMap;
     }
     
-    public void setHandler(ClientWorldHandler handler){
-        this.handler = handler;
+    public void setHandler(ClientWorldHandler handler){ 
+        this.handler = handler; // called by clientMain to attach a handler
     }
     public AetherGamePanel(){ //initialize game variables, assign map to UI
-        addMouseMotionListener(this);
+        addMouseMotionListener(this); //add in input listeners, initialize static classes
         addKeyListener(this);
         addMouseListener(this);
         AssetManager.init();
@@ -59,20 +61,20 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
     public void addNotify() {
         super.addNotify();
         requestFocus();
-        ready = true;
+        ready = true; // make sure our panel is prepared before rendering
     }
     
     public void update(){
-        handler.update();
+        handler.update(); //update the game and gui components
         MyGUI.update();
     }
     
     @Override
     public void paintComponent(Graphics g){//display the UI
         if (ready){
-            g.setColor(Color.GRAY);
-            g.fillRect(0,0,800,600);
-            gameMap.render(g,this);
+            g.setColor(Color.GRAY); 
+            g.fillRect(0,0,800,600);//this should never actually be seen
+            gameMap.render(g,this);//show the map and gui
             MyGUI.draw(g);
         }
     }
@@ -94,7 +96,7 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
 
     @Override
     public void keyPressed(KeyEvent e) {
-        InputManager.keyDown(e.getKeyCode());
+        InputManager.keyDown(e.getKeyCode()); // todo: restrict keyinput from the game when using shop
         GameSource.GUI.InputManager.keyDown(e.getKeyCode());
     }
 

@@ -6,3 +6,5 @@ body
 trollbaitarmor
 maxhp 100
 maxmp 100
+hp 100
+mp 100
