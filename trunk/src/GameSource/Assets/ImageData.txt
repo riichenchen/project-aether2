@@ -32,4 +32,16 @@ bluegoldrunners inventory/equip/feet/bluegoldrunners.png
 blueelementalshoes inventory/equip/feet/blueelementalshoes.png
 vonleonshoes inventory/equip/feet/vonleonshoes.png
 luminousshoes inventory/equip/feet/luminousshoes.png
+arroweruption skills/arroweruption.png
+blastburn skills/blastburn.png
+divinesaber skills/divinesaber.png
+icicle skills/icicle.png
+judgement skills/judgement.png
+lightningstrike skills/lightningstrike.png
+magicclaw skills/magicclaw.png
+plasmashock skills/plasmashock.png
+sheolfear skills/sheolfear.png
+spiritbomb skills/spiritbomb.png
+stalagamite skills/stalagamite.png
+staticvortex skills/staticvortex.png
 john npc/john.png
