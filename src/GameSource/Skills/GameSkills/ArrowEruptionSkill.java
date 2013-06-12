@@ -11,6 +11,7 @@ import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Skills.AbstractActiveSkill;
 import GameSource.Skills.ActiveSkillData;
 import GameSource.User.CharacterHandler;
+import Sound.SoundManager;
 import Spatial.Spatial;
 
 /**
@@ -41,7 +42,7 @@ public class ArrowEruptionSkill extends AbstractActiveSkill{
 
     @Override
     public void invokeHitSound() {
-        //to be done
+        SoundManager.getChannel("Effects").addTrack("arroweruption");
     }
 
     @Override

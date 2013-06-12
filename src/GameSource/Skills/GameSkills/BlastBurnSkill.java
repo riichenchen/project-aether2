@@ -42,7 +42,7 @@ public class BlastBurnSkill extends AbstractActiveSkill{
 
     @Override
     public void invokeHitSound() {
-        SoundManager.getChannel("Effects").addTrack("icicle");
+        SoundManager.getChannel("Effects").addTrack("blastburn");
     }
 
     @Override
