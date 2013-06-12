@@ -154,7 +154,7 @@ public class AShop extends AWindow{
             if ((c instanceof EquipItem && activeTabR.equals("equip"))||
                 (c instanceof UseItem && activeTabR.equals("use"))){
                 AButton b=new AButton (key,AMessage.SHOP_SELL,key,202,35);
-                b.setImage(TextImageFactory.createShopLabel(c));
+                b.setImage(TextImageFactory.createShopLabel(c,1));      //1: sell
                 b.setFGImage(AImageFactory.getImage("shop_item_fg"));
                 b.setHover(TextImageFactory.createDes(c));
                 b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
@@ -171,7 +171,7 @@ public class AShop extends AWindow{
             InventoryItem c=nitemsL.get(i).item;
             String key=nitemsL.get(i).item.getKey();
             AButton b=new AButton (key,AMessage.SHOP_BUY,key,202,35);
-            b.setImage(TextImageFactory.createShopLabel(c));
+            b.setImage(TextImageFactory.createShopLabel(c,2));              //buy=2;
             b.setFGImage(AImageFactory.getImage("shop_item_fg"));
             b.setHover(TextImageFactory.createDes(c));
             b.setParent(this);

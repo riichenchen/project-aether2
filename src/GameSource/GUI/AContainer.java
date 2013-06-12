@@ -33,9 +33,6 @@ public class AContainer extends AComponent{
     }
     
     public void draw(Graphics g){
-        for (AComponent a: content){
-            a.draw(g);
-        }
         if (scrollBar!=null){
             Image mid=AImageFactory.getImage("scroll_mid");
             for (int yy=scrollBar[0].y+12; yy<scrollBar[1].y; yy++){
@@ -45,6 +42,9 @@ public class AContainer extends AComponent{
                 a.draw(g);
                 g.setColor(new Color (255,255,255));
             }
+        }
+        for (AComponent a: content){
+            a.draw(g);
         }
         /*
         for (int i=scrollstart;i<Math.min(content.size(),scrollstart+size);i++){
@@ -72,14 +72,6 @@ public class AContainer extends AComponent{
         return scrollstart;
     }
     public void call(){
-        for (AComponent a: content){
-            System.out.println("AContainer/call   "+a.getName()+" checked");
-            if (a.visible() && a.collidepoint(AMouseInput.mx, AMouseInput.my)){
-                System.out.println("AContainer/call   "+a.getName()+" called");
-                a.call();
-                break;
-            }
-        }
         if (scrollBar!=null){
             for (AScrollButton a:scrollBar){
                 if (a.visible() && a.collidepoint(AMouseInput.mx, AMouseInput.my)){
@@ -87,6 +79,13 @@ public class AContainer extends AComponent{
                 } 
             }
         }
+        for (AComponent a: content){
+            if (a.visible() && a.collidepoint(AMouseInput.mx, AMouseInput.my)){
+                a.call();
+                break;
+            }
+        }
+        
     }
     public void update(){
         if (scrollBar!=null)
@@ -103,10 +102,11 @@ public class AContainer extends AComponent{
     }
     
     public void addScrollBar(int sx, int sy, int sh){
+        int scrollInc=sh/((allContent.size()-24)/4);
         scrollBar=new AScrollButton[3];
-        scrollBar[0]=(new AScrollButton("up",sx,sy-12,this));         //12: height of up button
-        scrollBar[1]=(new AScrollButton("down",sx,sy+sh,this));
-        scrollBar[2]=(new AScrollButton("bar",sx+1,sy,this));           
+        scrollBar[0]=(new AScrollButton("up",sx,sy-12,this,scrollInc));         //12: height of up button
+        scrollBar[1]=(new AScrollButton("down",sx,sy+sh,this,scrollInc));
+        scrollBar[2]=(new AScrollButton("bar",sx+1,sy,this,scrollInc));           
     }
     
     public void scroll(int amount){
@@ -116,7 +116,8 @@ public class AContainer extends AComponent{
         private String type;
         private int ly;
         protected AContainer cparent;
-        public AScrollButton(String type, int x, int y, AContainer c){
+        private int scrollInc;
+        public AScrollButton(String type, int x, int y, AContainer c, int si){
             setName("type");
             this.type=type;
             setLocation(x,y);
@@ -126,6 +127,7 @@ public class AContainer extends AComponent{
             cparent=c;
             setParent(c.parent);
             ly=-1;
+            scrollInc=si;
             setVisible(true);
         }
         @Override
@@ -135,12 +137,12 @@ public class AContainer extends AComponent{
                 ly=AMouseInput.my-parent.y-y;
             }
             else if (type.equals("up")){
-                int ny=Math.min(Math.max(scrollBar[0].y+12,bar.y-10),scrollBar[1].y-26);
+                int ny=Math.min(Math.max(scrollBar[0].y+12,bar.y-scrollInc),scrollBar[1].y-26);
                 cparent.scroll(ny-y);
                 bar.setLocation(bar.x,ny);
             }
             else if (type.equals("down")){
-                int ny=Math.min(Math.max(scrollBar[0].y+12,bar.y+10),scrollBar[1].y-26);
+                int ny=Math.min(Math.max(scrollBar[0].y+12,bar.y+scrollInc),scrollBar[1].y-26);
                 cparent.scroll(ny-y);
                 bar.setLocation(bar.x,ny);
             }

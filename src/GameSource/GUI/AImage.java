@@ -41,6 +41,7 @@ public class AImage extends AComponent{
         setSize(bg.getWidth(null),bg.getHeight(null));
         setVisible(true);
         setLocation(x,y);
+        
     }
     public void update(){}
     public void call(){}
@@ -50,6 +51,7 @@ public class AImage extends AComponent{
             if (fg!=null && (collidepoint(AMouseInput.mx, AMouseInput.my))){
                 g.drawImage(fg,AMouseInput.mx,AMouseInput.my+20,null);
             }
+//            System.out.println("AImage/draw:   "+name+" drawn!");
         }
         
     }

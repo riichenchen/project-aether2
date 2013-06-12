@@ -53,7 +53,10 @@ public class CharacterHandler {
         return player;
     }
     public static void addSkillLevel(String skillName,int level){
-        skillLevels.put(skillName, level);
+        if (skillLevels.get(skillName)!=null)
+            skillLevels.put(skillName,skillLevels.get(skillName)+level);
+        else
+            skillLevels.put(skillName, level);
     }
     
     public static int getSkillLevel(String key){
