@@ -102,4 +102,7 @@ arroweruption
 judgement
 lightningstrike
 magicclaw
+spiritbomb
+sheolfear
+stalagamite
 /spellRings

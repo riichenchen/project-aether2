@@ -8,5 +8,5 @@ magicclaw magicclaw.txt
 plasmashock plasmashock.txt
 sheolfear sheolfear.txt
 spiritbomb spiritbomb.txt
-stalagamite stalagamite.txt
 staticvortex staticvortex.txt
+stalagamite stalagamite.txt
