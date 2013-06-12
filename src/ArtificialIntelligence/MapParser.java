@@ -23,6 +23,24 @@ public class MapParser {
         int lx, ly, rx, ry;
         lx = ly = 1 << 30;
         rx = ry = - (1 << 30);
+        boolean hasObstacles = false;
+        
+        for (int i = 0; i < mySpats[0].length; i++) {
+            
+            int cx = (int)mySpats[0][i].getX();
+            int cy = (int)mySpats[0][i].getZ();
+            
+            if (cx < lx)
+                lx = cx;
+            if (cy < ly)
+                ly = cy;
+            
+            if (cx > rx)
+                rx = cx;
+            if (cy > ry)
+                ry = cy;
+        }
+        
         for (int i = 0; i < mySpats[1].length; i++) {
             
             int cx = (int)mySpats[1][i].getX();
@@ -37,21 +55,28 @@ public class MapParser {
                 rx = cx;
             if (cy > ry)
                 ry = cy;
+            
+            hasObstacles = true;
+        
         }
         
-        xOffset = lx;
-        yOffset = ly;
+            xOffset = lx;
+            yOffset = ly;
+
+            charMap = new char [rx - xOffset][ry - yOffset];
+            
+            for (char [] c: charMap)
+                Arrays.fill(c, (char)0);
         
-        charMap = new char [rx - xOffset][ry - yOffset];
-        
-        for (char [] c: charMap)
-            Arrays.fill(c, (char)0);
-        
-        for (int i = 0; i < mySpats[1].length; i++) {
-            int cx = (int)mySpats[1][i].getX();
-            int cy = (int)mySpats[1][i].getZ();
-            charMap[cx - xOffset][cy - yOffset] = 1;
-        }
+        if (hasObstacles) {
+            System.out.println("There are obstacles");
+            
+            for (int i = 0; i < mySpats[1].length; i++) {
+                int cx = (int)mySpats[1][i].getX();
+                int cy = (int)mySpats[1][i].getZ();
+                charMap[cx - xOffset][cy - yOffset] = 1;
+            }
+        } 
     }
     
     public int getxOffset() {
