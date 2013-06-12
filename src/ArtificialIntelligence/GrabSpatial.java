@@ -14,8 +14,8 @@ import Spatial.Spatial;
  */
 public class GrabSpatial {
     
-    public static final int DEFAULT_LENGTH = 64;
-    public static final int DEFAULT_WIDTH = 64;
+    public static final int DEFAULT_LENGTH = 1024;
+    public static final int DEFAULT_WIDTH = 1024;
     protected int x, y;
     protected int boundary_length, boundary_width;
     protected DummySpatial dummySpat;
@@ -61,6 +61,9 @@ public class GrabSpatial {
             System.out.println("Passing in null map");
         dummySpat.bindToMap(gm);
         inRange = ps.grabSpatialsAround(dummySpat);
+        int xlen = inRange[0].length;
+        int ylen = inRange[1].length;
+        //System.out.printf("Num player / mob spats: %d\nNum enviro spats: %d\n", xlen, ylen);
     }
     
     public Spatial[][] getSpatials() {
