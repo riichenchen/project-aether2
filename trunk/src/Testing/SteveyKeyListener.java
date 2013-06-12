@@ -16,6 +16,11 @@ import GameSource.Skills.GameCasts.IcicleCast;
 import GameSource.Skills.GameCasts.JudgementCast;
 import GameSource.Skills.GameCasts.LightningStrikeCast;
 import GameSource.Skills.GameCasts.MagicClawCast;
+import GameSource.Skills.GameCasts.PlasmaShockCast;
+import GameSource.Skills.GameCasts.SheolFearCast;
+import GameSource.Skills.GameCasts.SpiritBombCast;
+import GameSource.Skills.GameCasts.StalagamiteCast;
+import GameSource.Skills.GameCasts.StaticVortexCast;
 import GameSource.User.CharacterHandler;
 import Input.AbstractKeyListener;
 import java.awt.event.KeyEvent;
@@ -143,6 +148,51 @@ public class SteveyKeyListener extends AbstractKeyListener{
             if (CharacterHandler.getStat("mp") > cost){
                 CharacterHandler.addStat("mp", -cost);
                 CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new LightningStrikeCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_X) && CharacterHandler.getSkillLevel("plasmashock")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("plasmashock"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("plasmashock"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new PlasmaShockCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_F) && CharacterHandler.getSkillLevel("sheolfear")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("sheolfear"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("sheolfear"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new SheolFearCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_G) && CharacterHandler.getSkillLevel("spiritbomb")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("spiritbomb"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("spiritbomb"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new SpiritBombCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_Q) && CharacterHandler.getSkillLevel("stalagamite")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("stalagamite"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("stalagamite"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new StalagamiteCast(CharacterHandler.getPlayer()));
+            }
+        }
+        if (eventKeyDown(KeyEvent.VK_V) && CharacterHandler.getSkillLevel("staticvortex")>0){
+            state = "cast";
+            ActiveSkillData dat = ((ActiveSkillData)AssetManager.getSkillData("staticvortex"));
+            int cost = dat.getMpCost(CharacterHandler.getSkillLevel("staticvortex"));
+            if (CharacterHandler.getStat("mp") > cost){
+                CharacterHandler.addStat("mp", -cost);
+                CharacterHandler.getPlayer().getMap().addBackgroundSpatial(new StaticVortexCast(CharacterHandler.getPlayer()));
             }
         }
         if (eventKeyDown(KeyEvent.VK_SPACE)){
