@@ -1,3 +1,5 @@
+cursor_up cursorNormal.png
+cursor_down cursorClicked.png
 empty empty.png
 equipment equipbg.png
 invent inventory/Item.backgrnd.png
@@ -63,7 +65,7 @@ npc_yes_call NPCChat/buttons/yesc.png
 npc_top NPCchat/pieces/top.png
 npc_bottom NPCchat/pieces/bottom.png
 npc_mid NPCchat/pieces/center.png
-npc_name NPCchat/npc_name.png
+npc_name NPCchat/pieces/npc_name.png
 scroll_up scrollbar/chat.scroll.normal.0.png
 scroll_mid scrollbar/chat.scroll.normal.1.png
 scroll_down scrollbar/chat.scroll.normal.2.png

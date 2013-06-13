@@ -28,24 +28,23 @@ public class ASkills extends AWindow{
     private AButton [] tabs;
     private int skillPoints;
     private int job;
-//    private ArrayList<APoint> buttonLocs;
-//    private AContainer buttons;
     private ArrayList<APoint> labelLocs;
     private AContainer labels;
     private ArrayList<String[]> tiers;
+    private String [] descriptions;
+    
     
     public ASkills(){
         super("skills");
         setImage(AImageFactory.getImage("skills_main"));
         setSize(174,299);
         setMoveBar(0,0,174,23);
-//        buttonLocs=new ArrayList<>()/;
         
+        loadDescriptions();
         labelLocs=new ArrayList<>();
         loadLocs();
         tiers=new ArrayList<String []>();
         loadTiers();
-//        buttons=new AContainer(0,0,4, buttonLocs);
         labels=new AContainer (0,0,4,labelLocs);
         skillPoints=CharacterHandler.getStat("skillPoints");
         
@@ -58,18 +57,23 @@ public class ASkills extends AWindow{
         
         buttons=new AButton[4];
         loadButtons();
-   //     updateButtons();
         setPane("0");
         
         loadLabels();
         labels.setVisible(true);
         this.add(labels);
         setVisible(true);
- //       setPane("equip");
- //       buttons.addScrollBar(153,65,183);
         
     }
-    
+    public void loadDescriptions(){
+        descriptions=new String [6];
+        try{
+            BufferedReader br=new BufferedReader(new FileReader("src/GameSource/Assets/skillDescriptions.txt"));
+            for (int i=0; i<6; i++){
+                descriptions[i]=br.readLine();
+            }
+        }catch(IOException e){System.out.println("No descriptions!");}
+    }
     public void loadTabs(){
         tabs=new AButton [3];
         for (int i=0; i<3; i++){
@@ -115,7 +119,6 @@ public class ASkills extends AWindow{
     }
    public void loadLocs(){
         for (int i=0; i<4;i++){
-//            buttonLocs.add(new APoint(134,114+40*i));
             labelLocs.add(new APoint(11,94+38*i));
         }
     }
@@ -189,6 +192,11 @@ public class ASkills extends AWindow{
     @Override
     public void draw(Graphics g){
         g.drawImage(bg,x,y,null);
+        g.drawImage(AssetManager.getImage("tier"+activeTab),10,53,null);
+        g.setColor(new Color(255,255,255));
+        g.drawString(descriptions[2*activeTab],48,68);
+        g.drawString(descriptions[2*activeTab+1],48,83);
+        
         for (int i=0; i<4;i++){
             Image tmp=AImageFactory.getImage("skill_up_disable");
             g.drawImage(tmp,x+134,y+114+39*i,null);

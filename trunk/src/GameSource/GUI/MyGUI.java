@@ -7,7 +7,6 @@ package GameSource.GUI;
 import GameSource.Script.NPCFrame;
 import java.awt.Graphics;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  *
@@ -66,7 +65,8 @@ public class MyGUI extends AGUI{
         windows.put(chat.getName(),chat);
         windowNames.add(chat.getName());
         
-
+        cursordown=AImageFactory.getImage("cursor_down");
+        cursorup=AImageFactory.getImage("cursor_up");
     }
 
 
@@ -109,10 +109,19 @@ public class MyGUI extends AGUI{
     public static void increaseSkill(int i){
         skills.increase(i);
     }
+    public static void drawCursor(Graphics g){
+        if (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT)){
+            g.drawImage(cursordown,AMouseInput.mx,AMouseInput.my,null);
+        }
+        else{
+            g.drawImage(cursorup,AMouseInput.mx,AMouseInput.my,null);
+        }
+    }
     public static void draw(Graphics g){
         AGUI.draw(g);
         hud.draw(g);
         chat.draw(g);
+        drawCursor(g);
     }
 
     public static void npc_next() {
