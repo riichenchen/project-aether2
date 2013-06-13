@@ -57,6 +57,8 @@ public class GameMap {
             camera = new AetherCam(this,camlen,camwid);
             renderer = new Renderer(this,camera); // create a renderer for this map
         }
+        obstacles = new Rectangle[1];
+        obstacles[0] = new Rectangle(0, 0, 2, 2);
     }
 
     //returns a handle to the camera for the game to control if needed
