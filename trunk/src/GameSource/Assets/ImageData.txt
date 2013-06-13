@@ -44,4 +44,7 @@ sheolfear skills/sheolfear.png
 spiritbomb skills/spiritbomb.png
 stalagamite skills/stalagamite.png
 staticvortex skills/staticvortex.png
+tier1 skills/tier1.png
+tier2 skills/tier2.png
+tier3 skills/tier3.png
 john npc/john.png
