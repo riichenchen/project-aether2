@@ -5,8 +5,6 @@ equip
 feet
 luminousshoes
 maxhp 450
-hp 450
 maxmp 300
-mp 300
 attack 500
 defense 200

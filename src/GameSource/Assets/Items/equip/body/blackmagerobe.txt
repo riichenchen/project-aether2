@@ -5,6 +5,5 @@ equip
 body
 blackmagerobe
 maxhp 30
-hp 30
 defense 60
 attack 15

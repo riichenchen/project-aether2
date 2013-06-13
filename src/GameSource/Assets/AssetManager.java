@@ -30,6 +30,7 @@ import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
@@ -343,8 +344,9 @@ public class AssetManager {
                         nextline = fin_map.readLine();
                         while (!nextline.equals("/"+s)){
                             String[] npcTemp = nextline.split(" ");
-                            NPC newNpc = new NPC(Integer.parseInt(npcTemp[0]),Integer.parseInt(npcTemp[2]),Integer.parseInt(npcTemp[2]),npcTemp[3]);
+                            NPC newNpc = new NPC(Integer.parseInt(npcTemp[1]),Integer.parseInt(npcTemp[2]),Integer.parseInt(npcTemp[3]),npcTemp[0]);
                             mymap.addPermanentSpatial(newNpc);
+                            nextline = fin_map.readLine();
                         }
                     }
                 }

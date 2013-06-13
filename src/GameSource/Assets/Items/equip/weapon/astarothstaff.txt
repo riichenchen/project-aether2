@@ -6,4 +6,3 @@ weapon
 astarothstaff
 attack 80
 maxmp 30
-mp 30

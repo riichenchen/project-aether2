@@ -5,6 +5,5 @@ equip
 feet
 blackwindshoes
 maxmp 30
-mp 30
 defense 10
 attack 20

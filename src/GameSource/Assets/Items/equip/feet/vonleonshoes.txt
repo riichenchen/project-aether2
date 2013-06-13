@@ -5,8 +5,6 @@ equip
 feet
 vonleonshoes
 maxhp 250
-hp 250
 maxmp 100
-mp 100
 attack 300
 defense 100

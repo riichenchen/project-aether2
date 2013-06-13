@@ -5,7 +5,5 @@ equip
 body
 calasrobe
 maxhp 70
-hp 70
 defense 120
 maxmp 60
-mp 60

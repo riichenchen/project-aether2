@@ -5,5 +5,4 @@ equip
 body
 bloodchaosrobe
 maxhp 80
-hp 80
 defense 70

@@ -7,4 +7,3 @@ guiltianhat
 attack 45
 defense 50
 maxmp 100
-mp 100

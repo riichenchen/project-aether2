@@ -5,7 +5,5 @@ equip
 body
 moonlightrobe
 maxhp 60
-hp 60
 defense 100
 maxmp 40
-mp 40

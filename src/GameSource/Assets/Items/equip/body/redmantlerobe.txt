@@ -5,8 +5,6 @@ equip
 body
 redmantlerobe
 maxhp 100
-hp 100
 defense 150
 maxmp 80
-mp 80
 attack 40

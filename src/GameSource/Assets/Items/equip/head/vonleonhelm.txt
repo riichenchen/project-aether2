@@ -7,6 +7,4 @@ vonleonhelm
 attack 115
 defense 90
 maxmp 175
-mp 175
 maxhp 40
-hp 40

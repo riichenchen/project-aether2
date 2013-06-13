@@ -6,4 +6,3 @@ weapon
 darkritualstaff
 attack 160
 maxmp -30
-mp -30

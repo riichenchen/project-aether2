@@ -7,4 +7,3 @@ infiniumhat
 attack -15
 defense 80
 maxmp 200
-mp 200

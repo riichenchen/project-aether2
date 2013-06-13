@@ -7,4 +7,3 @@ orientalhat
 attack 65
 defense 70
 maxmp 150
-mp 150
