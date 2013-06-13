@@ -174,7 +174,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
     @Override
     public void mouseClicked(MouseEvent e) {
         Globals.theMouse.setLocation(e.getX(),Globals.theMouse.getY(),e.getY());
-        Globals.theMouse.click();
+//        Globals.theMouse.click();
     }
 
     @Override

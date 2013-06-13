@@ -8,12 +8,16 @@ import java.util.HashMap;
 import javazoom.jl.player.Player;
 
 /**
- * Author: Shiyang Han
+ * @author Shiyang Han
+ * The SoundManager manages all sound assets that are part of the game.
+ * It has a handle on all channels as well as a hashmap that maps a sound key
+ * to a directory.
  */
 public class SoundManager {
     private static HashMap<String,SoundChannel> channels = new HashMap<>();
     private static HashMap<String,String> allSound = new HashMap<>();
     
+    // The init method loads in all sound keys to their corresponding directories
     public static void init(){
         try{
             BufferedReader in = new BufferedReader(new FileReader("src/Sound/SoundFiles.txt"));
@@ -31,20 +35,23 @@ public class SoundManager {
         }
     }
     
+    //Add channel method creates a channel using a specified key and loop variable
     public static void addChannel(String identifier,boolean loop){
         SoundChannel newChannel = new SoundChannel(loop);
-        if (channels.containsKey(identifier)){
-            System.out.println("Warning: key "+identifier+" already exists!");
+        if (channels.containsKey(identifier)){ // breaks if the channel already exists
+            System.out.println("SEVERE: key "+identifier+" already exists!");
             System.exit(0);
         }
         channels.put(identifier,newChannel);
         newChannel.start();
     }
     
+    //Returns a channel mapped to the specified key
     public static SoundChannel getChannel(String identifier){
         return channels.get(identifier);
     }
     
+    //Creates a player object using the directory mapped to a passed in key
     public static Player getTrack(String identifier){
         String id = allSound.get(identifier);
         try { 
@@ -55,24 +62,6 @@ public class SoundManager {
             System.exit(0);
         }
         return null;
-    }
-    
-    public static void main(String[] args){
-        SoundManager.init();
-        SoundManager.addChannel("MyChannel", false);
-        SoundChannel MyChannel = SoundManager.getChannel("MyChannel");
-        MyChannel.setNumberTracks(1);
-        MyChannel.addTrack("soundTest1");
-        while (true){
-            //Add some delay in (for the effect)
-            for (int i = 0; i < 1000000000; i++){
-                for (int j = 0; j < 10; j++){
-                    int blah = i;
-                }
-            }
-            
-            MyChannel.addTrack("soundTest1");
-        }
     }
 }
 

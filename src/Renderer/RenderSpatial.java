@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 /**
  *
  * @author Shiyang
+ * The Skeleton for a spatial that's renderable.
+ * All renderable spatials must provide a way for the renderer to render it.
  */
 public abstract class RenderSpatial extends Spatial{
     protected HashMap<Integer,RenderChunk> renderChunks = new HashMap<>();
@@ -22,6 +24,7 @@ public abstract class RenderSpatial extends Spatial{
         super(x,y,z,dx,dz,dy,m,c,collidable);
     }
     
+    //Bind and unbind methods
     public void bindToRenderer(Renderer renderer){
         this.renderer = renderer;
     }
@@ -31,7 +34,7 @@ public abstract class RenderSpatial extends Spatial{
     }
     
     
-    /*Override move to update the renderer each time*/
+    /*Override move to update this object in the renderer each time*/
     @Override 
     public void move(float x,float y,float z){
         super.move(x,y,z);
@@ -49,5 +52,4 @@ public abstract class RenderSpatial extends Spatial{
     public HashMap<Integer,RenderChunk> getRenderChunks(){
         return renderChunks;
     }
-//    public abstract int[] getCullBounds(float S_QUAD);
 }

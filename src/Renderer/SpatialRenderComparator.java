@@ -10,6 +10,7 @@ import java.util.Comparator;
 /**
  *
  * @author Shiyang
+ * A comparator that prioritizes on y x and then x coordinates
  */
 public class SpatialRenderComparator implements Comparator<RenderSpatial>{
     public static final int LESS = 1,GREATER = -1;

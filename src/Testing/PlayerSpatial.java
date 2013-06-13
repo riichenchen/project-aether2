@@ -14,6 +14,8 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The player spatial class, which the main game 
+ * uses the track and move the player
  */
 public class PlayerSpatial extends CharacterSpatial{
     
@@ -25,18 +27,17 @@ public class PlayerSpatial extends CharacterSpatial{
     int n = 0;
     @Override
     public void collideEffect(Spatial s) {
-//        if (s instanceof Portal){
-//            System.out.println("YAY "+(n++));
-//        }
     }
+    
     @Override
     public void update(){
         super.update();
-        CharacterHandler.setCurrentPortal(null);
+        CharacterHandler.setCurrentPortal(null); // reset the collided portal each loop
     }
 
     @Override
     public CharacterAnimControl getAnimControl() {
+        //for now, every player uses Sola
         return new CharacterAnimControl(AssetManager.getSpriteSet("Sola"));
     }
     
