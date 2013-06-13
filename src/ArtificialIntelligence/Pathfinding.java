@@ -182,7 +182,7 @@ public class Pathfinding {
             tar_y = y2;
             solve();
         }
-	
+	/*
 	public static void main(String [] args) {
 		char [][] test_grid = {
 		{0, 0, 0, 0},
@@ -201,5 +201,5 @@ public class Pathfinding {
 		for (int i = 0; i < bPathLen; i++)
 			System.out.printf("%d %d\n", (int)bPath.get(i) / test.Y_MAX, (int)bPath.get(i) % test.Y_MAX);
 	}
-	
+	*/
 }
