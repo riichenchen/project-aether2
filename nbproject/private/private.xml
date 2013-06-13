@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/ClientMain.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Globals.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/AetherGamePanel.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/ClientWorldHandler.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/GameMap.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/GamePoint.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/ServerMain.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Game/ServerWorldHandler.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Input/PlayerKeyListener.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Mob/BillysCow.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Net/Client/AetherClient.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Net/Client/AetherClientNetListener.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/Net/Client/AetherClientNetSender.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/Database/PlayerData.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/src/GameSource/User/CharacterHandler.java</file>
+        <file>file:/C:/Users/Liu/Desktop/project-aether2/test/Notes.java</file>
+    </open-files>
 </project-private>
