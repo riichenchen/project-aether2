@@ -45,6 +45,7 @@ public class CharacterHandler {
         stats.put("exp",0);
         stats.put("money", 0);
         stats.put("level",0);
+        stats.put("job",0);
     }
     public static void bindPlayer(PlayerSpatial spat){
         player = spat;
