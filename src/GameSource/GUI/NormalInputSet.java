@@ -12,9 +12,9 @@ public class NormalInputSet extends AbstractInputSet{
 		keyMap.put("invent",KeyEvent.VK_I);
                 keyMap.put("npcchat",KeyEvent.VK_F9);
                 keyMap.put("equipment",KeyEvent.VK_E);
-                keyMap.put("user_stats",KeyEvent.VK_T);
+                keyMap.put("user_stats",KeyEvent.VK_S);
                 keyMap.put("skills",KeyEvent.VK_K);
-                keyMap.put("shop",KeyEvent.VK_S);
+                keyMap.put("shop",KeyEvent.VK_Y);
 		mouseUsed=false;
 	}
 
@@ -59,5 +59,9 @@ public class NormalInputSet extends AbstractInputSet{
                 if (InputManager.keys[KeyEvent.VK_ESCAPE]){
                     MyGUI.closeWindow();
                 }
+        for (int i=0; i<KeyEvent.KEY_LAST; i++){
+        	if (InputManager.down(i))
+        		Input.InputManager.keyDown(i);
+        }
 	}
 }

@@ -24,7 +24,10 @@ public class AGUI{
 	protected static AComponent focusedScreen;
         
         protected static InventoryItem mouseItem;              //Static?
-	private static ArrayList<AContainer.AScrollButton> scrollbars;
+	protected static ArrayList<AContainer.AScrollButton> scrollbars;
+        
+        protected static Image cursorup;
+        protected static Image cursordown;
 //        public static boolean [] keys;			//Input fields; keyboard and mouse
 //        public static int mx, my;			//Public for easier updating and
 //        public static int [] mouseButtons;		//access by the AComponents

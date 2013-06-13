@@ -88,7 +88,8 @@ public class ANPCChat extends AWindow{
            g.drawImage(cImg,x+27,y+27,null);
            g.drawImage(AssetManager.getImage("npc_name"), x+27,y+27+cImg.getHeight(null), null);
            g2.setColor(new Color(255,255,255));
-           g.drawString(name,x+40,y+27+cImg.getHeight(null)+30);
+           Image cname=TextImageFactory.create(g, frame.getKey());
+           g.drawImage(cname,x+17+54-cname.getWidth(null)/2,y+27+10+cImg.getHeight(null)-cname.getHeight(null)/2,null);
         }
     }
     public void drawBG(Graphics g){
