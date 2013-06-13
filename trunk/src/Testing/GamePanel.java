@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
 //        myMap.addSpatial(myBlock);
         myMap.addSpatial(yourBlock);
         myCam = myMap.getCamera();
-        mynpc = new NPC(400,1,400,"johnny",new CharacterAnimControl(AssetManager.getSpriteSet("npc/john")));
+        mynpc = new NPC(400,1,400,"john");
         myMap.addPermanentSpatial(mynpc);
         Globals.theMouse.bindToMap(myMap);
         myMap.addBackgroundSpatial(new CharacterSpatial(350,0.5f,200,64,64,64,0,0,0) {
@@ -173,8 +173,7 @@ public class GamePanel extends JPanel implements MouseMotionListener,KeyListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Globals.theMouse.setLocation(e.getX(),Globals.theMouse.getY(),e.getY());
-//        Globals.theMouse.click();
+        Globals.theMouse.click(e.getX(),e.getY());
     }
 
     @Override

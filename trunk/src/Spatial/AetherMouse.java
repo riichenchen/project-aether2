@@ -26,22 +26,13 @@ public class AetherMouse extends Spatial{
     
     //Called by the GUI if a mouse click landed in-game
     public void click(int mx,int my){
-        
+        super.setLocation(mx+boundMap.getCamera().getX(),0,(my+boundMap.getCamera().getY())/Globals.__PROJECTION_SCALE__);
+        Spatial[] spats = boundMap.getSpace().grabSpatialsAround(this)[1];
+        for (Spatial s: spats){
+            if (s instanceof NPC){
+                if (((NPC)s).collideMouse())
+                    ((NPC)s).clicked();
+            }
+        }
     }
-    
-    //Override the setlocation method 
-    @Override
-    public void setLocation(float x,float y,float z){
-        super.setLocation(x+boundMap.getCamera().getX(),y,(z+boundMap.getCamera().getY())/Globals.__PROJECTION_SCALE__);
-        boundMap.getSpace().updateSpatial(this);
-    }
-//    public void click(){
-//        Spatial[] spats = boundMap.getSpace().grabSpatialsAround(this)[1];
-//        for (Spatial s: spats){
-//            if (s instanceof NPC){
-//                if (((NPC)s).collideMouse())
-//                    ((NPC)s).clicked();
-//            }
-//        }
-//    }
 }
