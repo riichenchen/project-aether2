@@ -1,80 +1,82 @@
 package GameSource.Controls;
 
 import ArtificialIntelligence.Pathfinding;
-import ArtificialIntelligence.FindClosestEnemy;
 import ArtificialIntelligence.AIControl;
-import ArtificialIntelligence.GrabSpatial;
-import ArtificialIntelligence.MapParser;
-import ArtificialIntelligence.Node;
 import GameSource.Assets.MobData.AbstractMob;
+import GameSource.User.CharacterHandler;
 import GameSource.game.GameMap;
-import Spatial.Spatial;
 import Testing.CowAICalculation;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class CowAIControl extends AIControl {
 
+    private final double DEFAULT_AGGRO_RADIUS = 128;
+    private final double DEFAULT_SHORT_ATTACK_RANGE = 5;
+    private final double DEFAULT_LONG_ATTACK_RANGE = 15;
+    
+    private final int SHORT_ATTACK = 0, LONG_ATTACK = 1;
+    
     protected GameMap curMap;
-    protected ArrayList myPath;
     protected Pathfinding pf;
-    protected FindClosestEnemy fce;
     protected int curX, curY;
-    protected Spatial target;
-    protected MapParser mp;
-    protected boolean isLoaded;
-    protected GrabSpatial gs;
-    protected Spatial [][] inRange;
+    protected int tarX, tarY;
+    protected double shortAttackRange, longAttackRange;
+    protected double aggroRadius;
+    protected double dist;
+    protected Random rnd;
     
     public CowAIControl(GameMap map) {
         super(new CowAICalculation());
         curMap = map;
-        if (map == null)
-            System.out.println("Who needs a map?");
-        isLoaded = false;
+        aggroRadius = DEFAULT_AGGRO_RADIUS;
+        shortAttackRange = DEFAULT_SHORT_ATTACK_RANGE;
+        longAttackRange = DEFAULT_LONG_ATTACK_RANGE;
+        rnd = new Random();
+        getLocations();
+        pf = new Pathfinding(map.getCharMap(), curX, curY, tarX, tarY);
+    }
+    
+    public CowAIControl(GameMap map, double _aggroRadius, double _shortAttackRange, double _longAttackRange) {
+        super(new CowAICalculation());
+        curMap = map;
+        aggroRadius = _aggroRadius;
+        shortAttackRange = _shortAttackRange;
+        longAttackRange = _longAttackRange;
+        
     }
 
     @Override
     public void update(Object returnValue) {
-        if (boundTo != null && !isLoaded)
-            init();
-        
-        if (myPath == null || myPath.isEmpty()) {
-            Random rnd = new Random();
-            int xdist = rnd.nextInt(5) - 1;
-            int ydist = rnd.nextInt(5) - 1;
-            boundTo.move(xdist, 0, ydist);
+        getLocations();
+        int attackType = rnd.nextInt() % 2;
+        if (attackType == SHORT_ATTACK) {
+            if (dist <= shortAttackRange) {
+                //boundTo.attack(CharacterHandler.getPlayer(), SHORT_ATTACK);
+            } else
+                move();
         } else {
-            int dx = ((Node)(myPath.get(0))).getX() - curX;
-            int dy = ((Node)(myPath.get(0))).getY() - curY;
-         
-            boundTo.move(dx, 0, dy);
-      }
-    }
-    
-    public void init() {
-        curX = (int)boundTo.getX();
-        curY = (int)boundTo.getZ();
-        
-        gs = new GrabSpatial(curMap, curX, curY);
-        
-        inRange = gs.getSpatials();
-        System.out.println(Arrays.toString(inRange));
-        mp = new MapParser(inRange);
-        
-        if (mp.getCharMap() != null) {
-            fce = new FindClosestEnemy(curX, curY, inRange);
-            target = fce.getTarget();
-
-            pf = new Pathfinding(mp.getCharMap(), curX - mp.getxOffset(), curY - mp.getyOffset(), (int)target.getX() - mp.getxOffset(), (int)target.getY() - mp.getyOffset());
-            myPath = pf.getPath();
-
-            isLoaded = true;
+            if (dist <= longAttackRange) {
+                //boundTo.attack(CharacterHandler.getPlayer(), LONG_ATTACK);
+            } else
+                move();
         }
     }
     
-    public int countSpatials() {
+    private void getLocations() {
+        curX = (int)boundTo.getX();
+        curY = (int)boundTo.getZ();
+        tarX = (int)CharacterHandler.getPlayer().getX();
+        tarY = (int)CharacterHandler.getPlayer().getY();    
+        dist = Math.sqrt((tarX - curX) * (tarX - curX) + (tarY - curY) * (tarY - curY));
+    }
+    
+    private void move() {
+        pf.updateLocations(curX, curY, tarX, tarY);
+        boundTo.move(pf.getToX() - curX, 0, pf.getToY() - curY);
+    }
+    
+    private int countSpatials() {
         ArrayList curSpatials = curMap.getSpatials();
         int size = curSpatials.size();
         int numMob = 0;
@@ -85,5 +87,4 @@ public class CowAIControl extends AIControl {
         }
         return numMob;
     }
-    
 }
