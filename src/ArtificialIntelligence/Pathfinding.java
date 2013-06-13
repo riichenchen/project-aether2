@@ -137,10 +137,13 @@ public class Pathfinding {
 		
 		best_path = new ArrayList();
 		
-		int c_node = tar_x * Y_MAX + tar_y;
-		while (prev[c_node] != -1) {
-			c_node = prev[c_node];
-			best_path.add(c_node);
+		int c_node = prev[tar_x * Y_MAX + tar_y];
+		if (c_node != -1) {
+			while (prev[c_node] != -1) {
+				best_path.add(c_node);
+				c_node = prev[c_node];
+			}
+			Collections.reverse(best_path);
 		}
 	}
 	
@@ -159,23 +162,44 @@ public class Pathfinding {
 		tar_y = y;
 		solve();
 	}
+        
+        public int getToX() {
+            if (!best_path.isEmpty())
+                return (int)(best_path.get(0)) / Y_MAX;
+            return cur_x;
+        }
+        
+        public int getToY() {
+            if (!best_path.isEmpty())
+                return (int)(best_path.get(0)) % Y_MAX;
+            return cur_y;
+        }
+        
+        public void updateLocations(int x1, int y1, int x2, int y2) {
+            cur_x = x1;
+            cur_y = y1;
+            tar_x = x2;
+            tar_y = y2;
+            solve();
+        }
 	
-	/*public static void main(String [] args) {
+	public static void main(String [] args) {
 		char [][] test_grid = {
 		{0, 0, 0, 0},
-		{0, 0, 1, 0},
+		{0, 1, 1, 0},
 		{1, 0, 0, 0},
 		}; 
 		
+                
 		Pathfinding test = new Pathfinding(test_grid, 0, 0, 2, 2);
-		test.updateCurrentLocation(0, 2);
-		test.updateTargetLocation(1, 2);
-		
+		//test.updateCurrentLocation(0, 2);
+		//test.updateTargetLocation(1, 2);
+                test.updateLocations(1, 0, 2, 1);
 		ArrayList bPath = test.getPath();
-		int bPathLen = bPath.size();
-		
+                int bPathLen = bPath.size();
+		//System.out.printf("%d %d\n", test.getToX(), test.getToY());
 		for (int i = 0; i < bPathLen; i++)
 			System.out.printf("%d %d\n", (int)bPath.get(i) / test.Y_MAX, (int)bPath.get(i) % test.Y_MAX);
-	}*/
+	}
 	
 }
