@@ -11,6 +11,7 @@ import GameSource.game.GameMap;
 import Spatial.Spatial;
 import Testing.CowAICalculation;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class CowAIControl extends AIControl {
@@ -36,20 +37,20 @@ public class CowAIControl extends AIControl {
 
     @Override
     public void update(Object returnValue) {
-//        if (boundTo != null && !isLoaded)
-//            init();
-//        
-//        if (myPath == null || myPath.isEmpty()) {
-//            Random rnd = new Random();
-//            int xdist = rnd.nextInt(5) - 1;
-//            int ydist = rnd.nextInt(5) - 1;
-//            boundTo.move(xdist, 0, ydist);
-//        } else {
-//            int dx = ((Node)(myPath.get(0))).getX() - curX;
-//            int dy = ((Node)(myPath.get(0))).getY() - curY;
-//         
-//            boundTo.move(dx, 0, dy);
-//      }
+        if (boundTo != null && !isLoaded)
+            init();
+        
+        if (myPath == null || myPath.isEmpty()) {
+            Random rnd = new Random();
+            int xdist = rnd.nextInt(5) - 1;
+            int ydist = rnd.nextInt(5) - 1;
+            boundTo.move(xdist, 0, ydist);
+        } else {
+            int dx = ((Node)(myPath.get(0))).getX() - curX;
+            int dy = ((Node)(myPath.get(0))).getY() - curY;
+         
+            boundTo.move(dx, 0, dy);
+      }
     }
     
     public void init() {
@@ -59,7 +60,7 @@ public class CowAIControl extends AIControl {
         gs = new GrabSpatial(curMap, curX, curY);
         
         inRange = gs.getSpatials();
-        
+        System.out.println(Arrays.toString(inRange));
         mp = new MapParser(inRange);
         
         if (mp.getCharMap() != null) {

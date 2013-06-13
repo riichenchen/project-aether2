@@ -4,9 +4,11 @@
  */
 package ArtificialIntelligence;
 
+import GameSource.Assets.Portals.Portal;
 import GameSource.game.GameMap;
 import PhysicsSpace.PhysicsSpace;
 import Spatial.Spatial;
+import Testing.PlayerSpatial;
 
 /**
  *
@@ -40,7 +42,6 @@ public class GrabSpatial {
         boundary_width = DEFAULT_WIDTH;
         gm = map;
         ps = map.getPhysicsSpace();
-        gm = map;
         init();
     }
     
@@ -58,12 +59,14 @@ public class GrabSpatial {
     
     private void init() {
         dummySpat = new DummySpatial(x, y, boundary_length, boundary_width);
+        gm.addSpatial(dummySpat);
         if (gm == null)
             System.out.println("Passing in null map");
-        dummySpat.bindToMap(gm);
         inRange = ps.grabSpatialsAround(dummySpat);
+        
         int xlen = inRange[0].length;
         int ylen = inRange[1].length;
+        gm.removeSpatial(dummySpat);
         //System.out.printf("Num player / mob spats: %d\nNum enviro spats: %d\n", xlen, ylen);
     }
     
