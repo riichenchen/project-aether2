@@ -69,7 +69,7 @@ public class ServerWorldHandler {
             String mapType = r.getString("mapid");//retrieve its map
             int[] entity_data = new int[]{r.getInt("maxhp"),r.getInt("hp"),r.getInt("maxmp"),r.getInt("mp"), //get the stats of the player
                                           r.getInt("money"),r.getInt("level"),r.getInt("exp"),r.getInt("attack"),r.getInt("defense"),
-                                          r.getInt("statPoints"),r.getInt("skillPoints")};
+                                          r.getInt("statPoints"),r.getInt("skillPoints"),r.getInt("job")};
             //construct a player data object
             return new PlayerData(accountid,characterType,loc,mapType,getItemData(accountid),entity_data,r.getString("name"),
                                   getSkillLevels(accountid),getQuestData(accountid),getEquipData(accountid));
@@ -130,6 +130,7 @@ public class ServerWorldHandler {
         db.makeUpdate(String.format(template,"defense",""+entityData[8]));
         db.makeUpdate(String.format(template,"statPoints",""+entityData[9]));
         db.makeUpdate(String.format(template,"skillPoints",""+entityData[10]));
+        db.makeUpdate(String.format(template,"job",""+entityData[11]));
         
         //Template to insert an inventory item
         String invenTemplate = "update inventory set %s = %s where accountId = "+accountId+" and itemId = '%s'";
