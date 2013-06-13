@@ -6,4 +6,3 @@ weapon
 bluemarinestaff
 attack 200
 maxmp 130
-mp 130

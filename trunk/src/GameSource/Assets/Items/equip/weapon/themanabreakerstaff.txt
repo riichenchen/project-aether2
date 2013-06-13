@@ -6,4 +6,3 @@ weapon
 themanabreakerstaff
 attack 110
 maxmp 100
-mp 100

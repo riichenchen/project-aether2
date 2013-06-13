@@ -6,4 +6,3 @@ weapon
 revolutionstaff
 attack 100
 maxmp 50
-mp 50

@@ -33,7 +33,7 @@ public class SteveyKeyListener extends AbstractKeyListener{
     float speed = 3f;
     String state = "stand";
     String direction = "down";
-    NPCFrame myFrame = new NPCFrame("john");
+//    NPCFrame myFrame = new NPCFrame("john");
     @Override
     public void resolveKeyEvents() {
         Object charCont = boundTo.getControl(CharacterAnimControl.class);
@@ -225,10 +225,10 @@ public class SteveyKeyListener extends AbstractKeyListener{
         if (eventKeyDown(KeyEvent.VK_4)){
             CharacterHandler.addStat("skillPoints", 10);
         }
-        if (eventKeyDown(KeyEvent.VK_5)){
-            myFrame = new NPCFrame("john");
-            MyGUI.showNPC(myFrame,"john");
-        }
+//        if (eventKeyDown(KeyEvent.VK_5)){
+//            myFrame = new NPCFrame("john");
+//            MyGUI.showNPC(myFrame,"john");
+//        }
 //        if (eventKeyDown(KeyEvent.VK_6)){
 //            MyGUI.showNPC(myFrame.next());
 //        }

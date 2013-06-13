@@ -5,5 +5,4 @@ equip
 body
 bluedorosrobe
 maxhp 40
-hp 40
 defense 30

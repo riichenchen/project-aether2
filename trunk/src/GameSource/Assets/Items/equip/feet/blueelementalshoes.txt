@@ -5,8 +5,6 @@ equip
 feet
 blueelementalshoes
 maxhp 170
-hp 170
 maxmp 40
-mp 40
 attack 200
 defense 50

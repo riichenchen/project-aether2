@@ -6,5 +6,4 @@ weapon
 timelessaeasstaff
 attack 300
 maxmp 250
-mp 250
 defense 75

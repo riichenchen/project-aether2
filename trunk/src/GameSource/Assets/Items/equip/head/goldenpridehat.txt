@@ -7,4 +7,3 @@ goldenpridehat
 attack 30
 defense 40
 maxmp 70
-mp 70

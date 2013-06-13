@@ -67,6 +67,7 @@ public class ClientWorldHandler {
             oldMusic = myGameMap.getBGMusic();
         }
         this.myGameMap = AssetManager.getMap(mapid);
+        Globals.theMouse.bindToMap(myGameMap);
         thegame.setMap(this.myGameMap);
         camControl.bindToCamera(myGameMap.getCamera());
         //BackgroundMusic only has 1 track slot for bgm, so it gets overridden each time
@@ -161,6 +162,7 @@ public class ClientWorldHandler {
         myGameMap.removeSpatial(boundSpat);
         boundSpat.setLocation(port.getNewPos());
         myGameMap = AssetManager.getMap(port.getToMap());
+        Globals.theMouse.bindToMap(myGameMap);
         myGameMap.addSpatial(boundSpat);
         thegame.setMap(myGameMap);
         camControl.bindToCamera(myGameMap.getCamera());

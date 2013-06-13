@@ -5,5 +5,4 @@ equip
 feet
 redjewelshoes
 maxhp 30
-hp 30
 defense 30

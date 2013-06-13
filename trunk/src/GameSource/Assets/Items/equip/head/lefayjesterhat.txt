@@ -7,4 +7,3 @@ lefayjesterhat
 attack 20
 defense 20
 maxmp 30
-mp 30

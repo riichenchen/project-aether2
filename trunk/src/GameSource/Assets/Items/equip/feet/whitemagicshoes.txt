@@ -5,5 +5,4 @@ equip
 feet
 whitemagicshoes
 maxmp 100
-mp 100
 attack 50

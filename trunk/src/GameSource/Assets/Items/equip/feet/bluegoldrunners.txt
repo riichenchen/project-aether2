@@ -5,6 +5,5 @@ equip
 feet
 bluegoldrunners
 maxhp 130
-hp 130
 attack 75
 defense 30

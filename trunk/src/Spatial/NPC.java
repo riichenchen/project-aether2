@@ -6,7 +6,9 @@ package Spatial;
 
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
+import GameSource.GUI.MyGUI;
 import GameSource.Globals;
+import GameSource.Script.NPCFrame;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
 import java.awt.Color;
@@ -98,7 +100,8 @@ public class NPC extends RenderSpatial{
     
     int n = 0;
     public void clicked(){
-        System.out.println(name+" has been clicked! "+(n++));
+        System.out.println("LE JOHNNY");
+        MyGUI.showNPC(new NPCFrame("john"),"john");
     }
     
     //The collideMouse method provides a way for the mouse to be detected inside
