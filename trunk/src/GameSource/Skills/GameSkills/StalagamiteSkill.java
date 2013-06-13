@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The stalagamiteskill class. Standard implementation of an abstractactiveskill.
  */
 public class StalagamiteSkill extends AbstractActiveSkill{
 

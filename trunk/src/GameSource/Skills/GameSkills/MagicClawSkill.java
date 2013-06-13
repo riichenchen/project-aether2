@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The magicclawskill class. Standard implementation of an abstractactiveskill.
  */
 public class MagicClawSkill extends AbstractActiveSkill{
 

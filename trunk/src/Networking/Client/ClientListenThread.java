@@ -13,11 +13,14 @@ import java.net.Socket;
 /**
  *
  * @author Shiyang
+ * The skeleton listener thread
+ * Any implementation must override the receive message class, which deals
+ * with any messages received over the network other than the reserved
+ * register client message (which registers a client id with the server)
  */
 public abstract class ClientListenThread extends Thread
 {
     protected ObjectInputStream in = null;
-    //protected ObjectOutputStream out = null;
     protected Socket socket = null;
     protected boolean connected = false;
     protected Client client;
@@ -26,26 +29,20 @@ public abstract class ClientListenThread extends Thread
         this.socket = cSocket;
         this.client = client;
         try {
-            in = new ObjectInputStream(socket.getInputStream());
+            in = new ObjectInputStream(socket.getInputStream()); // attempt to get input stream from the socket
         } catch (Exception e){
             System.out.println("could not connect with input stream "+e.getMessage());
         }
         connected = true;
-//        try {
-//            out = new ObjectOutputStream(socket.getOutputStream());
-//        } catch (Exception ex){
-//            System.out.println("could not connect with output stream: "+ex.getMessage());
-//        }
     }
+    
     public abstract void ReceiveMessage(Message msg);
     
-//    public void connect(){
-//        //onConnect();
-//        connected = true;
-//    }
+    //Returns the connection
     public boolean isConnected(){
         return connected;
     }
+    
     
     public void run ()
     {
@@ -53,11 +50,11 @@ public abstract class ClientListenThread extends Thread
 	{
 	    try {
                 Object x = in.readObject();
-                if (x instanceof RegisterClientMessage) {
+                if (x instanceof RegisterClientMessage) { // register this class
                     System.out.println("registered as client "+((RegisterClientMessage)x).getClientId());
                     client.setClientId(((RegisterClientMessage)x).getClientId());
                 } else {
-                    ReceiveMessage((Message)x);
+                    ReceiveMessage((Message)x); // otherwise pass the message to be dealt with
                 }    
 	    } catch (Exception e) {
                 System.out.println("Problem Occured. Server may have died. Error:"+e.getMessage());
@@ -67,12 +64,4 @@ public abstract class ClientListenThread extends Thread
 	    }
 	}
     }
-//    public void sendMessage(Message msg){
-//        try {
-//            msg.setClientId(CLIENTID);
-//            out.writeObject(msg);
-//        } catch (Exception e){
-//            System.out.println("Error sending Message: "+e.getMessage());
-//        }
-//    }
 }

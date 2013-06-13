@@ -14,6 +14,8 @@ import java.net.Socket;
 /**
  *
  * @author Shiyang
+ * The skeleton class for a server.
+ * Manages a socket connection as well as a listener and manager
  */
 public abstract class Server extends Thread{
     protected ClientManager manager;
@@ -39,14 +41,15 @@ public abstract class Server extends Thread{
             netListener = addListener(manager);
             netListener.start();
     }
-    
+    //Should a message be received, multiple listener threads may add a message
+    //at the same time. Because of this, synchronization is necessary
     public synchronized void receiveMessage(Message m){
         netListener.addMessage(m);
     }
     
     public void run(){
         System.out.println("Waiting on Connections");
-        while(acceptConns) {
+        while(acceptConns) {//listening for connections at all times
             try {
                 // accept a connection from a client
                 cSocket = sSocket.accept();

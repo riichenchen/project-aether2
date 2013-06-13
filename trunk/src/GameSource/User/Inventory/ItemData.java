@@ -11,6 +11,8 @@ import java.util.HashMap;
 /**
  *
  * @author Shiyang
+ * The item data class is a data container that contains information
+ * about a specific item
  */
 public class ItemData {
     //Used by itemFactory to generate an instance of this item :DD
@@ -28,6 +30,8 @@ public class ItemData {
         stats = new HashMap<>();
         this.itemType = itemType;
     }
+    //standard set/get/add/get methods
+    //Notes: Yes, it's public
     public void setEquipType(String equipType){
         this.equipItemType = equipType;
     }

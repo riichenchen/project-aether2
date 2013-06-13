@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- *
  * @author Shiyang
+ * The ScriptData class manages all frames and
+ * all cases in this specific npc script. It provides
+ * basic methods such as get frame number, which, given a current frame
+ * number, returns the frame to direct the player to using the casedata.
  */
 public class ScriptData {
     private HashMap<Integer,ScriptFrame> allFrames;
@@ -23,6 +26,7 @@ public class ScriptData {
         this.allCases = new ArrayList<>();
     }
     
+    //standard add and get methods
     public void addFrame(ScriptFrame frame){
         allFrames.put(numberFrames++,frame);
     }
@@ -48,6 +52,7 @@ public class ScriptData {
         return allFrames.get(frameNumber);
     }
     
+    //The final case is called if no cases have been satisfied
     public int getFinalFrame(){
         return finalCase;
     }

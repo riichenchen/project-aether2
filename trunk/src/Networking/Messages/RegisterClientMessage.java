@@ -9,6 +9,10 @@ import java.io.Serializable;
 /**
  *
  * @author Shiyang
+ * The registerclient message is used by the server to communicate to a client
+ * it's registered client id code so it can recognize server messages from
+ * forwarded ones
+ * with 
  */
 public class RegisterClientMessage extends Message implements Serializable {
     public RegisterClientMessage(){}

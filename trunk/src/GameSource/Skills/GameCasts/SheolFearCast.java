@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.SheolFearSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The sheolfearcast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class SheolFearCast extends AbstractCast{
 

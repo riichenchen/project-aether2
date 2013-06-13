@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The spiritbombskill class. Standard implementation of an abstractactiveskill.
  */
 public class SpiritBombSkill extends AbstractActiveSkill{
 

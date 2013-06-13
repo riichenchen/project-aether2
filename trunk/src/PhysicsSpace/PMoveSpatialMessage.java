@@ -10,6 +10,8 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * A simple move spatial message used by the physics space to
+ * move a spatial a given vector distance
  */
 public class PMoveSpatialMessage extends PhysicsSpaceMessage{
     private Vector2D motion;

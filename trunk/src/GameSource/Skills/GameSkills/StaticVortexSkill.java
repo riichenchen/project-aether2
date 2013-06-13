@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The staticvortexskill class. Standard implementation of an abstractactiveskill.
  */
 public class StaticVortexSkill extends AbstractActiveSkill{
 

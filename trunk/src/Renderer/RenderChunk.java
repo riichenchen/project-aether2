@@ -10,6 +10,7 @@ import java.util.Iterator;
 /**
  *
  * @author Shiyang
+ * Similar to physics chunk, the render chunk 
  */
 public class RenderChunk {
     private static int IDs = 0;

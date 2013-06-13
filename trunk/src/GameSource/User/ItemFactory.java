@@ -15,6 +15,9 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The item factory class is a static class that provides some tools for
+ * spawning items into a given game map, as well as retrieving an instance of an
+ * item provided the given key is correct
  */
 public class ItemFactory {
     public static InventoryItem getItem(String key){
@@ -42,11 +45,5 @@ public class ItemFactory {
         InventoryItem myItem = getItem(key);
         myItem.setLocation(spat.getX(),spat.getY(),spat.getZ()+1);
         map.addSpatial(myItem);
-    }
-    
-    public static void main(String[] args){
-        AssetManager.init();
-        InventoryItem myItem = ItemFactory.getItem("trollbaithelm");
-        System.out.println(myItem);
     }
 }

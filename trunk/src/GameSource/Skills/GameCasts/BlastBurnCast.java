@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.BlastBurnSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The blastburncast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class BlastBurnCast extends AbstractCast{
 

@@ -9,6 +9,9 @@ import Spatial.Spatial;
 /**
  *
  * @author Robert
+ * 
+ * Standard physics space message used to communicate requests from the game
+ * to the physics space
  */
 public class PhysicsSpaceMessage {
     public final Spatial spat;

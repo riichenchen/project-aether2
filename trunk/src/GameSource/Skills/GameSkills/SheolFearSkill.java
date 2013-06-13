@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The sheolfearskill class. Standard implementation of an abstractactiveskill.
  */
 public class SheolFearSkill extends AbstractActiveSkill{
 

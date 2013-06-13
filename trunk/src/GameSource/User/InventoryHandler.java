@@ -11,6 +11,8 @@ import java.util.HashMap;
 /**
  *
  * @author Shiyang
+ * The inventory handler is a static class that handles the players inventory
+ * It provides standard add and get methods and also tracks quantity.
  */
 public class InventoryHandler {
     private static HashMap<String,InventoryItem> allItems = new HashMap<>();
@@ -40,6 +42,9 @@ public class InventoryHandler {
         itemQuantities.put(itemKey, quantity);
         MyGUI.updateItems();
     }
+    //this method takes in an item and removes it from the inventory completely
+    //if only one quantity ofthis item exists. Otherwise, it deducts one from
+    //the quantity
     public static void removeItem(InventoryItem item){
         String itemKey = item.getKey();
         if (allItems.containsKey(itemKey)){
@@ -55,7 +60,7 @@ public class InventoryHandler {
         }
         MyGUI.updateItems();
     }
-    
+    //standard get methods for items in the players inventory
     public static String[] getItemIds(){
         return allItems.keySet().toArray(new String[0]);
     }
@@ -67,8 +72,9 @@ public class InventoryHandler {
     public static int getItemQuantity(String key){
         return itemQuantities.get(key);
     }
-    
+    //Returns true if the user has enough of a certain item
     public static boolean hasItem(String id, int quantity){
+        //Short-ciruit or prevents null pointer exception
         if (!allItems.containsKey(id) || itemQuantities.get(id) < quantity){
             return false;
         }

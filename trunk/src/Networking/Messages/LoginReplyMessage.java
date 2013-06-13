@@ -9,6 +9,8 @@ import java.io.Serializable;
 /**
  *
  * @author Shiyang
+ * The login reply message packages a reply from the server regarding
+ * a login request and ships it to the client
  */
 public class LoginReplyMessage extends Message implements Serializable {
     public LoginReplyMessage(){}

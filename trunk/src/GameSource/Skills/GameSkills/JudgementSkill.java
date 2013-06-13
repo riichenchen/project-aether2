@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The judgementskill class. Standard implementation of an abstractactiveskill.
  */
 public class JudgementSkill extends AbstractActiveSkill{
 

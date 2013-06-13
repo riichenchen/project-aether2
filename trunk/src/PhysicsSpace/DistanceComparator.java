@@ -11,6 +11,8 @@ import java.util.Comparator;
 /**
  *
  * @author Shiyang
+ * An implementation comparator that prioritizes objects that are closer
+ * to the player.
  */
 public class DistanceComparator implements Comparator<Spatial>{
     public static final int LESS = 1,GREATER = -1;

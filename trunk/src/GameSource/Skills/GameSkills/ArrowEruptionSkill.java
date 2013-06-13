@@ -15,8 +15,8 @@ import Sound.SoundManager;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The arroweruptionskill class. Standard implementation of an abstractactiveskill. 
  */
 public class ArrowEruptionSkill extends AbstractActiveSkill{
 

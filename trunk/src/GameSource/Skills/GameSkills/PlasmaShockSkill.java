@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The plasmashockskill class. Standard implementation of an abstractactiveskill.
  */
 public class PlasmaShockSkill extends AbstractActiveSkill{
 

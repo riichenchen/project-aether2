@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.PlasmaShockSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The plasmashockcast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class PlasmaShockCast extends AbstractCast{
 

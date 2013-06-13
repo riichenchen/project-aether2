@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.StalagamiteSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The stalagamitecast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class StalagamiteCast extends AbstractCast{
 

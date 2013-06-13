@@ -12,8 +12,12 @@ import GameSource.User.ItemFactory;
 import java.util.ArrayList;
 
 /**
- *
  * @author Shiyang
+ * The ScriptFrame class handles a single frame
+ * without considering any cases. If this frame has been hit,
+ * it also provides an outcome - which are the effects which occur
+ * when this frame has been browsed. It also holds the text that
+ * this frame would say as well as this frame's buttons.
  */
 public class ScriptFrame {
     private ArrayList<FrameData> outcomes;
@@ -37,6 +41,9 @@ public class ScriptFrame {
         this.outcomes.add(outcome);
     }
     
+    //reads from all outcome data and applies them
+    //one by one depending on the type of outcome
+    //Fairly self explanatory by key
     public void doOutcomes(){
         for (FrameData outcome: outcomes){
             if (outcome.dataType.equals("additem")){
@@ -59,6 +66,7 @@ public class ScriptFrame {
         }
     }
     
+    //Returns all buttons on this frame
     public String[] getButtons(){
         return buttons;
     }

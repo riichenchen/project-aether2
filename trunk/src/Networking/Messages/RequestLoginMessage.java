@@ -10,6 +10,8 @@ import java.io.Serializable;
 /**
  *
  * @author Shiyang
+ * The request login message encapsulates a login user and login password
+ * and ships it to the server. Note: The all passwords are hashed for safety
  */
 public class RequestLoginMessage extends Message implements Serializable{
     public RequestLoginMessage(){}

@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.JudgementSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The judgementcast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class JudgementCast extends AbstractCast{
 

@@ -5,12 +5,13 @@
 package Networking.Messages;
 
 import Database.PlayerData;
-import GameSource.Game.GamePoint;
 import java.io.Serializable;
 
 /**
  *
  * @author Shiyang
+ * The playerJoinMessage encapsulates a playerdata
+ * class and ships it to the client
  */
 public class PlayerJoinMessage extends Message implements Serializable{
     private PlayerData pData;

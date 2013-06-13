@@ -17,6 +17,7 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The lightningstrikeskill class. Standard implementation of an abstractactiveskill.
  */
 public class LightningStrikeSkill extends AbstractActiveSkill{
 

@@ -15,8 +15,8 @@ import Sound.SoundManager;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The blastburnskill class. Standard implementation of an abstractactiveskill.
  */
 public class BlastBurnSkill extends AbstractActiveSkill{
 

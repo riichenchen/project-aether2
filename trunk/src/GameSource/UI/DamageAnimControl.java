@@ -10,6 +10,8 @@ import Controls.CharacterAnimControl;
 /**
  *
  * @author Shiyang
+ * The damage anim control makes the damage number rise and disappear after
+ * about 1 second
  */
 public class DamageAnimControl extends CharacterAnimControl{
     int counter = 0;
