@@ -27,6 +27,7 @@ public class ASkills extends AWindow{
     
     private AButton [] tabs;
     private int skillPoints;
+    private int job;
 //    private ArrayList<APoint> buttonLocs;
 //    private AContainer buttons;
     private ArrayList<APoint> labelLocs;
@@ -49,7 +50,7 @@ public class ASkills extends AWindow{
         skillPoints=CharacterHandler.getStat("skillPoints");
         
         loadTabs();//Load the tabs
-        
+        job=CharacterHandler.getStat("job");
         activeTabButton=tabs[0];
         activeTab=-1;
         
@@ -75,12 +76,19 @@ public class ASkills extends AWindow{
             tabs[i].setSize(30,18);
             tabs[i].setImage(AImageFactory.getImage("skill_"+tabs[i].getName()));
             tabs[i].setFGImage(AImageFactory.getImage("skill_"+tabs[i].getName()+"_fg"));
-            tabs[i].setVisible(true);
+            tabs[i].setVisible(false);
             tabs[i].setLocation(7+30*i,30);
             this.add(tabs[i]);
         }
     }
-    
+    public void updateTabs(){
+        for (int i=0; i<3; i++){
+            tabs[i].setVisible(false);
+        }
+        for (int i=0; i<=job; i++){
+            tabs[i].setVisible(true);
+        }
+    }
     public void loadTiers(){
         try{
             BufferedReader in=new BufferedReader(new FileReader("src/GameSource/Assets/skilltiers.txt"));
@@ -159,6 +167,10 @@ public class ASkills extends AWindow{
             skillPoints=CharacterHandler.getStat("skillPoints");
 //            System.out.println("ASkills/update   Buttons updated!");
             updateButtons();
+        }
+        if (CharacterHandler.getStat("job")!=job){
+            job=CharacterHandler.getStat("job");
+            updateTabs();
         }
         loadLabels();
     }
