@@ -1,3 +1,4 @@
+package ArtificialIntelligence;
 
 import java.awt.Rectangle;
 
