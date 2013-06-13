@@ -73,8 +73,8 @@ public class CowAIControl extends AIControl {
     private void move() {
         //pf.updateLocations(curX, curY, tarX, tarY);
         boundTo.move(tarX - curX, 0, tarY - curY);
-        System.out.printf("Moved x: %d y: %d(%d - %d)\n", tarX - curX, tarY - curY, tarY, curY);
-        System.out.printf("Current: %d %d %d\nTarget: %d %d %d\n", (int)boundTo.getX(), (int)boundTo.getY(), (int)boundTo.getZ(), (int)CharacterHandler.getPlayer().getX(), (int)CharacterHandler.getPlayer().getY(), (int)CharacterHandler.getPlayer().getZ());
+        //System.out.printf("Moved x: %d y: %d(%d - %d)\n", tarX - curX, tarY - curY, tarY, curY);
+        //System.out.printf("Current: %d %d %d\nTarget: %d %d %d\n", (int)boundTo.getX(), (int)boundTo.getY(), (int)boundTo.getZ(), (int)CharacterHandler.getPlayer().getX(), (int)CharacterHandler.getPlayer().getY(), (int)CharacterHandler.getPlayer().getZ());
     }
     
     private int countSpatials() {
