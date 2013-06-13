@@ -62,12 +62,15 @@ public class ClientWorldHandler {
     }
     //called each time a new map is entered
     public void setGameMap(String mapid){
-        String oldMusic = myGameMap.getBGMusic();
+        String oldMusic = null;
+        if (myGameMap != null){
+            oldMusic = myGameMap.getBGMusic();
+        }
         this.myGameMap = AssetManager.getMap(mapid);
         thegame.setMap(this.myGameMap);
         camControl.bindToCamera(myGameMap.getCamera());
         //BackgroundMusic only has 1 track slot for bgm, so it gets overridden each time
-        if (!myGameMap.getBGMusic().equals(oldMusic)){ // only swap if the music actually changes
+        if (oldMusic == null || !myGameMap.getBGMusic().equals(oldMusic)){ // only swap if the music actually changes
             SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
         }
     }

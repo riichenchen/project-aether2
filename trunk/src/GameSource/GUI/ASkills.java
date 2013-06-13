@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package GameSource.GUI;
-
+//HEYEYYYYYYYYY THIS IS THE FILE IN CHEN'S USB!!
 import GameSource.Assets.AssetManager;
 import GameSource.User.CharacterHandler;
 import java.awt.Color;
@@ -23,6 +23,7 @@ public class ASkills extends AWindow{
     public static final String [] nameDirect={"0","1","2"};
     private int activeTab;
     private AButton activeTabButton;
+    private AButton [] buttons;
     
     private AButton [] tabs;
     private int skillPoints;
@@ -38,6 +39,7 @@ public class ASkills extends AWindow{
         setSize(174,299);
         setMoveBar(0,0,174,23);
 //        buttonLocs=new ArrayList<>()/;
+        
         labelLocs=new ArrayList<>();
         loadLocs();
         tiers=new ArrayList<String []>();
@@ -46,7 +48,27 @@ public class ASkills extends AWindow{
         labels=new AContainer (0,0,4,labelLocs);
         skillPoints=CharacterHandler.getStat("skillPoints");
         
-        //Load the tabs
+        loadTabs();//Load the tabs
+        
+        activeTabButton=tabs[0];
+        activeTab=-1;
+        
+        
+        buttons=new AButton[4];
+        loadButtons();
+   //     updateButtons();
+        setPane("0");
+        
+        loadLabels();
+        labels.setVisible(true);
+        this.add(labels);
+        setVisible(true);
+ //       setPane("equip");
+ //       buttons.addScrollBar(153,65,183);
+        
+    }
+    
+    public void loadTabs(){
         tabs=new AButton [3];
         for (int i=0; i<3; i++){
             tabs[i]=new AButton(""+i,AMessage.SKILLS,""+i);
@@ -57,16 +79,6 @@ public class ASkills extends AWindow{
             tabs[i].setLocation(7+30*i,30);
             this.add(tabs[i]);
         }
-        activeTabButton=tabs[0];
-        activeTab=0;
-        setPane("0");
-        
-        loadLabels();
-        this.add(labels);
-        setVisible(true);
- //       setPane("equip");
- //       buttons.addScrollBar(153,65,183);
-        
     }
     
     public void loadTiers(){
@@ -76,7 +88,6 @@ public class ASkills extends AWindow{
             for (int i=0; i<nTiers; i++){
                 String [] line=in.readLine().split(" ");
                 tiers.add(line);
-                System.out.println("ASkills/loadTiers  "+line.toString());
             }
         }
         catch(IOException e){System.out.println("Load shop tiers failed!");};
@@ -85,22 +96,23 @@ public class ASkills extends AWindow{
     public void loadButtons(){
         for (int i=0; i<4;i++){
             AButton b=new AButton("skill_"+i,AMessage.SKILL_UP,""+i,12,12);
-            b.setLocation(134,114+40*i);
+            b.setLocation(134,114+39*i);
             b.setImage(AImageFactory.getImage("stat_up"));
             b.setFGImage(AImageFactory.getImage("stat_up_fg"));
             b.setVisible(false);
             add(b);
+            buttons[i]=b;
         }
     }
    public void loadLocs(){
         for (int i=0; i<4;i++){
 //            buttonLocs.add(new APoint(134,114+40*i));
-            labelLocs.add(new APoint(11,94+40*i));
+            labelLocs.add(new APoint(11,94+38*i));
         }
     }
     public void increase(int a){
         CharacterHandler.addSkillLevel(labels.get(a).getName(),1);
-        CharacterHandler.addStat("skillPoints", 0);
+        CharacterHandler.addStat("skillPoints", -1);
     }
     public void loadLabels(){
         String [] skillNames=tiers.get(activeTab);
@@ -108,7 +120,7 @@ public class ASkills extends AWindow{
         for (int i=0;i<skillNames.length;i++){
             String key=skillNames[i];
             Image back=TextImageFactory.createSkillsLabel(key);
-            Image front=TextImageFactory.createDes(AssetManager.getSkillData(key).getName(),AssetManager.getSkillData(key).getDescription());
+            Image front=TextImageFactory.createSkillDes(key,AssetManager.getSkillData(key).getDescription());
             AImage a=new AImage(key,labelLocs.get(i).x,labelLocs.get(i).y,back,front);
             a.setParent(this);
             labels.add(a);
@@ -125,52 +137,56 @@ public class ASkills extends AWindow{
             activeTabButton=tabs[newPane];
             activeTabButton.displayFG();
             loadLabels();
+            updateButtons();
         }
     }
     public void updateButtons(){
-        if (skillPoints>0 && (subComponents.get(0).visible()==false)){
-//            System.out.println("AStats/updateButtons   Buttons are visible!");
-            for (AComponent a: subComponents){
-                a.setVisible(true);
+            for (int i=0; i<4; i++){
+                System.out.println(labels.get(i).getName());
+                int skill=0;
+                try{
+                    skill=CharacterHandler.getSkillLevel(labels.get(i).getName());
+                }catch (NullPointerException e){}
+                buttons[i].setVisible(false);
+                if (skillPoints>0 && skill<10)
+                    buttons[i].setVisible(true);
             }
-        }
-        else if ((skillPoints<=0 && (subComponents.get(0).visible()))){
-//            System.out.println("AStats/updateButtons   Buttons are invisible!");
-            for (AComponent a: subComponents){
-                a.setVisible(false);
-            }
-        }
     }
     @Override
     public void update(){
         super.update();
         if (CharacterHandler.getStat("skillPoints")!=skillPoints){
             skillPoints=CharacterHandler.getStat("skillPoints");
+//            System.out.println("ASkills/update   Buttons updated!");
             updateButtons();
         }
         loadLabels();
     }
     
-//    public void draw(Graphics g){
-//        super.draw(g);
-//        g.drawString(""+CharacterHandler.getStat("skillPoints"),x+139,y+269);
-//        g.drawImage(AImageFactory.getImage("skills_main_fg"),x,y,null);
-//    }
-//    
     @Override
-    
+    public void call(){
+        for (AComponent c: subComponents){
+                if (c.visible() && c.callable() && ( c instanceof AContainer ||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
+                    c.call();
+                    break;
+                }
+            }
+    }   
+
+    @Override
     public void draw(Graphics g){
         g.drawImage(bg,x,y,null);
-//        Image disabled=AImageFactory.getImage("skill_up_no");
-//        for (int i=0; i<6; i++){
-//            g.drawImage(disabled,x+55,y+28+18*i,null);
-//        }
+        for (int i=0; i<4;i++){
+            Image tmp=AImageFactory.getImage("skill_up_disable");
+            g.drawImage(tmp,x+134,y+114+39*i,null);
+        }
         for (AComponent a: subComponents){
             if (a.visible()){
                 a.draw(g);
-                System.out.println("ASkills/draw  "+a.getName()+" drawn!");
             }
         }
+        
+        
         g.setFont(new Font("Arial",Font.PLAIN,11));
         g.setColor(new Color(0,0,0));
         g.drawString(""+CharacterHandler.getStat("skillPoints"),x+139,y+269);

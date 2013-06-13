@@ -110,9 +110,9 @@ public class ATextField extends AComponent{
 		g2.setColor(foreground);
     		g2.drawString(line,parent.x+x+10,parent.y+y+10);
                 
-                if (collidepoint(parent.x+AMouseInput.mx,parent.y+AMouseInput.my)){
-                    g2.drawRect(x,y,width,height);
-                }
+//                if (collidepoint(parent.x+AMouseInput.mx,parent.y+AMouseInput.my)){
+//                    g2.drawRect(x,y,width,height);
+//                }
   //  	int dx=parent.x+x; int dy=parent.y+y;
   //      System.out.println(name+" textfield drawn at "+dx+","+dy);
         }
