@@ -5,6 +5,7 @@
 package Spatial;
 
 import Controls.CharacterAnimControl;
+import GameSource.Assets.AssetManager;
 import GameSource.Globals;
 import Renderer.AetherCam;
 import Renderer.RenderSpatial;
@@ -26,12 +27,12 @@ public class NPC extends RenderSpatial{
     private int time = 0;
     private CharacterAnimControl animControl;
     
-    public NPC(float x, float y, float z,String name,CharacterAnimControl animControl){
+    public NPC(float x, float y, float z,String name){
         super(x,y,z,0,0,0,0,0,0);
-        addControl(animControl);
-        this.animControl = animControl;
+        this.animControl = new CharacterAnimControl(AssetManager.getSpriteSet("npc/"+name));
         length = animControl.getImageWidth();
         height = animControl.getImageHeight();
+        addControl(animControl);
         this.name = name;
     }
     

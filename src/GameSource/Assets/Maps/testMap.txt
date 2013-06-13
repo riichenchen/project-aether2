@@ -2281,3 +2281,6 @@ Spawners
 BGSound
 soundTest1
 /BGSound
+Npc
+john 200 1 300
+/Npc

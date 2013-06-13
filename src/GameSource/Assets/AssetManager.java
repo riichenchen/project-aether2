@@ -22,6 +22,7 @@ import GameSource.Skills.SkillData;
 import GameSource.Spawners.CowSpawner;
 import GameSource.User.Inventory.ItemData;
 import GameSource.game.GameMap;
+import Spatial.NPC;
 import Spatial.Spatial;
 import Testing.MyTestCharacter;
 import Testing.PlayerSpatial;
@@ -44,7 +45,7 @@ public class AssetManager {
     private static HashMap<String,GameMap> allmaps; // maps
     private static HashMap<String,SpriteSet> allAnimSets; //all spritesets
     private static HashMap<String,PortalData> allPortalData; //all portal dat
-    private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound"}; // tags that load map uses
+    private static String[] mapProperties = new String[]{"Blocks","Portals","Spawners","BGSound","Npc"}; // tags that load map uses
     private static HashMap<String,Image> allImages;
     private static HashMap<String,ItemData> allItemData;
     private static HashMap<String, SkillData> allSkillData;
@@ -337,6 +338,13 @@ public class AssetManager {
                         while (!nextline.equals("/"+s)){    
                             mymap.setBGMusic(nextline);
                             nextline = fin_map.readLine();
+                        }
+                    } else if (s.equals("Npc")){
+                        nextline = fin_map.readLine();
+                        while (!nextline.equals("/"+s)){
+                            String[] npcTemp = nextline.split(" ");
+                            NPC newNpc = new NPC(Integer.parseInt(npcTemp[0]),Integer.parseInt(npcTemp[2]),Integer.parseInt(npcTemp[2]),npcTemp[3]);
+                            mymap.addPermanentSpatial(newNpc);
                         }
                     }
                 }
