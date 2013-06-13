@@ -51,6 +51,7 @@ public class Test extends JFrame implements ActionListener{
                 CharacterHandler.addStat("exp",5);
                 CharacterHandler.addStat("statPoints",10);
                 CharacterHandler.addStat("money",1000000);
+                CharacterHandler.addStat("skillPoints",20);
             EquipHandler.init();
             EquipHandler.equip((EquipItem)(ItemFactory.getItem("trollbaithelm")));
             EquipHandler.equip((EquipItem)(ItemFactory.getItem("trollbaitarmor")));
