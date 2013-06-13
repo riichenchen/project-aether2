@@ -10,6 +10,9 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The AbstractCameraControl class provides from a skeleton that all camera
+ * controls can build off of. The camera control can bind to spatial and then
+ * have the bound camera follow the spatial
  */
 public abstract class AbstractCameraControl {
     protected Spatial boundSpat;
@@ -17,7 +20,7 @@ public abstract class AbstractCameraControl {
     
     public AbstractCameraControl() {
     }
-    
+    //Standard bind and unbind methods
     public void bindToSpatial(Spatial spat){
         this.boundSpat = spat;
     }
@@ -36,6 +39,7 @@ public abstract class AbstractCameraControl {
             Update();
         }
     }
+    //Each cam control should have it's own way to update
     public abstract void Update();
     
 }

@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 /**
  *
  * @author Shiyang
+ * The npc spatial is a special case of RenderSpatial.
+ * It doesn't require a control, as it simply randomly changes animation track
+ * when it's done the current one. Not only that, it also provides a method
+ * to execute when it's clicked.
  */
 public class NPC extends RenderSpatial{
     private String name;
@@ -33,6 +37,7 @@ public class NPC extends RenderSpatial{
     
     @Override 
     public void render(Graphics g,JPanel pane, AetherCam cam){
+        //again, debugging if needed (copied from characterspat)
         if (Globals.__PHYSICSDEBUG__ <5){
             Polygon theShape = getShape();
             int[] allX = theShape.xpoints;
@@ -49,7 +54,6 @@ public class NPC extends RenderSpatial{
             g.setColor(Color.PINK);
             g.drawLine(allX[0],allY[0],allX[3],allY[3]);
             g.drawLine(allX[2],allY[2],allX[1],allY[1]);
-            //            g.drawRect(loc[0], loc[1], (int)this.getLength(),(int)this.getWidth());
             g.setColor(Color.red);
             int[] loc = cam.convertCoords(this.getX()-this.getLength()/2, this.getZ()*Globals.__PROJECTION_SCALE__ -this.getHeight());
             g.drawRect(loc[0],loc[1],(int)this.getLength(),(int)this.getHeight());
@@ -78,25 +82,31 @@ public class NPC extends RenderSpatial{
     public void collideEffect(Spatial s) {
         //nothing occurs (this shouldn't every be called for that matter
     }
+    
     @Override
     public void update(){
         super.update();
         time++;
-        if (time == animControl.getLimit()){
+        if (time == animControl.getLimit()){ // if this track is finished, swap to a new one
            animControl.swapRandomAnim();
            length = animControl.getImageWidth();
            height = animControl.getImageHeight();
            time = 0;
         }
     }
+    
     int n = 0;
     public void clicked(){
         System.out.println(name+" has been clicked! "+(n++));
     }
     
+    //The collideMouse method provides a way for the mouse to be detected inside
+    //this NPC's bounding rect
     public boolean collideMouse(){
         return getSpriteBox().contains(Globals.theMouse.getX(),Globals.theMouse.getZ()*Globals.__PROJECTION_SCALE__);
     }
+    
+    //Returns a sprite box representing it's location in the game
     public Polygon getSpriteBox(){
         int offx = animControl.getOffX();
         int offy = animControl.getOffY();

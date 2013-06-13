@@ -24,9 +24,7 @@ public abstract class Spatial {
     protected float length, height, width;
     protected static int IDs = 0;
     protected int id;
-//    protected float mass;
-//=======
-//     private int entity;
+
     public final float mass;
     public final float cof;      //coefficient of friction
     protected double rotation;        //in degrees clockwise
@@ -42,6 +40,7 @@ public abstract class Spatial {
     protected GameMap boundMap;
     protected HashMap<String,Object> properties;
     
+    //Constructs a spatial out of the provided properties
     public Spatial(float x, float y, float z, float l, float h, float w, float m, float c, int collidable){
         this.location = new GamePoint(x,y,z);
         length = l;
@@ -57,7 +56,7 @@ public abstract class Spatial {
         percentscale = 1f;
         properties = new HashMap<>();
     }
-    
+    //Any additional properties can be defined by set property and get property
     public void setProperty(String key,Object obj){
         properties.put(key, obj);
     }
@@ -65,7 +64,7 @@ public abstract class Spatial {
     public Object getProperty(String key){
         return properties.get(key);
     }
-    
+    //checks if the key exists
     public boolean hasProperty(String key){
         return properties.containsKey(key);
     }
@@ -74,6 +73,7 @@ public abstract class Spatial {
         properties.remove(key);
     }
     
+    //standard bind and unbind methods
     public void bindToMap(GameMap map){
         this.boundMap = map;
     }
@@ -93,6 +93,8 @@ public abstract class Spatial {
         this.id = id;
     }
     
+    //Translates this spatial if it doesn't have a space.
+    //Otherwise space handles the operation
     public void move(float x, float y, float z){
         if (space == null){
             location.translate(x,y,z);
@@ -100,8 +102,11 @@ public abstract class Spatial {
             space.addMoveMessage(x,z,this);
         }
     }
+    
     public abstract void collideEffect(Spatial s);
     
+    //the collide method checks if this spatial collides with a passed in one
+    //using rotation, length, width, etc.
     public boolean collide(Spatial s){
         boolean collided = false;
         boolean rotated = false;
@@ -123,37 +128,10 @@ public abstract class Spatial {
         if (rotated){
             s.setLocalRotation(-arot);
         } 
-        if (collided){
-            return true;
-//            if (aYmin >= bYmax && aYmax <= bYmin){
-//                return true;
-//            } else if (aYmin <= bYmin && aYmax >= bYmax){
-//                return true;
-//            }
-//            return false;
-        }
-        return false;
+        return collided;
     }
     
-    /*not used atm...*/
-    public boolean contains(Spatial s){
-        Rectangle axz = new Rectangle ((int)(location.getX() - length/2), (int)(location.getZ() - width/2), (int)length, (int)width);
-        Rectangle bxz = new Rectangle ((int)(s.getX() - s.getLength()/2), (int)(s.getZ() - s.getWidth()/2), (int)s.getLength(), (int)s.getWidth());
-        
-        float aYmin = location.getY();
-        float aYmax = location.getY() + height;
-        
-        float bYmin = s.getY();
-        float bYmax = s.getY() + s.getHeight();
-        
-        if (axz.contains(bxz)){
-            if (aYmin >= bYmin && aYmax <= bYmax)
-            {return true;}
-            else{}return false;
-        }
-        else{}return false;
-    }
-    
+    //Standard get and set location,rotation methods
     public GamePoint getLocation(){
         return location;
     }
@@ -169,18 +147,16 @@ public abstract class Spatial {
     public void setLocalRotation(double r){
         rotation = (rotation + Math.toRadians(r)) % (2*Math.PI);
     }
+    
+    //Returns a polygon representing the rotated rectangle
     public Polygon getShape(){
         double angle = Math.atan(width/length);
-//        if (this instanceof Stevey)
-//            System.out.println(Math.atan(width/length));
-//            System.out.println(Math.cos(angle));
-//        double angle2 = rotation - Math.atan(width/length);
         double dis = Math.hypot(width/2,length/2);
         
         float x = location.getX();
         float z = location.getZ();
-//        double cosA = Math.cos(rotation);
-//        double sinA = Math.sin(rotation);
+        
+        //rotate each of the points to the desired angle
         Point p1 = new Point((int)(x + dis * Math.cos(angle+rotation)),(int)(z + dis * Math.sin(angle+rotation)));
         Point p2 = new Point((int)(x + dis * Math.cos(Math.PI-angle+rotation)),(int)(z + dis * Math.sin(Math.PI-angle+rotation)));
         Point p3 = new Point((int)(x + dis * Math.cos(Math.PI+angle+rotation)),(int)(z + dis * Math.sin(Math.PI+angle+rotation)));
@@ -192,9 +168,13 @@ public abstract class Spatial {
         Polygon shape = new Polygon(xpoints, zpoints, 4);
         return shape;
     }
+    
+    //Retuns the chunks bound to this spat
     public HashMap<Integer,PhysicsChunk> getPhysicsChunks(){
         return physicsChunks;
     }
+    
+    //some shortcut get methods
     public float getX(){
         return location.getX();
     }
@@ -217,11 +197,13 @@ public abstract class Spatial {
         return id;
     }
     
+    //Adds a control to this spatial and binds the control to this spat.
     public void addControl(AbstractControl control){
         control.bindToSpatial(this);
         controls.put(control.getControlId(),control);
     }
     
+    //Removes a specific control
     public void removeControl(AbstractControl control){
         controls.remove(control.getControlId());
     }
@@ -236,6 +218,7 @@ public abstract class Spatial {
         }
     }
     
+    //Returns the first control seen 
     public AbstractControl getControl(){
     	if (controls.isEmpty()){
             return null;
@@ -245,6 +228,7 @@ public abstract class Spatial {
     	}
     }
     
+    //returns a control with the specified control key
     public AbstractControl getControl(int id){
     	if (controls.containsKey(id)){
             return controls.get(id);
@@ -264,29 +248,20 @@ public abstract class Spatial {
         return null;
     }
     
-    public void scale(float percent){
-        percentscale = percent;
-    	length *= percentscale;
-    	width *= percentscale;
-    	height *= percentscale;
-    }
-    public void scaleLocal(float percent){
-    	percentscale += percent;
-    	length *= percentscale;
-    	width *= percentscale;
-    	height *= percentscale;
-    }
-    
+    //The update method updates each control bound to this spatial
     public void update(){
         AbstractControl[] conts = controls.values().toArray(new AbstractControl[0]);
         for (AbstractControl c: conts){
             c.update();
         }
     }
+    
+    //Returns the distance squared from the given spatial
     public float distSquared(Spatial spat){
         return spat.location.distanceSquared(location);
     }
     
+    //Standard rotate method
     public void rotate(double radians){
         rotation = radians;
     }
@@ -312,6 +287,7 @@ public abstract class Spatial {
         return new int[]{x,y,sizex,sizey};
     }
     
+    //Returns the lines that define this spatial's bounding rect
     public Line2D[] getBoundingLines(){
         Point2D[] points = getPoints();
         return new Line2D[]{new Line2D(points[3],points[2]),
@@ -319,6 +295,8 @@ public abstract class Spatial {
                             new Line2D(points[1],points[2]),
                             new Line2D(points[0],points[1])};
     }
+    
+    //Returns the points that define this spatials bounding rect
     public Point2D[] getPoints(){
         Polygon p = getShape();
         int[] xs = p.xpoints;
@@ -329,43 +307,38 @@ public abstract class Spatial {
         }
         return points;
     }
+    
+    //this method intersects a given line with the 4 lines that define this spatials
+    //bounding rect
     public Point2D[] intersectLine(Line2D line){
         Line2D[] allLines = getBoundingLines();
         LinkedList<Point2D> intersections = new LinkedList<>();
-//        for (Line2D ln: allLines){
         Point2D intersection = allLines[0].intersect(line);
         if (intersection != null && allLines[1].distanceTo(intersection) < length && allLines[2].distanceTo(intersection) < length){
-//            System.out.println("Front!");
             intersections.add(intersection);
         }
         intersection = allLines[3].intersect(line);
         if (intersection != null && allLines[1].distanceTo(intersection) < length && allLines[2].distanceTo(intersection) < length){
-//            System.out.println("BACK!");
             intersections.add(intersection);
         }
         
         intersection = allLines[1].intersect(line);
-//        if (this instanceof Portal){
-//        System.out.println(intersection.x+" "+intersection.y);
-//        System.out.println(allLines[0].distanceTo(intersection));
-//        System.out.println(allLines[3].distanceTo(intersection));
-//        }
         if (intersection != null && allLines[0].distanceTo(intersection) < width && allLines[3].distanceTo(intersection) < width){
-//            System.out.println("LEFT");
             intersections.add(intersection);
         }
         intersection = allLines[2].intersect(line);
         if (intersection != null && allLines[0].distanceTo(intersection) < width && allLines[3].distanceTo(intersection) < width){
-//            System.out.println("RIGHT!");
             intersections.add(intersection);
         }
         
-//        }
         return intersections.toArray(new Point2D[0]);
     }
+    
+    //Sets location to a new point (with new pointer)
     public void setLocation(GamePoint p){
         this.location = p;
     }
+    //Sets the location's x y and z coordinates
     public void setLocation(float x,float y,float z){
         this.location.setX(x);
         this.location.setY(y);

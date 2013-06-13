@@ -75,6 +75,8 @@ public class Renderer {
     public void updateSpat(RenderMessage message){
         updateSpatMessages.add(message);
     }
+    //Actually performing the update action.
+    //Removes the spat from its previous chunk bindings and re-adds it to the renderer
     public void update(){
         while (updateSpatMessages.peek() != null){
             RenderMessage mymsg = updateSpatMessages.poll();
@@ -86,39 +88,39 @@ public class Renderer {
                     ch.removeObject(myspat);
                 }
                 myspat.getRenderChunks().clear();
-//                while (myspat.getChunks().peek()!= null){
-//                    RenderChunk myChunk = myspat.getChunks().poll();
-//                    myChunk.removeObject(myspat);
-//                }
                 addSpatial(myspat);
             }
         }
     }
+    
     public void clearMessages(){
         updateSpatMessages.clear();
     }
+    
+    //Takes a spatials cull bounds and throws it into all chunks that these cull bounds cover
     public void addSpatial(RenderSpatial spat){
-        int[] cullbounds = spat.getCullBounds(S_QUAD);//GamePoint location = spat.getLocation();
-        int x = cullbounds[0];//(int)Math.floor(location.getX()*S_QUAD);
-        int y = cullbounds[1];//(int)Math.floor(location.getZ()*S_QUAD);
-        int sizex = cullbounds[2];//(int)Math.ceil(spat.getLength()*S_QUAD);
-        int sizey = cullbounds[3];//(int)Math.ceil(spat.getWidth()*S_QUAD);
+        int[] cullbounds = spat.getCullBounds(S_QUAD);
+        int x = cullbounds[0];
+        int y = cullbounds[1];
+        int sizex = cullbounds[2];
+        int sizey = cullbounds[3];
 
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
-                //System.out.println(j+" "+i);
                 renderMap[j][i].addObject(spat);
             }
         }
         //give renderable spat reference to this
         spat.bindToRenderer(this);
     }
+    //Remove the spatial from each chunk that it once belonged to and
+    //unbinds it from each chunk
     public void removeSpatial(RenderSpatial spat){
         int[] cullbounds = spat.getCullBounds(S_QUAD);//GamePoint location = spat.getLocation();
-        int x = cullbounds[0];//(int)Math.floor(location.getX()*S_QUAD);
-        int y = cullbounds[1];//(int)Math.floor(location.getZ()*S_QUAD);
-        int sizex = cullbounds[2];//(int)Math.ceil(spat.getLength()*S_QUAD);
-        int sizey = cullbounds[3];//(int)Math.ceil(spat.getWidth()*S_QUAD);
+        int x = cullbounds[0];
+        int y = cullbounds[1];
+        int sizex = cullbounds[2];
+        int sizey = cullbounds[3];
         
         for (int i = x; i <x+sizex;i++){
             for (int j = y; j < y+sizey;j++){
