@@ -15,7 +15,7 @@ import Spatial.AetherMouse;
 public class Globals {
     public static final int __PORT__ = 4186;// the port being used to host the game
     public static final float __SERVERVERSION__ = 1.00f; // protocol version (for future use)
-    public static final String __IP__ = "192.168.2.135";//"24.57.115.97"; //"localhost"; // ip to connect to
+    public static final String __IP__ = "localhost";//"24.57.115.97"; //"localhost"; // ip to connect to
     public static final String __SQLUSER__ = "root"; // database user and pass
     public static final String __SQLPASS__ = "";
     public static final String DBIP = "localhost";//database access ip
