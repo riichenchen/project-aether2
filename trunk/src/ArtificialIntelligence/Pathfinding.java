@@ -1,10 +1,15 @@
 package ArtificialIntelligence;
 
+/*This class takes in a map of 0s and 1s (0 for passable terrain 
+ * 
+ * 
+ * 
+ */
+
 import java.util.*;
 
 public class Pathfinding {
 	public static int INF, X_MAX, Y_MAX;
-	
 	private char [][] grid;
 	private int [] dist, prev;
 	private int [] dx = {1, 0, -1, 0};
@@ -33,7 +38,8 @@ public class Pathfinding {
 		cur_y = _cur_y;
 		tar_x = _tar_x;
 		tar_y = _tar_y;
- 		solve();
+                if (inBounds())
+                    solve();
 	}
 	
 	private int getManDist(int v1, int v2) {
@@ -154,13 +160,15 @@ public class Pathfinding {
 	public void updateCurrentLocation(int x, int y) {
 		cur_x = x;
 		cur_y = y;
-		solve();
+                if (inBounds())
+                    solve();
 	}
 	
 	public void updateTargetLocation(int x, int y) {
 		tar_x = x;
 		tar_y = y;
-		solve();
+                if (inBounds())
+                    solve();
 	}
         
         public int getToX() {
@@ -180,8 +188,13 @@ public class Pathfinding {
             cur_y = y1;
             tar_x = x2;
             tar_y = y2;
-            solve();
+            if (inBounds())
+                solve();
         }
+        
+        private boolean inBounds() {
+            return cur_x >= 0 && cur_x < X_MAX && cur_y >= 0 && cur_y < Y_MAX && tar_x >= 0 && tar_x < X_MAX && tar_y >= 0 && tar_y < Y_MAX;
+        } 
 	/*
 	public static void main(String [] args) {
 		char [][] test_grid = {
