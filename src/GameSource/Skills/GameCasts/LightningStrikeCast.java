@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.LightningStrikeSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The lightningstrike class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class LightningStrikeCast extends AbstractCast{
 

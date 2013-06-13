@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.IcicleSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The iciclecast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class IcicleCast extends AbstractCast{
 

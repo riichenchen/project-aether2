@@ -9,6 +9,9 @@ import java.io.Serializable;
 /**
  *
  * @author Shiyang
+ * The Skeleton message class.
+ * All messages must extend this class for serialization as well
+ * as server/client synchronization
  */
 public abstract class Message implements Serializable{
     private int ClientId = -1;//Default: Server message

@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.MagicClawSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The magicclawcastt class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class MagicClawCast extends AbstractCast{
 

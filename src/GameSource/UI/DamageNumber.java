@@ -13,6 +13,8 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * The damage number class generates a number picture based upon the type passed in
+ * and number passed in
  */
 public class DamageNumber extends CharacterSpatial{
 
@@ -20,14 +22,14 @@ public class DamageNumber extends CharacterSpatial{
         super(x, 1000, z,37,39,0,0,0,0);
         if (type == 1){ // make a swap if we have a dif type
             removeControl((CharacterAnimControl)getControl(CharacterAnimControl.class));
-            addControl(new DamageAnimControl(AssetManager.getSpriteSet("damage/purple")));
+            addControl(new DamageAnimControl(AssetManager.getSpriteSet("damage/purple"))); // swap to purple if necessary
         }
         ((CharacterAnimControl)getControl(CharacterAnimControl.class)).swapAnim(""+digit);
     }
 
     @Override
     public CharacterAnimControl getAnimControl() {
-        return new DamageAnimControl(AssetManager.getSpriteSet("damage/red"));
+        return new DamageAnimControl(AssetManager.getSpriteSet("damage/red")); //by default red coloured
     }
 
     @Override

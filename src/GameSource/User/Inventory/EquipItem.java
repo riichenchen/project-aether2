@@ -11,6 +11,9 @@ import java.util.HashMap;
 /**
  *
  * @author Shiyang
+ * The EquipItem class extends inventory item
+ * and overrides the use method by equipping this item
+ * it also provides some standard add and remove stat methods
  */
 public class EquipItem extends InventoryItem{
     private HashMap<String,Integer> stats;

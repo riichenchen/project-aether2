@@ -9,10 +9,8 @@ import GameSource.Game.GamePoint;
 import GameSource.game.GameMap;
 import Math.Line2D;
 import Math.Point2D;
-import PhysicsSpace.AVelocity;
 import PhysicsSpace.PhysicsChunk;
 import PhysicsSpace.PhysicsSpace;
-import GameSource.Assets.Portals.Portal;
 import java.util.HashMap;
 import java.awt.*;
 import java.util.LinkedList;
@@ -40,7 +38,6 @@ public abstract class Spatial {
     protected float percentscale;
     protected HashMap<Integer,AbstractControl> controls;
     protected HashMap<Integer,PhysicsChunk> physicsChunks;
-    protected AVelocity velocity;
     protected PhysicsSpace space;
     protected GameMap boundMap;
     protected HashMap<String,Object> properties;
@@ -50,7 +47,6 @@ public abstract class Spatial {
         length = l;
         height = h;
         width = w;
-        this.velocity = new AVelocity(); // To add proper velocity later
         controls = new HashMap<>();
         physicsChunks = new HashMap<>();
         mass = m;

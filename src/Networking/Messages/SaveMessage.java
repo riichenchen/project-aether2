@@ -9,6 +9,8 @@ import Database.PlayerData;
 /**
  *
  * @author Shiyang
+ * The save message encapsulates a player data to be shipped off to
+ * the Server to be saved into the database
  */
 public class SaveMessage extends Message{
     private PlayerData saveData;

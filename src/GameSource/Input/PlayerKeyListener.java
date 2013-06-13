@@ -6,7 +6,6 @@ package GameSource.Input;
 
 import Controls.CharacterAnimControl;
 import Input.AbstractKeyListener;
-import PhysicsSync.SpatActionMessage;
 import java.awt.event.KeyEvent;
 
 /**

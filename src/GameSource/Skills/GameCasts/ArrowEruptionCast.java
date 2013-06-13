@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.ArrowEruptionSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The arroweruptioncast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class ArrowEruptionCast extends AbstractCast{
 

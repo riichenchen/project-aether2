@@ -9,6 +9,8 @@ import Spatial.Spatial;
 /**
  *
  * @author Shiyang
+ * An update spatial message that tells the physics space which spatial
+ * to update.
  */
 public class PUpdateSpatialMessage extends PhysicsSpaceMessage{
     public PUpdateSpatialMessage(Spatial spat){

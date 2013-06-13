@@ -4,17 +4,12 @@
  */
 package GameSource.Net.Client;
 
-import GameSource.Assets.AssetManager;
 import GameSource.Game.ClientWorldHandler;
 import Networking.Client.Client;
 import Networking.Client.ClientListenThread;
 import Networking.Messages.LoginReplyMessage;
-import Networking.Messages.MapDataPackageMessage;
 import Networking.Messages.Message;
 import Networking.Messages.PlayerJoinMessage;
-import Networking.Messages.RemoveSpatialMessage;
-import PhysicsSync.PhysicSyncMessage;
-import Spatial.MapSpatData;
 import Spatial.Spatial;
 import java.net.Socket;
 

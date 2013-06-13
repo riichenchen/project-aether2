@@ -11,6 +11,8 @@ import GameSource.Mob.BillysCow;
 /**
  *
  * @author Shiyang
+ * First implementation ever of a mobspawner.
+ * Yay!!! Spawns a billys cow :33
  */
 public class CowSpawner extends AbstractMobSpawner{
 

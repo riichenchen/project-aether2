@@ -7,16 +7,19 @@ package GameSource.Skills;
 import java.util.HashMap;
 
 /**
- *
  * @author Shiyang
+ * The ActiveSkillData class is an extension of the skilldata class and provides
+ * additional information for active skills such as activetype, range, mana cost,
+ * etc.
  */
 public class ActiveSkillData extends SkillData{
     private String activeType;
-    private HashMap<Integer,Integer> mpCost;
+    private HashMap<Integer,Integer> mpCost; // organize all properties by a mapping of level
     private HashMap<Integer,Double> damagePercentile;
     private HashMap<Integer,Integer> ranges;
     private HashMap<Integer,Integer> castTime;
     
+    //initializes all data containers
     public ActiveSkillData(String name,String activeType) {
         super(name);
         this.activeType = activeType;
@@ -26,6 +29,7 @@ public class ActiveSkillData extends SkillData{
         this.castTime = new HashMap<>();
     }
     
+    //standard set and get methods below
     public void setMpCost(int level,int value){
         mpCost.put(level, value);
     }

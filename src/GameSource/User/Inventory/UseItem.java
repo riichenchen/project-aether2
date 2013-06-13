@@ -11,6 +11,9 @@ import java.util.HashMap;
 /**
  *
  * @author Shiyang
+ * The standard use item.
+ * As expected, it applies its stats and then
+ * removes itself from the user's inventory
  */
 public class UseItem extends InventoryItem {
     private HashMap<String,Integer> stats;

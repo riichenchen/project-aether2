@@ -17,12 +17,16 @@ import javax.swing.JPanel;
 /**
  *
  * @author Shiyang
+ * The abstract InventoryItem class is the skeleton by which
+ * all inventory items will extend. All items must provide a way for them to
+ * be used (despite whether an effect occurs at all or not)
  */
 public abstract class InventoryItem extends RenderSpatial{
     private String itemName;
     private Image image;
     private String key;
     
+    //the item must have a valid image key as well as an x and y position
     public InventoryItem(String itemId, float x, float z) {
         super(x, 1, z, 40, 40, 40, 0,0,0);
         this.itemName = itemId;
@@ -42,6 +46,8 @@ public abstract class InventoryItem extends RenderSpatial{
     
     public abstract void use();
     
+    //the render method simply places it on the map standing centered
+    // at its location
     @Override
     public void render(Graphics g, JPanel pane, AetherCam camera){
         if (image == null){
@@ -57,6 +63,7 @@ public abstract class InventoryItem extends RenderSpatial{
             CharacterHandler.addCollideItem(this);
         }
     }
+    //standard set and get key methods
     public void setKey(String k){
         this.key = k;
     }

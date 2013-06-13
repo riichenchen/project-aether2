@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.StaticVortexSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The staticvortextcast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class StaticVortexCast extends AbstractCast{
 

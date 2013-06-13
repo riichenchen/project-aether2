@@ -10,8 +10,9 @@ import GameSource.Skills.GameSkills.DivineSaberSkill;
 import Spatial.Spatial;
 
 /**
- *
  * @author Shiyang
+ * The divinesabercast class. Fairly straight forward. Simply implements
+ * all of it's requirements from abstractcast
  */
 public class DivineSaberCast extends AbstractCast{
 

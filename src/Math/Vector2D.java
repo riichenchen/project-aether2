@@ -7,6 +7,9 @@ package Math;
 /**
  *
  * @author Shiyang
+ * Vector2D class used to calculate velocities
+ * More methods may be added later. For now, vector multiplication
+ * isn't really needed
  */
 public class Vector2D {
     public float x,y,z;

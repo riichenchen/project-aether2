@@ -14,6 +14,8 @@ import java.net.Socket;
 /**
  *
  * @author Shiyang
+ * The serverclient class manages all connections to a specific client
+ * socket.
  */
 public class ServerClient extends Thread{
     protected Socket cSocket = null;
@@ -28,8 +30,9 @@ public class ServerClient extends Thread{
         this.cSocket = cSocket;
         this.manager = manager;
         this.theServer = theServer;
+        // attempt to connect with input and output stream from sockets
         try {
-            out = new ObjectOutputStream(cSocket.getOutputStream());
+            out = new ObjectOutputStream(cSocket.getOutputStream()); 
         } catch (Exception e) {}
         try {
             in = new ObjectInputStream(cSocket.getInputStream());
@@ -45,18 +48,18 @@ public class ServerClient extends Thread{
         return connectionId;
     }
     
-    //public abstract void ReceiveMessage(Message m);
     
     @Override
     public void run() {
         try {
-            while(stayConnected) {
+            while(stayConnected) { // continue to wait for messages from this client
                 Object msg = in.readObject();
                 theServer.receiveMessage((Message)msg);
             }
         } catch (Exception e) {
 
         } finally {
+            //should they disconnnect, remove them from the manager
             manager.removeClient(this);
             try {
                 in.close();
@@ -69,10 +72,10 @@ public class ServerClient extends Thread{
             manager = null;
         }
     }
-
+    
+    //The send method takes a message and ships it off to the corresponding client
     public synchronized void send(Message message){
         try {
-            //message.setClientId(-1);
             out.writeObject(message);
         } catch (IOException e){
             System.out.println("Unable to send message!");
