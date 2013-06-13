@@ -12,6 +12,7 @@ import Renderer.Renderer;
 import Spatial.Spatial;
 import Testing.PlayerSpatial;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +38,7 @@ public class GameMap {
     protected boolean canRender = false;
     protected String mapName; //very handy to store a key (for easy assetmanager reference)
     protected PhysicsSpace space;
+    protected Rectangle[] obstacles;
     private String bgMusic; // key for bgm
 
     //Constructor: initializes and sets everything
@@ -285,5 +287,10 @@ public class GameMap {
     public PhysicsSpace getPhysicsSpace() {
         return space;
     }
+    
+    public Rectangle [] getObstacles() {
+        return obstacles;
+    }
+    
 }
 
