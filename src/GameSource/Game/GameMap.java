@@ -39,6 +39,7 @@ public class GameMap {
     protected String mapName; //very handy to store a key (for easy assetmanager reference)
     protected PhysicsSpace space;
     protected Rectangle[] obstacles;
+    protected char[][] charMap;
     private String bgMusic; // key for bgm
 
     //Constructor: initializes and sets everything
@@ -264,15 +265,22 @@ public class GameMap {
 
     //Methods for AI
     public char [][] getCharMap() {
-        char [][] ret = new char[dimx][dimy];
-        for (char [] c: ret){
-            Arrays.fill(c, (char)0);
+        if (charMap == null) {
+            charMap = new char[dimx][dimy];
+		for (int i = 0; i < dimx; i++)
+			for (int j = 0; j < dimy; j++)
+					charMap[i][j] = 0;
+		for (int i = 0; i < obstacles.length; i++) {
+				int curHeight = (int)obstacles[i].getHeight();
+				int curWidth = (int)obstacles[i].getWidth();
+				int curX = (int)obstacles[i].getX();
+				int curY = (int)obstacles[i].getY();
+				for (int j = 0; j < curHeight; j++)
+					for (int k = 0; k < curWidth; k++)
+						charMap[curX + j][curY + k] = 1;
+		}
         }
-        for (Map.Entry<Integer, Spatial> entry : spats.entrySet()) {
-            Spatial curSpat = entry.getValue();
-            ret[(int)(curSpat.getX())][(int)(curSpat.getZ())] = 1;
-        }
-        return ret;
+        return charMap;
     }
 
     public ArrayList getSpatials() {
