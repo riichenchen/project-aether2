@@ -51,6 +51,7 @@ public class ASkills extends AWindow{
         
         loadTabs();//Load the tabs
         job=CharacterHandler.getStat("job");
+        updateTabs();
         activeTabButton=tabs[0];
         activeTab=-1;
         
