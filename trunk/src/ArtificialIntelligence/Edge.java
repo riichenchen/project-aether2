@@ -8,8 +8,11 @@ package ArtificialIntelligence;
  *
  * @author Angus
  */
-public class Edge {
-        protected int to, cost;
+
+ //Edge for A* Algorithm in Pathfinding.java
+ 
+ public class Edge {
+        protected int to, cost; //to is the other Node that the Edge is connected to, cost is the cost to traverse the edge
         public Edge(int _to, int _cost) {
                 to = _to;
                 cost = _cost;
