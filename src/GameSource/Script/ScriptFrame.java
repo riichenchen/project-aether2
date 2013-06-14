@@ -62,6 +62,8 @@ public class ScriptFrame {
                 CharacterHandler.addStat("money", Integer.parseInt(outcome.values[0]));
             } else if (outcome.dataType.equals("setqueststatus")){
                 QuestManager.setQuestStatus(outcome.values[0],Integer.parseInt(outcome.values[1]));
+            } else if (outcome.dataType.equals("warptomap")){
+                CharacterHandler.getWorld().warpMap(outcome.values[0], Integer.parseInt(outcome.values[1]), Integer.parseInt(outcome.values[2]), Integer.parseInt(outcome.values[3]));
             }
         }
     }

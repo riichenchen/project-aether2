@@ -7,6 +7,7 @@ package GameSource.User;
 import Database.SaveSkillData;
 import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Assets.Portals.Portal;
+import GameSource.Game.ClientWorldHandler;
 import GameSource.User.Inventory.InventoryItem;
 import Sound.SoundManager;
 import Testing.PlayerSpatial;
@@ -30,6 +31,7 @@ public class CharacterHandler {
     private static HashMap<String, Integer> skillLevels;
     private static PlayerSpatial player;
     private static SteveyKeyListener userControl = null;
+    private static ClientWorldHandler world;
     
     public static void init(){
         stats = new HashMap<>();
@@ -48,6 +50,14 @@ public class CharacterHandler {
         stats.put("money", 0);
         stats.put("level",0);
         stats.put("job",0);
+    }
+    
+    public static void bindWorld(ClientWorldHandler world){
+        world = world;
+    }
+    
+    public static ClientWorldHandler getWorld(){
+        return world;
     }
     //Add this spatial to the player
     public static void bindPlayer(PlayerSpatial spat){

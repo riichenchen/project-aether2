@@ -12,6 +12,7 @@ import GameSource.Assets.Shop.ShopData;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Assets.TerrainBlocks.Blocks.DirtBlock.Dirt_Block;
 import GameSource.Assets.TerrainBlocks.Blocks.GrassBlock.Grass_Block;
+import GameSource.Assets.TerrainBlocks.Blocks.IceBlock.Ice_Block;
 import GameSource.Globals;
 import GameSource.Script.FrameCase;
 import GameSource.Script.FrameData;
@@ -306,6 +307,8 @@ public class AssetManager {
                                 mymap.addBackgroundSpatial(new Dirt_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
                             } else if (tempdat[0].equals("grassblock")){
                                 mymap.addBackgroundSpatial(new Grass_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
+                            } else if (tempdat[0].equals("iceblock")){
+                                mymap.addBackgroundSpatial(new Ice_Block(Integer.parseInt(tempdat[1]),Integer.parseInt(tempdat[2]),Integer.parseInt(tempdat[3])));
                             }
                             nextline = fin_map.readLine();
                         }

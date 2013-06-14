@@ -19,3 +19,5 @@ mouseclick gui/mouseclick.mp3
 dragend gui/dragend.mp3
 dragstart gui/dragstart.mp3
 tabswap gui/tabswap.mp3
+glacierBG glacierBG.mp3
+bossBG1 bossBG1.mp3
