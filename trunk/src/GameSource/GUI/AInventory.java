@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
 import GameSource.Assets.AssetManager;
@@ -15,10 +11,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Joy
- */
 public class AInventory extends AWindow{
     public static final String [] nameDirect={"equip","use","other"};
     private String activeTab;
@@ -35,6 +27,7 @@ public class AInventory extends AWindow{
         setImage(AImageFactory.getImage("invent"));
         setSize(172,393);
         setMoveBar(0,0,172,22);
+		
         buttonLocs=new ArrayList<>();
         loadButtonLocs();
         buttons=new AContainer(0,0,24, buttonLocs);
@@ -51,33 +44,25 @@ public class AInventory extends AWindow{
             tabs[i].setLocation(8+31*i,27);
             this.add(tabs[i]);
         }
-        
+       
         this.add(buttons);
         buttons.addScrollBar(153,65,183);
         setVisible(true);
         activeTabButton=tabs[0];
         setPane("equip");
-        
-        
     }
     
     public void loadButtonLocs(){
-        for (int ty=0; ty<6; ty++){
+        for(int ty=0; ty<6; ty++){
             for (int tx=0; tx<4; tx++){
                 buttonLocs.add(new APoint (10+36*tx,51+36*ty));
             }
         }
-//        for (int tx=10; tx<148;tx+=36){
-//            for (int ty=51; ty<150; ty+=36){
-//                buttonLocs.add(new APoint(tx,ty));
-//            }
-//        }
     }
     
     public void loadButtons(){
         items = InventoryHandler.getItemIds();
         buttons.clear();
-//        int buttonNo=0;
         for (int i=0;i<items.length;i++){
             String key=items[i];
             InventoryItem c=InventoryHandler.getItem(key);
@@ -88,10 +73,8 @@ public class AInventory extends AWindow{
                 b.setFGImage(TextImageFactory.merge(c.getImage(),AImageFactory.getImage("item_fg")));
                 b.setHover(TextImageFactory.createDes(c));
                 b.setLabel(String.format("%d",InventoryHandler.getItemQuantity(key)));
-//                b.setLocation(buttonLocs.get(buttonNo).x, buttonLocs.get(buttonNo).y);
                 b.setParent(this);
                 buttons.add(b);
-   //             buttonNo++;
             }
         }
         buttons.updateActiveContent();
@@ -99,7 +82,6 @@ public class AInventory extends AWindow{
     
     public void setPane(String paneName){
         if (paneName.equals(activeTab)==false){
- //           System.out.println("Pane Switch to "+paneName+"Items: "+items.length);
             activeTab=paneName;
             for (int i=0; i<3; i++){
                 if (nameDirect[i].equals(activeTab)){
@@ -117,19 +99,4 @@ public class AInventory extends AWindow{
         super.update();
         buttons.update();
     }
-    /*
-    @Override
-    public void call(){
-        super.call(); 
-        int rx = MyGUI.mx-x;
-        int ry = MyGUI.my-y;
-        for (AComponent c: buttons.content()){
-                if (c.collidepoint(rx,ry)){
-                    c.call();
-                    break;
-                }
-            }
-    }
-    * */
 }
-

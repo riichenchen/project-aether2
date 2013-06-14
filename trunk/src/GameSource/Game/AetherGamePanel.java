@@ -91,19 +91,25 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
 
     @Override
     public void keyTyped(KeyEvent e) {
-        GameSource.GUI.InputManager.keyTyped(e.getKeyCode());
+        try{
+            GameSource.GUI.InputManager.keyTyped(e.getKeyCode());
+        }catch (ArrayIndexOutOfBoundsException gg){}
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        InputManager.keyDown(e.getKeyCode()); // todo: restrict keyinput from the game when using shop
-        GameSource.GUI.InputManager.keyDown(e.getKeyCode());
+//        InputManager.keyDown(e.getKeyCode()); // todo: restrict keyinput from the game when using shop
+        try{
+            GameSource.GUI.InputManager.keyDown(e.getKeyCode());
+        }catch (ArrayIndexOutOfBoundsException gg){}
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        InputManager.keyUp(e.getKeyCode());
-        GameSource.GUI.InputManager.keyUp(e.getKeyCode());
+        try{
+            InputManager.keyUp(e.getKeyCode());
+            GameSource.GUI.InputManager.keyUp(e.getKeyCode());
+        } catch (ArrayIndexOutOfBoundsException gg) {}
     }
 
     @Override

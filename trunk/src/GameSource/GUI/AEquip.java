@@ -29,7 +29,7 @@ public class AEquip extends AWindow{
     public void loadImages(){
         subComponents.clear();
         String [] parts={"head","body","feet","weapon"};
-        for (int i=0; i<4; i++){
+        for (int i=3;i>=0;i--){
             EquipItem item= (EquipItem)EquipHandler.getItem(parts[i]);
             if (item!=null){
                 Image back=TextImageFactory.createEquipLabel(item,parts[i]);

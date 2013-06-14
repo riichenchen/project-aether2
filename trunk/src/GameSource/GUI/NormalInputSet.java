@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 
 public class NormalInputSet extends AbstractInputSet{
-
+        public static boolean passShift=true;
 	public NormalInputSet(){
 		name="normal";
 		keyMap=new HashMap<String, Integer>();
@@ -19,6 +19,7 @@ public class NormalInputSet extends AbstractInputSet{
 	}
 
 	public void update(){
+            passShift=InputManager.down(KeyEvent.VK_SHIFT);
             boolean passMouse=MyGUI.mouseFree() && (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT));
             boolean a=AMouseInput.clicked(AMouseInput.LEFT);
             boolean b=AMouseInput.released(AMouseInput.LEFT)&&(AMouseInput.held(AMouseInput.LEFT));
@@ -31,27 +32,29 @@ public class NormalInputSet extends AbstractInputSet{
 		
             String [] cwindows = MyGUI.get_windows().toArray(new String [0]);
                 
-                if (InputManager.keys[keyMap.get("npcchat")]){
-                    MyGUI.showNPC("\"We faeries don't talk about them much, but the Underclouds are a place hidden deep within the clouds you can normally see up here. Strange creatures and dark faeries live there, but they've always kept to themselves. \n" +
-"There's even a rumor that there's some kind of city down there, but nobody who's gone to look has ever returned. I think there might be a path through there that lets you get to Faerie City, but I don't know. But it's probably your only choice.\" ");
-                }
-                
-            
-		for (String wname: cwindows){
+                for (String wname: cwindows){
 			if (keyMap.get(wname)!=null && InputManager.keys[keyMap.get(wname)]){
 				MyGUI.keyCall(wname);
                                 InputManager.clearKey(keyMap.get(wname));
 			}
                 }
-               for (String wname: cwindows){
-			if (MyGUI.getWindow(wname).visible() && MyGUI.getWindow(wname).collidepoint(AMouseInput.mx,AMouseInput.my)){
-                                if (AMouseInput.clicked(AMouseInput.LEFT)){
-					MyGUI.mouseClickCall(wname);
-                                        passMouse=false;
-					break;
-                                }
-			}
-		}
+                if (MyGUI.getWindow("hud").visible() && MyGUI.getWindow("hud").collidepoint(AMouseInput.mx,AMouseInput.my)){
+                        if (AMouseInput.clicked(AMouseInput.LEFT)){
+                                MyGUI.mouseClickCall("hud");
+                                passMouse=false;
+                        }
+                }
+                else{
+                    for (String wname: MyGUI.get_visibleWindows()){
+                             if (MyGUI.getWindow(wname).visible() && MyGUI.getWindow(wname).collidepoint(AMouseInput.mx,AMouseInput.my)){
+                                     if (AMouseInput.clicked(AMouseInput.LEFT)){
+                                             MyGUI.mouseClickCall(wname);
+                                             passMouse=false;
+                                             break;
+                                     }
+                             }
+                     }
+                }
 		if (passMouse){
                     MyGUI.unfocus();
                     Globals.theMouse.click(AMouseInput.mx, AMouseInput.my);
@@ -60,8 +63,8 @@ public class NormalInputSet extends AbstractInputSet{
                     MyGUI.closeWindow();
                 }
         for (int i=0; i<KeyEvent.KEY_LAST; i++){
-        	if (InputManager.down(i))
+                if (i!=KeyEvent.VK_SHIFT && InputManager.down(i))
         		Input.InputManager.keyDown(i);
         }
-	}
+    }
 }

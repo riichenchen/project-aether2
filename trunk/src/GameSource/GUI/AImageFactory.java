@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
 import java.awt.Image;
@@ -14,11 +10,13 @@ import javax.swing.ImageIcon;
 public class AImageFactory {
     private static HashMap<String,Image> allImages;
     private static final String DIRECTORY = "src/GameSource/Assets/";
+	
     public static void init(){
         allImages = new HashMap<>();
         loadImages();
         System.out.println("Loaded GUI Images !");
     }
+	
     private static void loadImages(){
         try {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"GUIImageData.txt"));

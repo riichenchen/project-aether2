@@ -68,13 +68,15 @@ public class ATextField extends AComponent{
         cursorLoc=s.length();
     }
     public void update(){
+        MyGUI.passShift=false;
     	for (int i=0; i<InputManager.keys.length; i++){
     		if (KeyCharMap.isTypeable(i,0)&& (InputManager.keys[i] ||InputManager.heldKeys[i])){
     			insert(KeyCharMap.getChar(i,InputManager.down(KeyEvent.VK_SHIFT)));
                         InputManager.keys[i]=false;
-                        InputManager.heldKeys[i]=false;
-    		}
+                        InputManager.heldKeys[i]=false; 
+    		}  
     	}
+        
         if (InputManager.down(KeyEvent.VK_BACK_SPACE)){
     		delete();
                 InputManager.clearKey(KeyEvent.VK_BACK_SPACE);
@@ -92,7 +94,6 @@ public class ATextField extends AComponent{
     		cursorLoc=Math.min(cursorLoc+1,content.length());
                 InputManager.clearKey(KeyEvent.VK_RIGHT);
     	}
-    	
     }
     
     public void draw(Graphics g){

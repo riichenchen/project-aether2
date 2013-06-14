@@ -6,20 +6,18 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 
-//CURRENT TASK AT HAND: Components containing components, AButton, Specialty Components
-//KEY ISSUES TO RESOLVE: Line 95
 
 public abstract class AComponent{
-    protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
-    protected Color background, foreground;
-    protected Font font;
-    protected boolean visible, callable, focused, locked, moveable;
-    protected String name;
-    protected int id;
-    protected AComponent parent; 
-    protected ArrayList<AComponent> subComponents;
-    protected Image bg,fg;
-    protected ARect moveBar;
+	protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
+	protected Color background, foreground;
+	protected Font font;
+	protected boolean visible, callable, focused, locked, moveable;
+	protected String name;
+	protected int id;
+	protected AComponent parent; 
+	protected ArrayList<AComponent> subComponents;
+	protected Image bg,fg;
+	protected ARect moveBar;
 	
 	private static int idCounter=0;
 	public static final AComponent NULL=new AWindow(0,0,0,0);
@@ -32,10 +30,10 @@ public abstract class AComponent{
 		visible=false;
 		callable=true;
 		focused=false;
-                moveable=true;
-            subComponents= new ArrayList<AComponent>();
-            parent=AComponent.NULL;
-            moveBar=new ARect(x,y,width,height);
+		moveable=true;
+		subComponents= new ArrayList<AComponent>();
+		parent=AComponent.NULL;
+		moveBar=new ARect(x,y,width,height);
 		id=idCounter++;
 	}
 	public AComponent(int nx,int ny,int nw,int nh){
@@ -43,7 +41,7 @@ public abstract class AComponent{
 		background=new Color(229,229,229);
 	}
 	
-    @Override
+	@Override
 	public int hashCode(){
 		return id;
 	}
@@ -53,9 +51,9 @@ public abstract class AComponent{
 	public boolean collide (AComponent a){
 		return x<=a.x && a.x<=x+width && y<=a.y && a.y<=y+height;
 	}
-        public boolean moveBarCollide(){
-            return moveBar==null||moveBar.collidepoint(AMouseInput.mx,AMouseInput.my,x+parent.x,y+parent.y);
-        }
+	public boolean moveBarCollide(){
+		return moveBar==null||moveBar.collidepoint(AMouseInput.mx,AMouseInput.my,x+parent.x,y+parent.y);
+	}
 
 	public void setBG(int r, int g, int b){
 		background=new Color(r,g,b);
@@ -66,8 +64,8 @@ public abstract class AComponent{
 	public void setLocation(int x, int y) {
 		this.x=x; this.y=y;
 	}
-        public void setLocation(APoint a){
-            x=a.x; y=a.y;
+	public void setLocation(APoint a){
+		x=a.x; y=a.y;
         }
 	public void setSize(int wid, int hght){
 		width=wid; height = hght;
@@ -75,18 +73,18 @@ public abstract class AComponent{
 	public void setName(String s){
 		name=s;
 	}
-        public void setImage (Image g){
-                bg=g;
-        }
-        public void setFGImage(Image g){
-            fg=g;
-        }
-        public void setParent(AComponent c){
-            parent=c;
-        }
-        public void setMoveBar(int x, int y, int w, int h){
-            moveBar=new ARect(x,y,w,h);
-        }
+	public void setImage (Image g){
+		bg=g;
+	}
+	public void setFGImage(Image g){
+		fg=g;
+	}
+	public void setParent(AComponent c){
+		parent=c;
+	}
+	public void setMoveBar(int x, int y, int w, int h){
+		moveBar=new ARect(x,y,w,h);
+	}
 	public void setVisible(boolean b){
 		visible=b;
 	}
@@ -96,18 +94,15 @@ public abstract class AComponent{
 	public void setFocused(boolean b){
 		focused=b;
 	}
-        public void setMoveable(boolean b){
-            moveable=b;
-        }
+	public void setMoveable(boolean b){
+		moveable=b;
+	}
 	public void lock(){
 		lx=AMouseInput.mx-x;
 		ly=AMouseInput.my-y;
 		locked = true;
-		
 	}
 	public void unlock(){
-//		System.out.println(name+" unlocked");
-//		System.out.println("("+x+","+y+"),"+lx+","+ly);
 		locked= false;
 	}
 	public void lockShift(){
@@ -131,24 +126,20 @@ public abstract class AComponent{
 	public boolean visible(){
 		return visible;
 	}
-        public boolean callable(){
-            return callable;
-        }
+	public boolean callable(){
+		return callable;
+	}
 	public boolean locked(){
 		return locked;
 	}
-        public boolean moveable(){
-            return moveable;
-        }
-
+	public boolean moveable(){
+		return moveable;
+	}
 	public void add(AComponent c){
 		c.parent=this;
 		subComponents.add(c);
 	}
 	public abstract void draw(Graphics g);
 	public abstract void update();
-	public abstract void call(); 			//????
-
-  
-		
+	public abstract void call(); 			
 }

@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GameSource.GUI;
-//HEYEYYYYYYYYY THIS IS THE FILE IN CHEN'S USB!!
+
 import GameSource.Assets.AssetManager;
 import GameSource.User.CharacterHandler;
 import java.awt.Color;
@@ -15,10 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Joy
- */
 public class ASkills extends AWindow{
     public static final String [] nameDirect={"0","1","2"};
     private int activeTab;
@@ -104,11 +97,10 @@ public class ASkills extends AWindow{
             }
         }
         catch(IOException e){System.out.println("Load shop tiers failed!");};
-        
     }
     public void loadButtons(){
         for (int i=0; i<4;i++){
-            AButton b=new AButton("skill_"+i,AMessage.SKILL_UP,""+i,12,12);
+            AButton b=new AButton("skill_"+(i),AMessage.SKILL_UP,""+(i),12,12);
             b.setLocation(134,114+39*i);
             b.setImage(AImageFactory.getImage("stat_up"));
             b.setFGImage(AImageFactory.getImage("stat_up_fg"));
@@ -143,7 +135,6 @@ public class ASkills extends AWindow{
     public void setPane(String paneName){
         int newPane=Integer.parseInt(paneName);
         if (newPane!=activeTab){
- //           System.out.println("Pane Switch to "+paneName+"Items: "+items.length);
             activeTab=newPane;
             activeTabButton.displayBG();
             activeTabButton=tabs[newPane];
@@ -154,7 +145,6 @@ public class ASkills extends AWindow{
     }
     public void updateButtons(){
             for (int i=0; i<4; i++){
-                System.out.println(labels.get(i).getName());
                 int skill=0;
                 try{
                     skill=CharacterHandler.getSkillLevel(labels.get(i).getName());
@@ -169,7 +159,6 @@ public class ASkills extends AWindow{
         super.update();
         if (CharacterHandler.getStat("skillPoints")!=skillPoints){
             skillPoints=CharacterHandler.getStat("skillPoints");
-//            System.out.println("ASkills/update   Buttons updated!");
             updateButtons();
         }
         if (CharacterHandler.getStat("job")!=job){
@@ -192,10 +181,14 @@ public class ASkills extends AWindow{
     @Override
     public void draw(Graphics g){
         g.drawImage(bg,x,y,null);
-        g.drawImage(AssetManager.getImage("tier"+activeTab),10,53,null);
+        g.drawImage(AssetManager.getImage("tier"+(activeTab+1)),x+15,y+58,null);
         g.setColor(new Color(255,255,255));
-        g.drawString(descriptions[2*activeTab],48,68);
-        g.drawString(descriptions[2*activeTab+1],48,83);
+        g.setFont(new Font("Arial",Font.PLAIN,10));
+        g.drawString(descriptions[2*activeTab],x+48,y+68);
+        g.drawString(descriptions[2*activeTab+1],x+48,y+83);
+        g.setFont(new Font("Arial",Font.PLAIN,11));
+        g.setColor(new Color(0,0,0));
+        g.drawString(""+CharacterHandler.getStat("skillPoints"),x+139,y+269);
         
         for (int i=0; i<4;i++){
             Image tmp=AImageFactory.getImage("skill_up_disable");
@@ -206,11 +199,6 @@ public class ASkills extends AWindow{
                 a.draw(g);
             }
         }
-        
-        
-        g.setFont(new Font("Arial",Font.PLAIN,11));
-        g.setColor(new Color(0,0,0));
-        g.drawString(""+CharacterHandler.getStat("skillPoints"),x+139,y+269);
         g.drawImage(AImageFactory.getImage("skills_main_fg"),x,y,null);
     }
 }
