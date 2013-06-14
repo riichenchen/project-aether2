@@ -63,6 +63,19 @@ public class Pathfinding {
 
                                     if (y + 1 < Y_MAX && grid[x][y + 1] == 0) 
                                             edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y + 1, 1));
+                                    
+                                    if (x - 1 >= 0 && y - 1 >= 0 && grid[x - 1][y - 1] == 0) 
+                                            edges[x * Y_MAX + y].add(new Edge((x - 1) * Y_MAX + y - 1, 1));
+
+                                    if (x + 1 < X_MAX && y - 1 >= 0 && grid[x + 1][y - 1] == 0)
+                                            edges[x * Y_MAX + y].add(new Edge((x + 1) * Y_MAX + y - 1, 1));
+
+                                    if (x - 1 >= 0 && y + 1 < Y_MAX && grid[x - 1][y + 1] == 0) 
+                                            edges[x * Y_MAX + y].add(new Edge((x - 1) * Y_MAX + y + 1, 1));
+
+                                    if (x + 1 < X_MAX && y + 1 < Y_MAX && grid[x + 1][y + 1] == 0) 
+                                            edges[x * Y_MAX + y].add(new Edge((x + 1) * Y_MAX + y + 1, 1));
+                                    
                             }
                     }
             }
