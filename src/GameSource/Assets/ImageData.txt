@@ -47,4 +47,9 @@ staticvortex skills/staticvortex.png
 tier1 skills/tier1.png
 tier2 skills/tier2.png
 tier3 skills/tier3.png
+glacierchunk inventory/etc/glacierchunk.png
+glacierpass inventory/etc/glacierpass.png
+macargoshell inventory/etc/macargoshell.png
+magmacrystal inventory/etc/magmacrystal.png
+sphealmeat inventory/etc/sphealmeat.png
 john npc/john.png
