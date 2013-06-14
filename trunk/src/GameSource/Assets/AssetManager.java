@@ -376,12 +376,17 @@ public class AssetManager {
             BufferedReader fin = new BufferedReader(new FileReader(DIRECTORY+"Animations.txt"));
             String nextline;
             String[] tempdat;
+            String curSpriteName;
+            SpriteSet currentSet;
+            BufferedReader animTrack;
             while ((nextline = fin.readLine())!=null){
-                String curSpriteName = nextline;
-                SpriteSet currentSet = new SpriteSet();
+                curSpriteName = nextline;
+                //System.out.println(curSpriteName);
+                currentSet = new SpriteSet();
                 nextline = fin.readLine();
                 while (!nextline.equals("/"+curSpriteName)){
-                    BufferedReader animTrack = new BufferedReader(new FileReader(DIRECTORY+"Animations/"+curSpriteName+"/"+nextline+"/info.txt"));
+                    animTrack = new BufferedReader(new FileReader(DIRECTORY+"Animations/"+curSpriteName+"/"+nextline+"/info.txt"));
+                    //System.out.println(nextline);
                     int numImages = Integer.parseInt(animTrack.readLine());
                     tempdat = animTrack.readLine().split(",");
                     int[] offsets = new int[]{Integer.parseInt(tempdat[0]),Integer.parseInt(tempdat[1])};
