@@ -1,3 +1,6 @@
 testPort1;testPort1.txt
 cowPort1;cowPort1.txt
 makerTestPort1;makerTestPort1.txt
+glacier1P1;glacier1P1.txt
+glacier2P1;glacier2P1.txt
+glacier3p1;glacier3P1.txt

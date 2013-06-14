@@ -50,6 +50,7 @@ public class ClientWorldHandler {
         this.aiHandle = new AIHandler();
         aiHandle.start(); // begin the ai handle thread
         this.theMouse = Globals.theMouse; // bind the mouse
+        CharacterHandler.bindWorld(this);
     }
     
     public AetherMouse getMouse(){
@@ -67,7 +68,7 @@ public class ClientWorldHandler {
         camControl.bindToCamera(myGameMap.getCamera());
         //BackgroundMusic only has 1 track slot for bgm, so it gets overridden each time
         if (oldMusic == null || !myGameMap.getBGMusic().equals(oldMusic)){ // only swap if the music actually changes
- //           SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
+            SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
         }
     }
     
@@ -151,6 +152,10 @@ public class ClientWorldHandler {
     //Note: the previous map "freezes" when the player exits and "resumes"
     //when the player enters again. It's meant to be that way :3
     private void enterPortal(Portal port){
+        String oldMusic = null;
+        if (myGameMap != null){
+            oldMusic = myGameMap.getBGMusic();
+        }
         //Clear old map's previous messages
         AbstractControl hold = (AbstractControl)boundSpat.getControl(SteveyKeyListener.class);
         boundSpat.removeControl(hold); // hold the current input object (lest a player spam enter)
@@ -161,8 +166,31 @@ public class ClientWorldHandler {
         myGameMap.addSpatial(boundSpat);
         thegame.setMap(myGameMap);
         camControl.bindToCamera(myGameMap.getCamera());
-        SoundManager.getChannel("BackgroundMusic").stopAll();
-//       SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
+        if (oldMusic == null || !oldMusic.equals(myGameMap.getBGMusic())){
+            SoundManager.getChannel("BackgroundMusic").stopAll();
+            SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
+        }
+        boundSpat.addControl(hold);
+    }
+    public void warpMap(String mapid,int x,int y,int z){
+        String oldMusic = null;
+        if (myGameMap != null){
+            oldMusic = myGameMap.getBGMusic();
+        }
+        //Clear old map's previous messages
+        AbstractControl hold = (AbstractControl)boundSpat.getControl(SteveyKeyListener.class);
+        boundSpat.removeControl(hold); // hold the current input object (lest a player spam enter)
+        myGameMap.removeSpatial(boundSpat);
+        boundSpat.setLocation(x,y,z);
+        myGameMap = AssetManager.getMap(mapid);
+        Globals.theMouse.bindToMap(myGameMap);
+        myGameMap.addSpatial(boundSpat);
+        thegame.setMap(myGameMap);
+        camControl.bindToCamera(myGameMap.getCamera());
+        if (oldMusic == null || !oldMusic.equals(myGameMap.getBGMusic())){
+            SoundManager.getChannel("BackgroundMusic").stopAll();
+            SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
+        }
         boundSpat.addControl(hold);
     }
     //Not exactly used atm. At sound point in time was used to implement a mouse
