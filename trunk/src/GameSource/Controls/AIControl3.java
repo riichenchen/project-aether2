@@ -1,4 +1,13 @@
+//AIControl3
+//Supports Mobs with - cast1, stand, and walk commands
+//Same as AIControl1 but with cast1 instead of attack1
+
 package GameSource.Controls;
+
+/**
+ *
+ * @author Angus
+ */
 
 import ArtificialIntelligence.Pathfinding;
 import ArtificialIntelligence.AIControl;

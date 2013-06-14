@@ -4,6 +4,11 @@
 
 package GameSource.Controls;
 
+/**
+ *
+ * @author Angus
+ */
+
 
 //Import required packages
 import ArtificialIntelligence.Pathfinding;

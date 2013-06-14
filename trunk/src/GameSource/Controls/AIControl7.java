@@ -1,4 +1,12 @@
+//AIControl7
+//Supports Mobs with -attack1, and stand (also teleports @ function move)
+
 package GameSource.Controls;
+
+/**
+ *
+ * @author Angus
+ */
 
 import ArtificialIntelligence.Pathfinding;
 import ArtificialIntelligence.AIControl;
@@ -113,6 +121,7 @@ public class AIControl7 extends AIControl {
     private void move() {
         hasMoved = true;
         state = "stand";
+        //mob will stand and teleport, instantly going to where the player is
         int dx = tarX - curX;
         int dy = tarY - curY;
         boundTo.move(dx, 0, dy);

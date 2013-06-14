@@ -1,4 +1,13 @@
+//AIControl6
+//Supports Mobs with - stand, and walk commands
+
+
 package GameSource.Controls;
+
+/**
+ *
+ * @author Angus
+ */
 
 import ArtificialIntelligence.Pathfinding;
 import ArtificialIntelligence.AIControl;
@@ -65,7 +74,7 @@ public class AIControl6 extends AIControl {
             animControl = (CharacterAnimControl)boundTo.getControl(CharacterAnimControl.class);
             loadedAnimControl = true;
         }
-        
+        //can only stand and walk
         if ((slow == delay)) {
             
             getLocations();
