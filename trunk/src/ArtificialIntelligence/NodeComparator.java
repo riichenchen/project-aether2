@@ -11,8 +11,8 @@ import java.util.Comparator;
  * @author Angus
  */
 public class NodeComparator implements Comparator<Node> {
-        public int compare (Node x, Node y) {
-                if (x.cost < y.cost)
+        public int compare (Node x, Node y) { //function arranges values placing min value at top of heap
+                if (x.cost < y.cost) 
                         return -1;
 
                 if (x.cost > y.cost)
