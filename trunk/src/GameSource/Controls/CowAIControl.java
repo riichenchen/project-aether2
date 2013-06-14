@@ -1,3 +1,6 @@
+//Testing AI Control 
+//OLD Broken down into 7 different controls
+
 package GameSource.Controls;
 
 import ArtificialIntelligence.Pathfinding;
