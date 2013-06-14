@@ -31,7 +31,7 @@ public class BillysCow extends AbstractMob{
 
     @Override
     public CharacterAnimControl getAnimControl() { // just use a simple test animation
-        return new CharacterAnimControl(AssetManager.getSpriteSet("lucario"));
+        return new CharacterAnimControl(AssetManager.getSpriteSet("empoleon"));
     }
     int n = 0;
     @Override
