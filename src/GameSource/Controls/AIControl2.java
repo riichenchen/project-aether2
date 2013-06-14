@@ -1,4 +1,12 @@
+//AIControl2
+//Supports Mobs with -attack1, cast1, stand, and walk commands
+
 package GameSource.Controls;
+
+/**
+ *
+ * @author Angus
+ */
 
 import ArtificialIntelligence.Pathfinding;
 import ArtificialIntelligence.AIControl;
@@ -94,17 +102,17 @@ public class AIControl2 extends AIControl {
             isAttacking1 = isCasting1 = false;
             isMoving = false;
             
-            if (dist <= attack1Range) {
+            if (dist <= attack1Range) { //always attack if in range
                 System.out.println("attack1\n");
                 isAttacking1 = true;
                 state = "attack1";
-            } else if (dist <= cast1Range) {
+            } else if (dist <= cast1Range) { //if it can cast, flip a coin, if heads castk
                 int goAttack = rnd.nextInt() % 2;
-                if (goAttack == 1) {
-                    System.out.println("cast1\n");
+                if (goAttack == 1) { //cast
+                    System.out.println("cast1\n");  
                     isCasting1 = true;
                     state = "cast1";
-                } else
+                } else //move if not in range
                     move();
             } else
                     move();
