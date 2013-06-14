@@ -9,7 +9,7 @@ package ArtificialIntelligence;
 import java.util.*;
 
 public class Pathfinding {
-	public static int INF, X_MAX, Y_MAX;
+	protected static int INF, X_MAX, Y_MAX;
 	private char [][] grid;
 	private int [] dist, prev;
 	private int [] dx = {1, 0, -1, 0};
@@ -33,7 +33,8 @@ public class Pathfinding {
 		visited = new boolean[maxSize];
 		prev = new int [maxSize];
 		best_path = new ArrayList();
-	 	nodeComparator = new NodeComparator(); 
+	 	nodeComparator = new NodeComparator();
+                createEdges();
 		cur_x = _cur_x;
 		cur_y = _cur_y;
 		tar_x = _tar_x;
@@ -41,6 +42,30 @@ public class Pathfinding {
                 if (inBounds())
                     solve();
 	}
+        
+        private void createEdges() {
+            	
+            for (int i = 0; i < maxSize; i++)
+			edges[i] = new ArrayList<Edge>();
+                
+            for (int x = 0; x < X_MAX; x++) {
+                    for (int y = 0; y < Y_MAX; y++) {
+                            if (grid[x][y] == 0) {
+                                    if (x - 1 >= 0 && grid[x - 1][y] == 0) 
+                                            edges[x * Y_MAX + y].add(new Edge((x - 1) * Y_MAX + y, 1));
+
+                                    if (x + 1 < X_MAX && grid[x + 1][y] == 0)
+                                            edges[x * Y_MAX + y].add(new Edge((x + 1) * Y_MAX + y, 1));
+
+                                    if (y - 1 >= 0 && grid[x][y - 1] == 0)
+                                            edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y - 1, 1));
+
+                                    if (y + 1 < Y_MAX && grid[x][y + 1] == 0) 
+                                            edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y + 1, 1));
+                            }
+                    }
+            }
+        }
 	
 	private int getManDist(int v1, int v2) {
 		int x1 = v1 / Y_MAX;
@@ -76,28 +101,7 @@ public class Pathfinding {
 				dist[x * Y_MAX + y] = INF;
 				
 		dist[cur_x * Y_MAX + cur_y] = 0;
-		
-		for (int i = 0; i < X_MAX * (Y_MAX + 1); i++)
-			edges[i] = new ArrayList<Edge>();
-			
-		for (int x = 0; x < X_MAX; x++) {
-			for (int y = 0; y < Y_MAX; y++) {
-				if (grid[x][y] == 0) {
-					if (x - 1 >= 0 && grid[x - 1][y] == 0) 
-						edges[x * Y_MAX + y].add(new Edge((x - 1) * Y_MAX + y, 1));
-					
-					if (x + 1 < X_MAX && grid[x + 1][y] == 0)
-						edges[x * Y_MAX + y].add(new Edge((x + 1) * Y_MAX + y, 1));
-					
-					if (y - 1 >= 0 && grid[x][y - 1] == 0)
-						edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y - 1, 1));
-					
-					if (y + 1 < Y_MAX && grid[x][y + 1] == 0) 
-						edges[x * Y_MAX + y].add(new Edge((x) * Y_MAX + y + 1, 1));
-				}
-			}
-		}
-		
+           
 		q = new PriorityQueue<Node>(11, nodeComparator);
 		q.add(new Node(cur_x * Y_MAX + cur_y, 0));
 		while (q.peek() != null) {
