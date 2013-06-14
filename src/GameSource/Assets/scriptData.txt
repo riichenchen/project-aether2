@@ -1,1 +1,6 @@
 john john.txt
+chiefstan chiefstan.txt
+icestone icestone.txt
+sam sam.txt
+athena athena.txt
+bruce bruce.txt

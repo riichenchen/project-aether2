@@ -1,0 +1,95 @@
+5
+
+Frame
+endchat null okay
+Text
+... I take a chunk out of this mysterious looking ice piece.
+/Text
+Outcome
+additem icechunk,1
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+... I put the ice piece back and...
+/Text
+Outcome
+takeitem glacierchunk,1
+setqueststatus investigatingGlacier2,2
+warptomap glacier4,400,1,400
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+I can't leave now. Glalie's right there!
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Finally... Glalie's gone. Time to report back to Chief Stan.
+/Text
+Outcome
+warptomap glacier3,400,1,400
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+I have the piece. Time to report back to the chief.
+/Text
+Outcome
+/Outcome
+/Frame
+5
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,1
+item glacierchunk,1
+/Require
+4
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,1
+/Require
+0
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier2,1
+/Require
+1
+Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier2,2
+questcomplete investigatingGlacier2
+/Require
+3
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier2,2
+/Require
+2
+/Case
+-2

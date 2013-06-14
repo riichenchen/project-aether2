@@ -1,0 +1,59 @@
+3
+
+Frame
+endchat null next
+Text
+Hello. My name's Sam. Although it may seem like it's the north pole, we're actually in a bit of a crisis as time appears to be frozen everywhere else!
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat prev next
+Text
+Incase you've forgotten, you can move with the arrow keys. Pressing i will access your inventory.
+E will open up your equipment screen. K shows your skills.
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Why don't you go speak with Athena over there. She'll explain some more.
+/Text
+Outcome
+/Outcome
+/Frame
+4
+
+Case
+Require
+frame -1
+/Require
+0
+/Case
+
+Case
+Require
+frame 0
+/Require
+1
+/Case
+
+Case
+Require
+frame 1
+/Require
+2
+/Case
+
+Case
+Require
+frame 2
+/Require
+-2
+/Case
+-2

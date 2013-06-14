@@ -1,0 +1,60 @@
+2
+Frame
+endchat null okay
+Text
+It's far too dangerous for you to go further!
+Ask for the Chief's permission if you're really curious.
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+You seem qualified enough to go.
+/Text
+Outcome
+warptomap glacier3,400,0,400
+/Outcome
+/Frame
+4
+
+Case
+Require
+frame -1
+item glacierpass,1
+/Require
+1
+/Case
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,2
+queststatus investigatingGlacier1,1
+/Require
+1
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier2,1
+/Require
+1
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier2,2
+/Require
+1
+/Case
+Require
+frame -1
+/Require
+0
+/Case
+-2

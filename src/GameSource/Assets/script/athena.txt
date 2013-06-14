@@ -1,0 +1,113 @@
+5
+
+Frame
+endchat null next
+Text
+Oh, hello. It's been a while since we've last had a visitor.
+I could use some help with preparing for tonight's meal.
+Seeing as you can't go anywhere due to the approaching storm, why not help me hunt for dinner.
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+If you don't know, you can press shift to cast Icicle.
+Come back to me when you have 10 spheal meats.
+You can find them through the huntingground portal to the right.
+Oh! Take these 20 red and blue potions to aid you.
+Double clicking will allow you to use the item.
+/Text
+Outcome
+setqueststatus gatheringFood1,1
+additem bluepot,20
+additem redpot,20
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Hurry and get those 10 spheal meats! The storm won't wait for anyone.
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Oh wow! These will taste delicious!
+Here, I found these shoes. Thanks for the hard work!
+It looks like the storm has subsided. 
+I know you're interested in the time situation.
+Chief Stan appears to have discovered something.
+/Text
+Outcome
+addexp 300
+additem redjewelshoes,1
+setqueststatus gatheringFood1,2
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Thanks for helping me earlier with those meats.
+Have you spoken with Chief Stan yet?
+/Text
+Outcome
+/Outcome
+/Frame
+6
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,0
+/Require
+0
+/Case
+
+Case
+Require
+frame 0
+/Require
+1
+/case
+
+Case
+Require
+frame 1
+/Require
+-2
+/Case
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,1
+item sphealmeat,10
+/Require
+3
+/Case
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,1
+/Require
+2
+/Case
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,2
+/Require
+4
+/Case
+-2
+
