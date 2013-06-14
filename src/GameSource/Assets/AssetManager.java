@@ -27,10 +27,10 @@ import Spatial.Spatial;
 import Testing.MyTestCharacter;
 import Testing.PlayerSpatial;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
@@ -346,6 +346,14 @@ public class AssetManager {
                             String[] npcTemp = nextline.split(" ");
                             NPC newNpc = new NPC(Integer.parseInt(npcTemp[1]),Integer.parseInt(npcTemp[2]),Integer.parseInt(npcTemp[3]),npcTemp[0]);
                             mymap.addPermanentSpatial(newNpc);
+                            nextline = fin_map.readLine();
+                        }
+                    } else if (s.equals("Rects")){
+                        nextline = fin_map.readLine();
+                        while (!nextline.equals("/"+s)){
+                            String[] npcTemp = nextline.split(" ");
+                            Rectangle rect = new Rectangle(Integer.parseInt(npcTemp[0]),Integer.parseInt(npcTemp[1]),Integer.parseInt(npcTemp[2]),Integer.parseInt(npcTemp[3]));
+                            mymap.addRect(rect);
                             nextline = fin_map.readLine();
                         }
                     }

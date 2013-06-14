@@ -2284,3 +2284,5 @@ soundTest1
 Npc
 john 200 1 300
 /Npc
+Rects
+/Rects
