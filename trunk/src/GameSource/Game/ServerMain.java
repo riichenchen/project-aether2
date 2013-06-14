@@ -19,7 +19,7 @@ public class ServerMain {
     private static ServerWorldHandler world;
     
     public static void main(String [] args) {
-        AssetManager.init(); //incase we need to send any game content involving assets
+        //AssetManager.init(); //incase we need to send any game content involving assets
         myDB = new DatabaseHandler();
         world = new ServerWorldHandler(myDB); // start the game
         theServer = new AetherServer(world);
