@@ -1,5 +1,11 @@
 package GameSource.GUI;
 
+/* AMessage.java            @Chen~
+ * This class is an object to simplify the process of responding to a button
+ * being pressed. It mainly contains a lot of constants determining the nature
+ * of the button, and a String specifying where the action is to be applied.
+ */
+
 public class AMessage {
     public static final int QUIT=0;
     public static final int OPEN_WINDOW=1;

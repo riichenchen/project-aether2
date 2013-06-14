@@ -52,8 +52,8 @@ public class CharacterHandler {
         stats.put("job",0);
     }
     
-    public static void bindWorld(ClientWorldHandler world){
-        world = world;
+    public static void bindWorld(ClientWorldHandler nworld){
+        world = nworld;
     }
     
     public static ClientWorldHandler getWorld(){

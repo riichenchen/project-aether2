@@ -7,6 +7,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 
+/*AComponent.java           @Chen
+ * This class is the main abstract class that all GUI windows extend. It contains
+ * fields and methods that all windows should or may have: x,y location, size, 
+ * background and foreground Images and Colors, boolean fields for adjusting 
+ * accessibility, a parent reference, a list of children, etc.
+ */
 
 public abstract class AComponent{
 	protected int x,y, width, height, lx, ly;		//lx, ly : locked x,y position
@@ -18,10 +24,10 @@ public abstract class AComponent{
 	protected AComponent parent; 
 	protected ArrayList<AComponent> subComponents;
 	protected Image bg,fg;
-	protected ARect moveBar;
+	protected ARect moveBar;        //A rectangle in which the user can click to drag the AComponent
 	
 	private static int idCounter=0;
-	public static final AComponent NULL=new AWindow(0,0,0,0);
+	public static final AComponent NULL=new AWindow(0,0,0,0);   //The default parent
 	
 	public AComponent(){
 		x=0; y=0; width=0; height = 0;
@@ -46,16 +52,19 @@ public abstract class AComponent{
 	public int hashCode(){
 		return id;
 	}
+    public void add(AComponent c){
+		c.parent=this;
+		subComponents.add(c);
+	}
 	public boolean collidepoint(int mx, int my){
 		return parent.x+x<=mx && mx<=parent.x+x+width && parent.y+y<=my && my<=parent.y+y+height;
-	}
-	public boolean collide (AComponent a){
-		return x<=a.x && a.x<=x+width && y<=a.y && a.y<=y+height;
 	}
 	public boolean moveBarCollide(){
 		return moveBar==null||moveBar.collidepoint(AMouseInput.mx,AMouseInput.my,x+parent.x,y+parent.y);
 	}
 
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //Specifier Methods
 	public void setBG(int r, int g, int b){
 		background=new Color(r,g,b);
 	}
@@ -67,7 +76,10 @@ public abstract class AComponent{
 	}
 	public void setLocation(APoint a){
 		x=a.x; y=a.y;
-        }
+    }
+    public void setLocation(){      //Sets the location at the center
+        x=400-(width/2); y=300-(height/2)-30;
+    }
 	public void setSize(int wid, int hght){
 		width=wid; height = hght;
 	}
@@ -98,19 +110,11 @@ public abstract class AComponent{
 	public void setMoveable(boolean b){
 		moveable=b;
 	}
-	public void lock(){
-		lx=AMouseInput.mx-x;
-		ly=AMouseInput.my-y;
-		locked = true;
-                SoundManager.getChannel("UI").addTrack("dragstart");
-	}
-	public void unlock(){
-		locked= false;
-	}
-	public void lockShift(){
-		setLocation(AMouseInput.mx-lx, AMouseInput.my-ly);
-	}
-	public int id(){
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //Accessor Methods
+    public int id(){
 		return id;
 	}
 	public int getWidth(){
@@ -137,11 +141,27 @@ public abstract class AComponent{
 	public boolean moveable(){
 		return moveable;
 	}
-	public void add(AComponent c){
-		c.parent=this;
-		subComponents.add(c);
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    //These three methods work to allow an AComponent to be "locked" to the mouse.
+    //When AComponent is initially locked, the difference between the mouse location
+    //and top left corner is noted. The lockShift() is then repeatedly called while
+    //the AComponent is locked in order to update its loaction.
+	public void lock(){
+		lx=AMouseInput.mx-x;
+		ly=AMouseInput.my-y;
+		locked = true;
+        SoundManager.getChannel("UI").addTrack("dragstart");
 	}
+	public void unlock(){
+		locked= false;
+	}
+	public void lockShift(){
+		setLocation(AMouseInput.mx-lx, AMouseInput.my-ly);
+	}
+	
+	
 	public abstract void draw(Graphics g);
 	public abstract void update();
-	public abstract void call(); 			
+	public abstract void call();                //Invoked when AComponent is clicked
 }

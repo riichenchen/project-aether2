@@ -33,7 +33,7 @@ public class NPC extends RenderSpatial{
         super(x,y,z,0,0,0,0,0,0);
         this.animControl = new CharacterAnimControl(AssetManager.getSpriteSet("npc/"+name));
         length = animControl.getImageWidth();
-        height = animControl.getImageHeight();
+        height = animControl.getImageHeight()*2;
         addControl(animControl);
         this.name = name;
     }
@@ -100,8 +100,7 @@ public class NPC extends RenderSpatial{
     
     int n = 0;
     public void clicked(){
-        System.out.println("LE JOHNNY");
-        MyGUI.showNPC(new NPCFrame("john"),"john");
+        MyGUI.showNPC(new NPCFrame(name),name);
     }
     
     //The collideMouse method provides a way for the mouse to be detected inside

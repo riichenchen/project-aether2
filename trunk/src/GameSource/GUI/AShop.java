@@ -22,6 +22,11 @@ import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/*AShop.java            @Chen~
+ * Specialty window that displays a shop inventory, as well as a player inventory
+ * and allows for sale of items between the two.
+ */
+
 public class AShop extends AWindow{
     public static final String [] nameDirect={"equip","use","other"};
     private String activeTabL;
@@ -37,12 +42,12 @@ public class AShop extends AWindow{
     private String [] itemsL; private String [] itemsR;
     private ArrayList<APoint> buttonLocsL; private ArrayList<APoint> buttonLocsR;
     private AContainer buttonsL; private AContainer buttonsR;
-    private String buyItem="";
-    private String sellItem="";
-    private String buyWarning="";
-    private String sellWarning="";
+    private String buyItem="";              //The items that will be sold or bought
+    private String sellItem="";             //upon clicking the buttons
+    private String buyWarning="";                   //Error messages to be shown
+    private String sellWarning="";                  //when attempting to buy
     
-    private String shopDataKey="trollbaitshop";     //changeable
+    private String shopDataKey="trollbaitshop";     
     
     public AShop(){
         super("shop");
@@ -60,23 +65,17 @@ public class AShop extends AWindow{
         tabsL=new AButton [1];
         loadTabs();
         loadHeader();
-//        System.out.println("AShop/Constr.   tabsR[0]:"+tabsR[0]);
         
         //Containers come last so that they don't take all of the mousecalls.
-        //Check to make sure that having two will work out. You may need to 
-        //overwrite call.
         this.add(buttonsR);
         this.add(buttonsL);
         
-        activeTabButtonL=tabsL[0];
+        activeTabButtonL=tabsL[0];      //Set the active tbas
         activeTabButtonR=tabsR[0];
-//        System.out.println("AShop/Constr.   activeTabButton:"+activeTabButtonR);
         activeTabButtonR.setVisible(true);
         setRightPane("equip");
         loadLeftButtons();
-        
-        
-        
+
         setVisible(true);
     }
     public void setBuyItem(String s){
@@ -85,7 +84,9 @@ public class AShop extends AWindow{
     public void setSellItem(String s){
         sellItem=s;
     }
-    
+    public void setShopId(String s){
+        shopDataKey=s;
+    }
     public void loadHeader(){
         buyNum=new ATextField(84,14,21,50);
         buyNum.setCallable(true);
@@ -108,7 +109,7 @@ public class AShop extends AWindow{
         sellConfirm.setVisible(true);
         add(sellConfirm);
     }
-    public void loadTabs(){
+    public void loadTabs(){         //Load the four tabs
         for (int i=0; i<3; i++){
             tabsR[i]=new AButton(nameDirect[i],AMessage.SHOP,nameDirect[i]);
             tabsR[i].setSize(31,20);
@@ -133,11 +134,12 @@ public class AShop extends AWindow{
         }
     }
     public void setRightPane(String paneName){
+        //Sets the right active tab to the parameter taken in and reloads the 
+        //buttons as needed
         if (paneName.equals(activeTabR)==false){
             activeTabR=paneName;
             for (int i=0; i<3; i++){
                 if (nameDirect[i].equals(activeTabR)){
-//                    System.out.println("AShop/setRightPane    activeTabButtonR:"+activeTabButtonR);
                     activeTabButtonR.displayBG();
                     activeTabButtonR=tabsR[i];
                     activeTabButtonR.displayFG();
@@ -151,6 +153,7 @@ public class AShop extends AWindow{
         }
     }
     public void loadRightButtons(){
+        //Gets an Array of inventory items and adds them to the AContainer
         itemsR = InventoryHandler.getItemIds();
         buttonsR.clear();
         for (int i=0;i<itemsR.length;i++){
@@ -170,6 +173,8 @@ public class AShop extends AWindow{
         buttonsR.updateActiveContent();
     } 
     public void loadLeftButtons(){
+        //Gets a LinkedList of items available in the shop based on the shopData
+        //key, loads the buttons for the items, and adds them to the AContainer
         LinkedList<ShopItemData> nitemsL=AssetManager.getShopData(shopDataKey).getShopItems();
         buttonsL.clear();
         for (int i=0;i<nitemsL.size();i++){
@@ -180,38 +185,40 @@ public class AShop extends AWindow{
             b.setFGImage(AImageFactory.getImage("shop_item_fg"));
             b.setHover(TextImageFactory.createDes(c));
             b.setParent(this);
-                buttonsL.add(b);
+            buttonsL.add(b);
         }
         buttonsL.updateActiveContent();
     } 
-    
+    @Override
     public void update(){
         super.update();
-        if (buyNum.focus())
-            buyNum.update();
+        if (buyNum.focus())         //Call the textbox's update functions if
+            buyNum.update();        //they are in focus (have been clicked)
         if (sellNum.focus())
             sellNum.update();
         loadLeftButtons();
         loadRightButtons();
     }
+    @Override
     public void call(){
         buyNum.setFocused(false);
         sellNum.setFocused(false);
         for (AComponent c: subComponents){
-                if (c.callable()&& (c instanceof AContainer||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
-                    c.call();
-                    break;
-                }
+            if (c.callable()&& (c instanceof AContainer||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
+                c.call();
+                break;
+            }
        }
-       buttonsL.call();
+       buttonsL.call();         //The above loop will definitely call buttonsR, so we force a call of buttonsL
     }
-     
+    
+    @Override
     public void draw(Graphics g){
         super.draw(g);
         g.setColor(new Color(0,0,0));
         g.setFont(new Font("Arial",Font.BOLD,11));
         
-        g.drawString (""+CharacterHandler.getStat("money"),x+372,y+103);
+        g.drawString (""+CharacterHandler.getStat("money"),x+372,y+103);    //Draw the money text
         
         String buy="";
         String sell="";
@@ -230,6 +237,8 @@ public class AShop extends AWindow{
         g.drawString(sellWarning, x+120+231, y+40);
     }
     public boolean isNum(String s){
+        //Check if a string can be parsed into an integer by looking for non-digit
+        //characters.
         for (int i=0; i<s.length(); i++){
             if (s.charAt(i)<48 || s.charAt(i)>57)
                 return false;
@@ -237,8 +246,11 @@ public class AShop extends AWindow{
         return s.length()>0;
     }
     public void buy() {
+        //This method is invoked when the buyConfirm button is clicked by the
+        //AProcessor. It parses the text in the quantity textfield, gives feedback
+        //if the input is invalid, and also processes  the sale if the number is valid.
         if (buyItem.equals(""))
-            return;
+            return;                     //Do nothing if no item is selected
         String qnt=buyNum.getText();
         if (isNum(qnt)){
             int q=Integer.parseInt(qnt);
@@ -264,6 +276,9 @@ public class AShop extends AWindow{
     }
 
     public void sell() {
+        //This method is invoked when the sellConfirm button is clicked by the
+        //AProcessor. It parses the text in the quantity textfield, gives feedback
+        //if the input is invalid, and also processes  the sale if the number is valid.
         if (sellItem.equals(""))
             return;
         String qnt=sellNum.getText();
@@ -289,43 +304,4 @@ public class AShop extends AWindow{
             sellNum.setText("");
         }
     }
-}
-class TestSPanel extends JPanel{
-	AShop equip;
-	public TestSPanel(){
-		super();
-		equip=new AShop();
-                equip.setVisible(true);
-	}
-	public void paintComponent (Graphics g){
-		equip.draw(g);
-	}
-}
-class TestShop extends JFrame{
-	TestSPanel test;
-	public TestShop(){
-		super("AHHHH3");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                setSize(800,600);
-		test=new TestSPanel();
-		add(test);
-		repaint();
-		setVisible(true);
-	}
-	public static void main (String [] args){
-            AssetManager.init();
-                AImageFactory.init();
-            InventoryHandler.addItem(ItemFactory.getItem("trollbaithelm"));
-            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
-            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
-            InventoryHandler.addItem(ItemFactory.getItem("redpot"));
-                CharacterHandler.init();
-                CharacterHandler.addStat("maxhp",500);
-                CharacterHandler.addStat("maxmp",10000);
-                CharacterHandler.addStat("hp",352);
-                CharacterHandler.addStat("mp",10000);
-                EquipHandler.init();
-		new TestShop();
-	}
-	
 }

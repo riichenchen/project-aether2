@@ -1,4 +1,5 @@
 2
+
 Frame
 endchat null okay
 Text
@@ -15,10 +16,10 @@ Text
 You seem qualified enough to go.
 /Text
 Outcome
-warptomap glacier3,400,0,400
+warptomap glacier3,400,1,400
 /Outcome
 /Frame
-4
+5
 
 Case
 Require
@@ -52,6 +53,8 @@ queststatus investigatingGlacier2,2
 /Require
 1
 /Case
+
+Case
 Require
 frame -1
 /Require

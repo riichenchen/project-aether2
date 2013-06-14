@@ -49,6 +49,7 @@ Outcome
 addexp 300
 additem redjewelshoes,1
 setqueststatus gatheringFood1,2
+takeitem sphealmeat,10
 /Outcome
 /Frame
 
@@ -76,7 +77,7 @@ Require
 frame 0
 /Require
 1
-/case
+/Case
 
 Case
 Require

@@ -29,7 +29,7 @@ public class UseItem extends InventoryItem {
     
     @Override
     public void use() {
-        for (String s: stats.values().toArray(new String[0])){
+        for (String s: stats.keySet().toArray(new String[0])){
             CharacterHandler.addStat(s, stats.get(s));
         }
         InventoryHandler.removeItem(this);

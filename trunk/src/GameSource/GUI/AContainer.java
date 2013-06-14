@@ -5,13 +5,20 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 
+/*AContainer.java           @Chen~
+ * This class defines the AContainer object which has no visual representation
+ * itself, but rather contains a list of objects that it maps onto a list of 
+ * locations. It is useful for situations where the contents of a window are
+ * consistently changes and was intended to work with scrollbars.
+ */
 public class AContainer extends AComponent{
-	private ArrayList<AComponent> allContent;
-	public ArrayList<AComponent> content;
-	public ArrayList<APoint> buttonLocs;
+	private ArrayList<AComponent> allContent;       //All potential content
+	public ArrayList<AComponent> content;           //Currently displayed content
+	public ArrayList<APoint> buttonLocs;            //Posisble locations
 	private AScrollButton [] scrollBar;
 	private int scrollstart;
-	private int size;
+	private int size;           //How many objects *can* fit into content
+    
 	public AContainer(int xx,int yy, int sz, ArrayList<APoint> pos){
 		super();
 		setName("container"+this.id());
@@ -26,10 +33,12 @@ public class AContainer extends AComponent{
 	@Override
 	public void add(AComponent c){
 		allContent.add(c);
+        //Items added to AContainers don't take the AContainer as a parent since
+        //it has to visual represenations.
 	}
 	
 	public void draw(Graphics g){
-		if (scrollBar!=null){
+		if (scrollBar!=null){                       //Draw the scrollbar
 			Image mid=AImageFactory.getImage("scroll_mid");
 			for (int yy=scrollBar[0].y+12; yy<scrollBar[1].y; yy++){
 				g.drawImage(mid,parent.x+scrollBar[0].x,parent.y+yy,null);
@@ -39,12 +48,9 @@ public class AContainer extends AComponent{
 				g.setColor(new Color (255,255,255));
 			}
 		}
-                for (int i=content.size()-1; i>=0; i--){
-                        content.get(i).draw(g);
-                }
-//		for (AComponent a: content){
-//			a.draw(g);
-//		}
+        for (int i=content.size()-1; i>=0; i--){        //draw the visible subComponents
+                content.get(i).draw(g);
+        }
 	}
 	public AComponent get(int i){
 		return content.get(i);
@@ -82,6 +88,7 @@ public class AContainer extends AComponent{
 			scrollBar[2].update();
 	}
 	public void updateActiveContent(){
+        //The method refreshs content based on situation and what's available in allContent
 		content.clear();
 		for (int i=scrollstart;i<Math.min(allContent.size(),scrollstart+size);i++){
 			AComponent b=allContent.get(i);
@@ -99,8 +106,7 @@ public class AContainer extends AComponent{
 		scrollBar[2]=(new AScrollButton("bar",sx+1,sy,this,scrollInc));           
 	}
 	
-	public void scroll(int amount){
-	}
+	public void scroll(int amount){}
 	public void scrollDown(int amount){}
 	
 	class AScrollButton extends AButton{

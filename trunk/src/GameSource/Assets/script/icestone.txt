@@ -6,7 +6,7 @@ Text
 ... I take a chunk out of this mysterious looking ice piece.
 /Text
 Outcome
-additem icechunk,1
+additem glacierchunk,1
 /Outcome
 /Frame
 
@@ -17,7 +17,7 @@ Text
 /Text
 Outcome
 takeitem glacierchunk,1
-setqueststatus investigatingGlacier2,2
+setqueststatus investigatingGlacier2,1
 warptomap glacier4,400,1,400
 /Outcome
 /Frame
@@ -37,6 +37,7 @@ Text
 Finally... Glalie's gone. Time to report back to Chief Stan.
 /Text
 Outcome
+setqueststatus investigatingGlacier2,2
 warptomap glacier3,400,1,400
 /Outcome
 /Frame
@@ -72,14 +73,15 @@ Case
 Require
 frame -1
 queststatus investigatingGlacier2,1
+item glacierchunk,1
 /Require
 1
-Case
+/Case
 
 Case
 Require
 frame -1
-queststatus investigatingGlacier2,2
+queststatus investigatingGlacier2,1
 questcomplete investigatingGlacier2
 /Require
 3
@@ -88,7 +90,7 @@ questcomplete investigatingGlacier2
 Case
 Require
 frame -1
-queststatus investigatingGlacier2,2
+queststatus investigatingGlacier2,1
 /Require
 2
 /Case

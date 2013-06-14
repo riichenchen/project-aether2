@@ -20,7 +20,11 @@ import GameSource.Script.ScriptData;
 import GameSource.Script.ScriptFrame;
 import GameSource.Skills.ActiveSkillData;
 import GameSource.Skills.SkillData;
+import GameSource.Spawners.AbsolSpawner;
 import GameSource.Spawners.CowSpawner;
+import GameSource.Spawners.GlalieSpawner;
+import GameSource.Spawners.LucarioSpawner;
+import GameSource.Spawners.SphealSpawner;
 import GameSource.User.Inventory.ItemData;
 import GameSource.game.GameMap;
 import Spatial.NPC;
@@ -129,7 +133,7 @@ public class AssetManager {
                 BufferedReader scriptFin = new BufferedReader(new FileReader(DIRECTORY+"script/"+tempdata[1]));
                 int nFrames = Integer.parseInt(scriptFin.readLine());
                 //Load in all frames
-                String scriptFinNext;
+                String scriptFinNext = null;
                 ScriptData newDat = new ScriptData();
                 for (int i = 0; i < nFrames; i++){
                     while (!(scriptFinNext = scriptFin.readLine()).equals("Frame")); // skip to next Frame tag
@@ -171,6 +175,7 @@ public class AssetManager {
                 }
                 newDat.setFinalCase(Integer.parseInt(scriptFin.readLine())); // if nothing matches go to this case
                 allScriptData.put(tempdata[0], newDat);
+                scriptFin.close();
             }
         } catch (IOException e){
             System.out.println("Error loading scripts!");
@@ -328,7 +333,15 @@ public class AssetManager {
                             AbstractMobSpawner spawner = null;
                             if (tempdat[0].equals("CowSpawner")){
                                 spawner = new CowSpawner(Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3]),Integer.parseInt(tempdat[4])/10);
-                            }//else if....
+                            }else if (tempdat[0].equals("LucarioSpawner")){
+                                spawner = new LucarioSpawner(Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3]),Integer.parseInt(tempdat[4])/10);
+                            }else if (tempdat[0].equals("GlalieSpawner")){
+                                spawner = new GlalieSpawner(Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3]),Integer.parseInt(tempdat[4])/10);
+                            }else if (tempdat[0].equals("AbsolSpawner")){
+                                spawner = new AbsolSpawner(Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3]),Integer.parseInt(tempdat[4])/10);
+                            }else if (tempdat[0].equals("SphealSpawner")){
+                                spawner = new SphealSpawner(Float.parseFloat(tempdat[1]), Float.parseFloat(tempdat[2]), Float.parseFloat(tempdat[3]),Integer.parseInt(tempdat[4])/10);
+                            }
                             if (spawner == null){
                                 System.out.println("SEVERE: UNABLE TO FIND MOBID "+tempdat[0]);
                                 System.exit(0);

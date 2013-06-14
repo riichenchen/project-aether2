@@ -1,3 +1,7 @@
 testMap;testMap.txt
 cowFarm;cowFarm.txt
 makerTest;makerTest.txt
+glacier1;glacier1.txt
+glacier2;glacier2.txt
+glacier3;glacier3.txt
+glacier4;glacier4.txt

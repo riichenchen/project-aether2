@@ -1,16 +1,18 @@
 package GameSource.GUI;
 
-import GameSource.Assets.AssetManager;
 import GameSource.User.Inventory.EquipItem;
 import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.Inventory.UseItem;
+import GameSource.User.Inventory.EtcItem;
 import GameSource.User.InventoryHandler;
-import GameSource.User.ItemFactory;
 import Sound.SoundManager;
-import java.awt.Graphics;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
+/*AInventory.java           @Chen~
+ * A specialty window to display the items available from InventoryHandler, nicely
+ * sorted by type. It allows the user to view item descriptions, drag and drog items
+ * into the game, and doubleclick on items to equip or use them.
+ */
 
 public class AInventory extends AWindow{
     public static final String [] nameDirect={"equip","use","other"};
@@ -19,7 +21,7 @@ public class AInventory extends AWindow{
     
     private AButton [] tabs;
     private String [] items;
-    private ArrayList<APoint> buttonLocs;
+    private ArrayList<APoint> buttonLocs; 
     private AContainer buttons;
     
     
@@ -33,9 +35,10 @@ public class AInventory extends AWindow{
         loadButtonLocs();
         buttons=new AContainer(0,0,24, buttonLocs);
         
-        tabs=new AButton [3];
+        
         this.add(new AImage("invent_bg2",6,23));
         this.add(new AImage("invent_bg3",7,45));
+        tabs=new AButton [3];                       //Load the three tabs
         for (int i=0; i<3; i++){
             tabs[i]=new AButton(nameDirect[i],AMessage.INVENTORY,nameDirect[i]);
             tabs[i].setSize(31,20);
@@ -62,13 +65,17 @@ public class AInventory extends AWindow{
     }
     
     public void loadButtons(){
+        //This method grabs an array of available items from the inventory, then loops
+        //through, keeps the ones that match the current pane, creates an appropriate
+        //button, then adds the button to the Container.
         items = InventoryHandler.getItemIds();
         buttons.clear();
         for (int i=0;i<items.length;i++){
             String key=items[i];
             InventoryItem c=InventoryHandler.getItem(key);
             if ((c instanceof EquipItem && activeTab.equals("equip"))||
-                (c instanceof UseItem && activeTab.equals("use"))){
+                (c instanceof UseItem && activeTab.equals("use"))||
+                (c instanceof EtcItem && activeTab.equals("other"))){
                 AButton b=new AButton (key,AMessage.INVENTORY_CLICK,key,33,33);
                 b.setImage(c.getImage());
                 b.setFGImage(TextImageFactory.merge(c.getImage(),AImageFactory.getImage("item_fg")));
@@ -92,7 +99,7 @@ public class AInventory extends AWindow{
                 }
             }
             loadButtons();
-            try{
+            try{        //Catch NullPointerException from beginning when sounds aren't yet loaded
                 SoundManager.getChannel("UI").stopAll();
                 SoundManager.getChannel("UI").addTrack("tabswap");
             }catch (NullPointerException e){}

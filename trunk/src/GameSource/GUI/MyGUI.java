@@ -6,20 +6,26 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 
+/* MyGUI.java           @Chen~
+ * This class extends MyGUI and contains all the specific function needed for the
+ * Aether GUI. It loads all the windows and contains all the methods to call various
+ * methods within the windows themselves.
+ */
+
 public class MyGUI extends AGUI{
-    private static ANPCChat npcchat;
-    private static AInventory invent;
-    private static AHUD hud;
-    private static ATextField chat;
-    private static AEquip equip;
-    private static AStats stats;
-    private static ASkills skills;
-    private static AShop shop;
-    private static BufferedReader in;
-    private static Image cursorimage;
+    private static ANPCChat npcchat;        //
+    private static AInventory invent;       //
+    private static AHUD hud;                //
+    private static ATextField chat;         ///..  Windows
+    private static AEquip equip;            //
+    private static AStats stats;            //
+    private static ASkills skills;          //
+    private static AShop shop;              //
+
+    private static Image cursorimage;       //cursor images
     private static Image cursordown;
     private static Image cursorup;
-    public static boolean passShift;
+    public static boolean passShift;        //Whether or not to call Game's shift button
 
 
     public static void init(int wid, int hgt){
@@ -27,8 +33,9 @@ public class MyGUI extends AGUI{
         passShift=false;
         cursorimage=cursorup;
         inputSets.put("normal",new NormalInputSet());
-	inputSet=inputSets.get("normal");
+        inputSet=inputSets.get("normal");
 		
+        //Loading all the windows
         npcchat=new ANPCChat();
         npcchat.setVisible(false);
         windows.put(npcchat.getName(),npcchat);
@@ -77,13 +84,14 @@ public class MyGUI extends AGUI{
     public static void showNPC(NPCFrame f,String n){
         npcchat.setName(n);
         npcchat.setFrame(f);
-        npcchat.setContent(f.next());
-        openWindow("npcchat");
+        String s=f.next();
+        if (s!=null){
+            npcchat.setContent(s);
+            openWindow("npcchat");
+        }
     }
-    public static void showNPC(String text){
-        npcchat.setContent(text);
-        openWindow("npcchat");
-    }
+
+    //The next three methods change varies panes in inventory, skills, and shop
     public static void changeInventPane(String newPane){
         if (invent!=null){
             invent.setPane(newPane);
@@ -99,37 +107,35 @@ public class MyGUI extends AGUI{
             skills.setPane(newPane);
         }
     }
+    
+    //These two methods set the active sell or buy items as instructed by AProcessor,
+    //or buy or sell the active Items as instructed by AProcessor.
     public static void setShopBuyItem(String i){
         shop.setBuyItem(i);
     }
     public static void setShopSellItem(String i){
         shop.setSellItem(i);
     }
-    public static void updateItems(){
-        if (invent!=null){
-            invent.loadButtons();
-        }
+    public static void shopBuyItem(String content) {
+        shop.buy();
     }
-    public static void increaseSkill(int i){
-        skills.increase(i);
+    public static void shopSellItem(String content) {
+        shop.sell();
     }
-    public static void drawCursor(Graphics g){
-        if (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT)){
-            g.drawImage(cursordown,AMouseInput.mx,AMouseInput.my,null);
-        }
-        else{
-            g.drawImage(cursorup,AMouseInput.mx,AMouseInput.my,null);
-        }
+    public static void setShopData(String key){
+        shop.setShopId(key);
     }
+    
+  
+
     public static void draw(Graphics g){
-        
-        
         AGUI.draw(g);
         hud.draw(g);
         chat.draw(g);
         g.drawImage(cursorimage,AMouseInput.mx, AMouseInput.my,null);
     }
 
+    //These three methods are invoked to trigger the NPC chat box to change frames
     public static void npc_next() {
         npcchat.next();
     }
@@ -141,21 +147,23 @@ public class MyGUI extends AGUI{
         closeWindow("npcchat");
     }
 
+    //These methods keep the GUI windows up-to-date with other changes made in the
+    //program buy recalculating the dependent components.
+    public static void updateItems(){
+        if (invent!=null){
+            invent.loadButtons();
+        }
+    }
     public static void updateStatWindow() {
         stats.updateButtons();
     }
-
-    public static void shopBuyItem(String content) {
-        shop.buy();
+    public static void increaseSkill(int i){
+        skills.increase(i);
     }
-
-    public static void shopSellItem(String content) {
-        shop.sell();
-    }
-    
-    public static void setShopData(String key){}
-    
     public static void update(){
+        //This update loops runs the AGUI main update loop, blits the cursor, and
+        //checks for changews that can be made. It also checks whether or not a
+        //Shift key press is to be pressed at i=a
         passShift=InputManager.down(KeyEvent.VK_SHIFT);
         if (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT)){
             cursorimage=cursordown;

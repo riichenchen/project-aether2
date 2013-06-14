@@ -1,20 +1,17 @@
 package GameSource.GUI;
 import java.util.Map;
+/* AbstractInputSet.java			@Chen~
+ * Input sets process received Mouse and keyboard input information
+ * and respond as necessary. They each contain a main update loop that
+ * checks to map each input to its appropriate result
+ */
 public abstract class AbstractInputSet{
 	protected String name;
-	protected MyGUI myGUI;
 	protected Map<String,Integer> keyMap;
+		//keyMap is a HashMap that maps a window name to its shortcut
+		//key code for opening/closing.
 	protected boolean mouseUsed;
 
-	/*Erm... yea... abstract implies that it's not specifically
-	 *designed for any purpose and should work for like just about
-	 *anything... This implies that it has to have an invent,chat, and
-	 *shop keymapping... T.T.T.T.T.T.T.T*/
-	 /*
-	public abstract boolean invent(boolean [] keys);
-	public abstract boolean chat(boolean [] keys);
-	public abstract boolean shop(boolean [] keys);
-	*/
 	public int hashCode(){
 		return name.hashCode();
 	}

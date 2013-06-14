@@ -11,6 +11,11 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 
+/*ANPCChat.java             @Chen~
+ * A window to display text from a non-player character. When the window is
+ * opened, it is bound to an NPCFrame object through which the window navigates.
+ */
+
 public class ANPCChat extends AWindow{
     public static final int PREV=0;
     public static final int NEXT=1;
@@ -28,6 +33,8 @@ public class ANPCChat extends AWindow{
         setMoveBar(0,0,519,28);
     }
     public void loadButtons(){
+        //Loads all the possible buttons on the frame and sets their sizes and
+        //Images so that location is the only field left to specify.
         AButton next=new AButton("next",AMessage.NPC_CHAT,"next",40,16);
         next.setImage(AImageFactory.getImage("npc_next"));
         next.setFGImage(AImageFactory.getImage("npc_next_fg"));
@@ -68,20 +75,24 @@ public class ANPCChat extends AWindow{
     public void draw(Graphics g){
         if (visible){
            Graphics2D g2=(Graphics2D)g;
-           int ySize=((calcHeight(g2)+13)/13)*13;
-           setSize(519,28+44+ySize);
-           String [] stuff={"null","prev","no"};
- //          setButtons(stuff);
-           setButtons(frame.getButtons());
-           drawBG(g);
-           g2.setFont(new Font ("Arial",Font.PLAIN,10));
-           g2.setColor(foreground);
-           drawText(g2);
+           
+           int ySize=((calcHeight(g2)+13)/13)*13;       
+           setSize(519,28+44+ySize);                        //Resize the window
+           setLocation();
+                           
+           drawBG(g);                               //Get & draw buttons and bg
+           setButtons(frame.getButtons());  
            for (AComponent c: subComponents){
                 c.draw(g);
            }
-           Image cImg=AssetManager.getImage(frame.getKey());
+           
+           g2.setFont(new Font ("Arial",Font.PLAIN,10));    
+           g2.setColor(foreground);
+           drawText(g2);
+           
+           Image cImg=AssetManager.getImage(frame.getKey());    //Draw NPC image & name
            g.drawImage(cImg,x+27,y+27,null);
+           System.out.println(AssetManager.getImage("npc_name"));
            g.drawImage(AssetManager.getImage("npc_name"), x+27,y+27+cImg.getHeight(null), null);
            g2.setColor(new Color(255,255,255));
            Image cname=TextImageFactory.create(g, frame.getKey());
@@ -89,6 +100,9 @@ public class ANPCChat extends AWindow{
         }
     }
     public void drawBG(Graphics g){
+        //Draws the background of the NPC chat window, which is composed of a header,
+        //a footer, and a middle segment that is repeatedly drawn to fill in the 
+        //center depending on how large the window is.
         g.drawImage(AImageFactory.getImage("npc_top"),x,y,null);
         Image mid=AImageFactory.getImage("npc_mid");
         for (int i=0; i<(height-28-44)/13; i++){
@@ -97,6 +111,8 @@ public class ANPCChat extends AWindow{
         g.drawImage(AImageFactory.getImage("npc_bottom"), x, y+height-44, null);
     }
     public void drawText(Graphics2D g){
+        //Draws a string of text, wrapping it by word to make the text fit within
+        //the boundaries of the box.
         FontMetrics fm=g.getFontMetrics();
         String [] lines=content.split("\\r?\\n");
         int drawY=y+10+27;          //Y offset from top-left corner
@@ -104,11 +120,11 @@ public class ANPCChat extends AWindow{
             String [] words=line.split(" ");
             String dline="";
             int lineWidth=0;
-            for (String word:words){
-    		lineWidth+=fm.stringWidth(word);
-                if (lineWidth>340){
-                    g.drawString(dline,x+5+160,drawY);
-                    lineWidth=fm.stringWidth(word);
+            for (String word:words){                
+                lineWidth+=fm.stringWidth(word);    //Add words until the line is
+                if (lineWidth>340){                          //too wide, then
+                    g.drawString(dline,x+5+160,drawY);       //draw the line
+                    lineWidth=fm.stringWidth(word);         //and reset
                     dline="";
                     drawY+=fm.getHeight();
                 }
@@ -125,30 +141,33 @@ public class ANPCChat extends AWindow{
         String [] lines=content.split("\\r?\\n");
         int ans=lines.length;
         for (String line: lines){
-            String [] words=line.split(" ");
             int lineWidth=0;
+            String [] words=line.split(" ");        
             for (String word:words){
-    		lineWidth+=fm.stringWidth(word);
-                if (lineWidth>340){
-                    lineWidth=fm.stringWidth(word);
-                    ans++;
+                lineWidth+=fm.stringWidth(word);    //Add words until the line is
+                if (lineWidth>340){                 //too wide, then reset the
+                    lineWidth=fm.stringWidth(word); //line and add one to
+                    ans++;                          //the number of lines.
                 }
                 lineWidth+=fm.stringWidth(" ");
             }
         }
-        return Math.max(130,ans*fm.getHeight()+20);
+        return Math.max(130,ans*fm.getHeight()+20);     //Minimum height is 130px
     }
     
     public void setButtons(String[]info){
+        //Every frame of an NPC chat box has up to three buttons specified by 
+        //an Array in the NPCFrame. This method gets that Array, then loops
+        //through and maps the three given buttons to their appropriate locations
         subComponents.clear();
-        if (info[0]!="null"){
+        if (info[0]!="null"){               //Button 1 is either "end" or nothing       
             AButton end=buttons.get("end");
             end.setLocation(new APoint(9,height-23));
             end.setVisible(true);
             add(end);
         }
         AButton b1=buttons.get(info[1]);
-        AButton b2=buttons.get(info[2]);
+        AButton b2=buttons.get(info[2]); 
         if (b2!=null){
             b2.setLocation(new APoint(519-28-b2.width,height-57));
             b2.setVisible(true);
@@ -166,6 +185,8 @@ public class ANPCChat extends AWindow{
         }
     }
 
+    //These functions are eventually called by AProcessor upon button clicks to
+    //load the text for the next frame.
     public void next() {
         String s=frame.next();
         if (s!=null){
@@ -179,7 +200,6 @@ public class ANPCChat extends AWindow{
         setContent(frame.prev());
     }
     public void end() {
-        frame.endChat();
         MyGUI.closeWindow("npcchat");
     }
 }

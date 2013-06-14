@@ -2,9 +2,8 @@ package GameSource.GUI;/**/
 
 public class BattleInputSet extends AbstractInputSet{
 	//Inventory: u, Chat: o, Shop: disabled
-	public BattleInputSet(MyGUI g){
+	public BattleInputSet(){
 		name="normal";
-		myGUI=g;
 	}
 	public boolean invent(boolean [] keys){
 		return keys[85];

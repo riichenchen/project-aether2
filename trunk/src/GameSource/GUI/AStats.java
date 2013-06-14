@@ -10,6 +10,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
+/*AStats.java           @Chen~
+ * Specialty window to display the player's current stats and allow them to
+ * upgrade if they have enough skill points.
+ */
+
 public class AStats extends AWindow{
     private int statPoints;
     public AStats(){
@@ -23,7 +28,7 @@ public class AStats extends AWindow{
         updateButtons();
         
     }
-    public void loadButtons(){
+    public void loadButtons(){          //Create buttons for each upgradeable stat
         String [] stats={"attack","defense","maxhp","maxmp"};
         for (int i=0; i<4; i++){
             AButton b=new AButton(stats[i],AMessage.STAT_WINDOW,stats[i],12,12);
@@ -35,14 +40,14 @@ public class AStats extends AWindow{
         }
     }
     public void updateButtons(){
+        //This function sets the upgrade buttons's visibility based on statPoints.
+        //Buttons are visible and clickable as long as the play has statPoints.
         if (statPoints>0 && (subComponents.get(0).visible()==false)){
-//            System.out.println("AStats/updateButtons   Buttons are visible!");
             for (AComponent a: subComponents){
                 a.setVisible(true);
             }
         }
         else if ((statPoints<=0 && (subComponents.get(0).visible()))){
-//            System.out.println("AStats/updateButtons   Buttons are invisible!");
             for (AComponent a: subComponents){
                 a.setVisible(false);
             }
@@ -69,11 +74,11 @@ public class AStats extends AWindow{
     
     public void call(){
         for (AComponent c: subComponents){
-                if (c.visible() && c.callable() && ( c instanceof AContainer ||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
-                    c.call();
-                    break;
-                }
+            if (c.visible() && c.callable() && ( c instanceof AContainer ||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
+                c.call();
+                break;
             }
+        }
     }
     public void update(){
         super.update();
