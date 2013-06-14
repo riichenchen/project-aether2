@@ -2284,3 +2284,5 @@ farmy
 /BGSound
 Npc
 /Npc
+Rects
+/Rects

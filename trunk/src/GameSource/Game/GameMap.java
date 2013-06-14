@@ -38,8 +38,9 @@ public class GameMap {
     protected boolean canRender = false;
     protected String mapName; //very handy to store a key (for easy assetmanager reference)
     protected PhysicsSpace space;
-    protected Rectangle[] obstacles;
     protected char[][] charMap;
+    protected ArrayList<Rectangle> allRects;
+    
     private String bgMusic; // key for bgm
 
     //Constructor: initializes and sets everything
@@ -50,6 +51,7 @@ public class GameMap {
         spats = new HashMap<>();
         this.mapName = mapName;
         this.nonPermaSpats = new HashMap<>();
+        this.allRects = new ArrayList<>();
         this.space = new PhysicsSpace(9.81f,dimx,dimy); //note: gravity isn't exactly used at the point
         //Clean this up later maybe
         if (canRender){
@@ -272,11 +274,19 @@ public class GameMap {
 		for (int i = 0; i < dimx / Pathfinding.K; i++)
 			for (int j = 0; j < dimy / Pathfinding.K; j++)
 					charMap[i][j] = 0;
+<<<<<<< .mine
+		for (int i = 0; i < allRects.size(); i++) {
+				int curHeight = (int)allRects.get(i).getHeight();
+				int curWidth = (int)allRects.get(i).getWidth();
+				int curX = (int)allRects.get(i).getX();
+				int curY = (int)allRects.get(i).getY();
+=======
 		for (int i = 0; i < obstacles.length; i++) {
 				int curHeight = (int)obstacles[i].getHeight() / Pathfinding.K;
 				int curWidth = (int)obstacles[i].getWidth() / Pathfinding.K;
 				int curX = (int)obstacles[i].getX() / Pathfinding.K;
 				int curY = (int)obstacles[i].getY() / Pathfinding.K;
+>>>>>>> .r215
 				for (int j = 0; j < curHeight; j++)
 					for (int k = 0; k < curWidth; k++)
 						charMap[curX + j][curY + k] = 1;
@@ -298,9 +308,13 @@ public class GameMap {
         return space;
     }
     
-    public Rectangle [] getObstacles() {
-        return obstacles;
+    public void addRect(Rectangle rect){
+        allRects.add(rect);
     }
+    public Rectangle [] getObstacles() {
+        return allRects.toArray(new Rectangle[0]);
+    }
+    
     
 }
 
