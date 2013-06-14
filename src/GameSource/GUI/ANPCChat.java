@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
 import GameSource.Assets.AssetManager;
@@ -15,11 +11,6 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-//AssetManager.getImage(frame.getKey());
-/**
- *
- * @author Joy
- */
 public class ANPCChat extends AWindow{
     public static final int PREV=0;
     public static final int NEXT=1;
@@ -41,22 +32,27 @@ public class ANPCChat extends AWindow{
         next.setImage(AImageFactory.getImage("npc_next"));
         next.setFGImage(AImageFactory.getImage("npc_next_fg"));
         buttons.put("next",next);
+		
         AButton prev=new AButton("prev",AMessage.NPC_CHAT,"prev",40,16);
         prev.setImage(AImageFactory.getImage("npc_previous"));
         prev.setFGImage(AImageFactory.getImage("npc_previous_fg"));
         buttons.put("prev",prev);
+		
         AButton end=new AButton("end",AMessage.NPC_CHAT,"end",91,16);
         end.setImage(AImageFactory.getImage("npc_end"));
         end.setFGImage(AImageFactory.getImage("npc_end_fg"));
         buttons.put("end",end);
+		
         AButton yes=new AButton("yes",AMessage.NPC_CHAT,"yes",57,16);
         yes.setImage(AImageFactory.getImage("npc_yes"));
         yes.setFGImage(AImageFactory.getImage("npc_yes_fg"));
         buttons.put("yes",yes);
+		
         AButton no=new AButton("no",AMessage.NPC_CHAT,"no",57,16);
         no.setImage(AImageFactory.getImage("npc_no"));
         no.setFGImage(AImageFactory.getImage("npc_no_fg"));
         buttons.put("no",no);
+		
         AButton ok=new AButton("okay",AMessage.NPC_CHAT,"okay",40,16);
         ok.setImage(AImageFactory.getImage("npc_ok"));
         ok.setFGImage(AImageFactory.getImage("npc_ok_fg"));

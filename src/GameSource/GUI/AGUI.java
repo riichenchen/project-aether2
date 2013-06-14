@@ -37,18 +37,18 @@ public class AGUI{
         public static void bringToFront(String name){
             visibleWindows.remove(name);
             visibleWindows.push(name);
+            System.out.print("AGUI/bringToFront  Windows:");
+            for (String a: visibleWindows){
+                System.out.print(a+" ");  
+            }
+            System.out.print("\n");
         }
 	
 	public static void shiftFocus(String name){
-		if (focusedScreen==null){
-			focusedScreen=windows.get(name);
-                        focusedScreen.setFocused(true);
-                }
-		else{
-			focusedScreen.setFocused(false);
-			focusedScreen=windows.get(name);
-			focusedScreen.setFocused(true);
-		}
+		if (focusedScreen!=null)
+                    focusedScreen.setFocused(false);
+		focusedScreen=windows.get(name);
+		focusedScreen.setFocused(true);
                 bringToFront(name);
 	}
 	public static void addNewWindow(AComponent a){
@@ -61,6 +61,7 @@ public class AGUI{
 		shiftFocus(name);
 	}
 	public static void closeWindow(String name){
+                windows.get(name).unlock();
                 windows.get(name).setFocused(false);
 		windows.get(name).setVisible(false);
                 visibleWindows.remove(name);
@@ -130,6 +131,9 @@ public class AGUI{
     
     public static ArrayList<String> get_windows(){
     	return windowNames;
+    }
+    public static LinkedList<String> get_visibleWindows(){
+        return visibleWindows;
     }
     public static AComponent getWindow(String name){
     	return windows.get(name);

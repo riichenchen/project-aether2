@@ -1,19 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
 import GameSource.Script.NPCFrame;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 
-/**
- *
- * @author Joy
- */
 public class MyGUI extends AGUI{
- //   private LinkedList<String> windowNames;
     private static ANPCChat npcchat;
     private static AInventory invent;
     private static AHUD hud;
@@ -23,36 +16,48 @@ public class MyGUI extends AGUI{
     private static ASkills skills;
     private static AShop shop;
     private static BufferedReader in;
+    private static Image cursorimage;
+    private static Image cursordown;
+    private static Image cursorup;
+    public static boolean passShift;
 
 
     public static void init(int wid, int hgt){
         AGUI.init(wid,hgt);
-//        inputSets.put("battle",new BattleInputSet());
-	inputSets.put("normal",new NormalInputSet());
+        passShift=false;
+        cursorimage=cursorup;
+        inputSets.put("normal",new NormalInputSet());
 	inputSet=inputSets.get("normal");
+		
         npcchat=new ANPCChat();
         npcchat.setVisible(false);
         windows.put(npcchat.getName(),npcchat);
         windowNames.add(npcchat.getName());
+		
         hud=new AHUD();
         windows.put(hud.getName(),hud);
         windowNames.add(hud.getName());
+		
         invent=new AInventory();
         invent.setVisible(false);
         windows.put(invent.getName(),invent);
         windowNames.add(invent.getName());
+		
         equip=new AEquip();
         equip.setVisible(false);
         windows.put(equip.getName(),equip);
         windowNames.add(equip.getName());
+		
         stats=new AStats();
         stats.setVisible(false);
         windows.put(stats.getName(),stats);
         windowNames.add(stats.getName());
+		
         skills=new ASkills();
         skills.setVisible(false);
         windows.put(skills.getName(),skills);
         windowNames.add(skills.getName());
+		
         shop=new AShop();
         shop.setVisible(false);
         windows.put(shop.getName(),shop);
@@ -68,7 +73,6 @@ public class MyGUI extends AGUI{
         cursordown=AImageFactory.getImage("cursor_down");
         cursorup=AImageFactory.getImage("cursor_up");
     }
-
 
     public static void showNPC(NPCFrame f,String n){
         npcchat.setName(n);
@@ -118,10 +122,12 @@ public class MyGUI extends AGUI{
         }
     }
     public static void draw(Graphics g){
+        
+        
         AGUI.draw(g);
         hud.draw(g);
         chat.draw(g);
-        drawCursor(g);
+        g.drawImage(cursorimage,AMouseInput.mx, AMouseInput.my,null);
     }
 
     public static void npc_next() {
@@ -150,94 +156,19 @@ public class MyGUI extends AGUI{
     public static void setShopData(String key){}
     
     public static void update(){
+        passShift=InputManager.down(KeyEvent.VK_SHIFT);
+        if (AMouseInput.clicked(AMouseInput.LEFT)||AMouseInput.held(AMouseInput.LEFT)){
+            cursorimage=cursordown;
+        }
+        if (AMouseInput.released(AMouseInput.LEFT)){
+            cursorimage=cursorup;
+        }
         AGUI.update();
         if (equip.visible()){
             equip.update();
         }
+        if (InputManager.down(KeyEvent.VK_SHIFT)&&passShift){
+            Input.InputManager.keyDown(KeyEvent.VK_SHIFT);
+        }
     }
 }
-
-
-/*
- *     public static AButton createAButton(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb,int type,String message){
-        AButton out=new AButton(name,type,message);
-        out.setSize(wid,hgt);
-        out.setLocation(x,y);
-        out.setFG(fr,fg,fb);
-        out.setBG(br,bg,bb);
-        return out;
-    }
-    public static AWindow createAWindow(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
-        AWindow out=new AWindow(name);
-        out.setSize(wid,hgt);
-        out.setLocation(x,y);
-        out.setFG(fr,fg,fb);
-        out.setBG(br,bg,bb);
-        out.setVisible(false);
-        return out;
-    }
-    public static ATextArea createATextArea(String name, int x,int y,int wid,int hgt,int fr,int fg,int fb,int br,int bg,int bb){
-        ATextArea  out=new ATextArea (name);
-        out.setSize(wid,hgt);
-        out.setLocation(x,y);
-        out.setFG(fr,fg,fb);
-        out.setBG(br,bg,bb);
-        out.setVisible(false);
-        return out;
-    }
-    public static AComponent createComponent(String line) throws IOException{
-        System.out.println(line);
-        int x,y,wid,hgt,fr,fg,fb,br,bg,bb;
-        int type;
-        String message;
-        String name=in.readLine();
-        String [] size=in.readLine().split(" ");
-        wid=Integer.parseInt(size[0]); hgt=Integer.parseInt(size[1]);
-        
-        String [] bgCol=in.readLine().split(" ");
-        br=Integer.parseInt(bgCol[0]); bg=Integer.parseInt(bgCol[1]);bb=Integer.parseInt(bgCol[2]);
-        String [] fgCol=in.readLine().split(" ");
-        fr=Integer.parseInt(fgCol[0]); fg=Integer.parseInt(fgCol[1]);fb=Integer.parseInt(fgCol[2]);
-        String [] pos=in.readLine().split(" ");
-        x=Integer.parseInt(pos[0]); y=Integer.parseInt(pos[1]);
-        if (line.equals("<AButton")){
-            type=Integer.parseInt(in.readLine());
-            message=in.readLine();
-            System.out.println ("yoooo"+in.readLine());
-            return createAButton(name,x,y,wid,hgt,fr,fg,fb,br,bg,bb,type,message);
-        }
-        if (line.equals("<ATextArea")){
-            in.readLine();
-            return createATextArea(name,x,y,wid,hgt,fr,fg,fb,br,bg,bb);
-        }
-        AWindow out=createAWindow(name,x,y,wid,hgt,fr,fg,fb,br,bg,bb);
-        String nextLine=in.readLine();
-        System.out.println("hiii!" + nextLine);
-        while (nextLine.equals("/>")==false){
-            AComponent c=createComponent(nextLine);
-            out.add(c);
-            nextLine=in.readLine();
-        }
-        System.out.println(name+" done!");
-        return out;
-    }
- */
-
-        
-        /*
-        try{
-            in=new BufferedReader(new FileReader("src/GameSource/Assets/GUI/TestLayout.txt"));
-            String line=in.readLine();
-            while (line.equals("")==false){
-                AComponent c= createComponent(line);
-                System.out.println(c.getName());
-                addNewWindow(c);
-                line=in.readLine();
-            }
-        }
-        catch (IOException e){System.out.println("File not found");}
-        System.out.println(windowNames.size());
-        for (String s: windowNames){
-            System.out.println(s);
-        }
-        */

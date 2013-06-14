@@ -8,6 +8,7 @@ import java.awt.Image;
 public class ALabel extends AComponent{
 	private String text;
 	private Image pic;
+	
 	public ALabel(){
 		super();
 		text="";
@@ -28,6 +29,7 @@ public class ALabel extends AComponent{
 		setSize(img.getWidth(null),img.getHeight(null));
 		setVisible(true);
 	}
+	
 	public void setText(String content){
 		text=content;
 		pic=null;
@@ -35,16 +37,16 @@ public class ALabel extends AComponent{
 	public void setImage(Image img){
 		pic=img;
 		text="";
-                setSize(pic.getWidth(null),pic.getHeight(null));
+		setSize(pic.getWidth(null),pic.getHeight(null));
 	}
 	public void draw(Graphics g){
 		if (pic!=null){
 			g.drawImage(pic,parent.x+x,parent.y+y,background,null);
 		}
-                else{
-                        Graphics2D g2=(Graphics2D)g;
-                        FontMetrics fm=g2.getFontMetrics();
-                        setSize(fm.stringWidth(text)+10,fm.getHeight()+10);
+		else{
+			Graphics2D g2=(Graphics2D)g;
+			FontMetrics fm=g2.getFontMetrics();
+			setSize(fm.stringWidth(text)+10,fm.getHeight()+10);
 			g.setFont(font);
 			g.setColor(foreground);
 			g.drawString(text,parent.x+x,parent.y+y);

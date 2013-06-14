@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
 import java.awt.Graphics;
@@ -51,8 +47,6 @@ public class AImage extends AComponent{
             if (fg!=null && (collidepoint(AMouseInput.mx, AMouseInput.my))){
                 g.drawImage(fg,AMouseInput.mx,AMouseInput.my+20,null);
             }
-//            System.out.println("AImage/draw:   "+name+" drawn!");
         }
-        
     }
 }
