@@ -8,8 +8,7 @@ import ArtificialIntelligence.AIControl;
 import Controls.CharacterAnimControl;
 import GameSource.Assets.AssetManager;
 import GameSource.Assets.MobData.AbstractMob;
-import GameSource.Controls.CowAIControl;
-import GameSource.Skills.AbstractActiveSkill;
+import GameSource.Controls.AIControl1;
 import GameSource.User.CharacterHandler;
 import GameSource.User.ItemFactory;
 import Spatial.Spatial;
@@ -27,12 +26,12 @@ public class BillysCow extends AbstractMob{
 
     @Override
     public AIControl getAIControl() {
-        return new CowAIControl(CharacterHandler.getPlayer().getMap());
+        return new AIControl1(CharacterHandler.getPlayer().getMap());
     }
 
     @Override
     public CharacterAnimControl getAnimControl() { // just use a simple test animation
-        return new CharacterAnimControl(AssetManager.getSpriteSet("MyTestAnimation"));
+        return new CharacterAnimControl(AssetManager.getSpriteSet("lucario"));
     }
     int n = 0;
     @Override
