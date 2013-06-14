@@ -59,8 +59,6 @@ public class GameMap {
             camera = new AetherCam(this,camlen,camwid);
             renderer = new Renderer(this,camera); // create a renderer for this map
         }
-        obstacles = new Rectangle[1];
-        obstacles[0] = new Rectangle(0, 0, 2, 2);
     }
 
     //returns a handle to the camera for the game to control if needed
@@ -274,19 +272,14 @@ public class GameMap {
 		for (int i = 0; i < dimx / Pathfinding.K; i++)
 			for (int j = 0; j < dimy / Pathfinding.K; j++)
 					charMap[i][j] = 0;
-<<<<<<< .mine
-		for (int i = 0; i < allRects.size(); i++) {
-				int curHeight = (int)allRects.get(i).getHeight();
-				int curWidth = (int)allRects.get(i).getWidth();
-				int curX = (int)allRects.get(i).getX();
-				int curY = (int)allRects.get(i).getY();
-=======
-		for (int i = 0; i < obstacles.length; i++) {
-				int curHeight = (int)obstacles[i].getHeight() / Pathfinding.K;
-				int curWidth = (int)obstacles[i].getWidth() / Pathfinding.K;
-				int curX = (int)obstacles[i].getX() / Pathfinding.K;
-				int curY = (int)obstacles[i].getY() / Pathfinding.K;
->>>>>>> .r215
+                
+                int allRectsSize = allRects.size();
+		for (int i = 0; i < allRectsSize; i++) {
+				int curHeight = (int)allRects.get(i).getHeight() / Pathfinding.K;
+				int curWidth = (int)allRects.get(i).getWidth() / Pathfinding.K;
+				int curX = (int)allRects.get(i).getX() / Pathfinding.K;
+				int curY = (int)allRects.get(i).getY() / Pathfinding.K;
+
 				for (int j = 0; j < curHeight; j++)
 					for (int k = 0; k < curWidth; k++)
 						charMap[curX + j][curY + k] = 1;
