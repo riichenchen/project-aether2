@@ -12,6 +12,22 @@ import GameSource.game.GameMap;
  * @author Shiyang
  */
 public abstract class AIControl extends AbstractControl{
+    protected final double DEFAULT_AGGRO_RADIUS = 512;
+    protected final int DEFAULT_DELAY = 8;
+    
+    protected final double DEFAULT_ATTACK1_RANGE = 32;
+    protected final int DEFAULT_ATTACK1_DELAY = 32;
+    
+    protected final double DEFAULT_ATTACK2_RANGE = 64;
+    protected final int DEFAULT_ATTACK2_DELAY = 64;
+    
+    protected final double DEFAULT_CAST1_RANGE = 128;
+    protected final int DEFAULT_CAST1_DELAY = 128;
+    
+    protected final double DEFAULT_CAST2_RANGE = 256;
+    protected final int DEFAULT_CAST2_DELAY = 256;
+    
+    
     protected GameMap map = null;
     protected AbstractAICalculation calculator;
     
