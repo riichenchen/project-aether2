@@ -266,20 +266,29 @@ public class GameMap {
     }
 
     //Methods for AI
+	
+	//creates and returns the character map if it is not there
     public char [][] getCharMap() {
+		//if it has not been created, construct it
         if (charMap == null) {
+		//map is scaled by k
             charMap = new char[dimx / Pathfinding.K][dimy / Pathfinding.K];
+		
+		//clear map
 		for (int i = 0; i < dimx / Pathfinding.K; i++)
 			for (int j = 0; j < dimy / Pathfinding.K; j++)
 					charMap[i][j] = 0;
                 
+		//get number of obstacles
                 int allRectsSize = allRects.size();
+		//go through the obstacles
 		for (int i = 0; i < allRectsSize; i++) {
+				//scale down curHeight, curWidth, curX, curY by K
 				int curHeight = (int)allRects.get(i).getHeight() / Pathfinding.K;
 				int curWidth = (int)allRects.get(i).getWidth() / Pathfinding.K;
 				int curX = (int)allRects.get(i).getX() / Pathfinding.K;
 				int curY = (int)allRects.get(i).getY() / Pathfinding.K;
-
+				//go from curX curY to curX + curHeight, curY + curWidth and mark it off as blocked
 				for (int j = 0; j < curHeight; j++)
 					for (int k = 0; k < curWidth; k++)
 						charMap[curX + j][curY + k] = 1;
@@ -287,7 +296,7 @@ public class GameMap {
         }
         return charMap;
     }
-
+	//returns all the spatails in the set / list
     public ArrayList getSpatials() {
         ArrayList mySpats = new ArrayList<Spatial>();
         for (Map.Entry<Integer, Spatial> entry: spats.entrySet()) {
@@ -296,16 +305,17 @@ public class GameMap {
         }
         return mySpats;
     }
-
+	//return PhysicsSpace
     public PhysicsSpace getPhysicsSpace() {
         return space;
     }
-    
+    //add an obstacle
     public void addRect(Rectangle rect){
         allRects.add(rect);
     }
+	//return all the obstacles
     public Rectangle [] getObstacles() {
-        return allRects.toArray(new Rectangle[0]);
+        return allRects.toArray(new Rectangle[0]); //convert arraylist to array
     }
     
     
