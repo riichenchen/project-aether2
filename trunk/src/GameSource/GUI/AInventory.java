@@ -6,6 +6,7 @@ import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.Inventory.UseItem;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
+import Sound.SoundManager;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -91,6 +92,10 @@ public class AInventory extends AWindow{
                 }
             }
             loadButtons();
+            try{
+                SoundManager.getChannel("UI").stopAll();
+                SoundManager.getChannel("UI").addTrack("tabswap");
+            }catch (NullPointerException e){}
         }
     }
     
