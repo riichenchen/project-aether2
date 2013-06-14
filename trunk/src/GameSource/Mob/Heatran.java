@@ -26,7 +26,7 @@ public class Heatran extends AbstractMob{
 
     @Override
     public AIControl getAIControl() {
-        return new AIControl1(CharacterHandler.getPlayer().getMap());
+        return new AIControl5(CharacterHandler.getPlayer().getMap());
     }
 
     @Override

@@ -26,7 +26,7 @@ public class Magcargo extends AbstractMob{
 
     @Override
     public AIControl getAIControl() {
-        return new AIControl1(CharacterHandler.getPlayer().getMap());
+        return new AIControl6(CharacterHandler.getPlayer().getMap());
     }
 
     @Override
