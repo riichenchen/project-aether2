@@ -1,0 +1,167 @@
+8
+Frame
+endchat null okay
+Text
+Cough, cough. Our mysterious storms seem to come from the glacier over there.
+Now, I know that Bruce won't let you pass because it's far too dangerous.
+Here. take this pass and investigate the ice over there.
+/Text
+Outcome
+additem glacierpass,1
+setqueststatus investigatingGlacier1,1
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+What. You've lost your pass? Sigh.
+Here's another one. Be more careful with it this time!
+/Text
+Outcome
+additem glacierpass,1
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Wait... I've seen this ice before... It must be...
+Glalie?! I need you to return this ice piece back immediately to where you found it!
+/Text
+Outcome
+setqueststatus investigatingGlacier2,1
+setqueststatus investigatingGlacier1,2
+additem redpot,10
+additem bluepot,10
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+Hurry and investigate the glacier!
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+You must return the piece immediately.
+Terrible things may happen...
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+So that's what it was. That Glalie shouldn't be bothering us ever again thanks to you.
+Here, I have some powerful items for you.
+/Text
+Outcome
+additem blackmagerobe,1
+additem astarothstaff,1
+setqueststatus investigatingGlacier2,2
+/Outcome
+
+Frame
+endchat null okay
+Text
+Thanks again for helping out! Why not explore the world?
+/Text
+Outcome
+/Outcome
+/Frame
+
+Frame
+endchat null okay
+Text
+This temperature is a bad omen...
+/Text
+Outcome
+/Outcome
+/Frame
+9
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,2
+queststatus investigatingGlacier1,0
+/Require
+0
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,1
+item glacierchunk,1
+/Require
+2
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,1
+item glacierpass,1
+/Require
+3
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,1
+/Require
+1
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,2
+queststatus investigatingGlacier2,1
+questcomplete investigatingGlacier2
+/Require
+5
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier1,2
+queststatus investigatingGlacier2,1
+/Require
+4
+/Case
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,0
+/require
+7
+/Case
+
+Case
+Require
+frame -1
+queststatus gatheringFood1,1
+/require
+7
+/Case
+
+Case
+Require
+frame -1
+queststatus investigatingGlacier2,2
+/Require
+6
+/Case
+-2
