@@ -10,54 +10,58 @@ import Testing.CowAICalculation;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CowAIControl extends AIControl {
-
-    private final double DEFAULT_AGGRO_RADIUS = 256;
-    private final double DEFAULT_SHORT_ATTACK_RANGE = 32;
-    private final double DEFAULT_LONG_ATTACK_RANGE = 256;
-    private final int DEFAULT_DELAY = 8;
-    private final int DEFAULT_ATTACK_DELAY = 64;
-    private final int SHORT_ATTACK = 0, LONG_ATTACK = 1;
+public class AIControl5 extends AIControl {
+    
     
     protected GameMap curMap;
     protected Pathfinding pf;
-    protected int curX, curY;
-    protected int tarX, tarY;
-    protected int lastX, lastY;
-    protected double shortAttackRange, longAttackRange;
-    protected double aggroRadius;
-    protected double dist;
-    protected Random rnd;
-    protected int slow;
-    protected int delay;
-    protected int attackDelay;
-    protected boolean isAttacking;
-    protected boolean isMoving;
+    
+    private int curX, curY;
+    private int tarX, tarY;
+    private int lastX, lastY;
+    
+    private double aggroRadius;
+    
+    private double attack1Range;
+    private int attack1Delay;
+    private double attack2Range;
+    private int attack2Delay;
+   
+    private int slow;
+    private int delay;
+    
+    private double dist;
+    private Random rnd;
+    
+    private boolean isAttacking1, isAttacking2;
+    private boolean isMoving;
     private boolean hasMoved;
-    protected String state, direction;
+    private String state, direction;
     
     private boolean loadedAnimControl;
     private CharacterAnimControl animControl;
     
-    public CowAIControl(GameMap map) {
+    public AIControl5(GameMap map) {
         super(new CowAICalculation());
         curMap = map;
         aggroRadius = DEFAULT_AGGRO_RADIUS;
-        shortAttackRange = DEFAULT_SHORT_ATTACK_RANGE;
-        longAttackRange = DEFAULT_LONG_ATTACK_RANGE;
+        attack1Range = DEFAULT_ATTACK1_RANGE;
+        attack1Delay = DEFAULT_ATTACK1_DELAY;
+        attack2Range = DEFAULT_ATTACK2_RANGE;
+        attack2Delay = DEFAULT_ATTACK2_DELAY;
         delay = DEFAULT_DELAY;
-        attackDelay = DEFAULT_ATTACK_DELAY;
         init();
     }
     
-    public CowAIControl(GameMap map, double _aggroRadius, double _shortAttackRange, double _longAttackRange, int _delay, int _attackDelay) {
+    public AIControl5(GameMap map, double _aggroRadius, int _delay, double _attack1Range, int _attack1Delay, double _attack2Range, int _attack2Delay) {
         super(new CowAICalculation());
         curMap = map;
         aggroRadius = _aggroRadius;
-        shortAttackRange = _shortAttackRange;
-        longAttackRange = _longAttackRange;
         delay = _delay;
-        attackDelay = _attackDelay;
+        attack1Range = _attack1Range;
+        attack1Delay = _attack1Delay;
+        attack2Range = _attack2Range;
+        attack2Delay = _attack2Delay;
         init();
     }
     private void init() {
@@ -65,7 +69,7 @@ public class CowAIControl extends AIControl {
         curX = curY = tarX = tarY = -(1 << 30);
         pf = new Pathfinding(curMap.getCharMap(), curX, curY, tarX, tarY);
         slow = 0;
-        isAttacking = false;
+        isAttacking1 = isAttacking2 = false;
         isMoving = false;
         loadedAnimControl = false;
         hasMoved = false;
@@ -77,30 +81,30 @@ public class CowAIControl extends AIControl {
             animControl = (CharacterAnimControl)boundTo.getControl(CharacterAnimControl.class);
             loadedAnimControl = true;
         }
-        if (!hasMoved) {
-            state = "stand";
-            direction = "down";
-        }
         
-        if ((!isAttacking && slow == delay) || slow == attackDelay) {
+        if ( (!isAttacking1 && !isAttacking2 && (slow == delay)) || (isAttacking1 && (slow == attack1Delay)) || (isAttacking2 && (slow == attack2Delay)) ) {
             
             getLocations();
+            if (dist > aggroRadius)
+                return;
+            if (!hasMoved) {
+                state = "stand";
+                getDirection(tarX - curX, tarY - curY);
+            }
             
-            isAttacking = false;
+            isAttacking1 = isAttacking2 = false;
             isMoving = false;
             
-            if (dist <= shortAttackRange) {
-                System.out.println("Mob is atttacking with SHORT ATTACK\n");
-                isAttacking = true;
-                //boundTo.attack(CharacterHandler.getPlayer(), SHORT_ATTACK);
+            if (dist <= attack1Range) {
+                System.out.println("attack1\n");
+                isAttacking1 = true;
                 state = "attack1";
-            } else if (dist <= longAttackRange) {
-                int canAttack = rnd.nextInt() % 2;
-                if (canAttack == 1) {
-                    System.out.println("Mob is attacking with LONG ATTACK\n");
-                    isAttacking = true;
-                    //boundTo.attack(CharacterHandler.getPlayer(), LONG_ATTACK);
-                    state = "attack1";
+            } else if (dist <= attack2Range) {
+                int goAttack = rnd.nextInt() % 2;
+                if (goAttack == 1) {
+                    System.out.println("attack2\n");
+                    isAttacking2 = true;
+                    state = "attack2";
                 } else
                     move();
             } else
@@ -122,16 +126,12 @@ public class CowAIControl extends AIControl {
     
     private void move() {
         hasMoved = true;
-        state = "stand";
-        //System.out.printf("curx %d cury %d tarx %d tary %d\n", curX, curY, tarX, tarY);
+        state = "walk";
         pf.updateLocations(curX, curY, tarX, tarY);
-        //System.out.printf("%d %d\n", pf.getToX(), pf.getToY());
         int dx = pf.getToX() - curX;
         int dy = pf.getToY() - curY;
         boundTo.move(dx, 0, dy);
         getDirection(dx, dy);
-        //System.out.printf("Moved x: %d y: %d(%d - %d)\n", tarX - curX, tarY - curY, tarY, curY);
-        //System.out.printf("Current: %d %d %d\nTarget: %d %d %d\n", (int)boundTo.getX(), (int)boundTo.getY(), (int)boundTo.getZ(), (int)CharacterHandler.getPlayer().getX(), (int)CharacterHandler.getPlayer().getY(), (int)CharacterHandler.getPlayer().getZ());
     }
     
     private void getDirection(int dx, int dy) {
@@ -151,17 +151,5 @@ public class CowAIControl extends AIControl {
             direction = "upleft";
         else if (dx > 0 && dy < 0)
             direction = "upright";
-    }
-    
-    private int countSpatials() {
-        ArrayList curSpatials = curMap.getSpatials();
-        int size = curSpatials.size();
-        int numMob = 0;
-        for (int i = 0; i < size; i++) {
-            if (curSpatials.get(i) instanceof AbstractMob) {
-                numMob++;
-            }
-        }
-        return numMob;
     }
 }
