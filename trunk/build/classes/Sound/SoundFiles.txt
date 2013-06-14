@@ -14,3 +14,8 @@ sheolfear skills/sheolfear.mp3
 spiritbomb skills/spiritbomb.mp3
 stalagamite skills/stalagamite.mp3
 staticvortex skills/staticvortex.mp3
+mouseover gui/mouseover.mp3
+mouseclick gui/mouseclick.mp3
+dragend gui/dragend.mp3
+dragstart gui/dragstart.mp3
+tabswap gui/tabswap.mp3

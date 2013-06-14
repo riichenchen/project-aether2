@@ -6,6 +6,7 @@ package GameSource.User;
 
 import GameSource.Assets.AssetManager;
 import GameSource.User.Inventory.EquipItem;
+import GameSource.User.Inventory.EtcItem;
 import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.Inventory.ItemData;
 import GameSource.User.Inventory.UseItem;
@@ -34,6 +35,11 @@ public class ItemFactory {
             EquipItem newItem = new EquipItem(dat.itemName,dat.equipItemType,0,0);
             for (String stat: dat.stats.keySet().toArray(new String[0]))
                 newItem.addStat(stat, dat.stats.get(stat));
+            newItem.setImage(dat.image);
+            newItem.setKey(key);
+            return newItem;
+        } else if (dat.itemType.equals("etc")){
+            EtcItem newItem = new EtcItem(dat.itemName,0,0);
             newItem.setImage(dat.image);
             newItem.setKey(key);
             return newItem;

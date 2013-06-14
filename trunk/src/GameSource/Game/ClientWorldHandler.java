@@ -46,11 +46,6 @@ public class ClientWorldHandler {
         this.thegame = thegame; // Bind to the game panel
         thegame.setHandler(this);
         AbstractControl.setWorld(this);//bind all controls to the world handler
-        SoundManager.addChannel("Effects", false); // initialize the sound handler with some default channels
-        SoundManager.addChannel("BackgroundMusic", true);
-        SoundManager.addChannel("UI",false);
-        SoundManager.getChannel("UI").setNumberTracks(10);
-        SoundManager.getChannel("Effects").setNumberTracks(6);
         this.camControl = new AetherCameraControl();
         this.aiHandle = new AIHandler();
         aiHandle.start(); // begin the ai handle thread
