@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
+/*AImageFactory.java            @Chen~
+ * This class loads all images into a HashMap and allows other classes to
+ * retrieve them by key.
+ */
+
 public class AImageFactory {
     private static HashMap<String,Image> allImages;
     private static final String DIRECTORY = "src/GameSource/Assets/";

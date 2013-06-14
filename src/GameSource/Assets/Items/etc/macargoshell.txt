@@ -2,3 +2,4 @@ Macargo Shell
 The shell of a macargo.
 100
 etc
+macargoshell

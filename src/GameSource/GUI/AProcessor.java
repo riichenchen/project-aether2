@@ -1,24 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
 import GameSource.User.CharacterHandler;
 import GameSource.User.EquipHandler;
 import GameSource.User.Inventory.EquipItem;
 import GameSource.User.Inventory.InventoryItem;
+import GameSource.User.Inventory.UseItem;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
 
-/**
- *
- * @author Joy
+/*AProcessor.java           @Chen~
+ *This class contains a main process function that takes in
+ *an AMessage and performs the necessary action as a result.
  */
 public class AProcessor {
-    
-    
+
     public static void process(AMessage m){
+        //Main process method that contains a large switch to determine the
+        //message type. It may then call on more specific update functions for
+        //some message types.
         switch (m.type()){
             case AMessage.QUIT: System.out.println("QUIT GAME");
                 break;
@@ -59,14 +58,18 @@ public class AProcessor {
                 break;
             case AMessage.SHOP_SELL_CONFIRM: MyGUI.shopSellItem(m.content());
                 break;
-            default: System.out.println("uselessButton");
+            default: System.out.println("Warning: Button had no effect...");
         }    
     }
     private static void process_invent(AMessage m){
+        //Invoked when an item's button in the inventory is called
         if (AMouseInput.doubleclick[AMouseInput.LEFT]==AMouseInput.YES){
             InventoryItem c=ItemFactory.getItem(m.content());
             if (c instanceof EquipItem){
                 EquipHandler.equip((EquipItem)c);
+            }
+            else if (c instanceof UseItem){
+                c.use();
             }
         }
         else{
@@ -74,6 +77,7 @@ public class AProcessor {
         }
     }
     public static void process_npcchat(AMessage m){
+        //Invoked by the navigation buttons in the NPC chat boxes.
         if (m.content().equals("next") ||m.content().equals("okay")){
             MyGUI.npc_next();
         }else if (m.content().equals("prev")){

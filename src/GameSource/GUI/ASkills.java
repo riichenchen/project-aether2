@@ -1,4 +1,3 @@
-
 package GameSource.GUI;
 
 import GameSource.Assets.AssetManager;
@@ -13,19 +12,25 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*ASkills.java          @Chen~
+ * Specialty window to display the avaible skillset to a player and allow them to
+ * upgrade skill levels if they have enough skillPoints. Skills are available in
+ * increasing tiers (i.e. if tier 2 is available, so are tier 0,1).
+ */
+
 public class ASkills extends AWindow{
     public static final String [] nameDirect={"0","1","2"};
     private int activeTab;
     private AButton activeTabButton;
-    private AButton [] buttons;
+    private AButton [] buttons;             //The buttons for upgrading skillLevels
     
     private AButton [] tabs;
     private int skillPoints;
-    private int job;
+    private int job;                        //The highest tier available
     private ArrayList<APoint> labelLocs;
-    private AContainer labels;
-    private ArrayList<String[]> tiers;
-    private String [] descriptions;
+    private AContainer labels;              //The info displays in each tier
+    private ArrayList<String[]> tiers;      //The skills available in each tier
+    private String [] descriptions;         //The description of each tier
     
     
     public ASkills(){
@@ -42,7 +47,7 @@ public class ASkills extends AWindow{
         labels=new AContainer (0,0,4,labelLocs);
         skillPoints=CharacterHandler.getStat("skillPoints");
         
-        loadTabs();//Load the tabs
+        loadTabs();
         job=CharacterHandler.getStat("job");
         updateTabs();
         activeTabButton=tabs[0];
@@ -59,7 +64,7 @@ public class ASkills extends AWindow{
         setVisible(true);
         
     }
-    public void loadDescriptions(){
+    public void loadDescriptions(){              //Loads the two-line descriptions for each tier level
         descriptions=new String [6];
         try{
             BufferedReader br=new BufferedReader(new FileReader("src/GameSource/Assets/skillDescriptions.txt"));
@@ -68,7 +73,7 @@ public class ASkills extends AWindow{
             }
         }catch(IOException e){System.out.println("No descriptions!");}
     }
-    public void loadTabs(){
+    public void loadTabs(){     //Load all three possible tabs; some are set invisible
         tabs=new AButton [3];
         for (int i=0; i<3; i++){
             tabs[i]=new AButton(""+i,AMessage.SKILLS,""+i);
@@ -84,8 +89,8 @@ public class ASkills extends AWindow{
         for (int i=0; i<3; i++){
             tabs[i].setVisible(false);
         }
-        for (int i=0; i<=job; i++){
-            tabs[i].setVisible(true);
+        for (int i=0; i<=job; i++){         //Set only the accessible tabs to
+            tabs[i].setVisible(true);       //visible
         }
     }
     public void loadTiers(){
@@ -99,7 +104,7 @@ public class ASkills extends AWindow{
         }
         catch(IOException e){System.out.println("Load shop tiers failed!");};
     }
-    public void loadButtons(){
+    public void loadButtons(){          //Load the four buttons used to upgrade
         for (int i=0; i<4;i++){
             AButton b=new AButton("skill_"+(i),AMessage.SKILL_UP,""+(i),12,12);
             b.setLocation(134,114+39*i);
@@ -110,16 +115,19 @@ public class ASkills extends AWindow{
             buttons[i]=b;
         }
     }
-   public void loadLocs(){
+   public void loadLocs(){              //Load the location of each skill label
         for (int i=0; i<4;i++){
             labelLocs.add(new APoint(11,94+38*i));
         }
     }
     public void increase(int a){
+        //Invoked when an upgrade button is clicked. This methods performs the change.
         CharacterHandler.addSkillLevel(labels.get(a).getName(),1);
         CharacterHandler.addStat("skillPoints", -1);
     }
     public void loadLabels(){
+        //Load the 4 labels by creating the layers using TextImageFactory and data
+        //from SkillData.
         String [] skillNames=tiers.get(activeTab);
         labels.clear();
         for (int i=0;i<skillNames.length;i++){
@@ -133,7 +141,7 @@ public class ASkills extends AWindow{
         labels.updateActiveContent();
     }
     
-    public void setPane(String paneName){
+    public void setPane(String paneName){       //Change the active pane
         int newPane=Integer.parseInt(paneName);
         if (newPane!=activeTab){
             activeTab=newPane;
@@ -151,11 +159,11 @@ public class ASkills extends AWindow{
     public void updateButtons(){
             for (int i=0; i<4; i++){
                 int skill=0;
-                try{
+                try{                //skillLevel may be null at initilization
                     skill=CharacterHandler.getSkillLevel(labels.get(i).getName());
                 }catch (NullPointerException e){}
                 buttons[i].setVisible(false);
-                if (skillPoints>0 && skill<10)
+                if (skillPoints>0 && skill<10)      //10 is the max skill level
                     buttons[i].setVisible(true);
             }
     }
@@ -176,26 +184,28 @@ public class ASkills extends AWindow{
     @Override
     public void call(){
         for (AComponent c: subComponents){
-                if (c.visible() && c.callable() && ( c instanceof AContainer ||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
-                    c.call();
-                    break;
-                }
+            if (c.visible() && c.callable() && ( c instanceof AContainer ||c.collidepoint(AMouseInput.mx,AMouseInput.my))){
+                c.call();
+                break;
             }
+        }
     }   
 
     @Override
     public void draw(Graphics g){
         g.drawImage(bg,x,y,null);
         g.drawImage(AssetManager.getImage("tier"+(activeTab+1)),x+15,y+58,null);
-        g.setColor(new Color(255,255,255));
+        
+        g.setColor(new Color(255,255,255));     //Draw the description
         g.setFont(new Font("Arial",Font.PLAIN,10));
         g.drawString(descriptions[2*activeTab],x+48,y+68);
         g.drawString(descriptions[2*activeTab+1],x+48,y+83);
-        g.setFont(new Font("Arial",Font.PLAIN,11));
+        
+        g.setFont(new Font("Arial",Font.PLAIN,11)); //Draw the # of skillPoints
         g.setColor(new Color(0,0,0));
         g.drawString(""+CharacterHandler.getStat("skillPoints"),x+139,y+269);
         
-        for (int i=0; i<4;i++){
+        for (int i=0; i<4;i++){        //Draw disabled buttons before enabled buttons
             Image tmp=AImageFactory.getImage("skill_up_disable");
             g.drawImage(tmp,x+134,y+114+39*i,null);
         }

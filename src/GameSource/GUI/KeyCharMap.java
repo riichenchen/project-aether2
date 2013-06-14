@@ -1,21 +1,26 @@
 package GameSource.GUI;
 
+/* KeyCharMap.java          @Chen~
+ * This class is responsible for mapping a keyCode to a typeable
+ * character, with the consideration of the "Shift" key.
+ */
 public class KeyCharMap{
 	public static boolean isTypeable(int keyCode, int textType){
+        //Checks to ensure the pressed key is a typeable one (i.e. not 'Home',
+        //'Esc','Shift', etc.)
 		if (44<=keyCode && keyCode<=93 && keyCode!=58)
 			return true;
-		if (keyCode==32)
+		if ((keyCode==32||keyCode==192)||keyCode==222)
 			return true;
-		if (keyCode==192)
-			return true;
-		if (keyCode==222)
-			return true;
-		if (keyCode==10 && textType==1)	//replace 1 with GUI.TEXT_BOX
+		if (keyCode==10)                                //Enter
 			return true;
 		return false;
 	}
 	public static int getChar(int key, boolean shift){
-		if (key==32 || key==10)
+        //This method takes a typeable keyCode, whether or not shift is pressed,
+        //and runs through a series of if statements to return the matching
+        //ASCII code value.
+		if (key==32 || key==10)         //Space and Enter
 			return key;
 		if (shift==false){
 			if ((44<=key && key<=93)){
@@ -44,9 +49,7 @@ public class KeyCharMap{
 				return 126;
 			if (key==222)
 				return 34;
-			
 		}
-		
 		return -1;
 	}
 	

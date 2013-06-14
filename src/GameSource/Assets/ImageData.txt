@@ -53,3 +53,8 @@ macargoshell inventory/etc/macargoshell.png
 magmacrystal inventory/etc/magmacrystal.png
 sphealmeat inventory/etc/sphealmeat.png
 john npc/john.png
+bruce npc/bruce.png
+chiefstan npc/chiefstan.png
+sam npc/sam.png
+icestone npc/icestone.png
+athena npc/athena.png

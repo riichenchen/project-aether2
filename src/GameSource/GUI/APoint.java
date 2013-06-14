@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameSource.GUI;
 
-/**
- *
- * @author 38800542
+/*APoint.java           @Chen~
+ *Class storing x,y coordinates
  */
 public class APoint {
     protected int x,y;

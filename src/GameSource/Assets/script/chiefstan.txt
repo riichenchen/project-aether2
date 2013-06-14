@@ -1,4 +1,5 @@
 8
+
 Frame
 endchat null okay
 Text
@@ -16,7 +17,7 @@ Frame
 endchat null okay
 Text
 What. You've lost your pass? Sigh.
-Here's another one. Be more careful with it this time!
+Here's another one. Be more careful with it this time...
 /Text
 Outcome
 additem glacierpass,1
@@ -27,7 +28,7 @@ Frame
 endchat null okay
 Text
 Wait... I've seen this ice before... It must be...
-Glalie?! I need you to return this ice piece back immediately to where you found it!
+Glalie?! I need you to return this ice piece back immediately to where you found it...
 /Text
 Outcome
 setqueststatus investigatingGlacier2,1
@@ -40,7 +41,7 @@ additem bluepot,10
 Frame
 endchat null okay
 Text
-Hurry and investigate the glacier!
+Hurry and investigate the glacier...
 /Text
 Outcome
 /Outcome
@@ -67,11 +68,13 @@ additem blackmagerobe,1
 additem astarothstaff,1
 setqueststatus investigatingGlacier2,2
 /Outcome
+/Frame
 
 Frame
 endchat null okay
 Text
 Thanks again for helping out! Why not explore the world?
+I can take you to to a secret exit. (hax :3)
 /Text
 Outcome
 /Outcome
@@ -145,7 +148,7 @@ Case
 Require
 frame -1
 queststatus gatheringFood1,0
-/require
+/Require
 7
 /Case
 
@@ -153,7 +156,7 @@ Case
 Require
 frame -1
 queststatus gatheringFood1,1
-/require
+/Require
 7
 /Case
 
