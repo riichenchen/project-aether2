@@ -1,5 +1,6 @@
 package GameSource.game;
 
+import ArtificialIntelligence.Pathfinding;
 import GameSource.Assets.MobData.AbstractMob;
 import GameSource.Assets.Spawners.AbstractMobSpawner;
 import GameSource.Game.GamePoint;
@@ -15,7 +16,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import javax.swing.JPanel;
 /* GameMap
@@ -268,15 +268,15 @@ public class GameMap {
     //Methods for AI
     public char [][] getCharMap() {
         if (charMap == null) {
-            charMap = new char[dimx][dimy];
-		for (int i = 0; i < dimx; i++)
-			for (int j = 0; j < dimy; j++)
+            charMap = new char[dimx / Pathfinding.K][dimy / Pathfinding.K];
+		for (int i = 0; i < dimx / Pathfinding.K; i++)
+			for (int j = 0; j < dimy / Pathfinding.K; j++)
 					charMap[i][j] = 0;
 		for (int i = 0; i < obstacles.length; i++) {
-				int curHeight = (int)obstacles[i].getHeight();
-				int curWidth = (int)obstacles[i].getWidth();
-				int curX = (int)obstacles[i].getX();
-				int curY = (int)obstacles[i].getY();
+				int curHeight = (int)obstacles[i].getHeight() / Pathfinding.K;
+				int curWidth = (int)obstacles[i].getWidth() / Pathfinding.K;
+				int curX = (int)obstacles[i].getX() / Pathfinding.K;
+				int curY = (int)obstacles[i].getY() / Pathfinding.K;
 				for (int j = 0; j < curHeight; j++)
 					for (int k = 0; k < curWidth; k++)
 						charMap[curX + j][curY + k] = 1;
