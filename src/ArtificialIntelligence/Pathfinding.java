@@ -9,6 +9,7 @@ package ArtificialIntelligence;
 import java.util.*;
 
 public class Pathfinding {
+        public static final int K = 10;
 	protected static int INF, X_MAX, Y_MAX;
 	private char [][] grid;
 	private int [] dist, prev;
@@ -28,17 +29,17 @@ public class Pathfinding {
 		X_MAX = grid.length;
 		Y_MAX = grid[0].length;
 		maxSize = X_MAX * (Y_MAX + 1);
-		dist = new int [maxSize]; 
+                dist = new int [maxSize]; 
 		edges = new ArrayList[maxSize];
 		visited = new boolean[maxSize];
 		prev = new int [maxSize];
 		best_path = new ArrayList();
 	 	nodeComparator = new NodeComparator();
                 createEdges();
-		cur_x = _cur_x;
-		cur_y = _cur_y;
-		tar_x = _tar_x;
-		tar_y = _tar_y;
+		cur_x = _cur_x / K;
+		cur_y = _cur_y / K;
+		tar_x = _tar_x / K;
+		tar_y = _tar_y / K;
                 if (inBounds())
                     solve();
 	}
@@ -162,36 +163,36 @@ public class Pathfinding {
 	}
 	
 	public void updateCurrentLocation(int x, int y) {
-		cur_x = x;
-		cur_y = y;
+		cur_x = x / K;
+		cur_y = y / K;
                 if (inBounds())
                     solve();
 	}
 	
 	public void updateTargetLocation(int x, int y) {
-		tar_x = x;
-		tar_y = y;
+		tar_x = x / K;
+		tar_y = y / K;
                 if (inBounds())
                     solve();
 	}
         
         public int getToX() {
             if (!best_path.isEmpty())
-                return (int)(best_path.get(0)) / Y_MAX;
-            return cur_x;
+                return (int)(best_path.get(0)) / Y_MAX * K;
+            return cur_x * K;
         }
         
         public int getToY() {
             if (!best_path.isEmpty())
-                return (int)(best_path.get(0)) % Y_MAX;
-            return cur_y;
+                return (int)(best_path.get(0)) % Y_MAX * K;
+            return cur_y * K;
         }
         
         public void updateLocations(int x1, int y1, int x2, int y2) {
-            cur_x = x1;
-            cur_y = y1;
-            tar_x = x2;
-            tar_y = y2;
+            cur_x = x1 / K;
+            cur_y = y1 / K;
+            tar_x = x2 / K;
+            tar_y = y2 / K;
             if (inBounds())
                 solve();
         }
