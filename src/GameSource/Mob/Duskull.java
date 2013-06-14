@@ -26,7 +26,7 @@ public class Duskull extends AbstractMob{
 
     @Override
     public AIControl getAIControl() {
-        return new AIControl1(CharacterHandler.getPlayer().getMap());
+        return new AIControl3(CharacterHandler.getPlayer().getMap());
     }
 
     @Override
