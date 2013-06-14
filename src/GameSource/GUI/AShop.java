@@ -13,6 +13,7 @@ import GameSource.User.Inventory.InventoryItem;
 import GameSource.User.Inventory.UseItem;
 import GameSource.User.InventoryHandler;
 import GameSource.User.ItemFactory;
+import Sound.SoundManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -143,6 +144,10 @@ public class AShop extends AWindow{
                 }
             }
             loadRightButtons();
+            try{
+                SoundManager.getChannel("UI").stopAll();
+                SoundManager.getChannel("UI").addTrack("tabswap");
+            }catch(NullPointerException e){}
         }
     }
     public void loadRightButtons(){

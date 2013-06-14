@@ -1,5 +1,6 @@
 package GameSource.GUI;
 
+import Sound.SoundManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -101,6 +102,7 @@ public abstract class AComponent{
 		lx=AMouseInput.mx-x;
 		ly=AMouseInput.my-y;
 		locked = true;
+                SoundManager.getChannel("UI").addTrack("dragstart");
 	}
 	public void unlock(){
 		locked= false;

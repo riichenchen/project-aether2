@@ -72,7 +72,7 @@ public class ClientWorldHandler {
         camControl.bindToCamera(myGameMap.getCamera());
         //BackgroundMusic only has 1 track slot for bgm, so it gets overridden each time
         if (oldMusic == null || !myGameMap.getBGMusic().equals(oldMusic)){ // only swap if the music actually changes
-            SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
+ //           SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
         }
     }
     
@@ -167,7 +167,7 @@ public class ClientWorldHandler {
         thegame.setMap(myGameMap);
         camControl.bindToCamera(myGameMap.getCamera());
         SoundManager.getChannel("BackgroundMusic").stopAll();
-        SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
+//       SoundManager.getChannel("BackgroundMusic").addTrack(myGameMap.getBGMusic());
         boundSpat.addControl(hold);
     }
     //Not exactly used atm. At sound point in time was used to implement a mouse

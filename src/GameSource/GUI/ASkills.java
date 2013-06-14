@@ -3,6 +3,7 @@ package GameSource.GUI;
 
 import GameSource.Assets.AssetManager;
 import GameSource.User.CharacterHandler;
+import Sound.SoundManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -141,6 +142,10 @@ public class ASkills extends AWindow{
             activeTabButton.displayFG();
             loadLabels();
             updateButtons();
+            try{
+                SoundManager.getChannel("UI").stopAll();
+                SoundManager.getChannel("UI").addTrack("tabswap");
+            }catch(NullPointerException e){}
         }
     }
     public void updateButtons(){

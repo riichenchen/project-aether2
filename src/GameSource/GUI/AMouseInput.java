@@ -1,5 +1,6 @@
 package GameSource.GUI;
 
+import Sound.SoundManager;
 import java.awt.event.MouseEvent;
 
 public class AMouseInput{
@@ -50,6 +51,9 @@ public class AMouseInput{
 	public static void release(MouseEvent e){
 		buttonsHeld[e.getButton()-1]=NO;
 //           buttonsClicked[e.getButton()-1]=NO;
+                if (buttonsClicked[e.getButton()-1]==YES){
+                    SoundManager.getChannel("UI").addTrack("mouseclick");
+                }
 		buttonsReleased[e.getButton()-1]=YES;
 	}
 	public static void reset(){

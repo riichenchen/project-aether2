@@ -48,6 +48,11 @@ public class AetherGamePanel extends JPanel implements MouseMotionListener,KeyLi
         addMouseListener(this);
         AssetManager.init();
         SoundManager.init();
+        SoundManager.addChannel("Effects", false); // initialize the sound handler with some default channels
+        SoundManager.addChannel("BackgroundMusic", true);
+        SoundManager.addChannel("UI",false);
+        SoundManager.getChannel("UI").setNumberTracks(10);
+        SoundManager.getChannel("Effects").setNumberTracks(6);
         CharacterHandler.init();
         EquipHandler.init();
         AImageFactory.init();

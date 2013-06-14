@@ -1,6 +1,7 @@
 package GameSource.GUI;
 
 import GameSource.User.Inventory.InventoryItem;
+import Sound.SoundManager;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.HashMap;
@@ -108,8 +109,10 @@ public class AGUI{
             mouseItem=i;
         }
         public static void freeMouse(){
-            if (mouseItem!=null && hitGUI(AMouseInput.mx,AMouseInput.my)==false)
+            if (mouseItem!=null && hitGUI(AMouseInput.mx,AMouseInput.my)==false){
+                SoundManager.getChannel("UI").addTrack("dragend");
                 System.out.println(mouseItem.getKey()+" dropped at ("+AMouseInput.mx+","+AMouseInput.my+")");
+            }
             mouseItem=null;
         }
         public static boolean mouseFree(){
